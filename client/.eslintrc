@@ -1,0 +1,27 @@
+{
+	"root": true,
+	"parser": "babel-eslint",
+	"extends": ["canonical", "canonical/jest", "canonical/react"],
+	"env": {
+		"browser": true,
+		"node": true,
+		"es6": true,
+		"jest": true
+	},
+	"rules": {
+		"no-tabs": 0,
+		"sort-keys": 0,
+		"func-style": 0,
+		"no-restricted-syntax": 0,
+		"max-lines": [2, 250],
+		"indent": [2, "tab"],
+		"comma-dangle": [2, "never"],
+		"react/jsx-indent": [2, "tab"],
+		"react/jsx-indent-props": [2, "tab"],
+		"react/forbid-component-props": 0,
+		"react/sort-prop-types": 0,
+		"import/no-unassigned-import": 0,
+		"import/no-namespace": 0,
+		"babel/object-curly-spacing": [2, "always"]
+	}
+}

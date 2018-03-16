@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1521187332115" clover="3.2.0">
+  <project timestamp="1521187332115" name="All files">
+    <metrics statements="43" coveredstatements="11" conditionals="6" coveredconditionals="0" methods="21" coveredmethods="0" elements="70" coveredelements="11" complexity="0" loc="43" ncloc="43" packages="2" files="4" classes="4">
+      <package name="actions">
+        <metrics statements="17" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="0"/>
+        <file name="watcher.js" path="/Users/romanhome/Documents/GitHub/basic-electron-react-boilerplate/client/actions/watcher.js">
+          <metrics statements="17" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="7" count="0" type="stmt"/>
+          <line num="8" count="0" type="stmt"/>
+          <line num="9" count="0" type="stmt"/>
+          <line num="11" count="0" type="stmt"/>
+          <line num="19" count="0" type="stmt"/>
+          <line num="20" count="0" type="stmt"/>
+          <line num="29" count="0" type="stmt"/>
+          <line num="34" count="0" type="stmt"/>
+          <line num="35" count="0" type="stmt"/>
+          <line num="40" count="0" type="stmt"/>
+          <line num="47" count="0" type="stmt"/>
+          <line num="48" count="0" type="stmt"/>
+          <line num="53" count="0" type="stmt"/>
+        </file>
+      </package>
+      <package name="components">
+        <metrics statements="26" coveredstatements="7" conditionals="6" coveredconditionals="0" methods="13" coveredmethods="0"/>
+        <file name="App.js" path="/Users/romanhome/Documents/GitHub/basic-electron-react-boilerplate/client/components/App.js">
+          <metrics statements="14" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="0"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="15" count="0" type="stmt"/>
+          <line num="19" count="0" type="stmt"/>
+          <line num="21" count="0" type="stmt"/>
+          <line num="22" count="0" type="stmt"/>
+          <line num="27" count="0" type="stmt"/>
+          <line num="31" count="0" type="stmt"/>
+          <line num="32" count="0" type="stmt"/>
+          <line num="34" count="0" type="stmt"/>
+          <line num="48" count="0" type="stmt"/>
+          <line num="56" count="1" type="stmt"/>
+          <line num="60" count="1" type="stmt"/>
+          <line num="66" count="0" type="stmt"/>
+          <line num="72" count="0" type="stmt"/>
+        </file>
+        <file name="Form.js" path="/Users/romanhome/Documents/GitHub/basic-electron-react-boilerplate/client/components/Form.js">
+          <metrics statements="5" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="6" count="0" type="stmt"/>
+          <line num="8" count="0" type="stmt"/>
+          <line num="61" count="2" type="stmt"/>
+          <line num="66" count="2" type="stmt"/>
+        </file>
+        <file name="Watcher.js" path="/Users/romanhome/Documents/GitHub/basic-electron-react-boilerplate/client/components/Watcher.js">
+          <metrics statements="7" coveredstatements="2" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="0"/>
+          <line num="9" count="0" type="stmt"/>
+          <line num="10" count="0" type="stmt"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="18" count="0" type="stmt"/>
+          <line num="47" count="2" type="stmt"/>
+          <line num="54" count="2" type="stmt"/>
+          <line num="66" count="0" type="stmt"/>
+        </file>
+      </package>
+    </metrics>
+  </project>
+</coverage>

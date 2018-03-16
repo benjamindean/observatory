@@ -1,0 +1,69 @@
+{
+	"name": "observatory",
+	"description": "Watch for web content changes",
+	"version": "1.0.0",
+	"author": "Benjamin Dean",
+	"homepage": "https://github.com/benjamindean/observatory",
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:benjamindean/observatory.git"
+	},
+	"license": "MIT",
+	"main": "main.js",
+	"scripts": {
+		"test": "jest",
+		"coverage": "npm test -- --coverage && open ./coverage/lcov-report/index.html",
+		"start:dev": "npm run parcel:dev & NODE_ENV=dev electron .",
+		"start:prod": "npm run parcel:prod && electron .",
+		"parcel:dev": "parcel client/index.html",
+		"parcel:prod": "parcel build client/index.html --public-url ./ --target \"electron\"",
+		"package": "npm run parcel:prod && electron-packager ./ --out=./builds",
+		"npm-check-packages": "npx npm-check --ignore node-sass --ignore husky"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": ["test", "parcel:prod", "npm-check-packages"]
+		}
+	},
+	"jest": {
+		"coveragePathIgnorePatterns": ["/node_modules/", "/test/"],
+		"moduleFileExtensions": ["js"],
+		"moduleNameMapper": {
+			"\\.(css|scss)$": "<rootDir>/test/__mocks__/styles.js"
+		}
+	},
+	"devDependencies": {
+		"babel-core": "^6.26.0",
+		"babel-eslint": "^8.2.2",
+		"babel-preset-env": "^1.6.1",
+		"babel-preset-react": "^6.24.1",
+		"electron": "^1.8.3",
+		"electron-packager": "^11.1.0",
+		"eslint": "^4.18.2",
+		"eslint-config-canonical": "^9.3.2",
+		"husky": "^0.15.0-rc.9",
+		"jest": "^23.0.0-alpha.0",
+		"node-sass": "^4.8.1",
+		"npm-check": "^5.5.2",
+		"parcel-bundler": "^1.6.2"
+	},
+	"dependencies": {
+		"@koa/cors": "2",
+		"babel-polyfill": "^6.26.0",
+		"bulma": "^0.6.2",
+		"koa": "^2.5.0",
+		"koa-bodyparser": "^4.2.0",
+		"koa-router": "^7.4.0",
+		"koa-validate": "^1.0.7",
+		"lodash": "^4.17.5",
+		"pouchdb": "^6.4.3",
+		"prop-types": "^15.6.1",
+		"react": "^16.2.0",
+		"react-dom": "^16.2.0",
+		"react-redux": "^5.0.7",
+		"redux": "^3.7.2",
+		"redux-form": "^7.3.0",
+		"redux-thunk": "^2.2.0",
+		"winston": "^2.4.1"
+	}
+}
