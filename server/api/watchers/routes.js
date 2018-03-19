@@ -10,6 +10,10 @@ routes.get('/', controller.list);
 
 routes.get('/:id', controller.get);
 
+routes.get('/observe/:id', controller.observe);
+
+routes.get('/acknowledge/:id', controller.acknowledge);
+
 routes.post('/', validation.add, controller.add);
 
 routes.delete('/:id/:rev', controller.delete);

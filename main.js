@@ -1,10 +1,24 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, Tray } = require('electron');
 const path = require('path');
 const url = require('url');
 const server = require('./server');
 const isDev = process.env.NODE_ENV === 'dev';
 
 let mainWindow;
+let tray;
+
+function createTray() {
+	const contextMenu = Menu.buildFromTemplate([
+		{ label: 'Item1', type: 'radio' },
+		{ label: 'Item2', type: 'radio' },
+		{ label: 'Item3', type: 'radio', checked: true },
+		{ label: 'Item4', type: 'radio' }
+	]);
+
+	tray = new Tray(__dirname + '/client/assets/icons/16x16.png');
+	tray.setToolTip(app.getName());
+	tray.setContextMenu(contextMenu);
+}
 
 function createMenu() {
 	const template = [
@@ -43,7 +57,8 @@ function createWindow() {
 	mainWindow = new BrowserWindow({
 		width: 1024,
 		height: 768,
-		show: false
+		show: false,
+		icon: __dirname + '/client/assets/icons/256x256.png'
 	});
 
 	let indexPath = url.format({
@@ -70,6 +85,7 @@ function createWindow() {
 
 app.on('ready', async () => {
 	createWindow();
+	// createTray();
 	createMenu();
 });
 

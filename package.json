@@ -1,5 +1,6 @@
 {
 	"name": "observatory",
+	"productName": "Observatory",
 	"description": "Watch for web content changes",
 	"version": "1.0.0",
 	"author": "Benjamin Dean",
@@ -12,17 +13,19 @@
 	"main": "main.js",
 	"scripts": {
 		"test": "jest",
+		"lint": "npx eslint client && npx eslint server",
 		"coverage": "npm test -- --coverage && open ./coverage/lcov-report/index.html",
 		"start:dev": "npm run parcel:dev & NODE_ENV=dev electron .",
 		"start:prod": "npm run parcel:prod && electron .",
 		"parcel:dev": "parcel client/index.html",
 		"parcel:prod": "parcel build client/index.html --public-url ./ --target \"electron\"",
-		"package": "npm run parcel:prod && electron-packager ./ --out=./builds",
+		"package": "npm run parcel:prod && electron-packager ./ --out=./builds --overwrite",
 		"npm-check-packages": "npx npm-check --ignore node-sass --ignore husky"
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": ["test", "parcel:prod", "npm-check-packages"]
+			"pre-commit":
+				"npm run lint && npm test && npm run parcel:prod && npm run npm-check-packages"
 		}
 	},
 	"jest": {
@@ -37,12 +40,12 @@
 		"babel-eslint": "^8.2.2",
 		"babel-preset-env": "^1.6.1",
 		"babel-preset-react": "^6.24.1",
-		"electron": "^1.8.3",
+		"electron": "^1.8.4",
 		"electron-packager": "^11.1.0",
-		"eslint": "^4.18.2",
+		"eslint": "^4.19.0",
 		"eslint-config-canonical": "^9.3.2",
 		"husky": "^0.15.0-rc.9",
-		"jest": "^23.0.0-alpha.0",
+		"jest": "^22.4.2",
 		"node-sass": "^4.8.1",
 		"npm-check": "^5.5.2",
 		"parcel-bundler": "^1.6.2"
