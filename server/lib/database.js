@@ -5,4 +5,5 @@ const Store = PouchDb.defaults({
 	prefix: `${app.getPath('userData')}/`
 });
 
-module.exports = new Store('watchers');
+exports.dbWatchers = new Store('watchers');
+exports.dbSettings = new Store('settings');

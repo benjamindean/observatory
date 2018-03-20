@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as WatcherActions from '../actions/watcher';
+import * as SettingsActions from '../actions/settings';
 import Watcher from './Watcher';
 import Form from './Form';
 
@@ -104,14 +105,16 @@ App.propTypes = {
 
 function mapStateToProps (state) {
 	return {
-		watchers: state.watchers
+		watchers: state.watchers,
+		settings: state.settings
 	};
 }
 
 function mapDispatchToProps (dispatch) {
 	return {
 		actions: {
-			watcher: bindActionCreators(WatcherActions, dispatch)
+			watcher: bindActionCreators(WatcherActions, dispatch),
+			settings: bindActionCreators(SettingsActions, dispatch)
 		}
 	};
 }

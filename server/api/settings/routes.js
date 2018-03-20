@@ -2,18 +2,16 @@ const Router = require('koa-router');
 const controller = require('./controller');
 
 const routes = new Router({
-	prefix: '/watchers'
+	prefix: '/settings'
 });
 
 routes.get('/', controller.list);
 
 routes.get('/:id', controller.get);
 
-routes.get('/observe/:id', controller.observe);
-
-routes.get('/acknowledge/:id', controller.acknowledge);
-
 routes.post('/', controller.add);
+
+routes.post('/:id', controller.update);
 
 routes.delete('/:id/:rev', controller.delete);
 

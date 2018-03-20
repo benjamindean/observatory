@@ -6,7 +6,7 @@ class FormField extends React.PureComponent {
 	render () {
 		return (
 			<div className='field'>
-				<p className='control'>
+				<div className='control'>
 					<Field
 						className='input'
 						component='input'
@@ -14,7 +14,7 @@ class FormField extends React.PureComponent {
 						placeholder={this.props.placeholder}
 						type={this.props.type}
 					/>
-				</p>
+				</div>
 			</div>
 		);
 	}
