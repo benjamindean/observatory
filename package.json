@@ -49,7 +49,7 @@
 		"eslint": "^4.19.0",
 		"eslint-config-canonical": "^9.3.2",
 		"husky": "^0.15.0-rc.9",
-		"jest": "^22.4.2",
+		"jest": "^22.4.3",
 		"node-sass": "^4.8.1",
 		"npm-check": "^5.5.2",
 		"parcel-bundler": "^1.6.2"

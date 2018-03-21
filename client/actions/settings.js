@@ -3,8 +3,8 @@ export const REMOVE_SETTING = 'REMOVE_SETTING';
 export const LIST_SETTINGS = 'LIST_SETTINGS';
 export const UPDATE_SETTING = 'UPDATE_SETTING';
 
-export function list() {
-	return async function(dispatch) {
+export function list () {
+	return async (dispatch) => {
 		const response = await fetch('http://localhost:3000/settings');
 		const settings = await response.json();
 
@@ -15,8 +15,8 @@ export function list() {
 	};
 }
 
-export function add(setting) {
-	return async function(dispatch) {
+export function add (setting) {
+	return async (dispatch) => {
 		const response = await fetch('http://localhost:3000/settings', {
 			method: 'POST',
 			mode: 'cors',
@@ -34,8 +34,8 @@ export function add(setting) {
 	};
 }
 
-export function update(id, setting) {
-	return async function(dispatch) {
+export function update (id, setting) {
+	return async (dispatch) => {
 		const response = await fetch(`http://localhost:3000/watchers/settings/${id}`, {
 			method: 'POST',
 			mode: 'cors',
@@ -44,24 +44,24 @@ export function update(id, setting) {
 				'content-type': 'application/json'
 			}
 		});
-		const setting = await response.json();
+		const updatedSetting = await response.json();
 
 		return dispatch({
 			type: UPDATE_SETTING,
-			setting
+			updatedSetting
 		});
 	};
 }
 
-export function remove(id, rev) {
-	return async function(dispatch) {
+export function remove (id, rev) {
+	return async (dispatch) => {
 		await fetch(`http://localhost:3000/settings/${id}/${rev}`, {
 			method: 'DELETE',
 			mode: 'cors'
 		});
 
 		return dispatch({
-			type: REMOVE_WATCHER,
+			type: REMOVE_SETTING,
 			watcherId: id
 		});
 	};

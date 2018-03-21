@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import validate from 'validate.js';
 
 const constraints = {
@@ -24,7 +23,7 @@ const constraints = {
 	}
 };
 
-const validation = values => {
+const validation = (values) => {
 	return validate(values, constraints);
 };
 

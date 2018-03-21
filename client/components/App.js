@@ -22,6 +22,7 @@ class App extends React.Component {
 
 	async componentWillMount () {
 		await this.props.actions.watcher.list();
+		await this.props.actions.settings.list();
 
 		this.observeWatchers();
 		this.attachInterval();
@@ -95,11 +96,13 @@ class App extends React.Component {
 }
 
 App.defaultProps = {
-	watchers: []
+	watchers: [],
+	settings: []
 };
 
 App.propTypes = {
 	watchers: PropTypes.array,
+	settings: PropTypes.array,
 	actions: PropTypes.object.isRequired
 };
 

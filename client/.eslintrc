@@ -22,6 +22,7 @@
 		"react/sort-prop-types": 0,
 		"import/no-unassigned-import": 0,
 		"import/no-namespace": 0,
+		"import/max-dependencies": 0,
 		"babel/object-curly-spacing": [2, "always"]
 	}
 }

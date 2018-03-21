@@ -6,7 +6,7 @@ export const OBSERVE_WATCHER = 'OBSERVE_WATCHER';
 export const ACKNOWLEDGE = 'ACKNOWLEDGE';
 
 export function list () {
-	return async function (dispatch) {
+	return async (dispatch) => {
 		const response = await fetch('http://localhost:3000/watchers');
 		const watchers = await response.json();
 
@@ -18,7 +18,7 @@ export function list () {
 }
 
 export function add (watcher) {
-	return async function (dispatch) {
+	return async (dispatch) => {
 		const response = await fetch('http://localhost:3000/watchers/', {
 			method: 'POST',
 			mode: 'cors',
@@ -37,7 +37,7 @@ export function add (watcher) {
 }
 
 export function observe (id) {
-	return async function (dispatch) {
+	return async (dispatch) => {
 		const response = await fetch(`http://localhost:3000/watchers/observe/${id}`, {
 			method: 'GET',
 			mode: 'cors'
@@ -52,7 +52,7 @@ export function observe (id) {
 }
 
 export function acknowledge (id) {
-	return async function (dispatch) {
+	return async (dispatch) => {
 		const response = await fetch(`http://localhost:3000/watchers/acknowledge/${id}`, {
 			method: 'GET',
 			mode: 'cors'
@@ -67,7 +67,7 @@ export function acknowledge (id) {
 }
 
 export function remove (id, rev) {
-	return async function (dispatch) {
+	return async (dispatch) => {
 		await fetch(`http://localhost:3000/watchers/${id}/${rev}`, {
 			method: 'DELETE',
 			mode: 'cors'
