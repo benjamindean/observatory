@@ -17,7 +17,6 @@ const RenderField = ({ input, placeholder, type, meta: { touched, error } }) => 
 
 RenderField.propTypes = {
 	input: PropTypes.object.isRequired,
-	name: PropTypes.string.isRequired,
 	placeholder: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
 	meta: PropTypes.object.isRequired

@@ -11,6 +11,10 @@ import * as SettingsActions from '../actions/settings';
 import Watcher from './Watcher';
 import Form from './Form';
 
+const { ipcRenderer } = window.require('electron');
+
+ipcRenderer.send('started', 1);
+
 class App extends React.Component {
 	constructor (props) {
 		super(props);
