@@ -15,6 +15,8 @@ routes.get('/acknowledge/:id', controller.acknowledge);
 
 routes.post('/', controller.add);
 
+routes.post('/pick', controller.pickElement);
+
 routes.delete('/:id/:rev', controller.delete);
 
 module.exports = routes;

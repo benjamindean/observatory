@@ -57,6 +57,10 @@ class WatchersController {
 
 		ctx.body = await dbWatchers.get(ctx.params.id);
 	}
+
+	async pickElement(ctx) {
+		selector.pickElement(ctx.request.body.url);
+	}
 }
 
 module.exports = new WatchersController();

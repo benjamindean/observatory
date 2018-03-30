@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import * as WatcherActions from '../actions/watcher';
 import * as SettingsActions from '../actions/settings';
 import Watcher from './Watcher';
-import Form from './Form';
+import Form from './Form/Form';
 
 const { ipcRenderer } = window.require('electron');
 

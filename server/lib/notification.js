@@ -7,7 +7,11 @@ module.exports = item => {
 
 	const notification = new Notification({
 		title: `UPDATED: "${item.title}"`,
-		subtitle: `From "${item.oldValue}" to "${item.newValue}"`
+		subtitle: `From "${item.oldValue}" to "${item.newValue}"`,
+		actions: [{
+			type: 'button',
+			text: 'Ack'
+		}]
 	});
 
 	notification.show();
