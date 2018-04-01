@@ -2,15 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const RenderField = ({ input, placeholder, type, meta: { touched, error } }) => {
-	return <div className='field'>
-		<div className='control'>
-			<input
-				className={touched && error ? 'input is-danger' : 'input'}
-				{...input}
-				placeholder={placeholder}
-				type={type}
-			/>
-		</div>
+	return <div>
+		<input
+			className={touched && error ? 'pt-input pt-intent-danger' : 'pt-input'}
+			{...input}
+			placeholder={placeholder}
+			type={type}
+		/>
 		{touched && error && <p className='help is-danger'>{error}</p>}
 	</div>;
 };

@@ -4,12 +4,27 @@ import '../assets/css/App.scss';
 import * as _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+	Navbar,
+	Alignment,
+	NavbarHeading,
+	NavbarGroup,
+	NavbarDivider,
+	Button,
+	Menu,
+	MenuItem,
+	Position,
+	Popover,
+	FocusStyleManager
+} from '@blueprintjs/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as WatcherActions from '../actions/watcher';
 import * as SettingsActions from '../actions/settings';
 import Watcher from './Watcher';
 import Form from './Form/Form';
+
+FocusStyleManager.onlyShowFocusOnTabs();
 
 const { ipcRenderer } = window.require('electron');
 
@@ -33,7 +48,7 @@ class App extends React.Component {
 	}
 
 	attachInterval () {
-		const timeout = localStorage.getItem('interval') || 60;
+		const timeout = 60;
 
 		this.interval = setInterval(() => {
 			this.observeWatchers();
@@ -79,21 +94,34 @@ class App extends React.Component {
 
 		return (
 			<div>
-				<div className='control'>
-					<div className='select'>
-						<select
-							onChange={this.handleOnSelectInterval}
-							value={localStorage.getItem('interval') || 60}
+				<Navbar className='row'>
+					<NavbarGroup align={Alignment.LEFT}>
+						<NavbarHeading>Observatory</NavbarHeading>
+						<NavbarDivider />
+						<Popover
+							content={
+								<Menu>
+									<MenuItem
+										onClick={this.handleOnSelectInterval}
+										text='1 minute'
+									/>
+									<MenuItem
+										onClick={this.handleOnSelectInterval}
+										text='5 minutes'
+									/>
+								</Menu>
+							}
+							position={Position.BOTTOM}
 						>
-							<option value='60'>1 Minute</option>
-							<option value='300'>5 Minutes</option>
-							<option value='3600'>1 Hour</option>
-							<option value='10800'>3 Hours</option>
-						</select>
-					</div>
-				</div>
+							<Button icon='time' text='Interval' />
+						</Popover>
+					</NavbarGroup>
+				</Navbar>
 				<hr />
-				{watchersList} <Form onSubmit={this.handleAddWatcher} />
+				{watchersList}
+				<div className='row'>
+					<Form onSubmit={this.handleAddWatcher} />
+				</div>
 			</div>
 		);
 	}

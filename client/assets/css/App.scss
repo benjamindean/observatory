@@ -1,44 +1,11 @@
-$card-shadow: 2px 3px 15px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+@import "../../../node_modules/@blueprintjs/core/lib/css/blueprint.css";
+@import "../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css";
+@import '../../../node_modules/flexboxgrid/css/flexboxgrid.min.css';
 
-@import '../../../node_modules/bulma/bulma';
-
-h1 {
+body {
 	font-family: helvetica;
-	font-weight: 200;
 }
 
-.section {
-	padding: 1.5rem 1.5rem;
+.watcher-card {
+	margin-bottom: 2rem;
 }
-
-.card {
-	border-radius: 5px;
-	margin-bottom: 20px;
-
-	.card-header {
-		.delete {
-			align-self: center;
-			margin: 15px;
-		}
-	}
-
-	a {
-		word-break: break-all;
-	}
-}
-
-// .is-info {
-//   @extend .button.is-info;
-// }
-
-// .is-danger {
-//   @extend .button.is-danger;
-// }
-
-// .is-loading {
-//   @extend .button.is-loading;
-// }
-
-// .is-loading:after {
-//   @extend .button.is-loading:after;
-// }

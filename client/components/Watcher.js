@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Button, Card, Elevation } from '@blueprintjs/core';
 import * as WatcherActions from '../actions/watcher';
 
 class Watcher extends React.Component {
@@ -35,64 +36,66 @@ class Watcher extends React.Component {
 
 	render () {
 		return (
-			<div className='card'>
-				<header className='card-header'>
-					<p className='card-header-title'>{this.props.title}</p>
-					<button className='delete' onClick={this.handleDelete} />
-				</header>
-				<div className='card-content'>
-					<div className='content'>
-						<p>
-							<small>
-								<strong>Meta</strong>
-							</small>
-							<br />
-							<time>
-								<small>{'Updated: ' + this.props.checkTime}</small>
-							</time>
-						</p>
-						<p>
-							<small>
-								<strong>URL</strong>
-							</small>
-							<br />
-							<small>
-								<a href={this.props.url} target='_blank'>
-									{this.props.url}
-								</a>
-							</small>
-						</p>
-						<p>
-							<small>
-								<strong>Selector</strong>
-							</small>
-							<br />
-							<small>{this.props.element}</small>
-						</p>
-						<p>
-							<small>
-								<strong>Content</strong>
-							</small>
-							<br />
-							<br />
-							{this.props.oldValue &&
-								<div className='notification'>{this.props.oldValue}</div>
-							}
-							{this.props.newValue &&
-								<div className='notification is-primary'>
-									<button className='delete' onClick={this.handleAcknowledge} />
-									{this.props.newValue}
-								</div>
-							}
-						</p>
+			<Card className='row watcher-card' elevation={Elevation.TWO} interactive={false}>
+				<div className='col-xs-10'>
+					<h5>{this.props.title}</h5>
+					<p>
+						<small>
+							<strong>Meta</strong>
+						</small>
+						<br />
+						<time>
+							<small>{'Updated: ' + this.props.checkTime}</small>
+						</time>
+					</p>
+					<p>
+						<small>
+							<strong>URL</strong>
+						</small>
+						<br />
+						<small>
+							<a href={this.props.url} target='_blank'>
+								{this.props.url}
+							</a>
+						</small>
+					</p>
+					<p>
+						<small>
+							<strong>Selector</strong>
+						</small>
+						<br />
+						<small>{this.props.element}</small>
+					</p>
+					<p>
+						<small>
+							<strong>Content</strong>
+						</small>
+						<br />
+						<br />
+						{this.props.oldValue &&
+							<div className='notification'>{this.props.oldValue}</div>
+						}
+						{this.props.newValue &&
+							<div className='notification is-primary'>
+								{this.props.newValue}
+							</div>
+						}
+					</p>
+				</div>
+				<div className='col-xs-2'>
+					{this.props.newValue &&
+						<div className='row'>
+							<Button icon='tick' onClick={this.handleAcknowledge} text='Ack' />
+						</div>
+					}
+					<div className='row'>
+						<Button icon='refresh' onClick={this.handleRefresh} text='Refresh' />
+					</div>
+					<div className='row'>
+						<Button icon='delete' onClick={this.handleDelete} text='Delete' />
 					</div>
 				</div>
-				<footer className='card-footer'>
-					<a className='card-footer-item' onClick={this.handleRefresh}>
-						Refresh
-					</a>
-				</footer>
-			</div>
+			</Card>
 		);
 	}
 }

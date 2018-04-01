@@ -38,16 +38,20 @@ export function add (watcher) {
 
 export function observe (id) {
 	return async (dispatch) => {
-		const response = await fetch(`http://localhost:3000/watchers/observe/${id}`, {
-			method: 'GET',
-			mode: 'cors'
-		});
-		const watcher = await response.json();
+		try {
+			const response = await fetch(`http://localhost:3000/watchers/observe/${id}`, {
+				method: 'GET',
+				mode: 'cors'
+			});
+			const watcher = await response.json();
 
-		return dispatch({
-			type: UPDATE_WATCHER,
-			watcher
-		});
+			return dispatch({
+				type: UPDATE_WATCHER,
+				watcher
+			});
+		} catch (error) {
+			throw error;
+		}
 	};
 }
 

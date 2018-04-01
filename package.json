@@ -59,9 +59,10 @@
 		"parcel-bundler": "^1.7.0"
 	},
 	"dependencies": {
+		"@blueprintjs/core": "^2.0.1",
 		"@koa/cors": "2",
 		"babel-polyfill": "^6.26.0",
-		"bulma": "^0.6.2",
+		"flexboxgrid": "^6.3.1",
 		"koa": "^2.5.0",
 		"koa-bodyparser": "^4.2.0",
 		"koa-router": "^7.4.0",
@@ -72,6 +73,7 @@
 		"react": "^16.3.0",
 		"react-dom": "^16.3.0",
 		"react-redux": "^5.0.7",
+		"react-transition-group": "^2.3.0",
 		"redux": "^3.7.2",
 		"redux-form": "^7.3.0",
 		"redux-thunk": "^2.2.0",
