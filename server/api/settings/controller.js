@@ -19,35 +19,29 @@ class SettingsController {
 	}
 
 	async get(ctx) {
-		ctx.body = await dbSettings.get(ctx.params.id);
+		ctx.body = await dbSettings.get(ctx.params.key);
 	}
 
-	async add(ctx) {
-		const { key, val } = ctx.request.body;
-		const addedWatcher = await dbSettings.post({
-			key,
-			val
-		});
+	async set(ctx) {
+		const { key, value } = ctx.request.body;
 
-		ctx.body = await dbSettings.get(addedWatcher.id);
-	}
+		try {
+			const setting = await dbSettings.get(key);
 
-	async update(ctx) {
-		const setting = await dbSettings.get(ctx.params.id);
-		const updatedSetting = _.cloneDeep(setting);
+			await dbSettings.put(
+				Object.assign({}, setting, {
+					_id: key,
+					value
+				})
+			);
+		} catch (error) {
+			await dbSettings.put({
+				_id: key,
+				value
+			});
+		}
 
-		updatedSetting.val = ctx.body.val;
-
-		await dbSettings.put(Object.assign({}, { _id: setting._id }, updatedSetting));
-
-		ctx.body = await dbSettings.get(ctx.params.id);
-	}
-
-	async delete(ctx) {
-		ctx.body = await dbSettings.remove({
-			_id: ctx.params.id,
-			_rev: ctx.params.rev
-		});
+		ctx.body = await dbSettings.get(key);
 	}
 }
 

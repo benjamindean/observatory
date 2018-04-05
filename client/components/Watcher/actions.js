@@ -4,6 +4,8 @@ export const LIST_WATCHERS = 'LIST_WATCHERS';
 export const UPDATE_WATCHER = 'UPDATE_WATCHER';
 export const OBSERVE_WATCHER = 'OBSERVE_WATCHER';
 export const ACKNOWLEDGE = 'ACKNOWLEDGE';
+export const TOGGLE_LOADING_STATE = 'TOGGLE_LOADING_STATE';
+export const OBSERVE_ALL_WATCHERS = 'OBSERVE_ALL_WATCHERS';
 
 export function list () {
 	return async (dispatch) => {
@@ -81,5 +83,12 @@ export function remove (id, rev) {
 			type: REMOVE_WATCHER,
 			watcherId: id
 		});
+	};
+}
+
+export function toggleLoadingState (id) {
+	return {
+		type: TOGGLE_LOADING_STATE,
+		watcherId: id
 	};
 }

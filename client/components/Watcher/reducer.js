@@ -1,6 +1,12 @@
-import { ADD_WATCHER, REMOVE_WATCHER, LIST_WATCHERS, UPDATE_WATCHER } from '../actions/watcher';
+import {
+	ADD_WATCHER,
+	REMOVE_WATCHER,
+	LIST_WATCHERS,
+	UPDATE_WATCHER,
+	TOGGLE_LOADING_STATE
+} from './actions';
 
-export default function watcher (state = [], action) {
+export default function reducer (state = [], action) {
 	switch (action.type) {
 	case LIST_WATCHERS:
 		return action.watchers;
@@ -14,6 +20,16 @@ export default function watcher (state = [], action) {
 		return state.map((watcherItem) => {
 			if (watcherItem._id === action.watcher._id) {
 				return Object.assign({}, watcherItem, action.watcher);
+			}
+
+			return watcherItem;
+		});
+	case TOGGLE_LOADING_STATE:
+		return state.map((watcherItem) => {
+			if (watcherItem._id === action.watcherId) {
+				return Object.assign({}, watcherItem, {
+					isLoading: !watcherItem.isLoading
+				});
 			}
 
 			return watcherItem;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Card, Elevation } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
 import { reduxForm, Field } from 'redux-form';
 import RenderField from './RenderField';
 import validation from './validation';
@@ -11,19 +11,12 @@ class AddForm extends React.PureComponent {
 		const buttonClass = submitting ? 'pt-intent-success' : 'pt-intent-success';
 
 		return (
-			<Card elevation={Elevation.TWO} interactive={true}>
-				<form onSubmit={handleSubmit}>
-					<Field component={RenderField} name='title' placeholder='Title' type='text' />
-					<Field component={RenderField} name='url' placeholder='URL' type='text' />
-					<Field
-						component={RenderField}
-						name='element'
-						placeholder='Element'
-						type='text'
-					/>
-					<Button className={buttonClass} text='Add' type='submit' />
-				</form>
-			</Card>
+			<form className='add-form' onSubmit={handleSubmit}>
+				<Field component={RenderField} name='title' placeholder='Title' type='text' />
+				<Field component={RenderField} name='url' placeholder='URL' type='text' />
+				<Field component={RenderField} name='element' placeholder='Element' type='text' />
+				<Button className={buttonClass} loading={submitting} text='Add' type='submit' />
+			</form>
 		);
 	}
 }

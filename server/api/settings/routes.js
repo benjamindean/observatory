@@ -7,12 +7,8 @@ const routes = new Router({
 
 routes.get('/', controller.list);
 
-routes.get('/:id', controller.get);
+routes.get('/:key', controller.get);
 
-routes.post('/', controller.add);
-
-routes.post('/:id', controller.update);
-
-routes.delete('/:id/:rev', controller.delete);
+routes.post('/', controller.set);
 
 module.exports = routes;

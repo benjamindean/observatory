@@ -1,11 +1,81 @@
-@import "../../../node_modules/@blueprintjs/core/lib/css/blueprint.css";
-@import "../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css";
-@import '../../../node_modules/flexboxgrid/css/flexboxgrid.min.css';
+@import '../../../node_modules/normalize.css/normalize.css';
+@import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
+@import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 
-body {
-	font-family: helvetica;
+html, body, #root {
+	height: 100%;
+	min-height: 100%;
+}
+
+.main {
+	height: 100%;
+	&.pt-dark {
+		background-color: #394b59;
+	}
+}
+
+.fill {
+	width: 100%;
 }
 
 .watcher-card {
 	margin-bottom: 2rem;
+	border-radius: 0.5rem;
+	&-heading {
+		display: flex;
+		justify-content: space-between;
+		// &-title {
+		// 	align-items: flex-start;
+		// }
+		&-delete {
+			display: flex;
+		}
+		button {
+			height: 30px;
+		}
+	}
+	&-content {
+		display: flex;
+		align-items: center;
+		margin-top: 1rem;
+	}
+	a {
+		word-break: break-all;
+	}
+}
+
+.pt-popover-content {
+	max-width: 350px;
+	padding: 10px;
+}
+
+.add-form {
+	padding: 1rem;
+	&-input {
+		margin-bottom: 1rem;
+		input {
+			width: 100%;
+		}
+	}
+}
+
+.pt-dialog {
+	padding: 0;
+	border-radius: 0.5rem;
+}
+
+button {
+	box-shadow: none !important;
+	background-image: none !important;
+}
+
+.navbar {
+	margin-bottom: 1rem;
+	button {
+		margin-right: 1rem;
+	}
+}
+
+.watchers-list {
+	padding: 0 1rem;
 }
