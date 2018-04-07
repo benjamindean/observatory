@@ -2,7 +2,9 @@
 @import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
 @import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 
-html, body, #root {
+html,
+body,
+#root {
 	height: 100%;
 	min-height: 100%;
 }
@@ -24,20 +26,30 @@ html, body, #root {
 	&-heading {
 		display: flex;
 		justify-content: space-between;
-		// &-title {
-		// 	align-items: flex-start;
-		// }
+		margin-bottom: 1rem;
+		&-title {
+			display: flex;
+			align-items: center;
+			width: 80%;
+			h5 {
+				margin: 0;
+			}
+		}
 		&-delete {
 			display: flex;
 		}
 		button {
 			height: 30px;
+			border-radius: 1rem;
 		}
 	}
 	&-content {
 		display: flex;
 		align-items: center;
 		margin-top: 1rem;
+		button {
+			border-radius: 1rem;
+		}
 	}
 	a {
 		word-break: break-all;
@@ -78,4 +90,10 @@ button {
 
 .watchers-list {
 	padding: 0 1rem;
+}
+
+.pt-popover-content {
+	.pt-control:last-child {
+		margin-bottom: 0;
+	}
 }

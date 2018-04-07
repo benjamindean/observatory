@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const RenderField = ({ input, placeholder, type, meta: { touched, error } }) => {
+const RenderField = ({ input, placeholder, label, type, meta: { touched, error } }) => {
 	return (
 		<div className='add-form-input'>
+			<label>{label}</label>
 			<input
 				className={touched && error ? 'pt-input pt-intent-danger' : 'pt-input'}
 				{...input}
@@ -17,6 +18,7 @@ const RenderField = ({ input, placeholder, type, meta: { touched, error } }) => 
 
 RenderField.propTypes = {
 	input: PropTypes.object.isRequired,
+	label: PropTypes.string.isRequired,
 	placeholder: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired,
 	meta: PropTypes.object.isRequired

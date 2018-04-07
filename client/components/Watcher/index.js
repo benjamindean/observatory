@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Card, Elevation, Popover, Intent } from '@blueprintjs/core';
+import { Button, Card, Elevation, Popover, Intent, Tooltip, Position } from '@blueprintjs/core';
 import * as WatcherActions from './actions';
-import Label from './Label';
 import Content from './Content';
+
+const { shell } = window.require('electron');
 
 class Watcher extends React.Component {
 	constructor (props) {
@@ -13,6 +14,7 @@ class Watcher extends React.Component {
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleAcknowledge = this.handleAcknowledge.bind(this);
 		this.handleRefresh = this.handleRefresh.bind(this);
+		this.handleOpenUrl = this.handleOpenUrl.bind(this);
 	}
 
 	/**
@@ -36,12 +38,27 @@ class Watcher extends React.Component {
 		await this.props.actions.watcher.acknowledge(this.props.id);
 	}
 
+	handleOpenUrl () {
+		shell.openExternal(this.props.url);
+	}
+
 	render () {
 		return (
 			<Card className='watcher-card' elevation={Elevation.THREE} interactive={false}>
 				<div className='watcher-card-heading'>
 					<div className='watcher-card-heading-title'>
 						<h5>{this.props.title}</h5>
+						&nbsp;
+						<Button
+							className='pt-minimal'
+							icon='document-open'
+							intent={Intent.NONE}
+							onClick={this.handleOpenUrl}
+						/>
+						&nbsp;
+						<Tooltip content={this.props.element} position={Position.BOTTOM}>
+							<Button className='pt-minimal' icon='code' />
+						</Tooltip>
 					</div>
 					<div className='watcher-card-heading-delete'>
 						<Button
@@ -62,20 +79,9 @@ class Watcher extends React.Component {
 						</Popover>
 					</div>
 				</div>
-				<Label
-					content={'Updated: ' + this.props.checkTime}
-					isLoading={this.props.isLoading}
-					title='Meta'
-				/>
-				<Label
-					content={
-						<a href={this.props.url} target='_blank'>
-							{this.props.url}
-						</a>
-					}
-					title='URL'
-				/>
-				<Label content={this.props.element} title='Selector' />
+				<small>
+					Updated: <span className={this.props.isLoading ? 'pt-skeleton' : ''}>{this.props.checkTime}</span>
+				</small>
 				<Content intent={Intent.NONE} value={this.props.oldValue} />
 				<Content
 					icon={

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as _ from 'lodash';
+import Promise from 'bluebird';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Radio, RadioGroup } from '@blueprintjs/core';
@@ -69,12 +70,16 @@ class IntervalHandler extends React.Component {
 	}
 
 	observeAllWatchers () {
-		if (!this.props.watchers) {
-			return;
-		}
+		return new Promise((resolve) => {
+			if (!this.props.watchers) {
+				resolve();
+			}
 
-		_.forEach(this.props.watchers, async (watcher) => {
-			await this.props.actions.watcher.observe(watcher._id);
+			_.forEach(this.props.watchers, async (watcher) => {
+				await this.props.actions.watcher.observe(watcher._id);
+			});
+
+			resolve();
 		});
 	}
 

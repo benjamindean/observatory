@@ -36,7 +36,10 @@ module.exports = async watcher => {
 
 		notifyRenderer(DONE_OBSERVING, watcher._id);
 	} catch (error) {
-		notifyRenderer(FAILED_OBSERVING, error);
+		notifyRenderer(
+			FAILED_OBSERVING,
+			`Failed to observe ${watcher.title} with error: ${error.message}`
+		);
 		notifyRenderer(DONE_OBSERVING, watcher._id);
 	}
 };

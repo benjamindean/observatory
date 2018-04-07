@@ -1,3 +1,5 @@
+import fetchResponse from '../../utils/fetchResponse';
+
 export const ADD_WATCHER = 'ADD_WATCHER';
 export const REMOVE_WATCHER = 'REMOVE_WATCHER';
 export const LIST_WATCHERS = 'LIST_WATCHERS';
@@ -9,8 +11,7 @@ export const OBSERVE_ALL_WATCHERS = 'OBSERVE_ALL_WATCHERS';
 
 export function list () {
 	return async (dispatch) => {
-		const response = await fetch('http://localhost:3000/watchers');
-		const watchers = await response.json();
+		const watchers = await fetchResponse('http://localhost:3000/watchers');
 
 		return dispatch({
 			type: LIST_WATCHERS,
@@ -21,15 +22,10 @@ export function list () {
 
 export function add (watcher) {
 	return async (dispatch) => {
-		const response = await fetch('http://localhost:3000/watchers/', {
+		const addedWatcher = await fetchResponse('http://localhost:3000/watchers', {
 			method: 'POST',
-			mode: 'cors',
-			body: JSON.stringify(watcher),
-			headers: {
-				'content-type': 'application/json'
-			}
+			body: JSON.stringify(watcher)
 		});
-		const addedWatcher = await response.json();
 
 		return dispatch({
 			type: ADD_WATCHER,
@@ -40,30 +36,22 @@ export function add (watcher) {
 
 export function observe (id) {
 	return async (dispatch) => {
-		try {
-			const response = await fetch(`http://localhost:3000/watchers/observe/${id}`, {
-				method: 'GET',
-				mode: 'cors'
-			});
-			const watcher = await response.json();
+		const watcher = await fetchResponse(`http://localhost:3000/watchers/observe/${id}`, {
+			method: 'GET'
+		});
 
-			return dispatch({
-				type: UPDATE_WATCHER,
-				watcher
-			});
-		} catch (error) {
-			throw error;
-		}
+		return dispatch({
+			type: UPDATE_WATCHER,
+			watcher
+		});
 	};
 }
 
 export function acknowledge (id) {
 	return async (dispatch) => {
-		const response = await fetch(`http://localhost:3000/watchers/acknowledge/${id}`, {
-			method: 'GET',
-			mode: 'cors'
+		const watcher = await fetchResponse(`http://localhost:3000/watchers/acknowledge/${id}`, {
+			method: 'GET'
 		});
-		const watcher = await response.json();
 
 		return dispatch({
 			type: UPDATE_WATCHER,
@@ -74,9 +62,8 @@ export function acknowledge (id) {
 
 export function remove (id, rev) {
 	return async (dispatch) => {
-		await fetch(`http://localhost:3000/watchers/${id}/${rev}`, {
-			method: 'DELETE',
-			mode: 'cors'
+		await fetchResponse(`http://localhost:3000/watchers/${id}/${rev}`, {
+			method: 'DELETE'
 		});
 
 		return dispatch({
