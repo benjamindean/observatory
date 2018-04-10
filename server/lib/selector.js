@@ -51,7 +51,14 @@ class Selector {
 
 	async getElement(webContents, element) {
 		return await webContents.executeJavaScript(
-			`document.querySelector(\'${element}\').innerHTML`
+			`
+			const observatoryElement = document.querySelector(\'${element}\');
+
+			if (observatoryElement) {
+				observatoryElement.innerHTML;
+			} else {
+				'No such element';
+			}`
 		);
 	}
 
@@ -69,6 +76,10 @@ class Selector {
 
 					const title = await this.getTitle(window.webContents);
 					const element = await this.getElement(window.webContents, watcher.element);
+
+					if (element === 'No such element') {
+						reject(new Error('No such element'));
+					}
 
 					if (watcher.oldValue && watcher.oldValue !== element) {
 						watcher.newValue = element;

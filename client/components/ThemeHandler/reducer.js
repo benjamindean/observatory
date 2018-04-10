@@ -4,7 +4,7 @@ export default function reducer (state = 'pt-light', action) {
 	switch (action.type) {
 	case SET_THEME:
 	case GET_THEME:
-		return action.theme;
+		return action.payload || state;
 	default:
 		return state;
 	}

@@ -8,10 +8,13 @@
  */
 module.exports = async (ctx, next) => {
 	try {
-		return await next();
+		await next();
 	} catch (error) {
+		ctx.status = 500;
 		ctx.body = {
-			error
+			error: {
+				message: error.message
+			}
 		};
 	}
 };

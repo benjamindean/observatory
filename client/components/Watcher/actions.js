@@ -1,4 +1,5 @@
-import fetchResponse from '../../utils/fetchResponse';
+import { RSAA } from 'redux-api-middleware';
+import getErrorAction from '../../utils/getErrorAction';
 
 export const ADD_WATCHER = 'ADD_WATCHER';
 export const REMOVE_WATCHER = 'REMOVE_WATCHER';
@@ -10,72 +11,138 @@ export const TOGGLE_LOADING_STATE = 'TOGGLE_LOADING_STATE';
 export const OBSERVE_ALL_WATCHERS = 'OBSERVE_ALL_WATCHERS';
 
 export function list () {
-	return async (dispatch) => {
-		const watchers = await fetchResponse('http://localhost:3000/watchers');
-
-		return dispatch({
-			type: LIST_WATCHERS,
-			watchers
-		});
+	return {
+		[RSAA]: {
+			endpoint: 'http://localhost:3000/watchers',
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json'
+			},
+			types: [
+				'REQUEST',
+				{
+					type: LIST_WATCHERS,
+					payload: async (action, state, res) => {
+						return await res.json();
+					}
+				},
+				getErrorAction('Failed to list watchers')
+			]
+		}
 	};
 }
 
 export function add (watcher) {
-	return async (dispatch) => {
-		const addedWatcher = await fetchResponse('http://localhost:3000/watchers', {
+	return {
+		[RSAA]: {
+			endpoint: 'http://localhost:3000/watchers',
 			method: 'POST',
-			body: JSON.stringify(watcher)
-		});
-
-		return dispatch({
-			type: ADD_WATCHER,
-			watcher: addedWatcher
-		});
+			body: JSON.stringify(watcher),
+			headers: {
+				'content-type': 'application/json'
+			},
+			types: [
+				'REQUEST',
+				{
+					type: ADD_WATCHER,
+					payload: async (action, state, res) => {
+						return await res.json();
+					}
+				},
+				getErrorAction('Failed to add watcher')
+			]
+		}
 	};
 }
 
 export function observe (id) {
-	return async (dispatch) => {
-		const watcher = await fetchResponse(`http://localhost:3000/watchers/observe/${id}`, {
-			method: 'GET'
-		});
+	return {
+		[RSAA]: {
+			endpoint: `http://localhost:3000/watchers/observe/${id}`,
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json'
+			},
+			types: [
+				{
+					type: TOGGLE_LOADING_STATE,
+					payload: {
+						id,
+						isLoading: true
+					}
+				},
+				{
+					type: UPDATE_WATCHER,
+					payload: async (action, state, res) => {
+						const watcher = await res.json();
 
-		return dispatch({
-			type: UPDATE_WATCHER,
-			watcher
-		});
+						return Object.assign(watcher, {
+							isLoading: false
+						});
+					}
+				},
+				getErrorAction(`Failed to observe watcher ${id}`, {
+					watcherId: id
+				})
+			]
+		}
 	};
 }
 
 export function acknowledge (id) {
-	return async (dispatch) => {
-		const watcher = await fetchResponse(`http://localhost:3000/watchers/acknowledge/${id}`, {
-			method: 'GET'
-		});
-
-		return dispatch({
-			type: UPDATE_WATCHER,
-			watcher
-		});
+	return {
+		[RSAA]: {
+			endpoint: `http://localhost:3000/watchers/acknowledge/${id}`,
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json'
+			},
+			types: [
+				{
+					type: TOGGLE_LOADING_STATE,
+					payload: {
+						id,
+						isLoading: true
+					}
+				},
+				{
+					type: UPDATE_WATCHER,
+					payload: async (action, state, res) => {
+						return await res.json();
+					}
+				},
+				getErrorAction(`Failed to acknowledge change for watcher ${id}`)
+			]
+		}
 	};
 }
 
 export function remove (id, rev) {
-	return async (dispatch) => {
-		await fetchResponse(`http://localhost:3000/watchers/${id}/${rev}`, {
-			method: 'DELETE'
-		});
-
-		return dispatch({
-			type: REMOVE_WATCHER,
-			watcherId: id
-		});
+	return {
+		[RSAA]: {
+			endpoint: `http://localhost:3000/watchers/${id}/${rev}`,
+			method: 'DELETE',
+			headers: {
+				'content-type': 'application/json'
+			},
+			types: [
+				'REQUEST',
+				{
+					type: REMOVE_WATCHER,
+					payload: id
+				},
+				getErrorAction(`Failed remove watcher ${id}`)
+			]
+		}
 	};
 }
 
-export function toggleLoadingState (id) {
+export function toggleLoadingState (id, isLoading = false) {
 	return {
 		type: TOGGLE_LOADING_STATE,
-		watcherId: id
+		payload: {
+			id,
+			isLoading
+		}
 	};
 }

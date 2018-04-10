@@ -18,7 +18,7 @@ class AddForm extends React.Component {
 
 	async handleAddWatcher (values) {
 		await this.props.actions.watcher.add(values);
-		this.props.actions.addForm.handleToggleAddForm();
+		this.props.actions.addForm.handleToggleAddForm(false);
 	}
 
 	render () {
@@ -29,7 +29,9 @@ class AddForm extends React.Component {
 			<Dialog
 				icon='plus'
 				isOpen={this.props.isOpened}
-				onClose={this.props.actions.addForm.handleToggleAddForm}
+				onClose={() => {
+					this.props.actions.addForm.handleToggleAddForm(false);
+				}}
 				title='Add new watcher'
 			>
 				<form className='add-form' onSubmit={handleSubmit(this.handleAddWatcher)}>

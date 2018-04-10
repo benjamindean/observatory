@@ -1,33 +1,29 @@
 import _ from 'lodash';
-import { FocusStyleManager, Intent } from '@blueprintjs/core';
+import { FocusStyleManager } from '@blueprintjs/core';
 import 'babel-polyfill';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Promise from 'bluebird';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { DONE_OBSERVING, START_OBSERVING, FAILED_OBSERVING } from '../../../server/lib/eventmap';
 import '../../assets/css/App.scss';
 import Form from '../Form';
 import TopBar from '../TopBar';
 import Watcher from '../Watcher';
 import AppToaster from '../Toaster';
 import * as WatcherActions from '../Watcher/actions';
-import * as ToasterActions from '../Toaster/actions';
-
-const { ipcRenderer } = window.require('electron');
+import EventReaction from '../EventReaction';
 
 class App extends React.Component {
 	constructor (props) {
 		super(props);
 
 		FocusStyleManager.onlyShowFocusOnTabs();
-		this.attachEvents = this.attachEvents.bind(this);
+
 		this.observeAllWatchers = this.observeAllWatchers.bind(this);
 	}
 
 	async componentWillMount () {
-		this.attachEvents();
 		await this.props.actions.watcher.list();
 		await this.observeAllWatchers();
 	}
@@ -43,23 +39,6 @@ class App extends React.Component {
 			});
 
 			resolve();
-		});
-	}
-
-	attachEvents () {
-		ipcRenderer.on(START_OBSERVING, (event, watcherId) => {
-			this.props.actions.watcher.toggleLoadingState(watcherId);
-		});
-
-		ipcRenderer.on(DONE_OBSERVING, (event, watcherId) => {
-			this.props.actions.watcher.toggleLoadingState(watcherId);
-		});
-
-		ipcRenderer.on(FAILED_OBSERVING, (event, message) => {
-			this.props.actions.toaster.add({
-				message,
-				intent: Intent.DANGER
-			});
 		});
 	}
 
@@ -83,6 +62,7 @@ class App extends React.Component {
 
 		return (
 			<div className={`main ${this.props.theme}`}>
+				<EventReaction />
 				<AppToaster />
 				<Form />
 				<TopBar />
@@ -112,8 +92,7 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
 	return {
 		actions: {
-			watcher: bindActionCreators(WatcherActions, dispatch),
-			toaster: bindActionCreators(ToasterActions, dispatch)
+			watcher: bindActionCreators(WatcherActions, dispatch)
 		}
 	};
 }

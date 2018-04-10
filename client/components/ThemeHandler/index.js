@@ -29,8 +29,6 @@ class ThemeHandler extends React.Component {
 
 	async componentWillMount () {
 		await this.props.actions.theme.get();
-		await this.props.actions.theme.set(this.props.theme);
-
 		this.handleOnSelectTheme(null, this.props.theme);
 	}
 

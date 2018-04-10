@@ -49,8 +49,6 @@ class IntervalHandler extends React.Component {
 
 	async componentWillMount () {
 		await this.props.actions.interval.get('interval');
-		await this.props.actions.interval.set(this.props.interval);
-
 		this.handleOnSelectInterval(null, this.props.interval);
 	}
 

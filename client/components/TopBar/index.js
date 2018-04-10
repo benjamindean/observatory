@@ -14,7 +14,9 @@ class TopBar extends React.PureComponent {
 				<NavbarGroup align={Alignment.LEFT}>
 					<Button
 						icon='plus'
-						onClick={this.props.actions.form.handleToggleAddForm}
+						onClick={() => {
+							this.props.actions.form.handleToggleAddForm(true);
+						}}
 						text='Add'
 					/>
 					<IntervalHandler />

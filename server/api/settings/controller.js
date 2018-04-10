@@ -1,3 +1,4 @@
+const logger = require('winston');
 const _ = require('lodash');
 const { dbSettings } = require('../../lib/database');
 
@@ -24,17 +25,18 @@ class SettingsController {
 
 	async set(ctx) {
 		const { key, value } = ctx.request.body;
+		const setting = await dbSettings.get(key);
 
-		try {
-			const setting = await dbSettings.get(key);
-
+		if (setting) {
 			await dbSettings.put(
 				Object.assign({}, setting, {
 					_id: key,
 					value
 				})
 			);
-		} catch (error) {
+		} else {
+			logger.info(`Setting ${key} doesn't exist. Creating...`);
+
 			await dbSettings.put({
 				_id: key,
 				value

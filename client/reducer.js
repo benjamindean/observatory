@@ -7,7 +7,7 @@ import addForm from './components/Form/reducer';
 import toaster from './components/Toaster/reducer';
 import app from './components/App/reducer';
 
-const reducer = combineReducers({
+export default combineReducers({
 	app,
 	theme,
 	addForm,
@@ -16,5 +16,3 @@ const reducer = combineReducers({
 	toaster,
 	form
 });
-
-export default reducer;

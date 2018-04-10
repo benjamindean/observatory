@@ -8,7 +8,7 @@ export default function reducer (state = defaultState, action) {
 	switch (action.type) {
 	case TOGGLE_ADD_FORM:
 		return Object.assign({}, state, {
-			isOpened: !state.isOpened
+			isOpened: action.isOpened
 		});
 	default:
 		return state;

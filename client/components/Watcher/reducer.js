@@ -9,26 +9,26 @@ import {
 export default function reducer (state = [], action) {
 	switch (action.type) {
 	case LIST_WATCHERS:
-		return action.watchers;
+		return action.payload;
 	case ADD_WATCHER:
-		return [...state, action.watcher];
+		return [...state, action.payload];
 	case REMOVE_WATCHER:
 		return state.filter((watcherItem) => {
-			return watcherItem._id !== action.watcherId;
+			return watcherItem._id !== action.payload;
 		});
 	case UPDATE_WATCHER:
 		return state.map((watcherItem) => {
-			if (watcherItem._id === action.watcher._id) {
-				return Object.assign({}, watcherItem, action.watcher);
+			if (watcherItem._id === action.payload._id) {
+				return Object.assign({}, watcherItem, action.payload);
 			}
 
 			return watcherItem;
 		});
 	case TOGGLE_LOADING_STATE:
 		return state.map((watcherItem) => {
-			if (watcherItem._id === action.watcherId) {
+			if (watcherItem._id === action.payload.id) {
 				return Object.assign({}, watcherItem, {
-					isLoading: !watcherItem.isLoading
+					isLoading: action.payload.isLoading
 				});
 			}
 
