@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Navbar, Alignment, NavbarGroup, Button } from '@blueprintjs/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -7,7 +6,11 @@ import * as FormActions from '../Form/actions';
 import ThemeHandler from '../ThemeHandler';
 import IntervalHandler from '../IntervalHandler';
 
-class TopBar extends React.PureComponent {
+type TopBarProps = {
+	actions: Object
+};
+
+class TopBar extends React.PureComponent<TopBarProps> {
 	render () {
 		return (
 			<Navbar className='navbar'>
@@ -26,10 +29,6 @@ class TopBar extends React.PureComponent {
 		);
 	}
 }
-
-TopBar.propTypes = {
-	actions: PropTypes.object.isRequired
-};
 
 function mapDispatchToProps (dispatch) {
 	return {

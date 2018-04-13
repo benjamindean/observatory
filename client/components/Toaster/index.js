@@ -1,11 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Position, Toast, Toaster } from '@blueprintjs/core';
+import { Position, Toast, Toaster, IToastProps } from '@blueprintjs/core';
 import * as ToasterActions from './actions';
 
-class AppToaster extends React.PureComponent {
+type AppToasterProps = {
+	toasts: Array<IToastProps>,
+	actions: Object<Object>
+};
+
+class AppToaster extends React.PureComponent<AppToasterProps> {
 	constructor (props) {
 		super(props);
 
@@ -36,11 +40,6 @@ class AppToaster extends React.PureComponent {
 		);
 	}
 }
-
-AppToaster.propTypes = {
-	toasts: PropTypes.array.isRequired,
-	actions: PropTypes.object.isRequired
-};
 
 function mapStateToProps (state) {
 	return {

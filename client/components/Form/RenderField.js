@@ -1,7 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const RenderField = ({ input, placeholder, label, type, meta: { touched, error } }) => {
+type RenderFieldProps = {
+	input: Object,
+	label: string,
+	placeholder: string,
+	type: string,
+	meta: Object
+};
+
+const RenderField = (props: RenderFieldProps) => {
+	const { input, placeholder, label, type, meta: { touched, error } } = props;
+
 	return (
 		<div className='add-form-input'>
 			<label>{label}</label>
@@ -14,14 +23,6 @@ const RenderField = ({ input, placeholder, label, type, meta: { touched, error }
 			{touched && error && <small>{error}</small>}
 		</div>
 	);
-};
-
-RenderField.propTypes = {
-	input: PropTypes.object.isRequired,
-	label: PropTypes.string.isRequired,
-	placeholder: PropTypes.string.isRequired,
-	type: PropTypes.string.isRequired,
-	meta: PropTypes.object.isRequired
 };
 
 export default RenderField;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -7,7 +6,12 @@ import { Button, Radio, RadioGroup } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import * as ThemeActions from './actions';
 
-class ThemeHandler extends React.Component {
+type ThemeHandlerProps = {
+	actions: Object,
+	theme: string
+};
+
+class ThemeHandler extends React.Component<ThemeHandlerProps> {
 	constructor (props) {
 		super(props);
 		this.themesMap = [
@@ -82,11 +86,6 @@ class ThemeHandler extends React.Component {
 		);
 	}
 }
-
-ThemeHandler.propTypes = {
-	actions: PropTypes.object.isRequired,
-	theme: PropTypes.string.isRequired
-};
 
 function mapStateToProps (state) {
 	return {

@@ -1,6 +1,6 @@
 import { ADD_TOAST, REMOVE_TOAST } from './actions';
 
-export default function reducer (state = [], action) {
+export default function reducer (state: Array = [], action) {
 	switch (action.type) {
 	case ADD_TOAST:
 		return [...state, action.toast];

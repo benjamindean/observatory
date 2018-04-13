@@ -1,8 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Callout, Intent } from '@blueprintjs/core';
 
-class Content extends React.PureComponent {
+type ContentProps = {
+	icon?: Object,
+	value?: string,
+	intent?: string
+};
+
+class Content extends React.PureComponent<ContentProps> {
+	static defaultProps = {
+		value: false,
+		icon: null,
+		intent: Intent.NONE
+	};
+
 	render () {
 		return (
 			<div>
@@ -19,18 +30,5 @@ class Content extends React.PureComponent {
 		);
 	}
 }
-
-Content.defaultProps = {
-	value: false,
-	icon: null,
-	intent: Intent.NONE,
-	onClick: null
-};
-
-Content.propTypes = {
-	icon: PropTypes.object,
-	value: PropTypes.string,
-	intent: PropTypes.string
-};
 
 export default Content;

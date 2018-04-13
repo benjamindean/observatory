@@ -6,7 +6,7 @@ import {
 	TOGGLE_LOADING_STATE
 } from './actions';
 
-export default function reducer (state = [], action) {
+export default function reducer (state: Array = [], action) {
 	switch (action.type) {
 	case LIST_WATCHERS:
 		return action.payload;

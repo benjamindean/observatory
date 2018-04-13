@@ -1,6 +1,10 @@
 import { TOGGLE_ADD_FORM } from './actions';
 
-const defaultState = {
+type formState = {
+	isOpened: boolean
+};
+
+const defaultState: formState = {
 	isOpened: false
 };
 

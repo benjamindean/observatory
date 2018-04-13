@@ -10,7 +10,7 @@ class MainWindow {
 			width: 1024,
 			height: 768,
 			show: false,
-			icon: path.join(__dirname, '../client/assets/icons/512x512.png')
+			icon: path.join(__dirname, '../client/assets/icons/main.png')
 		};
 		this.indexPath = url.format({
 			protocol: this.isDev ? 'http:' : 'file:',

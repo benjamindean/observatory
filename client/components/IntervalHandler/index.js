@@ -1,16 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Promise from 'bluebird';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Radio, RadioGroup } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
+import { WatcherItem } from '../Watcher/index';
 import * as AppActions from '../App/actions';
 import * as WatcherActions from '../Watcher/actions';
 import * as IntervalActions from './actions';
 
-class IntervalHandler extends React.Component {
+type IntervalHandlerProps = {
+	actions: Object,
+	watchers: Array<WatcherItem>,
+	app: Object,
+	interval: number
+};
+
+class IntervalHandler extends React.Component<IntervalHandlerProps> {
 	constructor (props) {
 		super(props);
 		this.intervalsMap = [
@@ -98,10 +105,7 @@ class IntervalHandler extends React.Component {
 		});
 
 		return (
-			<RadioGroup
-				onChange={this.handleOnSelectInterval}
-				selectedValue={this.props.interval}
-			>
+			<RadioGroup onChange={this.handleOnSelectInterval} selectedValue={this.props.interval}>
 				{renderedItems}
 			</RadioGroup>
 		);
@@ -128,13 +132,6 @@ class IntervalHandler extends React.Component {
 		);
 	}
 }
-
-IntervalHandler.propTypes = {
-	actions: PropTypes.object.isRequired,
-	watchers: PropTypes.array.isRequired,
-	app: PropTypes.object.isRequired,
-	interval: PropTypes.number.isRequired
-};
 
 function mapStateToProps (state) {
 	return {

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Card, Elevation, Popover, Intent, Tooltip, Position } from '@blueprintjs/core';
@@ -8,7 +7,32 @@ import Content from './Content';
 
 const { shell } = window.require('electron');
 
-class Watcher extends React.Component {
+export type WatcherItem = {
+	_id: string,
+	_rev: string,
+	title?: string,
+	url?: string,
+	oldValue?: string,
+	newValue?: string,
+	element: string,
+	checkTime?: string,
+	isLoading?: boolean
+}
+
+type WatcherProps = {
+	actions: Object<Object>
+}
+
+class Watcher extends React.Component<WatcherItem & WatcherProps> {
+	static defaultProps = {
+		title: 'Test',
+		url: 'URL',
+		oldValue: null,
+		newValue: null,
+		checkTime: 'Unknown',
+		isLoading: false
+	};
+
 	constructor (props) {
 		super(props);
 		this.handleDelete = this.handleDelete.bind(this);
@@ -21,21 +45,21 @@ class Watcher extends React.Component {
 	 * Remove item from list and DB.
 	 */
 	async handleDelete () {
-		await this.props.actions.watcher.remove(this.props.id, this.props.rev);
+		await this.props.actions.watcher.remove(this.props._id, this.props._rev);
 	}
 
 	/**
 	 * Refresh item manually.
 	 */
 	async handleRefresh () {
-		await this.props.actions.watcher.observe(this.props.id);
+		await this.props.actions.watcher.observe(this.props._id);
 	}
 
 	/**
 	 * Acknowledge change and set is as Old Value.
 	 */
 	async handleAcknowledge () {
-		await this.props.actions.watcher.acknowledge(this.props.id);
+		await this.props.actions.watcher.acknowledge(this.props._id);
 	}
 
 	handleOpenUrl () {
@@ -80,7 +104,10 @@ class Watcher extends React.Component {
 					</div>
 				</div>
 				<small>
-					Updated: <span className={this.props.isLoading ? 'pt-skeleton' : ''}>{this.props.checkTime}</span>
+					Updated:{' '}
+					<span className={this.props.isLoading ? 'pt-skeleton' : ''}>
+						{this.props.checkTime}
+					</span>
 				</small>
 				<Content intent={Intent.NONE} value={this.props.oldValue} />
 				<Content
@@ -98,28 +125,6 @@ class Watcher extends React.Component {
 		);
 	}
 }
-
-Watcher.defaultProps = {
-	title: 'Test',
-	url: 'URL',
-	oldValue: null,
-	newValue: null,
-	checkTime: 'Unknown',
-	isLoading: false
-};
-
-Watcher.propTypes = {
-	id: PropTypes.string.isRequired,
-	rev: PropTypes.string.isRequired,
-	title: PropTypes.string,
-	url: PropTypes.string,
-	oldValue: PropTypes.string,
-	newValue: PropTypes.string,
-	element: PropTypes.string.isRequired,
-	actions: PropTypes.object.isRequired,
-	checkTime: PropTypes.string,
-	isLoading: PropTypes.bool
-};
 
 function mapDispatchToProps (dispatch) {
 	return {

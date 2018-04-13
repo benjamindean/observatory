@@ -1,20 +1,19 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-	OBSERVE_WATCHER,
-	REMOVE_WATCHER,
-	OPEN_ADD_FORM
-} from '../../../server/lib/eventmap';
+import { OBSERVE_WATCHER, REMOVE_WATCHER, OPEN_ADD_FORM } from '../../../server/lib/eventmap';
 import * as WatcherActions from '../Watcher/actions';
 import * as AddFormActions from '../Form/actions';
 
 const { ipcRenderer } = window.require('electron');
 
-class EventReaction extends React.PureComponent {
+type EventReactionProps = {
+	actions: Object
+};
+
+class EventReaction extends React.PureComponent<EventReactionProps> {
 	componentWillMount () {
-		this.attachEvents();
+		return this.attachEvents();
 	}
 
 	attachEvents () {
@@ -35,10 +34,6 @@ class EventReaction extends React.PureComponent {
 		return null;
 	}
 }
-
-EventReaction.propTypes = {
-	actions: PropTypes.object.isRequired
-};
 
 function mapDispatchToProps (dispatch) {
 	return {

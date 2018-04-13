@@ -1,6 +1,6 @@
 import { SET_INTERVAL, GET_INTERVAL } from './actions';
 
-export default function reducer (state = 60, action) {
+export default function reducer (state: number = 60, action) {
 	switch (action.type) {
 	case SET_INTERVAL:
 	case GET_INTERVAL:

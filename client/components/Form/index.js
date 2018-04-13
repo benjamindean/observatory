@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Dialog, Button } from '@blueprintjs/core';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
@@ -9,7 +8,14 @@ import * as FormActions from './actions';
 import RenderField from './RenderField';
 import validation from './validation';
 
-class AddForm extends React.Component {
+type AddFormProps = {
+	submitting: boolean,
+	actions: Object,
+	handleSubmit: Function,
+	isOpened: boolean
+};
+
+class AddForm extends React.Component<AddFormProps> {
 	constructor (props) {
 		super(props);
 
@@ -62,13 +68,6 @@ class AddForm extends React.Component {
 		);
 	}
 }
-
-AddForm.propTypes = {
-	submitting: PropTypes.bool.isRequired,
-	actions: PropTypes.object.isRequired,
-	handleSubmit: PropTypes.func.isRequired,
-	isOpened: PropTypes.bool.isRequired
-};
 
 function mapStateToProps (state) {
 	return {

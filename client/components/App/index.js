@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import { FocusStyleManager } from '@blueprintjs/core';
 import 'babel-polyfill';
-import PropTypes from 'prop-types';
 import React from 'react';
 import Promise from 'bluebird';
 import { connect } from 'react-redux';
@@ -9,12 +8,22 @@ import { bindActionCreators } from 'redux';
 import '../../assets/css/App.scss';
 import Form from '../Form';
 import TopBar from '../TopBar';
-import Watcher from '../Watcher';
+import Watcher, { WatcherItem } from '../Watcher';
 import AppToaster from '../Toaster';
 import * as WatcherActions from '../Watcher/actions';
 import EventReaction from '../EventReaction';
 
-class App extends React.Component {
+type AppProps = {
+	watchers: Array<WatcherItem>,
+	actions: Object,
+	theme: string
+};
+
+class App extends React.Component<AppProps> {
+	static defaultProps = {
+		watchers: []
+	};
+
 	constructor (props) {
 		super(props);
 
@@ -46,16 +55,8 @@ class App extends React.Component {
 		const watchersList = this.props.watchers.map((watcher) => {
 			return (
 				<Watcher
-					checkTime={watcher.checkTime}
-					element={watcher.element}
-					id={watcher._id}
-					isLoading={watcher.isLoading}
 					key={watcher._id}
-					newValue={watcher.newValue}
-					oldValue={watcher.oldValue}
-					rev={watcher._rev}
-					title={watcher.title}
-					url={watcher.url}
+					{...watcher}
 				/>
 			);
 		});
@@ -71,16 +72,6 @@ class App extends React.Component {
 		);
 	}
 }
-
-App.defaultProps = {
-	watchers: []
-};
-
-App.propTypes = {
-	watchers: PropTypes.array,
-	actions: PropTypes.object.isRequired,
-	theme: PropTypes.string.isRequired
-};
 
 function mapStateToProps (state) {
 	return {

@@ -1,6 +1,10 @@
 import { SET_INTERVAL_ID } from './actions';
 
-const defaultState = {
+type AppState = {
+	+intervalId: null
+};
+
+const defaultState: AppState = {
 	intervalId: null
 };
 

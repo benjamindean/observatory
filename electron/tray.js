@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const fetch = require('node-fetch');
-const { app, Menu, Tray, shell } = require('electron');
+const { app, Menu, Tray, shell, nativeImage } = require('electron');
 const notifyRenderer = require('./utils/notifyRenderer');
 const path = require('path');
 const { OBSERVE_WATCHER, REMOVE_WATCHER, OPEN_ADD_FORM } = require('../server/lib/eventmap');
@@ -71,7 +71,11 @@ class ObservatoryTray {
 	}
 
 	async create() {
-		this.tray = new Tray(path.join(__dirname, '../client/assets/icons/16x16.png'));
+		const image = nativeImage.createFromPath(
+			path.join(__dirname, '../client/assets/icons/main.icns')
+		);
+
+		this.tray = new Tray(image);
 		this.tray.setToolTip(app.getName());
 		await this.initContextMenu();
 	}

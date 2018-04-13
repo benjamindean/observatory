@@ -1,8 +1,12 @@
 import { RSAA } from 'redux-api-middleware';
-import getErrorAction from '../../utils/getErrorAction';
 
+// Main Actions
 export const SET_INTERVAL = 'SET_INTERVAL';
 export const GET_INTERVAL = 'GET_INTERVAL';
+
+// Errors
+export const ERROR_SET_INTERVAL = 'ERROR_SET_INTERVAL';
+export const ERROR_GET_INTERVAL = 'ERROR_GET_INTERVAL';
 
 export function get () {
 	return {
@@ -16,19 +20,31 @@ export function get () {
 				'REQUEST',
 				{
 					type: GET_INTERVAL,
-					payload: async (action, state, res) => {
-						const response = await res.json();
+					payload: async (action, state, res): number => {
+						const { value } = await res.json();
 
-						return response.value;
+						return value;
 					}
 				},
-				getErrorAction('Failed to get interval')
+				{
+					type: ERROR_GET_INTERVAL,
+					payload: async (action, state, res): Object => {
+						const { error } = await res.json();
+
+						return error;
+					},
+					meta: {
+						error: {
+							message: 'Failed to get interval'
+						}
+					}
+				}
 			]
 		}
 	};
 }
 
-export function set (interval) {
+export function set (interval: number) {
 	return {
 		[RSAA]: {
 			endpoint: 'http://localhost:3000/settings',
@@ -44,13 +60,25 @@ export function set (interval) {
 				'REQUEST',
 				{
 					type: SET_INTERVAL,
-					payload: async (action, state, res) => {
-						const response = await res.json();
+					payload: async (action, state, res): number => {
+						const { value } = await res.json();
 
-						return response.value;
+						return value;
 					}
 				},
-				getErrorAction('Failed to set interval')
+				{
+					type: ERROR_SET_INTERVAL,
+					payload: async (action, state, res): Object => {
+						const { error } = await res.json();
+
+						return error;
+					},
+					meta: {
+						error: {
+							message: 'Failed to set interval'
+						}
+					}
+				}
 			]
 		}
 	};
