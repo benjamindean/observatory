@@ -1,27 +1,29 @@
-import _ from 'lodash';
 import { FocusStyleManager } from '@blueprintjs/core';
-import 'babel-polyfill';
-import React from 'react';
 import Promise from 'bluebird';
+import _ from 'lodash';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import '../../assets/css/App.scss';
-import Form from '../Form';
-import TopBar from '../TopBar';
-import Watcher, { WatcherItem } from '../Watcher';
-import AppToaster from '../Toaster';
-import * as WatcherActions from '../Watcher/actions';
 import EventReaction from '../EventReaction';
+import Form from '../Form';
+import AppToaster from '../Toaster';
+import TopBar from '../TopBar';
+import Watcher from '../Watcher';
+import { WatcherItem } from '../../types';
+import * as WatcherActions from '../Watcher/actions';
+import EmptyList from './EmptyList';
 
 type AppProps = {
-	watchers: Array<WatcherItem>,
+	watchers: WatcherItem[],
+	filteredWatchers?: WatcherItem[],
 	actions: Object,
 	theme: string
 };
 
 class App extends React.Component<AppProps> {
 	static defaultProps = {
-		watchers: []
+		watchers: [],
+		filteredWatchers: null
 	};
 
 	constructor (props) {
@@ -32,7 +34,7 @@ class App extends React.Component<AppProps> {
 		this.observeAllWatchers = this.observeAllWatchers.bind(this);
 	}
 
-	async componentWillMount () {
+	async componentDidMount () {
 		await this.props.actions.watcher.list();
 		await this.observeAllWatchers();
 	}
@@ -53,12 +55,11 @@ class App extends React.Component<AppProps> {
 
 	render () {
 		const watchersList = this.props.watchers.map((watcher) => {
-			return (
-				<Watcher
-					key={watcher._id}
-					{...watcher}
-				/>
-			);
+			return <Watcher key={watcher._id} {...watcher} />;
+		});
+
+		const filteredWatchers = this.props.filteredWatchers.map((watcher) => {
+			return <Watcher key={watcher._id} {...watcher} />;
 		});
 
 		return (
@@ -67,7 +68,10 @@ class App extends React.Component<AppProps> {
 				<AppToaster />
 				<Form />
 				<TopBar />
-				<div className='watchers-list'>{watchersList}</div>
+				{!watchersList.length && <EmptyList />}
+				{watchersList.length &&
+					!filteredWatchers.length && <div className='watchers-list'>{watchersList}</div>}
+				{filteredWatchers.length && <div className='watchers-list'>{filteredWatchers}</div>}
 			</div>
 		);
 	}
@@ -76,6 +80,7 @@ class App extends React.Component<AppProps> {
 function mapStateToProps (state) {
 	return {
 		watchers: state.watchers,
+		filteredWatchers: state.search,
 		theme: state.theme
 	};
 }

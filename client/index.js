@@ -1,14 +1,6 @@
+import 'babel-polyfill';
 import * as React from 'react';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import App from './components/App';
-import configureStore from './configureStore';
+import Observatory from './Observatory';
 
-const store = configureStore();
-
-render(
-	<Provider store={store}>
-		<App />
-	</Provider>,
-	document.getElementById('root')
-);
+return render(<Observatory />, document.getElementById('root'));

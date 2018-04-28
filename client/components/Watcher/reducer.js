@@ -1,9 +1,9 @@
 import {
 	ADD_WATCHER,
-	REMOVE_WATCHER,
 	LIST_WATCHERS,
-	UPDATE_WATCHER,
-	TOGGLE_LOADING_STATE
+	REMOVE_WATCHER,
+	TOGGLE_LOADING_STATE,
+	UPDATE_WATCHER
 } from './actions';
 
 export default function reducer (state: Array = [], action) {

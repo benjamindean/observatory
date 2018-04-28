@@ -11,6 +11,8 @@ routes.get('/:id', controller.get);
 
 routes.get('/observe/:id', controller.observe);
 
+routes.post('/update/:id', controller.update);
+
 routes.get('/acknowledge/:id', controller.acknowledge);
 
 routes.post('/', controller.add);

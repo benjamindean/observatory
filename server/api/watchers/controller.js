@@ -31,6 +31,15 @@ class WatchersController {
 		ctx.body = await dbWatchers.get(addedWatcher.id);
 	}
 
+	async update(ctx) {
+		const watcher = await dbWatchers.get(ctx.params.id);
+		const updatedWatcher = ctx.request.body;
+
+		await dbWatchers.put(Object.assign({}, { _id: watcher._id }, updatedWatcher));
+
+		ctx.body = await dbWatchers.get(ctx.params.id);
+	}
+
 	async delete(ctx) {
 		ctx.body = await dbWatchers.remove({
 			_id: ctx.params.id,
@@ -59,7 +68,7 @@ class WatchersController {
 	}
 
 	async pickElement(ctx) {
-		selector.pickElement(ctx.request.body.url);
+		ctx.body = await selector.pickElement(ctx.request.body.url);
 	}
 }
 

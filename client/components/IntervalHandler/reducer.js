@@ -1,4 +1,4 @@
-import { SET_INTERVAL, GET_INTERVAL } from './actions';
+import { GET_INTERVAL, SET_INTERVAL } from './actions';
 
 export default function reducer (state: number = 60, action) {
 	switch (action.type) {

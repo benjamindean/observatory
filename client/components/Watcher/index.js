@@ -1,27 +1,21 @@
+import './style.scss';
+
+import { Button, Card, Elevation, Intent, Popover, Position, Tooltip } from '@blueprintjs/core';
+import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Card, Elevation, Popover, Intent, Tooltip, Position } from '@blueprintjs/core';
-import * as WatcherActions from './actions';
+import { WatcherItem } from '../../types';
 import Content from './Content';
+import * as WatcherActions from './actions';
+import Tags from './Tags';
 
 const { shell } = window.require('electron');
 
-export type WatcherItem = {
-	_id: string,
-	_rev: string,
-	title?: string,
-	url?: string,
-	oldValue?: string,
-	newValue?: string,
-	element: string,
-	checkTime?: string,
-	isLoading?: boolean
-}
-
 type WatcherProps = {
-	actions: Object<Object>
-}
+	actions: Object,
+	isLoading?: boolean
+};
 
 class Watcher extends React.Component<WatcherItem & WatcherProps> {
 	static defaultProps = {
@@ -30,13 +24,14 @@ class Watcher extends React.Component<WatcherItem & WatcherProps> {
 		oldValue: null,
 		newValue: null,
 		checkTime: 'Unknown',
-		isLoading: false
+		isLoading: false,
+		tags: []
 	};
 
 	constructor (props) {
 		super(props);
 		this.handleDelete = this.handleDelete.bind(this);
-		this.handleAcknowledge = this.handleAcknowledge.bind(this);
+		this.handleUpdate = this.handleUpdate.bind(this);
 		this.handleRefresh = this.handleRefresh.bind(this);
 		this.handleOpenUrl = this.handleOpenUrl.bind(this);
 	}
@@ -58,8 +53,11 @@ class Watcher extends React.Component<WatcherItem & WatcherProps> {
 	/**
 	 * Acknowledge change and set is as Old Value.
 	 */
-	async handleAcknowledge () {
-		await this.props.actions.watcher.acknowledge(this.props._id);
+	async handleUpdate (values: Object) {
+		const watcher = _.omit(this.props, ['actions', 'isLoading']);
+		const updatedWatcher = Object.assign({}, watcher, values);
+
+		await this.props.actions.watcher.update(updatedWatcher);
 	}
 
 	handleOpenUrl () {
@@ -109,18 +107,27 @@ class Watcher extends React.Component<WatcherItem & WatcherProps> {
 						{this.props.checkTime}
 					</span>
 				</small>
-				<Content intent={Intent.NONE} value={this.props.oldValue} />
-				<Content
-					icon={
-						<Button
-							icon='tick'
-							intent={Intent.SUCCESS}
-							onClick={this.handleAcknowledge}
-						/>
-					}
-					intent={Intent.SUCCESS}
-					value={this.props.newValue}
-				/>
+				<Tags tags={this.props.tags} watcher={this.props} />
+				<Content value={this.props.oldValue} />
+				{this.props.newValue &&
+					<Popover className='fill'>
+						<Content interactive={true} value={this.props.newValue} />
+						<div className='pt-popover-content'>
+							<h5>Acknowledge change?</h5>
+							<Button
+								intent={Intent.DANGER}
+								onClick={() => {
+									this.handleUpdate({
+										oldValue: this.props.newValue,
+										newValue: null
+									});
+								}}
+							>
+								Yes
+							</Button>
+						</div>
+					</Popover>
+				}
 			</Card>
 		);
 	}

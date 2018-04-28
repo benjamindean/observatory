@@ -17,7 +17,7 @@ export function get () {
 				'content-type': 'application/json'
 			},
 			types: [
-				'REQUEST',
+				'GET_THEME_REQUEST',
 				{
 					type: GET_THEME,
 					payload: async (action, state, res): string => {
@@ -57,7 +57,7 @@ export function set (theme: string) {
 				'content-type': 'application/json'
 			},
 			types: [
-				'REQUEST',
+				'SET_THEME_REQUEST',
 				{
 					type: SET_THEME,
 					payload: async (action, state, res): string => {

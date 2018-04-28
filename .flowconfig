@@ -1,8 +1,10 @@
 [ignore]
-.*/node_modules/.*
+<PROJECT_ROOT>/node_modules/*
+<PROJECT_ROOT>/.cache/*
+<PROJECT_ROOT>/dist/*
 
 [include]
-.*/client/.*
+<PROJECT_ROOT>/client/*.js
 
 [libs]
 

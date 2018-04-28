@@ -17,7 +17,7 @@ export function get () {
 				'content-type': 'application/json'
 			},
 			types: [
-				'REQUEST',
+				'GET_INTERVAL_REQUEST',
 				{
 					type: GET_INTERVAL,
 					payload: async (action, state, res): number => {
@@ -57,7 +57,7 @@ export function set (interval: number) {
 				'content-type': 'application/json'
 			},
 			types: [
-				'REQUEST',
+				'SET_INTERVAL_REQUEST',
 				{
 					type: SET_INTERVAL,
 					payload: async (action, state, res): number => {

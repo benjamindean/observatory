@@ -1,4 +1,12 @@
 {
-	"presets": ["flow", "env", "react"],
-	"plugins": ["flow-react-proptypes", "transform-class-properties"]
+	"presets": ["env", "react"],
+	"plugins": [
+		"flow-react-proptypes",
+		[
+			"transform-class-properties",
+			{
+				"spec": true
+			}
+		]
+	]
 }

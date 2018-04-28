@@ -1,30 +1,30 @@
+import { Card } from '@blueprintjs/core';
 import React from 'react';
-import { Callout, Intent } from '@blueprintjs/core';
 
 type ContentProps = {
-	icon?: Object,
 	value?: string,
-	intent?: string
+	interactive?: boolean,
+	onClick?: Function
 };
 
 class Content extends React.PureComponent<ContentProps> {
 	static defaultProps = {
 		value: false,
-		icon: null,
-		intent: Intent.NONE
+		interactive: false,
+		onClick: () => {}
 	};
 
 	render () {
 		return (
 			<div>
 				{this.props.value &&
-					<Callout
+					<Card
 						className='watcher-card-content'
-						icon={this.props.icon}
-						intent={this.props.intent}
+						interactive={this.props.interactive}
+						onClick={this.props.onClick}
 					>
 						{this.props.value}
-					</Callout>
+					</Card>
 				}
 			</div>
 		);

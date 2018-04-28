@@ -1,7 +1,7 @@
+import { IToastProps, Position, Toast, Toaster } from '@blueprintjs/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Position, Toast, Toaster, IToastProps } from '@blueprintjs/core';
 import * as ToasterActions from './actions';
 
 type AppToasterProps = {

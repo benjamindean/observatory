@@ -1,9 +1,9 @@
-import React from 'react';
-import _ from 'lodash';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Button, Radio, RadioGroup } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
+import _ from 'lodash';
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as ThemeActions from './actions';
 
 type ThemeHandlerProps = {
@@ -31,7 +31,7 @@ class ThemeHandler extends React.Component<ThemeHandlerProps> {
 		this.getSelectLabel = this.getSelectLabel.bind(this);
 	}
 
-	async componentWillMount () {
+	async componentDidMount () {
 		await this.props.actions.theme.get();
 		this.handleOnSelectTheme(null, this.props.theme);
 	}

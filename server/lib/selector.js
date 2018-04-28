@@ -1,11 +1,23 @@
-const { BrowserWindow } = require('electron');
+const { BrowserWindow, ipcMain } = require('electron');
+
+const getElemetnText = element => `
+	const observatoryElement = document.querySelector(\'${element}\');
+
+	if (observatoryElement) {
+		observatoryElement.textContent;
+	} else {
+		'No such element';
+	}
+`;
 
 const insertJs = `
 	const { ipcRenderer } = window.require('electron');
-	let observatoryCssPath = function (el) {
+
+	const observatoryCssPath = function (el) {
 		if (!(el instanceof Element)) {
 			return;
 		}
+
 		let path = [];
 
 		while (el.nodeType === Node.ELEMENT_NODE) {
@@ -35,13 +47,20 @@ const insertJs = `
 	};
 
 	document.addEventListener('click', (e) => {
+		e.stopPropagation();
 		e.preventDefault();
+		e.stopImmediatePropagation();
+
 		ipcRenderer.send('element-selected', observatoryCssPath(e.target));
-		ipcRenderer.on('element-selected', (event, agrs) => {
-			console.log(args);
-		});
-		console.log(observatoryCssPath(e.target));
+
+		window.close();
 	});
+`;
+
+const insertCSS = `
+	body :hover :last-child {
+		background: #0000000f;
+	}
 `;
 
 class Selector {
@@ -50,21 +69,12 @@ class Selector {
 	}
 
 	async getElement(webContents, element) {
-		return await webContents.executeJavaScript(
-			`
-			const observatoryElement = document.querySelector(\'${element}\');
-
-			if (observatoryElement) {
-				observatoryElement.innerHTML;
-			} else {
-				'No such element';
-			}`
-		);
+		return await webContents.executeJavaScript(getElemetnText(element));
 	}
 
 	async getElements(watcher) {
 		return new Promise((accept, reject) => {
-			const window = new BrowserWindow({
+			let window = new BrowserWindow({
 				show: false
 			});
 
@@ -91,23 +101,49 @@ class Selector {
 						watcher.title = title;
 					}
 
+					window.close();
+
 					accept(watcher);
 				} catch (error) {
+					window.close();
+
 					reject(error);
 				}
+			});
+
+			window.on('closed', () => {
+				window = null;
 			});
 		});
 	}
 
 	async pickElement(url) {
-		const window = new BrowserWindow({
-			show: true
-		});
+		return new Promise(accept => {
+			let window = new BrowserWindow({
+				show: true,
+				width: 1024,
+				height: 768
+			});
 
-		window.loadURL(url);
+			window.loadURL(url);
 
-		window.webContents.on('did-finish-load', async () => {
-			window.webContents.executeJavaScript(insertJs);
+			window.webContents.on('dom-ready', () => {
+				window.webContents.insertCSS(insertCSS);
+			});
+
+			window.webContents.on('did-finish-load', () => {
+				window.webContents.executeJavaScript(insertJs);
+			});
+
+			window.on('closed', () => {
+				window = null;
+			});
+
+			ipcMain.on('element-selected', async (event, element) => {
+				accept({
+					element
+				});
+			});
 		});
 	}
 }

@@ -1,11 +1,14 @@
 @import '../../../node_modules/normalize.css/normalize.css';
 @import '../../../node_modules/@blueprintjs/core/lib/css/blueprint.css';
-@import '../../../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css';
 
 html,
-body,
+body {
+	height: 100vh;
+}
+
 #root {
-	min-height: 100%;
+	display: inline;
+	overflow: auto;
 }
 
 .main {
@@ -19,55 +22,9 @@ body,
 	width: 100%;
 }
 
-.watcher-card {
-	margin-bottom: 2rem;
-	border-radius: 0.5rem;
-	&-heading {
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 1rem;
-		&-title {
-			display: flex;
-			align-items: center;
-			width: 80%;
-			h5 {
-				margin: 0;
-			}
-		}
-		&-delete {
-			display: flex;
-		}
-		button {
-			height: 30px;
-			border-radius: 1rem;
-		}
-	}
-	&-content {
-		display: flex;
-		align-items: center;
-		margin-top: 1rem;
-		button {
-			border-radius: 1rem;
-		}
-	}
-	a {
-		word-break: break-all;
-	}
-}
-
 .pt-popover-content {
 	max-width: 350px;
 	padding: 10px;
-}
-
-.add-form {
-	padding: 1rem;
-	&-input {
-		margin-bottom: 1rem;
-		input {
-			width: 100%;
-		}
-	}
 }
 
 .pt-dialog {
@@ -95,4 +52,8 @@ button {
 	.pt-control:last-child {
 		margin-bottom: 0;
 	}
+}
+
+.hidden {
+	display: none;
 }

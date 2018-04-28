@@ -1,4 +1,4 @@
-import { SET_THEME, GET_THEME } from './actions';
+import { GET_THEME, SET_THEME } from './actions';
 
 export default function reducer (state: string = 'pt-light', action) {
 	switch (action.type) {

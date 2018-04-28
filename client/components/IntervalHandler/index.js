@@ -1,13 +1,13 @@
-import React from 'react';
-import Promise from 'bluebird';
-import _ from 'lodash';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Button, Radio, RadioGroup } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
-import { WatcherItem } from '../Watcher/index';
+import Promise from 'bluebird';
+import _ from 'lodash';
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as AppActions from '../App/actions';
 import * as WatcherActions from '../Watcher/actions';
+import { WatcherItem } from '../../types';
 import * as IntervalActions from './actions';
 
 type IntervalHandlerProps = {
@@ -54,7 +54,7 @@ class IntervalHandler extends React.Component<IntervalHandlerProps> {
 		this.getSelectLabel = this.getSelectLabel.bind(this);
 	}
 
-	async componentWillMount () {
+	async componentDidMount () {
 		await this.props.actions.interval.get('interval');
 		this.handleOnSelectInterval(null, this.props.interval);
 	}

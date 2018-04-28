@@ -1,5 +1,5 @@
 import { RSAA } from 'redux-api-middleware';
-import { WatcherItem } from '../Watcher/index';
+import { WatcherItem } from '../../types';
 
 // Main Actions
 export const ADD_WATCHER = 'ADD_WATCHER';
@@ -38,7 +38,7 @@ export function list () {
 					'content-type': 'application/json'
 				},
 				types: [
-					'REQUEST',
+					'LIST_WATCHERS_REQUEST',
 					{
 						type: LIST_WATCHERS,
 						payload: async (action, state, res): Object => {
@@ -75,7 +75,7 @@ export function add (watcher: WatcherItem) {
 					'content-type': 'application/json'
 				},
 				types: [
-					'REQUEST',
+					'ADD_WATCHER_REQUEST',
 					{
 						type: ADD_WATCHER,
 						payload: async (action, state, res): Object => {
@@ -141,20 +141,23 @@ export function observe (id: string) {
 	};
 }
 
-export function acknowledge (id: string) {
+export function update (watcher: WatcherItem) {
 	return (dispatch) => {
 		return dispatch({
 			[RSAA]: {
-				endpoint: `http://localhost:3000/watchers/acknowledge/${id}`,
-				method: 'GET',
+				endpoint: `http://localhost:3000/watchers/update/${watcher._id}`,
+				method: 'POST',
+				body: JSON.stringify(watcher),
 				headers: {
 					'content-type': 'application/json'
 				},
 				types: [
-					toggleLoadingState(id, true),
+					toggleLoadingState(watcher._id, true),
 					{
 						type: UPDATE_WATCHER,
 						payload: async (action, state, res): Object => {
+							await dispatch(toggleLoadingState(watcher._id, false));
+
 							return await res.json();
 						}
 					},
@@ -163,13 +166,13 @@ export function acknowledge (id: string) {
 						payload: async (action, state, res): Object => {
 							const { error } = await res.json();
 
-							await dispatch(toggleLoadingState(id, false));
+							await dispatch(toggleLoadingState(watcher._id, false));
 
 							return error;
 						},
 						meta: {
 							error: {
-								message: `Failed to acknowledge change for watcher ${id}`
+								message: `Failed to update for watcher ${watcher._id}`
 							}
 						}
 					}
@@ -189,7 +192,7 @@ export function remove (id: string, rev: string) {
 					'content-type': 'application/json'
 				},
 				types: [
-					'REQUEST',
+					'REMOVE_WATCHER_REQUEST',
 					{
 						type: REMOVE_WATCHER,
 						payload: id

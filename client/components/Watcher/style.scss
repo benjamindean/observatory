@@ -1,0 +1,44 @@
+.watcher-card {
+	margin-bottom: 2rem;
+	border-radius: 0.5rem;
+	&-heading {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 1rem;
+		&-title {
+			display: flex;
+			align-items: center;
+			width: 80%;
+			h5 {
+				margin: 0;
+			}
+		}
+		&-delete {
+			display: flex;
+		}
+		button {
+			height: 30px;
+			border-radius: 1rem;
+		}
+	}
+	&-content {
+		display: flex;
+		align-items: center;
+		margin-top: 1rem;
+		button {
+			border-radius: 1rem;
+		}
+	}
+	a {
+		word-break: break-all;
+	}
+	.tag-input {
+		margin-top: 1rem;
+		& > .pt-input {
+			padding: 0;
+			background: none;
+			border: 0;
+			box-shadow: none;
+		}
+	}
+}

@@ -1,0 +1,16 @@
+.add-form {
+	padding: 1rem;
+	&-input {
+		margin-bottom: 1rem;
+		input {
+			width: 100%;
+		}
+	}
+	label {
+		margin-bottom: 0.5rem;
+		display: flex;
+	}
+	button {
+		margin: 1rem 1rem 0 0;
+	}
+}

@@ -1,10 +1,11 @@
+import { Alignment, Button, Navbar, NavbarGroup } from '@blueprintjs/core';
 import React from 'react';
-import { Navbar, Alignment, NavbarGroup, Button } from '@blueprintjs/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as FormActions from '../Form/actions';
-import ThemeHandler from '../ThemeHandler';
 import IntervalHandler from '../IntervalHandler';
+import ThemeHandler from '../ThemeHandler';
+import Search from '../Search';
 
 type TopBarProps = {
 	actions: Object
@@ -24,6 +25,7 @@ class TopBar extends React.PureComponent<TopBarProps> {
 					/>
 					<IntervalHandler />
 					<ThemeHandler />
+					<Search />
 				</NavbarGroup>
 			</Navbar>
 		);

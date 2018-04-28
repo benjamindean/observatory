@@ -35,15 +35,6 @@ class MainWindow {
 			this.window.show();
 
 			if (this.isDev) {
-				const {
-					default: installExtension,
-					REACT_DEVELOPER_TOOLS,
-					REDUX_DEVTOOLS
-				} = require('electron-devtools-installer');
-
-				await installExtension(REACT_DEVELOPER_TOOLS, true);
-				await installExtension(REDUX_DEVTOOLS, true);
-
 				this.window.webContents.openDevTools();
 			}
 		});
