@@ -2,7 +2,6 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deal/deal_functions.dart';
-import 'package:observatory/deal/deal_provider.dart';
 import 'package:observatory/deal/ui/waitlist_button.dart';
 import 'package:observatory/shared/models/deal.dart';
 
@@ -22,7 +21,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Expanded(
-            flex: 40,
+            flex: 50,
             child: BackButton(
               style: IconButton.styleFrom(
                 backgroundColor: context.colors.scheme.primary.withOpacity(
@@ -32,25 +31,11 @@ class DealPageBottomAppBar extends ConsumerWidget {
             ),
           ),
           Expanded(
-            flex: 60,
+            flex: 50,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Tooltip(
-                  message: 'Refresh',
-                  child: IconButton(
-                    onPressed: !deal.isLoading
-                        ? () => ref.watch(dealProvider(deal).notifier).refresh()
-                        : null,
-                    icon: Icon(
-                      Icons.refresh,
-                      color: !deal.isLoading
-                          ? context.colors.scheme.tertiary
-                          : context.colors.disabled,
-                    ),
-                  ),
-                ),
                 Tooltip(
                   message: 'Open in Browser',
                   child: IconButton(

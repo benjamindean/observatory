@@ -73,14 +73,6 @@ class AsyncDealsNotifier
 
   Future<void> reset() async {
     state = await AsyncValue.guard(() async {
-      return const DealsState(
-        deals: [],
-        hasReachedMax: false,
-        pageNumber: 1,
-      );
-    });
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
       return _initDeals();
     });
   }

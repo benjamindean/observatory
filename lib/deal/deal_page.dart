@@ -1,4 +1,5 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deal/ui/bundles_tile.dart';
@@ -12,8 +13,8 @@ import 'package:observatory/deal/deal_provider.dart';
 import 'package:observatory/deal/ui/tags_tile.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/is_there_any_deal_info.dart';
+import 'package:observatory/shared/ui/pull_to_refresh.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
-import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class DealPage extends ConsumerWidget {
   final Deal deal;
@@ -36,38 +37,36 @@ class DealPage extends ConsumerWidget {
       child: SafeArea(
         child: Scaffold(
           bottomNavigationBar: DealPageBottomAppBar(deal: dealState),
-          body: CustomScrollView(
-            physics: const ClampingScrollPhysics(),
-            slivers: dealState.isLoading
-                ? [
-                    DealAppBar(deal: deal),
-                    const SliverFillRemaining(
-                      child: ITADProgressIndicator(),
-                    )
-                  ]
-                : [
-                    DealAppBar(deal: deal),
-                    SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
-                          ReviewsTile(deal: deal),
-                          TagsTile(deal: deal),
-                          LowestPriceTile(deal: deal),
-                          BundlesTile(deal: deal),
-                          LinksTile(deal: deal),
-                        ],
-                      ),
-                    ),
-                    const SliverToBoxAdapter(
-                      child: ListHeading(title: 'Prices'),
-                    ),
-                    PriceListView(
-                      prices: dealState.prices,
-                    ),
-                    const SliverToBoxAdapter(
-                      child: IsThereAnyDealInfo(),
-                    ),
-                  ],
+          body: PullToRefresh(
+            onRefresh: () async {
+              return ref.watch(dealProvider(deal).notifier).refresh();
+            },
+            child: CustomScrollView(
+              slivers: [
+                DealAppBar(deal: deal),
+                const HeaderLocator.sliver(),
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      ReviewsTile(deal: deal),
+                      TagsTile(deal: deal),
+                      LowestPriceTile(deal: deal),
+                      BundlesTile(deal: deal),
+                      LinksTile(deal: deal),
+                    ],
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: ListHeading(title: 'Prices'),
+                ),
+                PriceListView(
+                  prices: dealState.prices,
+                ),
+                const SliverToBoxAdapter(
+                  child: IsThereAnyDealInfo(),
+                ),
+              ],
+            ),
           ),
         ),
       ),

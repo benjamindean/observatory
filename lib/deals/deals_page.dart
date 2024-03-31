@@ -1,3 +1,4 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deals/deals_list.dart';
@@ -7,6 +8,7 @@ import 'package:observatory/deals/ui/deals_appbar.dart';
 import 'package:observatory/deals/ui/deals_info_app_bar.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/ui/pull_to_refresh.dart';
 
 class DealsPage extends ConsumerWidget {
   const DealsPage({super.key});
@@ -25,9 +27,7 @@ class DealsPage extends ConsumerWidget {
     );
     final provider = getProvider(activeTab);
 
-    return RefreshIndicator.adaptive(
-      edgeOffset: AppBar().preferredSize.height +
-          MediaQuery.of(context).viewPadding.top,
+    return PullToRefresh(
       onRefresh: () async {
         await ref.read(provider.notifier).reset();
       },
@@ -35,6 +35,7 @@ class DealsPage extends ConsumerWidget {
         controller: PrimaryScrollController.of(context),
         slivers: [
           const DealsAppBar(),
+          const HeaderLocator.sliver(),
           DealsInfoAppBar(
             provider: provider,
           ),
