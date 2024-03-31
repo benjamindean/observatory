@@ -1,0 +1,47 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/shared/models/observatory_theme.dart';
+
+final List<ThemeMode> themeModes = [
+  ThemeMode.dark,
+  ThemeMode.light,
+  ThemeMode.system
+];
+
+class ThemeModeListTile extends ConsumerWidget {
+  const ThemeModeListTile({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ObservatoryTheme theme = ref.watch(themeModeProvider);
+
+    return ListTile(
+      title: const Text('Theme Mode'),
+      subtitle: const Text('Dark, Light or Auto.'),
+      trailing: ToggleButtons(
+        direction: Axis.horizontal,
+        onPressed: (int index) {
+          ref.watch(themeModeProvider.notifier).setTheme(
+                ObservatoryTheme(
+                  mode: themeModes[index].name,
+                  isTrueBlack: theme.isTrueBlack,
+                ),
+              );
+        },
+        isSelected: themeModes.map(
+          (e) {
+            return e == ThemeMode.values.asNameMap()[theme.mode];
+          },
+        ).toList(),
+        children: const [
+          Icon(Icons.brightness_4),
+          Icon(Icons.brightness_7),
+          Icon(Icons.brightness_auto),
+        ],
+      ),
+    );
+  }
+}
