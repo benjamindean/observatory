@@ -132,7 +132,7 @@ class RecentSearchesList extends ConsumerWidget {
         return const SliverFillRemaining(
           hasScrollBody: false,
           child: Center(
-            child: ITADProgressIndicator(),
+            child: ObservatoryProgressIndicator(),
           ),
         );
       },

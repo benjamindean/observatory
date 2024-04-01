@@ -47,7 +47,6 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.1
-  custom_refresh_indicator: ^3.1.0
   easy_refresh: ^3.3.4
 
 flutter_launcher_icons:

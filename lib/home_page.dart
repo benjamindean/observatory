@@ -63,7 +63,7 @@ class HomePage extends ConsumerWidget {
       ),
       body: settings.when(
         loading: () => const Center(
-          child: ITADProgressIndicator(),
+          child: ObservatoryProgressIndicator(),
         ),
         error: (error, stackTrace) {
           Logger().e(

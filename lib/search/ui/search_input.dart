@@ -54,7 +54,11 @@ class SearchInput extends ConsumerWidget {
               message: 'Reset Search',
               child: IconButton(
                 onPressed: () {
-                  ref.read(provider.notifier).clear();
+                  if ((searchState.query ?? '').isEmpty) {
+                    return ref.read(provider.notifier).reset();
+                  }
+
+                  return ref.read(provider.notifier).clear();
                 },
                 icon: const Icon(Icons.clear_outlined),
               ),

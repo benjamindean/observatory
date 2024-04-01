@@ -26,7 +26,7 @@ class LoadMoreState extends State<LoadMore> {
           child: Builder(
             builder: (BuildContext context) {
               if (isLoading) {
-                return const ITADProgressIndicator();
+                return const ObservatoryProgressIndicator();
               }
 
               return OutlinedButton(

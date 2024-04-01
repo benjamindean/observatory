@@ -37,7 +37,7 @@ class SettingsPage extends ConsumerWidget {
       ),
       body: SafeArea(
         child: settings.when(
-          loading: () => const ITADProgressIndicator(),
+          loading: () => const ObservatoryProgressIndicator(),
           error: (error, stackTrace) {
             Logger().e(
               'Failed to load settings',

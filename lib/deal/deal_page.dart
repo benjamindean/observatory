@@ -42,6 +42,7 @@ class DealPage extends ConsumerWidget {
               return ref.watch(dealProvider(deal).notifier).refresh();
             },
             child: CustomScrollView(
+              physics: const PageScrollPhysics(),
               slivers: [
                 DealAppBar(deal: deal),
                 const HeaderLocator.sliver(),

@@ -3,6 +3,7 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 const Curve opacityCurve = Interval(
   0.3,
@@ -22,44 +23,46 @@ class PullToRefresh extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ValueKey indicatorKey = const ValueKey<IndicatorMode>(
+      IndicatorMode.inactive,
+    );
+
     return EasyRefresh(
       header: BuilderHeader(
         processedDuration: Duration.zero,
         position: IndicatorPosition.locator,
-        triggerOffset: 50.0,
-        maxOverOffset: 70.0,
+        triggerOffset: const SliverAppBar().toolbarHeight + 40,
+        springRebound: false,
         clamping: false,
+        safeArea: false,
         builder: (context, state) {
           return Container(
-            color: context.colors.scheme.primaryContainer,
+            color: context.colors.scaffoldBackground,
             height: state.offset,
             child: AnimatedSwitcher(
-              layoutBuilder: (
-                Widget? currentChild,
-                List<Widget> previousChildren,
-              ) {
-                return Stack(
-                  alignment: Alignment.centerLeft,
-                  children: <Widget>[
-                    ...previousChildren,
-                    if (currentChild != null) currentChild,
-                  ],
-                );
-              },
-              duration: const Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 100),
               child: Builder(
+                key: state.mode == IndicatorMode.ready
+                    ? indicatorKey
+                    : indicatorKey = ValueKey<IndicatorMode>(state.mode),
                 builder: (context) {
                   switch (state.mode) {
+                    case IndicatorMode.ready:
+                    case IndicatorMode.armed:
+                      return Center(
+                        child: Icon(
+                          Icons.refresh,
+                          size: 40.0,
+                          color: context.colors.scheme.onSurfaceVariant,
+                        ),
+                      );
                     case IndicatorMode.processed:
                     case IndicatorMode.done:
                       return const SizedBox.shrink();
                     case IndicatorMode.processing:
-                      return Center(
-                        child: Transform.scale(
-                          scale: 0.8,
-                          child: CircularProgressIndicator(
-                            color: context.colors.scheme.onPrimaryContainer,
-                          ),
+                      return const Center(
+                        child: ObservatoryProgressIndicator(
+                          size: 25.0,
                         ),
                       );
                     default:
@@ -77,15 +80,13 @@ class PullToRefresh extends StatelessWidget {
                                 child: Icon(
                                   Icons.arrow_downward_rounded,
                                   size: context.textStyles.titleLarge.fontSize,
-                                  color:
-                                      context.colors.scheme.onPrimaryContainer,
+                                  color: context.colors.scheme.onSurfaceVariant,
                                 ),
                               ),
                               Text(
                                 'Pull to refresh',
                                 style: context.textStyles.labelLarge.copyWith(
-                                  color:
-                                      context.colors.scheme.onPrimaryContainer,
+                                  color: context.colors.scheme.onSurfaceVariant,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
