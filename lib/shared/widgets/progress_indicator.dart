@@ -14,7 +14,7 @@ class ObservatoryProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return SpinKitDualRing(
       lineWidth: 3.0,
-      color: context.colors.scheme.onSurfaceVariant,
+      color: context.colors.scheme.primary,
       size: size,
     );
   }

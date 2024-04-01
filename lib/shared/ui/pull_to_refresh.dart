@@ -53,7 +53,7 @@ class PullToRefresh extends StatelessWidget {
                         child: Icon(
                           Icons.refresh,
                           size: 40.0,
-                          color: context.colors.scheme.onSurfaceVariant,
+                          color: context.colors.scheme.primary,
                         ),
                       );
                     case IndicatorMode.processed:
@@ -80,13 +80,13 @@ class PullToRefresh extends StatelessWidget {
                                 child: Icon(
                                   Icons.arrow_downward_rounded,
                                   size: context.textStyles.titleLarge.fontSize,
-                                  color: context.colors.scheme.onSurfaceVariant,
+                                  color: context.colors.scheme.primary,
                                 ),
                               ),
                               Text(
                                 'Pull to refresh',
                                 style: context.textStyles.labelLarge.copyWith(
-                                  color: context.colors.scheme.onSurfaceVariant,
+                                  color: context.colors.scheme.primary,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
