@@ -521,6 +521,7 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LAUNCH_SCREEN_STORYBOARD = LaunchScreen.storyboard;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -710,6 +711,7 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LAUNCH_SCREEN_STORYBOARD = LaunchScreen.storyboard;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -739,6 +741,7 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LAUNCH_SCREEN_STORYBOARD = LaunchScreen.storyboard;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
