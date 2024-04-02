@@ -40,7 +40,7 @@ class PullToRefresh extends StatelessWidget {
             color: context.colors.scaffoldBackground,
             height: state.offset,
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 100),
+              duration: const Duration(milliseconds: 200),
               child: Builder(
                 key: state.mode == IndicatorMode.ready
                     ? indicatorKey
@@ -49,12 +49,10 @@ class PullToRefresh extends StatelessWidget {
                   switch (state.mode) {
                     case IndicatorMode.ready:
                     case IndicatorMode.armed:
-                      return Center(
-                        child: Icon(
-                          Icons.refresh,
-                          size: 40.0,
-                          color: context.colors.scheme.primary,
-                        ),
+                      return Icon(
+                        Icons.refresh,
+                        size: 40.0,
+                        color: context.colors.scheme.primary,
                       );
                     case IndicatorMode.processed:
                     case IndicatorMode.done:
@@ -70,28 +68,25 @@ class PullToRefresh extends StatelessWidget {
                         opacity: opacityCurve.transform(
                           min(state.offset / 50.0, 1.0),
                         ),
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Icon(
-                                  Icons.arrow_downward_rounded,
-                                  size: context.textStyles.titleLarge.fontSize,
-                                  color: context.colors.scheme.primary,
-                                ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Icon(
+                                Icons.arrow_downward_rounded,
+                                size: context.textStyles.titleLarge.fontSize,
+                                color: context.colors.scheme.primary,
                               ),
-                              Text(
-                                'Pull to refresh',
-                                style: context.textStyles.labelLarge.copyWith(
-                                  color: context.colors.scheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            ),
+                            Text(
+                              'Pull to refresh',
+                              style: context.textStyles.labelLarge.copyWith(
+                                color: context.colors.scheme.primary,
+                                fontWeight: FontWeight.bold,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       );
                   }
