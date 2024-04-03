@@ -1,50 +1,28 @@
-import 'package:firebase_app_check/firebase_app_check.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
-import 'package:observatory/deals/deals_provider.dart';
-import 'package:observatory/firebase_options.dart';
-import 'package:observatory/main.dart';
-import 'package:observatory/secret_loader.dart';
-import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/shared/api/api.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
+import 'package:integration_test/integration_test.dart';
 
-import 'mocks/deals_mocks.dart';
-import 'mocks/waitlist_mocks.dart';
+import 'utils/app.dart';
 
-void main() {
-  testWidgets('Main Tests', (widgetTester) async {
-    WidgetsApp.debugAllowBannerOverride = false;
+void main() async {
+  final IntegrationTestWidgetsFlutterBinding binding =
+      IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsApp.debugAllowBannerOverride = false;
 
-    await SettingsRepository.init();
+  testWidgets('Deals Page', (widgetTester) async {
+    await initDependencies();
+    await runObservatory(widgetTester);
 
-    GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
-    GetIt.I.registerSingleton<API>(await API.create());
-    GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
-
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-
-    await FirebaseAppCheck.instance.activate();
-
-    await widgetTester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          asyncWaitListProvider.overrideWith(AsyncWaitListNotifierMock.new),
-          asyncDealsProvider.overrideWith(AsyncDealsNotifierMock.new),
-        ],
-        child: const Observatory(),
-      ),
-    );
-
+    await binding.convertFlutterSurfaceToImage();
     await widgetTester.pumpAndSettle();
+    await binding.takeScreenshot('main');
+  });
+
+  testWidgets('Waitlist Page', (widgetTester) async {
+    await runObservatory(widgetTester);
 
     final waitlistButton = find.text('Waitlist');
 
@@ -52,6 +30,14 @@ void main() {
 
     await widgetTester.tap(waitlistButton);
     await widgetTester.pumpAndSettle();
+
+    await binding.convertFlutterSurfaceToImage();
+    await widgetTester.pumpAndSettle();
+    await binding.takeScreenshot('waitlist');
+  });
+
+  testWidgets('Deal Page', (widgetTester) async {
+    await runObservatory(widgetTester);
 
     final liesOfP = find.text('Lies Of P');
 
@@ -71,10 +57,8 @@ void main() {
     expect(find.text('\$41.99'), findsExactly(1));
     expect(find.text('\$49.79'), findsExactly(1));
 
-    await widgetTester.tap(find.byType(BackButton));
+    await binding.convertFlutterSurfaceToImage();
     await widgetTester.pumpAndSettle();
-
-    await widgetTester.tap(find.text('Search'));
-    await widgetTester.pumpAndSettle();
+    await binding.takeScreenshot('deal_page');
   });
 }
