@@ -11,6 +11,7 @@ class IsThereAnyDealInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      key: const Key('is_there_any_deal_info'),
       dense: true,
       subtitle: const Text(''),
       title: RichText(
