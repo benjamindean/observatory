@@ -9,11 +9,14 @@ void main() async {
   final IntegrationTestWidgetsFlutterBinding binding =
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  WidgetsFlutterBinding.ensureInitialized();
-  WidgetsApp.debugAllowBannerOverride = false;
+  setUpAll(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    WidgetsApp.debugAllowBannerOverride = false;
+
+    await initDependencies();
+  });
 
   testWidgets('Deals Page', (widgetTester) async {
-    await initDependencies();
     await runObservatory(widgetTester);
 
     await binding.convertFlutterSurfaceToImage();
