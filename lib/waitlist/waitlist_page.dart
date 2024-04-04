@@ -17,6 +17,7 @@ class WaitListPage extends ConsumerWidget {
         await ref.read(asyncWaitListProvider.notifier).reset();
       },
       child: CustomScrollView(
+        key: const Key('waitlist_scroll_view'),
         controller: PrimaryScrollController.of(context),
         slivers: const [
           WaitlistAppBar(),

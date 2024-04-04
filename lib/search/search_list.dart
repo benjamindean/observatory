@@ -44,6 +44,7 @@ class SearchList extends ConsumerWidget {
         }
 
         return SliverPadding(
+          key: const Key('search_scroll_view'),
           padding: const EdgeInsets.all(6.0),
           sliver: SliverList.builder(
             itemCount: searchState.deals?.length ?? 0,

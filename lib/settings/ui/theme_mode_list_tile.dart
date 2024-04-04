@@ -37,9 +37,18 @@ class ThemeModeListTile extends ConsumerWidget {
           },
         ).toList(),
         children: const [
-          Icon(Icons.brightness_4),
-          Icon(Icons.brightness_7),
-          Icon(Icons.brightness_auto),
+          Icon(
+            Icons.brightness_4,
+            key: Key('theme_togge_dark'),
+          ),
+          Icon(
+            Icons.brightness_7,
+            key: Key('theme_togge_light'),
+          ),
+          Icon(
+            Icons.brightness_auto,
+            key: Key('theme_togge_auto'),
+          ),
         ],
       ),
     );

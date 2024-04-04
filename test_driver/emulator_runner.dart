@@ -1,34 +1,31 @@
 import 'dart:io';
 
 import 'package:emulators/emulators.dart';
+import 'package:logger/logger.dart';
 
 Future<void> main() async {
-  List<String> emulatorIds = [
+  final List<String> emulatorIds = [
+    'iPhone 14 Pro Max',
     'iPhone 8 Plus',
+    'iPad Pro (12.9-inch) (2nd generation)',
+    'iPad Pro (12.9-inch) (6th generation)'
   ];
+  Logger().d('Running tests on emulators: ${emulatorIds.join(', ')}');
 
-  return runFlutterScreenshotTests(emulatorIds);
-}
-
-Future<ProcessResult> runFlutterIntegrationTests(
-  DeviceState state,
-) async {
-  return Process.run('flutter', [
-    'drive',
-    '-d',
-    state.id,
-    '--driver=test_driver/integration_test.dart',
-    '--target=integration_test/main_test.dart',
-  ], environment: {
-    'DEVICE_NAME': state.name
-  });
-}
-
-Future<void> runFlutterScreenshotTests(List<String> emulatorIds) async {
   final Emulators emulators = await Emulators.build();
 
+  await emulators.shutdownAll();
+
   await emulators.forEach(emulatorIds)((device) async {
-    await runFlutterIntegrationTests(device.state);
-    await emulators.drive(device, 'integration_test/main_test.dart');
+    Logger().d('Starting emulator: ${device.state.name} (${device.state.id})');
+
+    final Process process = await emulators.drive(
+      device,
+      'test_driver/main.dart',
+      config: {'locale': 'en'},
+    );
+
+    await stdout.addStream(process.stdout);
+    await stderr.addStream(process.stderr);
   });
 }
