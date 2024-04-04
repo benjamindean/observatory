@@ -8,6 +8,15 @@
 
 Observatory is the essential app for tracking PC game prices and discounts exclusively from legitimate resellers. Easily monitor the best deals for your favorite PC games, ensuring you never miss out on a sale.
 
+## Screenshots
+
+<p align="middle">
+  <img src="./screenshots/ios/iPhone 8 Plus_deals_page.png" width="24%" />
+  <img src="./screenshots/ios/iPhone 8 Plus_deal_page.png" width="24%" />
+  <img src="./screenshots/ios/iPhone 8 Plus_waitlist_page.png" width="24%" />
+  <img src="./screenshots/ios/iPhone 8 Plus_search_page.png" width="24%" />
+</p>
+
 ## Features
 
 - Track discounts from 30+ legitimate resellers.
