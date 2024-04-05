@@ -24,7 +24,7 @@ class AboutLinks extends StatelessWidget {
                   TextSpan(
                     text: 'Official Website',
                     style: TextStyle(
-                      color: context.colors.scheme.secondary,
+                      color: context.colors.scheme.tertiary,
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
@@ -48,7 +48,7 @@ class AboutLinks extends StatelessWidget {
                   TextSpan(
                     text: 'Privacy Policy',
                     style: TextStyle(
-                      color: context.colors.scheme.secondary,
+                      color: context.colors.scheme.tertiary,
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
@@ -72,7 +72,7 @@ class AboutLinks extends StatelessWidget {
                   TextSpan(
                     text: 'Terms & Conditions',
                     style: TextStyle(
-                      color: context.colors.scheme.secondary,
+                      color: context.colors.scheme.tertiary,
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
