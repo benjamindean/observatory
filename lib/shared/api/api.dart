@@ -32,7 +32,7 @@ class API {
     final options = CacheOptions(
       store: HiveCacheStore((await getApplicationDocumentsDirectory()).path),
       policy: CachePolicy.noCache,
-      maxStale: const Duration(days: 7),
+      maxStale: const Duration(days: 14),
     );
 
     final Dio dio = Dio(BaseOptions(responseType: ResponseType.plain))
