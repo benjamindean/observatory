@@ -1,10 +1,4 @@
 PODS:
-  - AppAuth (1.7.3):
-    - AppAuth/Core (= 1.7.3)
-    - AppAuth/ExternalUserAgent (= 1.7.3)
-  - AppAuth/Core (1.7.3)
-  - AppAuth/ExternalUserAgent (1.7.3):
-    - AppAuth/Core
   - AppCheckCore (10.18.1):
     - GoogleUtilities/Environment (~> 7.11)
     - PromisesObjC (~> 2.3)
@@ -64,18 +58,10 @@ PODS:
   - Flutter (1.0.0)
   - flutter_native_splash (0.0.1):
     - Flutter
-  - google_sign_in_ios (0.0.1):
-    - Flutter
-    - FlutterMacOS
-    - GoogleSignIn (~> 7.0.0)
   - GoogleDataTransport (9.4.1):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30911.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleSignIn (7.0.0):
-    - AppAuth (~> 1.5)
-    - GTMAppAuth (< 3.0, >= 1.3)
-    - GTMSessionFetcher/Core (< 4.0, >= 1.1)
   - GoogleUtilities/Environment (7.13.0):
     - GoogleUtilities/Privacy
     - PromisesObjC (< 3.0, >= 1.2)
@@ -88,18 +74,11 @@ PODS:
   - GoogleUtilities/UserDefaults (7.13.0):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - GTMAppAuth (2.0.0):
-    - AppAuth/Core (~> 1.6)
-    - GTMSessionFetcher/Core (< 4.0, >= 1.5)
-  - GTMSessionFetcher/Core (3.3.1)
   - in_app_purchase_storekit (0.0.1):
     - Flutter
     - FlutterMacOS
   - integration_test (0.0.1):
     - Flutter
-  - libphonenumber_plugin (0.0.1):
-    - Flutter
-    - PhoneNumberKit
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
     - nanopb/encode (= 2.30910.0)
@@ -108,12 +87,6 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - PhoneNumberKit (3.7.9):
-    - PhoneNumberKit/PhoneNumberKitCore (= 3.7.9)
-    - PhoneNumberKit/UIKit (= 3.7.9)
-  - PhoneNumberKit/PhoneNumberKitCore (3.7.9)
-  - PhoneNumberKit/UIKit (3.7.9):
-    - PhoneNumberKit/PhoneNumberKitCore
   - PromisesObjC (2.4.0)
   - PromisesSwift (2.4.0):
     - PromisesObjC (= 2.4.0)
@@ -133,10 +106,8 @@ DEPENDENCIES:
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
-  - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/darwin`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
-  - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/darwin`)
@@ -145,7 +116,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AppAuth
     - AppCheckCore
     - Firebase
     - FirebaseAppCheck
@@ -157,12 +127,8 @@ SPEC REPOS:
     - FirebaseInstallations
     - FirebaseSessions
     - GoogleDataTransport
-    - GoogleSignIn
     - GoogleUtilities
-    - GTMAppAuth
-    - GTMSessionFetcher
     - nanopb
-    - PhoneNumberKit
     - PromisesObjC
     - PromisesSwift
 
@@ -177,14 +143,10 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
-  google_sign_in_ios:
-    :path: ".symlinks/plugins/google_sign_in_ios/darwin"
   in_app_purchase_storekit:
     :path: ".symlinks/plugins/in_app_purchase_storekit/darwin"
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
-  libphonenumber_plugin:
-    :path: ".symlinks/plugins/libphonenumber_plugin/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   share_plus:
@@ -197,7 +159,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  AppAuth: a13994980c1ec792f7e2e665acd4d4aa6be43240
   AppCheckCore: d0d4bcb6f90fd9f69958da5350467b79026b38c7
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
   firebase_app_check: e8c287a244939510a9469062ca56227d44278dbc
@@ -213,18 +174,12 @@ SPEC CHECKSUMS:
   FirebaseSessions: cd97fb07674f3906619c871eefbd260a1546c9d3
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
-  google_sign_in_ios: 7c205d44fdc266640375c6ac33d96ba3983dbe02
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
-  GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
-  GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
-  GTMSessionFetcher: 8a1b34ad97ebe6f909fb8b9b77fba99943007556
   in_app_purchase_storekit: 0e4b3c2e43ba1e1281f4f46dd71b0593ce529892
   integration_test: 13825b8a9334a850581300559b8839134b124670
-  libphonenumber_plugin: 48bf4078546377eedaab4aa54978cd0f6fa23072
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
-  PhoneNumberKit: 9c8d546d65c3784721d575a29e712ae8b992fe79
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
   share_plus: 8875f4f2500512ea181eef553c3e27dba5135aad
