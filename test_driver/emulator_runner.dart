@@ -21,7 +21,7 @@ Future<void> main() async {
 
     final Process process = await emulators.drive(
       device,
-      'test_driver/main.dart',
+      'test_driver/screenshot.dart',
       config: {'locale': 'en'},
     );
 
