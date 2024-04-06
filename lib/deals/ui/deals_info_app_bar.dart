@@ -32,13 +32,14 @@ class DealsInfoAppBar extends ConsumerWidget {
                   children: [
                     Text.rich(
                       style: context.themes.text.labelLarge?.copyWith(
-                        color: context.colors.scheme.outline,
+                        color: context.colors.hint,
                       ),
                       TextSpan(
                         children: [
                           TextSpan(
                             text: state.deals.length.toString(),
-                            style: const TextStyle(
+                            style: context.themes.text.labelLarge?.copyWith(
+                              color: context.colors.hint,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -49,13 +50,14 @@ class DealsInfoAppBar extends ConsumerWidget {
                     const DotSeparator(),
                     Text.rich(
                       style: context.themes.text.labelLarge?.copyWith(
-                        color: context.colors.scheme.outline,
+                        color: context.colors.hint,
                       ),
                       TextSpan(
                         children: [
                           TextSpan(
                             text: discounted.toString(),
-                            style: const TextStyle(
+                            style: context.themes.text.labelLarge?.copyWith(
+                              color: context.colors.hint,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

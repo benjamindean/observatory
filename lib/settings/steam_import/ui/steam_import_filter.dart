@@ -1,3 +1,4 @@
+import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
@@ -15,7 +16,14 @@ class SteamImportFilter extends ConsumerWidget {
     return Wrap(
       children: [
         ListTile(
-          title: const Text('All'),
+          title: Text(
+            'All',
+            style: context.textStyles.titleMedium,
+          ),
+          subtitle: Text(
+            'Select all games',
+            style: context.textStyles.bodySmall,
+          ),
           onTap: () async {
             return ref
                 .watch(steamImportProvider.notifier)
@@ -23,11 +31,21 @@ class SteamImportFilter extends ConsumerWidget {
           },
         ),
         ListTile(
-          title: const Text('None'),
+          title: Text(
+            'None',
+            style: context.textStyles.titleMedium,
+          ),
+          subtitle: Text(
+            'De-select all games',
+            style: context.textStyles.bodySmall,
+          ),
           onTap: () async {
             return ref.watch(steamImportProvider.notifier).set([]);
           },
-        )
+        ),
+        Container(
+          height: const SliverAppBar().toolbarHeight,
+        ),
       ],
     );
   }

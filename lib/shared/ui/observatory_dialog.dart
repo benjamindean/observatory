@@ -22,15 +22,32 @@ class ObservatoryDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog.adaptive(
-      title: Text(title),
-      content: Text(body),
+      actionsPadding: const EdgeInsets.fromLTRB(
+        16.0,
+        8.0,
+        16.0,
+        8.0,
+      ),
+      title: Text(
+        title,
+        style: context.textStyles.titleLarge.copyWith(
+          color: context.colors.scheme.onBackground,
+        ),
+      ),
+      content: Text(
+        body,
+        style: context.textStyles.bodyMedium.copyWith(
+          color: context.colors.scheme.onBackground,
+        ),
+      ),
       actions: <Widget>[
         TextButton(
           onPressed: onDiscard,
           child: Text(
             discardText,
             style: TextStyle(
-              color: context.colors.scheme.tertiary,
+              color: context.colors.scheme.secondary,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -40,6 +57,7 @@ class ObservatoryDialog extends StatelessWidget {
             applyText,
             style: TextStyle(
               color: context.colors.scheme.primary,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),

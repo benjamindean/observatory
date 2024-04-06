@@ -26,7 +26,11 @@ class SteamImportPage extends ConsumerWidget {
                 flex: 50,
                 child: BackButton(
                   style: IconButton.styleFrom(
-                    backgroundColor: context.colors.primary.withOpacity(0.1),
+                    backgroundColor: ElevationOverlay.applySurfaceTint(
+                      context.colors.canvas,
+                      context.colors.scheme.surfaceTint,
+                      20,
+                    ),
                   ),
                 ),
               ),
@@ -42,10 +46,8 @@ class SteamImportPage extends ConsumerWidget {
                             ? null
                             : () {
                                 showModalBottomSheet(
-                                  useRootNavigator: true,
                                   useSafeArea: true,
                                   isScrollControlled: true,
-                                  showDragHandle: true,
                                   context: context,
                                   builder: (context) {
                                     return const SteamImportFilter();

@@ -67,14 +67,17 @@ class TagsTile extends ConsumerWidget {
                       label: Text(
                         tags[idx],
                         textScaler: const TextScaler.linear(0.9),
+                        style: context.themes.text.labelLarge?.copyWith(
+                          color: context.colors.scheme.onBackground,
+                        ),
                       ),
                       backgroundColor:
-                          context.colors.scheme.surfaceVariant.withOpacity(0.3),
-                      padding: const EdgeInsets.all(4.0),
-                      visualDensity: VisualDensity.compact,
-                      side: BorderSide(
-                        color: context.colors.canvas,
+                          context.colors.scheme.surfaceVariant.withOpacity(
+                        0.3,
                       ),
+                      padding: const EdgeInsets.all(6.0),
+                      visualDensity: VisualDensity.compact,
+                      side: BorderSide.none,
                     ),
                   );
                 },

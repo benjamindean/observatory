@@ -1,3 +1,4 @@
+import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/search/search_provider.dart';
@@ -52,7 +53,11 @@ class WaitlistAppBar extends ConsumerWidget {
                 color: Colors.transparent,
                 child: const Row(
                   mainAxisSize: MainAxisSize.max,
-                  children: [Expanded(child: Text(''))],
+                  children: [
+                    Expanded(
+                      child: Text(''),
+                    ),
+                  ],
                 ),
               ),
               onTap: () {
@@ -79,7 +84,12 @@ class WaitlistAppBar extends ConsumerWidget {
               ),
               onPressed: () => showWaitlistSorting(context),
               icon: const Icon(Icons.sort),
-              label: const Text('Waitlist'),
+              label: Text(
+                'Waitlist',
+                style: context.textStyles.labelLarge.copyWith(
+                  color: context.colors.scheme.onPrimary,
+                ),
+              ),
             );
           },
         ),

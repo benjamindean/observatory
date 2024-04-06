@@ -90,7 +90,11 @@ class DealCardCompact extends ConsumerWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                color: context.colors.scheme.surfaceVariant.withAlpha(100),
+                color: ElevationOverlay.applySurfaceTint(
+                  context.colors.canvas,
+                  context.colors.scheme.surfaceTint,
+                  3,
+                ),
                 child: Row(
                   children: [
                     Expanded(

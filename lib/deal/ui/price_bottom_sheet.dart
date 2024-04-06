@@ -27,39 +27,39 @@ class PriceBottomSheet extends ConsumerWidget {
             price: price,
           ),
         ),
-        Container(
-          color: context.colors.scheme.background,
-          child: Column(
-            children: [
-              ListTile(
-                leading: Icon(
-                  Icons.open_in_browser,
-                  color: context.colors.scheme.secondary,
-                ),
-                title: const Text('Open in Browser'),
-                onTap: () {
-                  launchUrl(
-                    Uri.parse(price.url),
-                    mode: LaunchMode.externalApplication,
-                  );
-                },
+        Column(
+          children: [
+            ListTile(
+              leading: Icon(
+                Icons.open_in_browser,
+                color: context.colors.scheme.secondary,
               ),
-              ListTile(
-                leading: Icon(
-                  Icons.share,
-                  color: context.colors.scheme.secondary,
-                ),
-                title: const Text('Share Link'),
-                onTap: () {
-                  Share.share(
-                    price.url.toString(),
-                  );
+              title: const Text('Open in Browser'),
+              onTap: () {
+                launchUrl(
+                  Uri.parse(price.url),
+                  mode: LaunchMode.externalApplication,
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.share,
+                color: context.colors.scheme.secondary,
+              ),
+              title: const Text('Share Link'),
+              onTap: () {
+                Share.share(
+                  price.url.toString(),
+                );
 
-                  context.pop();
-                },
-              )
-            ],
-          ),
+                context.pop();
+              },
+            )
+          ],
+        ),
+        Container(
+          height: const SliverAppBar().toolbarHeight,
         ),
       ],
     );

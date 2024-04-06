@@ -10,7 +10,6 @@ void showDealsFilter(BuildContext context) {
     useRootNavigator: true,
     useSafeArea: true,
     isScrollControlled: true,
-    showDragHandle: true,
     context: context,
     builder: (BuildContext context) {
       return const DealsFilter();
@@ -52,9 +51,15 @@ class DealsFilter extends ConsumerWidget {
               },
               title: Text(
                 dealCategoryLabels[category]?['title'] ?? 'Unknown',
+                style: context.textStyles.titleMedium.copyWith(
+                  color: context.colors.scheme.onPrimaryContainer,
+                ),
               ),
               subtitle: Text(
                 dealCategoryLabels[category]?['subtitle'] ?? 'Unknown',
+                style: context.textStyles.bodySmall.copyWith(
+                  color: context.colors.scheme.onPrimaryContainer,
+                ),
               ),
             );
           },

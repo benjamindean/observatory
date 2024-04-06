@@ -16,6 +16,8 @@ import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/ui/theme.dart';
 import 'package:uni_links/uni_links.dart';
 
+final state = GlobalKey<ScaffoldMessengerState>();
+
 class Observatory extends ConsumerWidget {
   const Observatory({
     super.key,
@@ -26,6 +28,7 @@ class Observatory extends ConsumerWidget {
     final ObservatoryTheme theme = ref.watch(themeModeProvider);
 
     return MaterialApp.router(
+      scaffoldMessengerKey: state,
       title: 'Observatory',
       theme: lightTheme,
       darkTheme: darkTheme(darkIsTrueBlack: theme.isTrueBlack),

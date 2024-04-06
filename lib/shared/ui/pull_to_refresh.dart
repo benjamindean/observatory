@@ -31,7 +31,7 @@ class PullToRefresh extends StatelessWidget {
       header: BuilderHeader(
         processedDuration: Duration.zero,
         position: IndicatorPosition.locator,
-        triggerOffset: const SliverAppBar().toolbarHeight + 40,
+        triggerOffset: const SliverAppBar().toolbarHeight + 50,
         springRebound: false,
         clamping: false,
         safeArea: false,

@@ -41,8 +41,11 @@ class StoreSelectPage extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 6.0),
                 child: BackButton(
                   style: IconButton.styleFrom(
-                    backgroundColor:
-                        context.colors.scheme.primary.withOpacity(0.04),
+                    backgroundColor: ElevationOverlay.applySurfaceTint(
+                      context.colors.canvas,
+                      context.colors.scheme.surfaceTint,
+                      20,
+                    ),
                   ),
                 ),
               ),
@@ -58,14 +61,19 @@ class StoreSelectPage extends ConsumerWidget {
                       onPressed: () {
                         showModalBottomSheet(
                           useSafeArea: true,
-                          useRootNavigator: true,
-                          showDragHandle: true,
                           context: rootNavigatorKey.currentContext!,
                           builder: (BuildContext context) {
                             return Wrap(
                               children: [
                                 ListTile(
-                                  title: const Text('Only Steam'),
+                                  title: Text(
+                                    'Only Steam',
+                                    style: context.textStyles.titleMedium,
+                                  ),
+                                  subtitle: Text(
+                                    'Select only Steam',
+                                    style: context.textStyles.bodySmall,
+                                  ),
                                   onTap: () async {
                                     final int steamId = stores
                                         .where(
@@ -84,7 +92,14 @@ class StoreSelectPage extends ConsumerWidget {
                                   },
                                 ),
                                 ListTile(
-                                  title: const Text('All Stores'),
+                                  title: Text(
+                                    'All Stores',
+                                    style: context.textStyles.titleMedium,
+                                  ),
+                                  subtitle: Text(
+                                    'Select all stores',
+                                    style: context.textStyles.bodySmall,
+                                  ),
                                   onTap: () async {
                                     ref.watch(listProvider.notifier).set(
                                           stores.map((e) => e.id).toList(),
@@ -92,7 +107,11 @@ class StoreSelectPage extends ConsumerWidget {
 
                                     context.pop();
                                   },
-                                )
+                                ),
+                                Container(
+                                  color: BottomAppBarTheme.of(context).color,
+                                  height: const SliverAppBar().toolbarHeight,
+                                ),
                               ],
                             );
                           },

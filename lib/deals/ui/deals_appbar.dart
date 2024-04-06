@@ -1,3 +1,4 @@
+import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deals/ui/deals_filter.dart';
@@ -30,7 +31,11 @@ class DealsAppBar extends ConsumerWidget {
                 color: Colors.transparent,
                 child: const Row(
                   mainAxisSize: MainAxisSize.max,
-                  children: [Expanded(child: Text(''))],
+                  children: [
+                    Expanded(
+                      child: Text(''),
+                    ),
+                  ],
                 ),
               ),
               onTap: () {
@@ -47,12 +52,16 @@ class DealsAppBar extends ConsumerWidget {
       actions: [
         FilledButton.icon(
           style: FilledButton.styleFrom(
-            elevation: 0,
+            elevation: 1,
+            side: BorderSide.none,
           ),
           onPressed: () => showDealsFilter(context),
           icon: const Icon(Icons.filter_list),
           label: Text(
             dealCategoryLabels[dealsTab]?['title'] ?? 'Unknown',
+            style: context.textStyles.labelLarge.copyWith(
+              color: context.colors.scheme.onPrimary,
+            ),
           ),
         ),
         const SettingsButton(),

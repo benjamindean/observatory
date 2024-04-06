@@ -9,7 +9,6 @@ void showWaitlistSorting(BuildContext context) {
     useRootNavigator: true,
     useSafeArea: true,
     isScrollControlled: true,
-    showDragHandle: true,
     context: context,
     builder: (BuildContext context) {
       return const WaitlistSortingPage();
@@ -87,20 +86,25 @@ class WaitlistSortingPage extends ConsumerWidget {
                         );
                   }
                 },
-                title: Text(textLabels[sorting]?['title'] ?? 'Price'),
+                title: Text(
+                  textLabels[sorting]?['title'] ?? 'Price',
+                  style: context.textStyles.titleMedium.copyWith(
+                    color: context.colors.scheme.onPrimaryContainer,
+                  ),
+                ),
                 trailing: Builder(
                   builder: (context) {
                     if (sorting == waitlistSorting) {
                       return Chip(
-                        visualDensity: VisualDensity.compact,
+                        side: BorderSide.none,
                         label: Text(
                           textLabels[sorting]?[waitlistSortingDirection] ??
                               'Unknown',
                           style: context.textStyles.labelMedium.copyWith(
-                            color: context.colors.scheme.onPrimaryContainer,
+                            color: context.colors.scheme.onPrimary,
                           ),
                         ),
-                        backgroundColor: context.colors.scheme.primaryContainer,
+                        backgroundColor: context.colors.scheme.primary,
                       );
                     }
 

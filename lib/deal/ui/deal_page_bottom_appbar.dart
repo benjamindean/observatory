@@ -24,8 +24,10 @@ class DealPageBottomAppBar extends ConsumerWidget {
             flex: 50,
             child: BackButton(
               style: IconButton.styleFrom(
-                backgroundColor: context.colors.scheme.primary.withOpacity(
-                  0.1,
+                backgroundColor: ElevationOverlay.applySurfaceTint(
+                  context.colors.canvas,
+                  context.colors.scheme.surfaceTint,
+                  20,
                 ),
               ),
             ),
