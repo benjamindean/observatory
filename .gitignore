@@ -247,3 +247,8 @@ firebase_app_id_file.json
 
 # Plugins (already resolved through pubspec.yaml)
 .flutter-plugins
+
+# Ignore unsupported platforms
+linux/
+windows/
+macos/
