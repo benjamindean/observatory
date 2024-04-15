@@ -9,6 +9,7 @@ import 'package:observatory/deal/ui/deal_bottom_sheet.dart';
 import 'package:observatory/deal/ui/deal_card_compact_info_row.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/widgets/header_image.dart';
 import 'package:observatory/waitlist/waitlist_provider.dart';
@@ -90,11 +91,7 @@ class DealCardCompact extends ConsumerWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                color: ElevationOverlay.applySurfaceTint(
-                  context.colors.canvas,
-                  context.colors.scheme.surfaceTint,
-                  3,
-                ),
+                color: context.elevatedCanvasColor,
                 child: Row(
                   children: [
                     Expanded(

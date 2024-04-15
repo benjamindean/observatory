@@ -1,4 +1,3 @@
-import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +10,7 @@ import 'package:observatory/deal/ui/price_listview.dart';
 import 'package:observatory/deal/ui/reviews_tile.dart';
 import 'package:observatory/deal/deal_provider.dart';
 import 'package:observatory/deal/ui/tags_tile.dart';
+import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/is_there_any_deal_info.dart';
 import 'package:observatory/shared/ui/pull_to_refresh.dart';
@@ -29,11 +29,7 @@ class DealPage extends ConsumerWidget {
     final Deal dealState = ref.watch(dealProvider(deal));
 
     return Container(
-      color: ElevationOverlay.applySurfaceTint(
-        context.colors.canvas,
-        context.colors.scheme.surfaceTint,
-        3,
-      ),
+      color: context.elevatedCanvasColor,
       child: SafeArea(
         child: Scaffold(
           bottomNavigationBar: DealPageBottomAppBar(deal: dealState),

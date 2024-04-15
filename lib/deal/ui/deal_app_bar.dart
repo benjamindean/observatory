@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/widgets/header_image.dart';
 
@@ -34,11 +35,7 @@ class DealAppBar extends ConsumerWidget {
         expandedTitleScale: 1,
         titlePadding: EdgeInsets.zero,
         title: Container(
-          color: ElevationOverlay.applySurfaceTint(
-            context.colors.canvas,
-            context.colors.scheme.surfaceTint,
-            3,
-          ),
+          color: context.elevatedCanvasColor,
           child: ListTile(
             title: Tooltip(
               message: deal.titleParsed,

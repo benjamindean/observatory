@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:observatory/router.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/stores_select/stores_list_provider.dart';
+import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 
@@ -41,11 +42,7 @@ class StoreSelectPage extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 6.0),
                 child: BackButton(
                   style: IconButton.styleFrom(
-                    backgroundColor: ElevationOverlay.applySurfaceTint(
-                      context.colors.canvas,
-                      context.colors.scheme.surfaceTint,
-                      20,
-                    ),
+                    backgroundColor: context.highElevatedCanvasColor,
                   ),
                 ),
               ),

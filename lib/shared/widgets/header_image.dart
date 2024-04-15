@@ -27,8 +27,12 @@ class HeaderImage extends StatelessWidget {
         fit: BoxFit.cover,
         fadeInDuration: const Duration(milliseconds: 100),
         imageUrl: url ?? '',
-        placeholder: (context, url) =>
-            const ObservatoryProgressIndicator(size: 30),
+        placeholder: (context, url) => const Opacity(
+          opacity: 0.3,
+          child: ObservatoryProgressIndicator(
+            size: 30,
+          ),
+        ),
         errorWidget: (context, url, error) => ImageError(isCompact: isCompact),
       );
     } catch (_) {

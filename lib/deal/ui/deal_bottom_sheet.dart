@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/deal/deal_functions.dart';
+import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/waitlist_provider.dart';
 
@@ -27,11 +28,7 @@ class DealBottomSheet extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
-          tileColor: ElevationOverlay.applySurfaceTint(
-            context.colors.canvas,
-            context.colors.scheme.surfaceTint,
-            3,
-          ),
+          tileColor: context.elevatedCanvasColor,
           contentPadding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
           title: Text(
             deal.titleParsed,

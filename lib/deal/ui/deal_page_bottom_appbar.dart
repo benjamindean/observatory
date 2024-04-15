@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deal/deal_functions.dart';
 import 'package:observatory/deal/ui/waitlist_button.dart';
+import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 
 class DealPageBottomAppBar extends ConsumerWidget {
@@ -24,11 +25,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
             flex: 50,
             child: BackButton(
               style: IconButton.styleFrom(
-                backgroundColor: ElevationOverlay.applySurfaceTint(
-                  context.colors.canvas,
-                  context.colors.scheme.surfaceTint,
-                  20,
-                ),
+                backgroundColor: context.highElevatedCanvasColor,
               ),
             ),
           ),

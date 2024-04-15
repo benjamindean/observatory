@@ -18,6 +18,21 @@ import 'package:observatory/shared/models/store.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:path_provider/path_provider.dart';
 
+final Map<String, String> dealFilters = {
+  'trending': 'Trending',
+  'time': 'Newest',
+  'cut': 'Highest Price Cut',
+  'price': 'Lowest Price',
+  'expiry': 'Expiring Soon',
+  'release-date': 'Release Date',
+  'rank': 'Most Popular',
+  'steam-players': 'Steam Players Count',
+  'steam-reviews': 'Steam Reviews',
+  'opencritic': 'OpenCritic Score',
+  'metacritic': 'Metacritic Score',
+  'metacritic-users': 'Metacritic User Score',
+};
+
 class API {
   final Dio dio;
   final CacheOptions cacheOptions;
