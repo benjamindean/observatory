@@ -109,15 +109,15 @@ class SteamImportForm extends ConsumerWidget {
                                         const TextSpan(
                                             text: ' games in your wishlist.'),
                                         const TextSpan(
-                                            text:
-                                                'Please verify that everything is correct and then press '),
+                                          text:
+                                              'Please verify that everything is correct and then press ',
+                                        ),
                                         const TextSpan(
                                           text: 'Import.',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        const TextSpan(text: '.'),
                                       ],
                                     ),
                                   ),

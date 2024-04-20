@@ -277,7 +277,7 @@ class API {
             id: 'none',
             title: e.value['name'],
             steamId: 'app/${e.key}',
-            added: e.value['added'],
+            added: (e.value['added'] ?? 0) * 1000,
             source: DealSource.steam,
           ),
         )
