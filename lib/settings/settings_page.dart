@@ -1,7 +1,5 @@
-import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:observatory/settings/purchase/purchase_provider.dart';
-import 'package:observatory/settings/purchase/purchase_state.dart';
+import 'package:observatory/settings/purchase/purchase_tile.dart';
 import 'package:observatory/settings/ui/about_links.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
@@ -28,9 +26,6 @@ class SettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<SettingsState> settings = ref.watch(asyncSettingsProvider);
-    final AsyncValue<PurchaseState> purchases = ref.watch(
-      asyncPurchaseProvider,
-    );
 
     return Scaffold(
       appBar: AppBar(
@@ -229,76 +224,7 @@ class SettingsPage extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  purchases.when(
-                    data: (data) {
-                      if (data.products.isEmpty) {
-                        return const SizedBox.shrink();
-                      }
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const ListHeading(title: 'Support the app'),
-                          const ListTile(
-                            subtitle: Text(
-                              'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it. Any amount is appreciated. Please note that there are no additional features or benefits for supporters.',
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                              16.0,
-                              8.0,
-                              16.0,
-                              8.0,
-                            ),
-                            child: Wrap(
-                              spacing: 12.0,
-                              children: data.products
-                                  .map(
-                                    (e) => OutlinedButton(
-                                      onPressed: () {
-                                        ref
-                                            .watch(
-                                                asyncPurchaseProvider.notifier)
-                                            .purchase(e);
-                                      },
-                                      child: Text(
-                                        e.price,
-                                        style: context.themes.text.titleMedium
-                                            ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: context
-                                              .colors.scheme.onBackground,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                    error: (error, stackTrace) {
-                      Logger().e(
-                        'Failed to load purchases',
-                        error: error,
-                        stackTrace: stackTrace,
-                      );
-
-                      return const SizedBox.shrink();
-                    },
-                    loading: () {
-                      return Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: LinearProgressIndicator(
-                          borderRadius: BorderRadius.circular(12.0),
-                          minHeight: 2,
-                          color: context.colors.scheme.onSurfaceVariant,
-                        ),
-                      );
-                    },
-                  ),
+                  const PurchaseTile(),
                   const ListHeading(title: 'About'),
                   const AboutLinks()
                 ],
