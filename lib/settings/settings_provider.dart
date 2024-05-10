@@ -2,7 +2,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:observatory/deals/deals_provider.dart';
-import 'package:observatory/settings/purchase_provider.dart';
+import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/settings_state.dart';
 

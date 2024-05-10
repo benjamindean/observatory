@@ -1,7 +1,7 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:observatory/settings/purchase_provider.dart';
+import 'package:observatory/settings/purchase/purchase_provider.dart';
+import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/settings/ui/about_links.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
@@ -28,7 +28,7 @@ class SettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<SettingsState> settings = ref.watch(asyncSettingsProvider);
-    final AsyncValue<List<ProductDetails>> purchases = ref.watch(
+    final AsyncValue<PurchaseState> purchases = ref.watch(
       asyncPurchaseProvider,
     );
 
@@ -231,7 +231,7 @@ class SettingsPage extends ConsumerWidget {
                   ),
                   purchases.when(
                     data: (data) {
-                      if (data.isEmpty) {
+                      if (data.products.isEmpty) {
                         return const SizedBox.shrink();
                       }
 
@@ -253,7 +253,7 @@ class SettingsPage extends ConsumerWidget {
                             ),
                             child: Wrap(
                               spacing: 12.0,
-                              children: data
+                              children: data.products
                                   .map(
                                     (e) => OutlinedButton(
                                       onPressed: () {

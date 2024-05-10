@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:observatory/settings/purchase/purchase_state.dart';
 
-class AsyncPurchaseNotifier extends AsyncNotifier<List<ProductDetails>> {
+class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
   StreamSubscription<List<PurchaseDetails>>? subscription;
 
   Future<List<ProductDetails>> _fetchPurchases() async {
@@ -30,7 +31,7 @@ class AsyncPurchaseNotifier extends AsyncNotifier<List<ProductDetails>> {
   }
 
   @override
-  Future<List<ProductDetails>> build() async {
+  Future<PurchaseState> build() async {
     ref.onDispose(() {
       subscription?.cancel();
     });
@@ -40,6 +41,12 @@ class AsyncPurchaseNotifier extends AsyncNotifier<List<ProductDetails>> {
 
     subscription = purchaseUpdated.listen((purchaseDetailsList) async {
       for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
+        state = await AsyncValue.guard(
+          () async => state.requireValue.copyWith(
+            status: purchaseDetails.status,
+          ),
+        );
+
         switch (purchaseDetails.status) {
           case PurchaseStatus.pending:
             break;
@@ -65,12 +72,17 @@ class AsyncPurchaseNotifier extends AsyncNotifier<List<ProductDetails>> {
       return;
     });
 
-    return _fetchPurchases();
+    return PurchaseState(
+      products: await _fetchPurchases(),
+      status: PurchaseStatus.canceled,
+    );
   }
 
   Future<void> reset() async {
+    subscription?.cancel();
+
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() => _fetchPurchases());
+    state = await AsyncValue.guard(() => build());
   }
 
   Future<void> purchase(ProductDetails product) async {
@@ -85,6 +97,6 @@ class AsyncPurchaseNotifier extends AsyncNotifier<List<ProductDetails>> {
 }
 
 final asyncPurchaseProvider =
-    AsyncNotifierProvider<AsyncPurchaseNotifier, List<ProductDetails>>(() {
+    AsyncNotifierProvider<AsyncPurchaseNotifier, PurchaseState>(() {
   return AsyncPurchaseNotifier();
 });
