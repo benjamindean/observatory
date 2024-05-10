@@ -1,6 +1,7 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
@@ -45,11 +46,13 @@ class PurchaseTile extends ConsumerWidget {
                   children: data.products
                       .map(
                         (e) => OutlinedButton(
-                          onPressed: () {
-                            ref
-                                .watch(asyncPurchaseProvider.notifier)
-                                .purchase(e);
-                          },
+                          onPressed: data.status != PurchaseStatus.canceled
+                              ? () {
+                                  ref
+                                      .watch(asyncPurchaseProvider.notifier)
+                                      .purchase(e);
+                                }
+                              : null,
                           child: Text(
                             e.price,
                             style: context.themes.text.titleMedium?.copyWith(
