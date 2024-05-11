@@ -25,6 +25,8 @@ class UnfinishedImportDialog extends ConsumerWidget {
       onApply: () async {
         ref.read(steamImportProvider.notifier).import().then(
           (result) {
+            context.pop();
+
             if (result == null) {
               return;
             }
