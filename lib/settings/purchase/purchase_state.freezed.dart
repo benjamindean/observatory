@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PurchaseState {
   List<ProductDetails> get products => throw _privateConstructorUsedError;
   PurchaseStatus? get status => throw _privateConstructorUsedError;
+  bool? get isPending => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PurchaseStateCopyWith<PurchaseState> get copyWith =>
@@ -30,7 +31,8 @@ abstract class $PurchaseStateCopyWith<$Res> {
           PurchaseState value, $Res Function(PurchaseState) then) =
       _$PurchaseStateCopyWithImpl<$Res, PurchaseState>;
   @useResult
-  $Res call({List<ProductDetails> products, PurchaseStatus? status});
+  $Res call(
+      {List<ProductDetails> products, PurchaseStatus? status, bool? isPending});
 }
 
 /// @nodoc
@@ -48,6 +50,7 @@ class _$PurchaseStateCopyWithImpl<$Res, $Val extends PurchaseState>
   $Res call({
     Object? products = null,
     Object? status = freezed,
+    Object? isPending = freezed,
   }) {
     return _then(_value.copyWith(
       products: null == products
@@ -58,6 +61,10 @@ class _$PurchaseStateCopyWithImpl<$Res, $Val extends PurchaseState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as PurchaseStatus?,
+      isPending: freezed == isPending
+          ? _value.isPending
+          : isPending // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -70,7 +77,8 @@ abstract class _$$PurchaseStateImplCopyWith<$Res>
       __$$PurchaseStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<ProductDetails> products, PurchaseStatus? status});
+  $Res call(
+      {List<ProductDetails> products, PurchaseStatus? status, bool? isPending});
 }
 
 /// @nodoc
@@ -86,6 +94,7 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
   $Res call({
     Object? products = null,
     Object? status = freezed,
+    Object? isPending = freezed,
   }) {
     return _then(_$PurchaseStateImpl(
       products: null == products
@@ -96,6 +105,10 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as PurchaseStatus?,
+      isPending: freezed == isPending
+          ? _value.isPending
+          : isPending // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -104,7 +117,9 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
 
 class _$PurchaseStateImpl implements _PurchaseState {
   _$PurchaseStateImpl(
-      {final List<ProductDetails> products = const [], this.status})
+      {final List<ProductDetails> products = const [],
+      this.status,
+      this.isPending = false})
       : _products = products;
 
   final List<ProductDetails> _products;
@@ -118,10 +133,13 @@ class _$PurchaseStateImpl implements _PurchaseState {
 
   @override
   final PurchaseStatus? status;
+  @override
+  @JsonKey()
+  final bool? isPending;
 
   @override
   String toString() {
-    return 'PurchaseState(products: $products, status: $status)';
+    return 'PurchaseState(products: $products, status: $status, isPending: $isPending)';
   }
 
   @override
@@ -130,12 +148,14 @@ class _$PurchaseStateImpl implements _PurchaseState {
         (other.runtimeType == runtimeType &&
             other is _$PurchaseStateImpl &&
             const DeepCollectionEquality().equals(other._products, _products) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.isPending, isPending) ||
+                other.isPending == isPending));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_products), status);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_products), status, isPending);
 
   @JsonKey(ignore: true)
   @override
@@ -147,12 +167,15 @@ class _$PurchaseStateImpl implements _PurchaseState {
 abstract class _PurchaseState implements PurchaseState {
   factory _PurchaseState(
       {final List<ProductDetails> products,
-      final PurchaseStatus? status}) = _$PurchaseStateImpl;
+      final PurchaseStatus? status,
+      final bool? isPending}) = _$PurchaseStateImpl;
 
   @override
   List<ProductDetails> get products;
   @override
   PurchaseStatus? get status;
+  @override
+  bool? get isPending;
   @override
   @JsonKey(ignore: true)
   _$$PurchaseStateImplCopyWith<_$PurchaseStateImpl> get copyWith =>

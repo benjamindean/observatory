@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
 
 class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
@@ -63,7 +64,19 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
         }
 
         if (purchaseDetails.pendingCompletePurchase) {
+          state = await AsyncValue.guard(
+            () async => state.requireValue.copyWith(
+              isPending: true,
+            ),
+          );
+
           await InAppPurchase.instance.completePurchase(purchaseDetails);
+
+          state = await AsyncValue.guard(
+            () async => state.requireValue.copyWith(
+              isPending: false,
+            ),
+          );
         }
       }
     }, onDone: () {
@@ -86,13 +99,23 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
   }
 
   Future<void> purchase(ProductDetails product) async {
-    final PurchaseParam purchaseParam = PurchaseParam(
-      productDetails: product,
-    );
+    try {
+      final PurchaseParam purchaseParam = PurchaseParam(
+        productDetails: product,
+      );
 
-    await InAppPurchase.instance.buyNonConsumable(
-      purchaseParam: purchaseParam,
-    );
+      await InAppPurchase.instance.buyNonConsumable(
+        purchaseParam: purchaseParam,
+      );
+    } catch (error, stackTrace) {
+      Logger().e(
+        'Failed to purchase product',
+        error: error,
+        stackTrace: stackTrace,
+      );
+
+      return;
+    }
   }
 }
 

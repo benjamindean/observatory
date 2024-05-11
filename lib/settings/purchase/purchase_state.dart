@@ -8,5 +8,6 @@ class PurchaseState with _$PurchaseState {
   factory PurchaseState({
     @Default([]) List<ProductDetails> products,
     PurchaseStatus? status,
+    @Default(false) bool? isPending,
   }) = _PurchaseState;
 }

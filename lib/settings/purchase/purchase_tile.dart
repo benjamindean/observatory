@@ -46,18 +46,20 @@ class PurchaseTile extends ConsumerWidget {
                   children: data.products
                       .map(
                         (e) => OutlinedButton(
-                          onPressed: data.status != PurchaseStatus.canceled
-                              ? () {
+                          onPressed: PurchaseStatus.pending == data.status
+                              ? null
+                              : () {
                                   ref
                                       .watch(asyncPurchaseProvider.notifier)
                                       .purchase(e);
-                                }
-                              : null,
+                                },
                           child: Text(
                             e.price,
                             style: context.themes.text.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: context.colors.scheme.onBackground,
+                              color: PurchaseStatus.pending == data.status
+                                  ? context.colors.disabled
+                                  : context.colors.scheme.onBackground,
                             ),
                           ),
                         ),
