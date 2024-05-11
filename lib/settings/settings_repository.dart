@@ -145,6 +145,20 @@ class SettingsRepository {
     );
   }
 
+  Future<void> removeDeals(List<Deal> deals) async {
+    return savedDealsBox.deleteAll(
+      deals.map((e) => e.id).toList(),
+    );
+  }
+
+  Future<void> removeDealsFromSteam() async {
+    final List<Deal> steamDeals = savedDealsBox.values
+        .where((d) => d.source == DealSource.steam)
+        .toList();
+
+    return removeDeals(steamDeals);
+  }
+
   List<int> getSelectedStores() {
     return settingsBox.get(
       PREF_SELECTED_STORES,

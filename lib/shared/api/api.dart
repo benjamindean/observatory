@@ -239,7 +239,9 @@ class API {
     final Map<String, dynamic> idsMap = json.decode(response.toString());
 
     return deals
-        .map((e) => e.copyWith(id: idsMap[e.steamId] ?? 'none'))
+        .map(
+          (e) => e.copyWith(id: idsMap[e.steamId] ?? 'none'),
+        )
         .where((e) => e.id != 'none')
         .toList();
   }

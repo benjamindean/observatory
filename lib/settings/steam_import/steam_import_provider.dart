@@ -65,7 +65,10 @@ class SteamImportNotifier extends AutoDisposeNotifier<SteamImportState> {
         state.selectedDeals,
       );
 
-      await GetIt.I<SettingsRepository>().saveDeals(deals.toList());
+      if (deals.isNotEmpty) {
+        await GetIt.I<SettingsRepository>().removeDealsFromSteam();
+        await GetIt.I<SettingsRepository>().saveDeals(deals.toList());
+      }
 
       if (state.username != null) {
         await GetIt.I<SettingsRepository>().setSteamUsername(state.username!);

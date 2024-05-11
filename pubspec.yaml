@@ -1,7 +1,7 @@
 name: observatory
 description: Game price tracker.
 publish_to: 'none' 
-version: 1.0.1
+version: 1.0.2
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
@@ -17,7 +17,7 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter_spinkit: ^5.2.0
   freezed_annotation: ^2.4.1
-  json_annotation: ^4.8.1 
+  json_annotation: ^4.9.0 
   dio: ^5.3.2
   logger: ^2.0.2
   flex_color_scheme: ^7.3.1
@@ -27,24 +27,24 @@ dependencies:
   dio_cache_interceptor: ^3.4.2
   dio_cache_interceptor_hive_store: ^3.2.1
   path_provider: ^2.1.1
-  go_router: ^13.2.1
-  share_plus: ^8.0.2
+  go_router: ^14.1.0
+  share_plus: ^9.0.0
   intl: ^0.18.1
   get_it: ^7.6.4
   font_awesome_flutter: ^10.5.0
-  firebase_crashlytics: ^3.4.19
-  firebase_core: ^2.27.1
+  firebase_crashlytics: ^3.5.5
+  firebase_core: ^2.31.0
   flutter_form_builder: ^9.1.1
   form_builder_validators: ^9.1.0
   flutter_slidable: ^3.1.0
   collection: ^1.18.0
   awesome_flutter_extensions: ^1.1.1
-  firebase_app_check: ^0.2.1+18
+  firebase_app_check: ^0.2.2+5
   in_app_purchase: ^3.1.13
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.1
-  easy_refresh: ^3.3.4
+  easy_refresh: ^3.3.5+1
 
 flutter_launcher_icons:
   android:
@@ -65,11 +65,11 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter
   mockito: ^5.4.4
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
   build_runner: ^2.4.6
   freezed: ^2.4.2
-  json_serializable: ^6.7.1
-  lints: ^3.0.0
+  json_serializable: ^6.8.0
+  lints: ^4.0.0
   custom_lint: 
   riverpod_lint: 
   emulators: ^0.5.1

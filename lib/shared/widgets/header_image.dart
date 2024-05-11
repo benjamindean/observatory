@@ -34,6 +34,7 @@ class HeaderImage extends StatelessWidget {
           ),
         ),
         errorWidget: (context, url, error) => ImageError(isCompact: isCompact),
+        errorListener: (value) => true,
       );
     } catch (_) {
       return ImageError(isCompact: isCompact);
