@@ -164,12 +164,6 @@ html[dir=rtl] .app__logo-wrapper {
 .app__description {
   font-size: var(--font-lg);
 }
-@media (max-width: 768px) {
-  .app__description {
-    margin-top: 8px;
-    margin-bottom: 0;
-  }
-}
 .app__screenshots-list {
   display: grid;
   grid-template-columns: 200px 200px 200px 200px 200px 200px;
@@ -201,22 +195,6 @@ html[dir=rtl] .app__logo-wrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-.app__buttons--mobile {
-  display: none;
-}
-@media (max-width: 768px) {
-  .app__buttons {
-    margin-left: 0;
-    margin-bottom: 64px;
-  }
-  .app__buttons--mobile {
-    display: flex;
-    justify-content: center;
-  }
-  .app__buttons--desktop {
-    display: none;
-  }
 }
 .app__button-play img {
   width: 176.4px;
