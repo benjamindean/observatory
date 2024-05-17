@@ -26,7 +26,7 @@ class LinksTile extends StatelessWidget {
         subtitle: Text(
           'Steam, Metacritic, YouTube, etc.',
           style: context.themes.text.labelLarge?.copyWith(
-            color: context.colors.scheme.onBackground,
+            color: context.colors.scheme.onSurface,
           ),
         ),
         children: [

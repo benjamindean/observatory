@@ -67,7 +67,7 @@ class BundlesTile extends ConsumerWidget {
                 return Text(
                   '${bundles.length} ${Intl.plural(bundles.length, one: 'bundle', other: 'bundles')} currently available!',
                   style: context.themes.text.labelLarge?.copyWith(
-                    color: context.colors.scheme.onBackground,
+                    color: context.colors.scheme.onSurface,
                   ),
                 );
               },
@@ -86,7 +86,7 @@ class BundlesTile extends ConsumerWidget {
                 return Text(
                   'This game is not currently bundled',
                   style: context.themes.text.labelLarge?.copyWith(
-                    color: context.colors.scheme.onBackground,
+                    color: context.colors.scheme.onSurface,
                   ),
                 );
               },

@@ -7,6 +7,7 @@ import 'package:observatory/deal/ui/deal_bottom_sheet.dart';
 import 'package:observatory/deal/ui/deal_card_info_row.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/widgets/header_image.dart';
 
@@ -48,25 +49,28 @@ class DealCardExpanded extends ConsumerWidget {
       },
       child: Card(
         elevation: 2,
-        child: Column(
-          children: <Widget>[
-            Builder(
-              builder: (context) {
-                if (!showHeaders) {
-                  return const SizedBox.shrink();
-                }
+        child: Container(
+          color: context.elevatedCanvasColor,
+          child: Column(
+            children: <Widget>[
+              Builder(
+                builder: (context) {
+                  if (!showHeaders) {
+                    return const SizedBox.shrink();
+                  }
 
-                return AspectRatio(
-                  aspectRatio: IMAGE_WIDTH / IMAGE_HEIGHT,
-                  child: HeaderImage(
-                    url: deal.headerImageURL,
-                    id: deal.id,
-                  ),
-                );
-              },
-            ),
-            DealCardInfoRow(deal: deal),
-          ],
+                  return AspectRatio(
+                    aspectRatio: IMAGE_WIDTH / IMAGE_HEIGHT,
+                    child: HeaderImage(
+                      url: deal.headerImageURL,
+                      id: deal.id,
+                    ),
+                  );
+                },
+              ),
+              DealCardInfoRow(deal: deal),
+            ],
+          ),
         ),
       ),
     );

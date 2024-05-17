@@ -52,7 +52,7 @@ class DealCardCompactInfoRow extends ConsumerWidget {
                     style: context.themes.text.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       overflow: TextOverflow.ellipsis,
-                      color: context.colors.scheme.onBackground,
+                      color: context.colors.scheme.onSurface,
                     ),
                   )
                 ],
@@ -62,7 +62,7 @@ class DealCardCompactInfoRow extends ConsumerWidget {
                 price.shop.name,
                 style: context.themes.text.labelMedium?.copyWith(
                   overflow: TextOverflow.ellipsis,
-                  color: context.colors.scheme.onBackground,
+                  color: context.colors.scheme.onSurface,
                 ),
               ),
               RichText(

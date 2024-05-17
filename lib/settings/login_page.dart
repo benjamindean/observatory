@@ -177,7 +177,7 @@
 //                           Text(
 //                             formType == FormType.login ? 'Sign In' : 'Sign Up',
 //                             style: context.themes.text.headlineMedium?.copyWith(
-//                               color: context.colors.scheme.onBackground,
+//                               color: context.colors.scheme.onSurface,
 //                             ),
 //                           )
 //                         ],
@@ -195,7 +195,7 @@
 //                                   'No account?',
 //                                   style:
 //                                       context.themes.text.titleSmall?.copyWith(
-//                                     color: context.colors.scheme.onBackground,
+//                                     color: context.colors.scheme.onSurface,
 //                                   ),
 //                                 ),
 //                                 TextButton(
@@ -214,7 +214,7 @@
 //                               Text(
 //                                 'Already have an account?',
 //                                 style: context.themes.text.titleSmall?.copyWith(
-//                                   color: context.colors.scheme.onBackground,
+//                                   color: context.colors.scheme.onSurface,
 //                                 ),
 //                               ),
 //                               TextButton(
@@ -288,7 +288,7 @@
 //                   Text(
 //                     'Or sign in with',
 //                     style: context.themes.text.titleSmall?.copyWith(
-//                       color: context.colors.scheme.onBackground,
+//                       color: context.colors.scheme.onSurface,
 //                     ),
 //                   ),
 //                   Padding(
@@ -326,7 +326,7 @@
 //                           },
 //                           icon: Icon(
 //                             FontAwesomeIcons.google,
-//                             color: context.colors.scheme.onBackground,
+//                             color: context.colors.scheme.onSurface,
 //                           ),
 //                         )
 //                       ],

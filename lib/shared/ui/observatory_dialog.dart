@@ -31,13 +31,13 @@ class ObservatoryDialog extends StatelessWidget {
       title: Text(
         title,
         style: context.textStyles.titleLarge.copyWith(
-          color: context.colors.scheme.onBackground,
+          color: context.colors.scheme.onSurface,
         ),
       ),
       content: Text(
         body,
         style: context.textStyles.bodyMedium.copyWith(
-          color: context.colors.scheme.onBackground,
+          color: context.colors.scheme.onSurface,
         ),
       ),
       actions: <Widget>[

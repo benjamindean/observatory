@@ -59,7 +59,7 @@ class PurchaseTile extends ConsumerWidget {
                               fontWeight: FontWeight.bold,
                               color: PurchaseStatus.pending == data.status
                                   ? context.colors.disabled
-                                  : context.colors.scheme.onBackground,
+                                  : context.colors.scheme.onSurface,
                             ),
                           ),
                         ),

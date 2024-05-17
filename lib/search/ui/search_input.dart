@@ -32,6 +32,7 @@ class SearchInput extends ConsumerWidget {
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,
         border: InputBorder.none,
+        contentPadding: const EdgeInsets.all(16),
         prefixIcon: Tooltip(
           message: 'Go Back',
           child: IconButton(

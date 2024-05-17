@@ -87,59 +87,62 @@ class DealCardCompact extends ConsumerWidget {
         },
         child: Card(
           elevation: 2,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                color: context.elevatedCanvasColor,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          deal.titleParsed,
-                          maxLines: 1,
-                          style: context.themes.text.titleSmall?.copyWith(
-                            color: context.colors.scheme.onSurface,
+          child: Container(
+            color: context.elevatedCanvasColor,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  color: context.highElevatedCanvasColor,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            deal.titleParsed,
+                            maxLines: 1,
+                            style: context.themes.text.titleSmall?.copyWith(
+                              color: context.colors.scheme.onSurface,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.start,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.start,
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Builder(
+                      builder: (context) {
+                        if (!showHeaders) {
+                          return const SizedBox.shrink();
+                        }
+
+                        return Expanded(
+                          flex: 50,
+                          child: AspectRatio(
+                            aspectRatio: IMAGE_WIDTH / IMAGE_HEIGHT,
+                            child: HeaderImage(
+                              url: deal.headerImageURL,
+                              id: deal.id,
+                              isCompact: true,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    Expanded(
+                      flex: 50,
+                      child: DealCardCompactInfoRow(deal: deal),
                     ),
                   ],
                 ),
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Builder(
-                    builder: (context) {
-                      if (!showHeaders) {
-                        return const SizedBox.shrink();
-                      }
-
-                      return Expanded(
-                        flex: 50,
-                        child: AspectRatio(
-                          aspectRatio: IMAGE_WIDTH / IMAGE_HEIGHT,
-                          child: HeaderImage(
-                            url: deal.headerImageURL,
-                            id: deal.id,
-                            isCompact: true,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  Expanded(
-                    flex: 50,
-                    child: DealCardCompactInfoRow(deal: deal),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

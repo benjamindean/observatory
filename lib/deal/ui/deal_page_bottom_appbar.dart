@@ -17,6 +17,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return BottomAppBar(
+      color: context.colors.scheme.surface,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
@@ -25,7 +26,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
             flex: 50,
             child: BackButton(
               style: IconButton.styleFrom(
-                backgroundColor: context.highElevatedCanvasColor,
+                backgroundColor: context.elevatedCanvasColor,
               ),
             ),
           ),

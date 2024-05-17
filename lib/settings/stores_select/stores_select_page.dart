@@ -33,6 +33,7 @@ class StoreSelectPage extends ConsumerWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
+        color: context.colors.scheme.surface,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -42,7 +43,7 @@ class StoreSelectPage extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 6.0),
                 child: BackButton(
                   style: IconButton.styleFrom(
-                    backgroundColor: context.highElevatedCanvasColor,
+                    backgroundColor: context.elevatedCanvasColor,
                   ),
                 ),
               ),

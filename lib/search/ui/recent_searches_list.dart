@@ -1,9 +1,11 @@
+import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/search/search_provider.dart';
+import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
@@ -79,26 +81,29 @@ class RecentSearchesList extends ConsumerWidget {
               }
 
               return Card(
-                elevation: 1,
-                child: InkWell(
-                  onTap: () async {
-                    await ref
-                        .read(searchResultsProvider.notifier)
-                        .performSearch(recentsList[index]);
-                  },
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.fromLTRB(16.0, 0, 0, 0),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.remove_circle_rounded),
-                      onPressed: () async {
-                        await ref
-                            .read(asynRecentsProvider.notifier)
-                            .removeRecent(
-                              recentsList[index],
-                            );
-                      },
+                elevation: 2,
+                child: Container(
+                  color: context.elevatedCanvasColor,
+                  child: InkWell(
+                    onTap: () async {
+                      await ref
+                          .read(searchResultsProvider.notifier)
+                          .performSearch(recentsList[index]);
+                    },
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.fromLTRB(16.0, 0, 0, 0),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.remove_circle_rounded),
+                        onPressed: () async {
+                          await ref
+                              .read(asynRecentsProvider.notifier)
+                              .removeRecent(
+                                recentsList[index],
+                              );
+                        },
+                      ),
+                      title: Text(recentsList[index]),
                     ),
-                    title: Text(recentsList[index]),
                   ),
                 ),
               );

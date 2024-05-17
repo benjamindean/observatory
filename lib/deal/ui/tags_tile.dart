@@ -68,11 +68,12 @@ class TagsTile extends ConsumerWidget {
                         tags[idx],
                         textScaler: const TextScaler.linear(0.9),
                         style: context.themes.text.labelLarge?.copyWith(
-                          color: context.colors.scheme.onBackground,
+                          color: context.colors.scheme.onSurface,
                         ),
                       ),
-                      backgroundColor:
-                          context.colors.scheme.surfaceVariant.withOpacity(
+                      backgroundColor: context
+                          .colors.scheme.surfaceContainerHighest
+                          .withOpacity(
                         0.3,
                       ),
                       padding: const EdgeInsets.all(6.0),
@@ -101,7 +102,7 @@ class TagsTile extends ConsumerWidget {
             //               )
             //           ],
             //           style: context.themes.text.labelLarge?.copyWith(
-            //             color: context.colors.scheme.onBackground,
+            //             color: context.colors.scheme.onSurface,
             //           ),
             //         );
             //       },

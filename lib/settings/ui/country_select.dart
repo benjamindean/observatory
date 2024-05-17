@@ -69,14 +69,14 @@
 //     return MaterialBanner(
 //       leading: Icon(
 //         Icons.info,
-//         color: context.colors.scheme.onBackground,
+//         color: context.colors.scheme.onSurface,
 //       ),
 //       content: Padding(
 //         padding: const EdgeInsets.only(bottom: 16.0, top: 12.0),
 //         child: Text(
 //           'Country doesn\'t affect prices and available stores as much as region does. If your contry is not in the list - just pick the closest one.',
 //           style: context.themes.text.labelMedium?.copyWith(
-//             color: context.colors.scheme.onBackground,
+//             color: context.colors.scheme.onSurface,
 //           ),
 //         ),
 //       ),

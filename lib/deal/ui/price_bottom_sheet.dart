@@ -22,7 +22,7 @@ class PriceBottomSheet extends ConsumerWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(8.0),
-          color: context.colors.scheme.surface,
+          color: context.colors.scheme.surfaceContainer,
           child: PriceCard(
             price: price,
           ),

@@ -68,7 +68,7 @@ class LowestPriceTile extends ConsumerWidget {
             return RichText(
               text: TextSpan(
                 style: context.themes.text.labelLarge?.copyWith(
-                  color: context.colors.scheme.onBackground,
+                  color: context.colors.scheme.onSurface,
                 ),
                 children: <TextSpan>[
                   TextSpan(

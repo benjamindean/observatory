@@ -19,100 +19,104 @@ class SteamImportPage extends ConsumerWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        child: Column(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(
-                flex: 50,
-                child: BackButton(
-                  style: IconButton.styleFrom(
-                    backgroundColor: context.highElevatedCanvasColor,
+        color: context.colors.scheme.surface,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  flex: 50,
+                  child: BackButton(
+                    style: IconButton.styleFrom(
+                      backgroundColor: context.elevatedCanvasColor,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                      child: IconButton(
-                        onPressed: steamImportState.deals == null
+                Expanded(
+                  flex: 50,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                        child: IconButton(
+                          onPressed: steamImportState.deals == null
+                              ? null
+                              : () {
+                                  showModalBottomSheet(
+                                    useSafeArea: true,
+                                    isScrollControlled: true,
+                                    context: context,
+                                    builder: (context) {
+                                      return const SteamImportFilter();
+                                    },
+                                  );
+                                },
+                          icon: const Icon(Icons.filter_list),
+                        ),
+                      ),
+                      FilledButton.icon(
+                        onPressed: steamImportState.selectedDeals.isEmpty ||
+                                steamImportState.isImporting ||
+                                steamImportState.isImporting
                             ? null
-                            : () {
-                                showModalBottomSheet(
-                                  useSafeArea: true,
-                                  isScrollControlled: true,
-                                  context: context,
-                                  builder: (context) {
-                                    return const SteamImportFilter();
+                            : () async {
+                                ref
+                                    .read(steamImportProvider.notifier)
+                                    .import()
+                                    .then(
+                                  (result) {
+                                    if (result == null) {
+                                      return;
+                                    }
+
+                                    ScaffoldMessenger.of(context)
+                                        .clearSnackBars();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: RichText(
+                                          text: TextSpan(
+                                            style: context.themes.snackBar
+                                                .contentTextStyle,
+                                            children: [
+                                              const TextSpan(
+                                                  text:
+                                                      'Successfully imported '),
+                                              TextSpan(
+                                                text: result.length.toString(),
+                                                style: context.themes.snackBar
+                                                    .contentTextStyle!
+                                                    .copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const TextSpan(
+                                                  text:
+                                                      ' games to your waitlist!'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
                                   },
                                 );
                               },
-                        icon: const Icon(Icons.filter_list),
+                        icon: steamImportState.isImporting
+                            ? Transform.scale(
+                                scale: 0.4,
+                                child: const CircularProgressIndicator(),
+                              )
+                            : const Icon(Icons.import_export_rounded),
+                        label: const Text('Import'),
                       ),
-                    ),
-                    FilledButton.icon(
-                      onPressed: steamImportState.selectedDeals.isEmpty ||
-                              steamImportState.isImporting ||
-                              steamImportState.isImporting
-                          ? null
-                          : () async {
-                              ref
-                                  .read(steamImportProvider.notifier)
-                                  .import()
-                                  .then(
-                                (result) {
-                                  if (result == null) {
-                                    return;
-                                  }
-
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: RichText(
-                                        text: TextSpan(
-                                          style: context
-                                              .themes.snackBar.contentTextStyle,
-                                          children: [
-                                            const TextSpan(
-                                                text: 'Successfully imported '),
-                                            TextSpan(
-                                              text: result.length.toString(),
-                                              style: context.themes.snackBar
-                                                  .contentTextStyle!
-                                                  .copyWith(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            const TextSpan(
-                                                text:
-                                                    ' games to your waitlist!'),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                      icon: steamImportState.isImporting
-                          ? Transform.scale(
-                              scale: 0.4,
-                              child: const CircularProgressIndicator(),
-                            )
-                          : const Icon(Icons.import_export_rounded),
-                      label: const Text('Import'),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          )
-        ]),
+                    ],
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
       ),
       appBar: steamImportState.deals?.isNotEmpty != null
           ? AppBar(

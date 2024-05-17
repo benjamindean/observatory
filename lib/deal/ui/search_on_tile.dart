@@ -44,7 +44,7 @@ class SearchOnTile extends ConsumerWidget {
           Text(
             title,
             style: context.themes.text.labelLarge?.copyWith(
-              color: context.colors.scheme.onBackground,
+              color: context.colors.scheme.onSurface,
             ),
           ),
         ],
