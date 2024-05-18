@@ -45,7 +45,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
                     icon: Icon(
                       Icons.open_in_browser,
                       color: deal.prices?.firstOrNull != null
-                          ? context.colors.scheme.secondary
+                          ? context.colors.scheme.tertiary
                           : context.colors.disabled,
                     ),
                   ),
@@ -59,7 +59,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
                     icon: Icon(
                       Icons.share,
                       color: deal.prices?.firstOrNull != null
-                          ? context.colors.scheme.secondary
+                          ? context.colors.scheme.tertiary
                           : context.colors.disabled,
                     ),
                   ),

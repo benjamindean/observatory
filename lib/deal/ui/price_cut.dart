@@ -35,7 +35,7 @@ class PriceCut extends StatelessWidget {
     if (priceCutInt == 100) {
       return Icon(
         Icons.card_giftcard_rounded,
-        color: context.colors.scheme.secondary,
+        color: context.colors.scheme.tertiary,
         size: textStyle?.fontSize,
       );
     }

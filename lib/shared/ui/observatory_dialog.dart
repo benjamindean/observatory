@@ -46,7 +46,7 @@ class ObservatoryDialog extends StatelessWidget {
           child: Text(
             discardText,
             style: TextStyle(
-              color: context.colors.scheme.secondary,
+              color: context.colors.scheme.tertiary,
               fontWeight: FontWeight.bold,
             ),
           ),

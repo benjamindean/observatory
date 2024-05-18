@@ -27,7 +27,7 @@ class ReviewsTile extends ConsumerWidget {
     }
 
     if (review.score! < 80) {
-      return context.colors.scheme.secondary;
+      return context.colors.scheme.tertiary;
     }
 
     return context.colors.scheme.error;

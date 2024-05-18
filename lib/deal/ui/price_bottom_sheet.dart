@@ -31,7 +31,7 @@ class PriceBottomSheet extends ConsumerWidget {
             ListTile(
               leading: Icon(
                 Icons.open_in_browser,
-                color: context.colors.scheme.secondary,
+                color: context.colors.scheme.tertiary,
               ),
               title: const Text('Open in Browser'),
               onTap: () {
@@ -44,7 +44,7 @@ class PriceBottomSheet extends ConsumerWidget {
             ListTile(
               leading: Icon(
                 Icons.share,
-                color: context.colors.scheme.secondary,
+                color: context.colors.scheme.tertiary,
               ),
               title: const Text('Share Link'),
               onTap: () {
