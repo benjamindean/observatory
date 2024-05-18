@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/deal/info_provider.dart';
+import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/info.dart';
 
@@ -71,11 +72,7 @@ class TagsTile extends ConsumerWidget {
                           color: context.colors.scheme.onSurface,
                         ),
                       ),
-                      backgroundColor: context
-                          .colors.scheme.surfaceContainerHighest
-                          .withOpacity(
-                        0.3,
-                      ),
+                      backgroundColor: context.elevatedCanvasColor,
                       padding: const EdgeInsets.all(6.0),
                       visualDensity: VisualDensity.compact,
                       side: BorderSide.none,

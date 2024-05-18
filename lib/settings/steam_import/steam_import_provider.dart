@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
@@ -47,6 +48,11 @@ class SteamImportNotifier extends AutoDisposeNotifier<SteamImportState> {
         stackTrace: stackTrace,
       );
 
+      FirebaseCrashlytics.instance.recordError(
+        error,
+        stackTrace,
+      );
+
       state = state.copyWith(
         isLoading: false,
         error:
@@ -84,6 +90,11 @@ class SteamImportNotifier extends AutoDisposeNotifier<SteamImportState> {
         'Failed to import Steam wishlist',
         error: error,
         stackTrace: stackTrace,
+      );
+
+      FirebaseCrashlytics.instance.recordError(
+        error,
+        stackTrace,
       );
 
       state = state.copyWith(

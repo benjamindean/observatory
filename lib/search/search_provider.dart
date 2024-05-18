@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
@@ -72,6 +73,10 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
     final API api = GetIt.I<API>();
     final List<Deal> results = await api.getSearchResults(query: query);
     final List<Deal> deals = Set<Deal>.from(results).toList();
+
+    FirebaseAnalytics.instance.logEvent(
+      name: 'search_performed',
+    );
 
     state = state.copyWith(
       deals: deals,

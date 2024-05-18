@@ -17,6 +17,6 @@ extension BuildContextEntension<T> on BuildContext {
   Color get highElevatedCanvasColor => ElevationOverlay.applySurfaceTint(
         colors.scheme.surface,
         colors.scheme.surfaceTint,
-        20,
+        5,
       );
 }

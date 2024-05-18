@@ -1,4 +1,5 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -75,6 +76,11 @@ class PurchaseTile extends ConsumerWidget {
             'Failed to load purchases',
             error: error,
             stackTrace: stackTrace,
+          );
+
+          FirebaseCrashlytics.instance.recordError(
+            error,
+            stackTrace,
           );
 
           return const SizedBox.shrink();

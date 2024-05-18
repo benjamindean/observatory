@@ -29,10 +29,10 @@ class SearchInput extends ConsumerWidget {
       decoration: InputDecoration(
         fillColor: Colors.transparent,
         hintText: 'Search',
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        border: InputBorder.none,
-        contentPadding: const EdgeInsets.all(16),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(30),
+        ),
         prefixIcon: Tooltip(
           message: 'Go Back',
           child: IconButton(

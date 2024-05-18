@@ -1,4 +1,5 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +13,16 @@ void shareDeal(Deal deal) {
   final Price? price = deal.prices?.firstOrNull;
 
   if (price != null) {
+    FirebaseAnalytics.instance.logShare(
+      contentType: 'deal',
+      itemId: deal.id,
+      method: 'manual',
+      parameters: {
+        'id': deal.id,
+        'title': deal.titleParsed,
+      },
+    );
+
     Share.share(
       price.url.toString(),
       subject: '${deal.titleParsed} on ${price.shop.name}',
@@ -45,6 +56,14 @@ void addDealToWaitlist({
       .removeFromWaitList(updatedDeal)
       .then(
     (value) {
+      FirebaseAnalytics.instance.logEvent(
+        name: 'waitlist_add',
+        parameters: {
+          'id': updatedDeal.id,
+          'title': updatedDeal.titleParsed,
+        },
+      );
+
       if (!showToast) {
         return;
       }
@@ -111,6 +130,14 @@ void removeDealFromWaitlist({
       .addToWaitlist(updatedDeal)
       .then(
     (value) {
+      FirebaseAnalytics.instance.logEvent(
+        name: 'waitlist_remove',
+        parameters: {
+          'id': updatedDeal.id,
+          'title': updatedDeal.titleParsed,
+        },
+      );
+
       if (!showToast) {
         return;
       }

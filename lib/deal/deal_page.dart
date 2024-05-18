@@ -1,4 +1,6 @@
+import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:easy_refresh/easy_refresh.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deal/ui/bundles_tile.dart';
@@ -10,7 +12,6 @@ import 'package:observatory/deal/ui/price_listview.dart';
 import 'package:observatory/deal/ui/reviews_tile.dart';
 import 'package:observatory/deal/deal_provider.dart';
 import 'package:observatory/deal/ui/tags_tile.dart';
-import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/is_there_any_deal_info.dart';
 import 'package:observatory/shared/ui/pull_to_refresh.dart';
@@ -26,10 +27,18 @@ class DealPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    FirebaseAnalytics.instance.logScreenView(
+      screenName: 'deal_page',
+      parameters: {
+        'id': deal.id,
+        'title': deal.titleParsed,
+      },
+    );
+
     final Deal dealState = ref.watch(dealProvider(deal));
 
     return Container(
-      color: context.elevatedCanvasColor,
+      color: context.colors.canvas,
       child: SafeArea(
         child: Scaffold(
           bottomNavigationBar: DealPageBottomAppBar(deal: dealState),
