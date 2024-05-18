@@ -53,7 +53,7 @@ class ImageError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: context.colors.scheme.onInverseSurface,
+      color: context.colors.scheme.surface,
       child: OverflowBox(
         maxWidth: double.infinity,
         maxHeight: (isCompact ? IMAGE_HEIGHT / 2 : IMAGE_HEIGHT).toDouble(),

@@ -20,9 +20,8 @@ class PriceBottomSheet extends ConsumerWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        Padding(
           padding: const EdgeInsets.all(8.0),
-          color: context.colors.scheme.surfaceContainer,
           child: PriceCard(
             price: price,
           ),

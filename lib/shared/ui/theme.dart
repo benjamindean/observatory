@@ -153,7 +153,7 @@ final ThemeData lightTheme = FlexThemeData.light(
     useTertiary: true,
     keepPrimary: true,
   ),
-  tones: FlexTones.jolly(Brightness.light),
+  tones: FlexTones.soft(Brightness.light),
   visualDensity: FlexColorScheme.comfortablePlatformDensity,
   useMaterial3: true,
   fontFamily: GoogleFonts.openSans().fontFamily,

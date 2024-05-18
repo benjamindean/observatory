@@ -17,6 +17,8 @@ class DealPageBottomAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return BottomAppBar(
+      elevation: 5,
+      shadowColor: context.colors.shadow,
       color: context.colors.scheme.surface,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
