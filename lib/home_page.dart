@@ -27,8 +27,6 @@ class HomePage extends ConsumerWidget {
 
     return Scaffold(
       bottomNavigationBar: NavigationBar(
-        elevation: 5,
-        shadowColor: context.colors.shadow,
         onDestinationSelected: (int index) async {
           child.goBranch(index);
 

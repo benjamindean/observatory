@@ -33,8 +33,6 @@ class StoreSelectPage extends ConsumerWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        elevation: 5,
-        shadowColor: context.colors.shadow,
         color: context.colors.scheme.surface,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
