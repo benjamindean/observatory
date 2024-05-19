@@ -38,7 +38,7 @@ class DealPage extends ConsumerWidget {
     final Deal dealState = ref.watch(dealProvider(deal));
 
     return Container(
-      color: context.colors.canvas,
+      color: context.colors.scheme.surface,
       child: SafeArea(
         child: Scaffold(
           bottomNavigationBar: DealPageBottomAppBar(deal: dealState),
