@@ -28,16 +28,19 @@ class Observatory extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ObservatoryTheme theme = ref.watch(themesProvider);
+    final FlexScheme? scheme = theme.scheme != null
+        ? FlexScheme.values.asNameMap()[theme.scheme]
+        : FlexScheme.mandyRed;
 
     return MaterialApp.router(
       scaffoldMessengerKey: state,
       title: 'Observatory',
       theme: lightTheme(
-        scheme: FlexScheme.values.asNameMap()[theme.scheme],
+        scheme: scheme,
       ),
       darkTheme: darkTheme(
         darkIsTrueBlack: theme.isTrueBlack,
-        scheme: FlexScheme.values.asNameMap()[theme.scheme],
+        scheme: scheme,
       ),
       themeMode: ThemeMode.values.asNameMap()[theme.mode],
       routerConfig: router,
