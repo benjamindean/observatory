@@ -7,7 +7,7 @@ part of 'price.dart';
 // **************************************************************************
 
 _$DRMImpl _$$DRMImplFromJson(Map<String, dynamic> json) => _$DRMImpl(
-      id: json['id'] as int? ?? 0,
+      id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? 'Unknown',
     );
 
@@ -19,7 +19,7 @@ Map<String, dynamic> _$$DRMImplToJson(_$DRMImpl instance) => <String, dynamic>{
 _$PriceDetailsImpl _$$PriceDetailsImplFromJson(Map<String, dynamic> json) =>
     _$PriceDetailsImpl(
       amount: (json['amount'] as num?)?.toDouble() ?? 0,
-      amountInt: json['amountInt'] as int? ?? 0,
+      amountInt: (json['amountInt'] as num?)?.toInt() ?? 0,
       currency: json['currency'] as String? ?? 'USD',
     );
 

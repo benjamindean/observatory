@@ -2,6 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,13 +27,18 @@ class Observatory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ObservatoryTheme theme = ref.watch(themeModeProvider);
+    final ObservatoryTheme theme = ref.watch(themesProvider);
 
     return MaterialApp.router(
       scaffoldMessengerKey: state,
       title: 'Observatory',
-      theme: lightTheme,
-      darkTheme: darkTheme(darkIsTrueBlack: theme.isTrueBlack),
+      theme: lightTheme(
+        scheme: FlexScheme.values.asNameMap()[theme.scheme],
+      ),
+      darkTheme: darkTheme(
+        darkIsTrueBlack: theme.isTrueBlack,
+        scheme: FlexScheme.values.asNameMap()[theme.scheme],
+      ),
       themeMode: ThemeMode.values.asNameMap()[theme.mode],
       routerConfig: router,
     );

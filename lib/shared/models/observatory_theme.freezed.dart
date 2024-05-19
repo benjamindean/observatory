@@ -24,6 +24,8 @@ mixin _$ObservatoryTheme {
   String get mode => throw _privateConstructorUsedError;
   @HiveField(1)
   bool get isTrueBlack => throw _privateConstructorUsedError;
+  @HiveField(2)
+  String? get scheme => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +39,10 @@ abstract class $ObservatoryThemeCopyWith<$Res> {
           ObservatoryTheme value, $Res Function(ObservatoryTheme) then) =
       _$ObservatoryThemeCopyWithImpl<$Res, ObservatoryTheme>;
   @useResult
-  $Res call({@HiveField(0) String mode, @HiveField(1) bool isTrueBlack});
+  $Res call(
+      {@HiveField(0) String mode,
+      @HiveField(1) bool isTrueBlack,
+      @HiveField(2) String? scheme});
 }
 
 /// @nodoc
@@ -55,6 +60,7 @@ class _$ObservatoryThemeCopyWithImpl<$Res, $Val extends ObservatoryTheme>
   $Res call({
     Object? mode = null,
     Object? isTrueBlack = null,
+    Object? scheme = freezed,
   }) {
     return _then(_value.copyWith(
       mode: null == mode
@@ -65,6 +71,10 @@ class _$ObservatoryThemeCopyWithImpl<$Res, $Val extends ObservatoryTheme>
           ? _value.isTrueBlack
           : isTrueBlack // ignore: cast_nullable_to_non_nullable
               as bool,
+      scheme: freezed == scheme
+          ? _value.scheme
+          : scheme // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -77,7 +87,10 @@ abstract class _$$ObservatoryThemeImplCopyWith<$Res>
       __$$ObservatoryThemeImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@HiveField(0) String mode, @HiveField(1) bool isTrueBlack});
+  $Res call(
+      {@HiveField(0) String mode,
+      @HiveField(1) bool isTrueBlack,
+      @HiveField(2) String? scheme});
 }
 
 /// @nodoc
@@ -93,6 +106,7 @@ class __$$ObservatoryThemeImplCopyWithImpl<$Res>
   $Res call({
     Object? mode = null,
     Object? isTrueBlack = null,
+    Object? scheme = freezed,
   }) {
     return _then(_$ObservatoryThemeImpl(
       mode: null == mode
@@ -103,6 +117,10 @@ class __$$ObservatoryThemeImplCopyWithImpl<$Res>
           ? _value.isTrueBlack
           : isTrueBlack // ignore: cast_nullable_to_non_nullable
               as bool,
+      scheme: freezed == scheme
+          ? _value.scheme
+          : scheme // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -112,7 +130,8 @@ class __$$ObservatoryThemeImplCopyWithImpl<$Res>
 class _$ObservatoryThemeImpl implements _ObservatoryTheme {
   const _$ObservatoryThemeImpl(
       {@HiveField(0) required this.mode,
-      @HiveField(1) required this.isTrueBlack});
+      @HiveField(1) required this.isTrueBlack,
+      @HiveField(2) this.scheme = 'mandyRed'});
 
   factory _$ObservatoryThemeImpl.fromJson(Map<String, dynamic> json) =>
       _$$ObservatoryThemeImplFromJson(json);
@@ -123,10 +142,14 @@ class _$ObservatoryThemeImpl implements _ObservatoryTheme {
   @override
   @HiveField(1)
   final bool isTrueBlack;
+  @override
+  @JsonKey()
+  @HiveField(2)
+  final String? scheme;
 
   @override
   String toString() {
-    return 'ObservatoryTheme(mode: $mode, isTrueBlack: $isTrueBlack)';
+    return 'ObservatoryTheme(mode: $mode, isTrueBlack: $isTrueBlack, scheme: $scheme)';
   }
 
   @override
@@ -136,12 +159,13 @@ class _$ObservatoryThemeImpl implements _ObservatoryTheme {
             other is _$ObservatoryThemeImpl &&
             (identical(other.mode, mode) || other.mode == mode) &&
             (identical(other.isTrueBlack, isTrueBlack) ||
-                other.isTrueBlack == isTrueBlack));
+                other.isTrueBlack == isTrueBlack) &&
+            (identical(other.scheme, scheme) || other.scheme == scheme));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, mode, isTrueBlack);
+  int get hashCode => Object.hash(runtimeType, mode, isTrueBlack, scheme);
 
   @JsonKey(ignore: true)
   @override
@@ -161,7 +185,8 @@ class _$ObservatoryThemeImpl implements _ObservatoryTheme {
 abstract class _ObservatoryTheme implements ObservatoryTheme {
   const factory _ObservatoryTheme(
       {@HiveField(0) required final String mode,
-      @HiveField(1) required final bool isTrueBlack}) = _$ObservatoryThemeImpl;
+      @HiveField(1) required final bool isTrueBlack,
+      @HiveField(2) final String? scheme}) = _$ObservatoryThemeImpl;
 
   factory _ObservatoryTheme.fromJson(Map<String, dynamic> json) =
       _$ObservatoryThemeImpl.fromJson;
@@ -172,6 +197,9 @@ abstract class _ObservatoryTheme implements ObservatoryTheme {
   @override
   @HiveField(1)
   bool get isTrueBlack;
+  @override
+  @HiveField(2)
+  String? get scheme;
   @override
   @JsonKey(ignore: true)
   _$$ObservatoryThemeImplCopyWith<_$ObservatoryThemeImpl> get copyWith =>

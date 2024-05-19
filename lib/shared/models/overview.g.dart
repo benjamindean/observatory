@@ -44,7 +44,7 @@ Map<String, dynamic> _$$OverviewPricesImplToJson(
     };
 
 _$BundleImpl _$$BundleImplFromJson(Map<String, dynamic> json) => _$BundleImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       title: json['title'] as String,
       url: json['url'] as String,
       details: json['details'] as String,
@@ -64,7 +64,7 @@ Map<String, dynamic> _$$BundleImplToJson(_$BundleImpl instance) =>
 
 _$BundlePageImpl _$$BundlePageImplFromJson(Map<String, dynamic> json) =>
     _$BundlePageImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
     );
 

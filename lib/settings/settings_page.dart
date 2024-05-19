@@ -1,6 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:observatory/settings/purchase/purchase_tile.dart';
 import 'package:observatory/settings/ui/about_links.dart';
+import 'package:observatory/settings/ui/theme_list_tile.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/waitlist/waitlist_provider.dart';
@@ -166,6 +167,7 @@ class SettingsPage extends ConsumerWidget {
                     isEnabled: settings.value?.showHeaders ?? true,
                   ),
                   const ThemeModeListTile(),
+                  const ThemeListTile(),
                   const ThemeTrueBlackListTile(),
                   const ListHeading(title: 'Waitlist'),
                   ListTile(

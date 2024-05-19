@@ -10,6 +10,7 @@ class ObservatoryTheme with _$ObservatoryTheme {
   const factory ObservatoryTheme({
     @HiveField(0) required String mode,
     @HiveField(1) required bool isTrueBlack,
+    @HiveField(2) @Default('mandyRed') String? scheme,
   }) = _ObservatoryTheme;
 
   factory ObservatoryTheme.fromJson(Map<String, Object?> json) =>

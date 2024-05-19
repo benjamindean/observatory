@@ -111,7 +111,7 @@ _$DealImpl _$$DealImplFromJson(Map<String, dynamic> json) => _$DealImpl(
           ? null
           : Overview.fromJson(json['overview'] as Map<String, dynamic>),
       isLoading: json['isLoading'] as bool? ?? false,
-      added: json['added'] as int? ?? 0,
+      added: (json['added'] as num?)?.toInt() ?? 0,
       source: $enumDecodeNullable(_$DealSourceEnumMap, json['source']) ??
           DealSource.itad,
     );

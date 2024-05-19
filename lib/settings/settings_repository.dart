@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:observatory/shared/models/deal.dart';
@@ -208,6 +209,7 @@ class SettingsRepository {
       PREF_THEME,
       defaultValue: ObservatoryTheme(
         mode: ThemeMode.system.name,
+        scheme: FlexScheme.mandyRed.name,
         isTrueBlack: false,
       ),
     );

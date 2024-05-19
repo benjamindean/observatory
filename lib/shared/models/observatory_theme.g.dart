@@ -19,17 +19,20 @@ class ObservatoryThemeAdapter extends TypeAdapter<ObservatoryTheme> {
     return ObservatoryTheme(
       mode: fields[0] as String,
       isTrueBlack: fields[1] as bool,
+      scheme: fields[2] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ObservatoryTheme obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.mode)
       ..writeByte(1)
-      ..write(obj.isTrueBlack);
+      ..write(obj.isTrueBlack)
+      ..writeByte(2)
+      ..write(obj.scheme);
   }
 
   @override
@@ -52,6 +55,7 @@ _$ObservatoryThemeImpl _$$ObservatoryThemeImplFromJson(
     _$ObservatoryThemeImpl(
       mode: json['mode'] as String,
       isTrueBlack: json['isTrueBlack'] as bool,
+      scheme: json['scheme'] as String? ?? 'mandyRed',
     );
 
 Map<String, dynamic> _$$ObservatoryThemeImplToJson(
@@ -59,4 +63,5 @@ Map<String, dynamic> _$$ObservatoryThemeImplToJson(
     <String, dynamic>{
       'mode': instance.mode,
       'isTrueBlack': instance.isTrueBlack,
+      'scheme': instance.scheme,
     };

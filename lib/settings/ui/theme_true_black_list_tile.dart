@@ -10,7 +10,7 @@ class ThemeTrueBlackListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ObservatoryTheme theme = ref.watch(themeModeProvider);
+    final ObservatoryTheme theme = ref.watch(themesProvider);
     final bool isLightTheme =
         MediaQuery.of(context).platformBrightness != Brightness.dark &&
             theme.mode != 'dark';
@@ -22,12 +22,7 @@ class ThemeTrueBlackListTile extends ConsumerWidget {
       onChanged: isLightTheme
           ? null
           : (value) {
-              ref.watch(themeModeProvider.notifier).setTheme(
-                    ObservatoryTheme(
-                      mode: theme.mode,
-                      isTrueBlack: value,
-                    ),
-                  );
+              ref.watch(themesProvider.notifier).setTrueBlack(value);
             },
     );
   }

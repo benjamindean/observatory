@@ -12,7 +12,7 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
       waitlistNotifications: json['waitlistNotifications'] as bool,
       selectedCountry: json['selectedCountry'] as String,
       selectedStores: (json['selectedStores'] as List<dynamic>)
-          .map((e) => e as int)
+          .map((e) => (e as num).toInt())
           .toList(),
       stores: (json['stores'] as List<dynamic>)
           .map((e) => Store.fromJson(e as Map<String, dynamic>))

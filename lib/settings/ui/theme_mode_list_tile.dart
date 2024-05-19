@@ -16,7 +16,7 @@ class ThemeModeListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ObservatoryTheme theme = ref.watch(themeModeProvider);
+    final ObservatoryTheme theme = ref.watch(themesProvider);
 
     return ListTile(
       title: const Text('Theme Mode'),
@@ -24,12 +24,9 @@ class ThemeModeListTile extends ConsumerWidget {
       trailing: ToggleButtons(
         direction: Axis.horizontal,
         onPressed: (int index) {
-          ref.watch(themeModeProvider.notifier).setTheme(
-                ObservatoryTheme(
-                  mode: themeModes[index].name,
-                  isTrueBlack: theme.isTrueBlack,
-                ),
-              );
+          ref
+              .watch(themesProvider.notifier)
+              .setThemeMode(themeModes[index].name);
         },
         isSelected: themeModes.map(
           (e) {

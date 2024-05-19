@@ -7,7 +7,7 @@ part of 'review.dart';
 // **************************************************************************
 
 _$ReviewImpl _$$ReviewImplFromJson(Map<String, dynamic> json) => _$ReviewImpl(
-      score: json['score'] as int?,
+      score: (json['score'] as num?)?.toInt(),
       source: json['source'] as String?,
       count: json['count'] as num?,
       url: json['url'] as String?,

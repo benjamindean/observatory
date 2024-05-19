@@ -9,14 +9,14 @@ part of 'steam_featured_item.dart';
 _$SteamFeaturedItemImpl _$$SteamFeaturedItemImplFromJson(
         Map<String, dynamic> json) =>
     _$SteamFeaturedItemImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      type: json['type'] as int?,
+      type: (json['type'] as num?)?.toInt(),
       discounted: json['discounted'] as bool?,
       currency: json['currency'] as String?,
-      discountpPercent: json['discount_percent'] as int?,
-      originalPrice: json['original_price'] as int?,
-      finalPrice: json['final_price'] as int?,
+      discountpPercent: (json['discount_percent'] as num?)?.toInt(),
+      originalPrice: (json['original_price'] as num?)?.toInt(),
+      finalPrice: (json['final_price'] as num?)?.toInt(),
       largeCapsuleImage: json['large_capsule_image'] as String?,
       smallCapsuleImage: json['small_capsule_image'] as String?,
       windowsAvailable: json['windows_available'] as bool?,

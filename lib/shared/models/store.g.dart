@@ -7,7 +7,7 @@ part of 'store.dart';
 // **************************************************************************
 
 _$StoreImpl _$$StoreImplFromJson(Map<String, dynamic> json) => _$StoreImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       title: json['title'] as String,
     );
 

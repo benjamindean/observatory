@@ -1,4 +1,5 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:observatory/deals/deals_provider.dart';
@@ -239,8 +240,7 @@ final asyncSettingsProvider =
   return AsyncSettingsNotifier();
 });
 
-final themeModeProvider =
-    NotifierProvider<ThemesProvider, ObservatoryTheme>(() {
+final themesProvider = NotifierProvider<ThemesProvider, ObservatoryTheme>(() {
   return ThemesProvider();
 });
 
@@ -250,7 +250,22 @@ class ThemesProvider extends Notifier<ObservatoryTheme> {
     return GetIt.I<SettingsRepository>().getTheme();
   }
 
-  Future<void> setTheme(ObservatoryTheme theme) async {
+  Future<void> setThemeMode(String mode) async {
+    final ObservatoryTheme theme = state.copyWith(mode: mode);
+    await GetIt.I<SettingsRepository>().setTheme(theme);
+
+    state = theme;
+  }
+
+  Future<void> setScheme(FlexScheme scheme) async {
+    final ObservatoryTheme theme = state.copyWith(scheme: scheme.name);
+    await GetIt.I<SettingsRepository>().setTheme(theme);
+
+    state = theme;
+  }
+
+  Future<void> setTrueBlack(bool isTrueBlack) async {
+    final ObservatoryTheme theme = state.copyWith(isTrueBlack: isTrueBlack);
     await GetIt.I<SettingsRepository>().setTheme(theme);
 
     state = theme;
