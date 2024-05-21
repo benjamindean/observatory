@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import awesome_notifications
+import workmanager
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -14,6 +15,9 @@ import awesome_notifications
         SwiftAwesomeNotificationsPlugin.register(
           with: registry.registrar(forPlugin: "io.flutter.plugins.awesomenotifications.AwesomeNotificationsPlugin")!)
     }
+
+    WorkmanagerPlugin.registerBGProcessingTask(withIdentifier: "observatory-waitlist-check")
+    WorkmanagerPlugin.registerPeriodicTask(withIdentifier: "observatory-waitlist-check", frequency: NSNumber(value: 20 * 60))
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }

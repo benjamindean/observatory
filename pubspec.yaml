@@ -47,6 +47,7 @@ dependencies:
   easy_refresh: ^3.4.0
   firebase_analytics: ^10.10.5
   awesome_notifications: ^0.9.3+1
+  workmanager: ^0.5.2
 
 dependency_overrides:
   intl: any
