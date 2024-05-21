@@ -11,9 +11,13 @@ import workmanager
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
 
-    SwiftAwesomeNotificationsPlugin.setPluginRegistrantCallback { registry in          
+    SwiftAwesomeNotificationsPlugin.setPluginRegistrantCallback { registry in
         SwiftAwesomeNotificationsPlugin.register(
           with: registry.registrar(forPlugin: "io.flutter.plugins.awesomenotifications.AwesomeNotificationsPlugin")!)
+    }
+
+    WorkmanagerPlugin.setPluginRegistrantCallback { registry in
+        GeneratedPluginRegistrant.register(with: registry)
     }
 
     WorkmanagerPlugin.registerBGProcessingTask(withIdentifier: "observatory-waitlist-check")

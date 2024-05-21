@@ -90,10 +90,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // (value) => GetIt.I.registerSingleton<FirebaseFirestore>(
-  //   FirebaseFirestore.instance,
-  // ),
-
   await FirebaseAppCheck.instance.activate();
 
   FlutterError.onError = (errorDetails) {
