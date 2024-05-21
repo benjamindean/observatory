@@ -108,6 +108,12 @@ class SteamImportNotifier extends AutoDisposeNotifier<SteamImportState> {
     return [];
   }
 
+  Future<List<Deal>?> reImport() async {
+    await fetch();
+
+    return import();
+  }
+
   void add(Deal deal) {
     state = state.copyWith(selectedDeals: [...state.selectedDeals, deal]);
   }

@@ -75,27 +75,8 @@ class SteamImportPage extends ConsumerWidget {
                                         .clearSnackBars();
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        content: RichText(
-                                          text: TextSpan(
-                                            style: context.themes.snackBar
-                                                .contentTextStyle,
-                                            children: [
-                                              const TextSpan(
-                                                  text:
-                                                      'Successfully imported '),
-                                              TextSpan(
-                                                text: result.length.toString(),
-                                                style: context.themes.snackBar
-                                                    .contentTextStyle!
-                                                    .copyWith(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              const TextSpan(
-                                                  text:
-                                                      ' games to your waitlist!'),
-                                            ],
-                                          ),
+                                        content: ImportSuccessSnackBarContent(
+                                          count: result.length.toString(),
                                         ),
                                       ),
                                     );
@@ -204,6 +185,34 @@ class SteamImportPage extends ConsumerWidget {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class ImportSuccessSnackBarContent extends StatelessWidget {
+  final String count;
+
+  const ImportSuccessSnackBarContent({
+    super.key,
+    required this.count,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        style: context.themes.snackBar.contentTextStyle,
+        children: [
+          const TextSpan(text: 'Successfully imported '),
+          TextSpan(
+            text: count,
+            style: context.themes.snackBar.contentTextStyle!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const TextSpan(text: ' games to your waitlist!'),
         ],
       ),
     );

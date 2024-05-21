@@ -52,7 +52,6 @@ class DealsAppBar extends ConsumerWidget {
       actions: [
         FilledButton.icon(
           style: FilledButton.styleFrom(
-            elevation: 1,
             side: BorderSide.none,
           ),
           onPressed: () => showDealsFilter(context),

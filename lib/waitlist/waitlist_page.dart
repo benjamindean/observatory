@@ -1,6 +1,7 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/pull_to_refresh.dart';
 import 'package:observatory/waitlist/ui/waitlist_appbar.dart';
 import 'package:observatory/waitlist/ui/waitlist_info_app_bar.dart';
@@ -12,6 +13,10 @@ class WaitListPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final List<Deal> deals = ref.watch(asyncWaitListProvider.select(
+      (value) => value.requireValue.deals,
+    ));
+
     return PullToRefresh(
       onRefresh: () async {
         await ref.read(asyncWaitListProvider.notifier).reset();
@@ -19,11 +24,11 @@ class WaitListPage extends ConsumerWidget {
       child: CustomScrollView(
         key: const Key('waitlist_scroll_view'),
         controller: PrimaryScrollController.of(context),
-        slivers: const [
-          WaitlistAppBar(),
-          HeaderLocator.sliver(),
-          WaitlistInfoAppBar(),
-          WaitListList(),
+        slivers: [
+          const WaitlistAppBar(),
+          const HeaderLocator.sliver(),
+          if (deals.isNotEmpty) const WaitlistInfoAppBar(),
+          const WaitListList(),
         ],
       ),
     );

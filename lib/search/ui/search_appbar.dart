@@ -56,10 +56,9 @@ class SearchAppBar extends ConsumerWidget {
             }
 
             return FilledButton.icon(
-              style: FilledButton.styleFrom(elevation: 0),
               onPressed: () {
-                ref.read(searchResultsProvider.notifier).setIsFocused(true);
                 ref.read(searchResultsProvider.notifier).setIsOpen(true);
+                ref.read(searchResultsProvider.notifier).setIsFocused(true);
               },
               icon: const Icon(Icons.search),
               label: const Text('Search'),

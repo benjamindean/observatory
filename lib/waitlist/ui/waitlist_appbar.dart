@@ -79,9 +79,6 @@ class WaitlistAppBar extends ConsumerWidget {
             }
 
             return FilledButton.icon(
-              style: FilledButton.styleFrom(
-                elevation: 0,
-              ),
               onPressed: () => showWaitlistSorting(context),
               icon: const Icon(Icons.sort),
               label: Text(
@@ -104,8 +101,8 @@ class WaitlistAppBar extends ConsumerWidget {
               child: IconButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  ref.read(filterResultsProvider.notifier).setIsFocused(true);
                   ref.read(filterResultsProvider.notifier).setIsOpen(true);
+                  ref.read(filterResultsProvider.notifier).setIsFocused(true);
                 },
                 icon: const Icon(Icons.search),
               ),

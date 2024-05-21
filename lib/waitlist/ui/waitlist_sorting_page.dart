@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/waitlist/ui/steam_import_list_tile.dart';
 
 void showWaitlistSorting(BuildContext context) {
   showModalBottomSheet(
@@ -55,10 +56,20 @@ class WaitlistSortingPage extends ConsumerWidget {
       ),
     );
 
-    return Wrap(
-      children: [
-        SingleChildScrollView(
-          child: ListView.builder(
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ListTile(
+            visualDensity: VisualDensity.compact,
+            tileColor: context.colors.canvas,
+            title: Text(
+              'Sort By',
+              style: context.textStyles.labelLarge.copyWith(
+                color: context.colors.scheme.outline,
+              ),
+            ),
+          ),
+          ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: WaitlistSorting.values.length,
@@ -114,8 +125,19 @@ class WaitlistSortingPage extends ConsumerWidget {
               );
             },
           ),
-        )
-      ],
+          ListTile(
+            visualDensity: VisualDensity.compact,
+            tileColor: context.colors.canvas,
+            title: Text(
+              'Steam Import',
+              style: context.textStyles.labelLarge.copyWith(
+                color: context.colors.scheme.outline,
+              ),
+            ),
+          ),
+          const SteamImportListTile(),
+        ],
+      ),
     );
   }
 }

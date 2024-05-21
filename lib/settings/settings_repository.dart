@@ -255,7 +255,10 @@ class SettingsRepository {
   }
 
   List<Deal> getWaitlistPast() {
-    return savedDealsBox.values.toList();
+    return settingsBox.get(
+      PREF_WAITLIST_PAST,
+      defaultValue: [],
+    );
   }
 
   Future<void> setWaitlistPast(List<Deal> waitlist) async {

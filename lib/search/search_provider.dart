@@ -40,7 +40,10 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
   }
 
   void setIsOpen(bool isOpen) {
-    state = state.copyWith(isOpen: isOpen);
+    state = state.copyWith(
+      isOpen: isOpen,
+      searchInputController: TextEditingController(),
+    );
   }
 
   void setIsFocused(bool isFocused) {
