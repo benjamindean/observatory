@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:observatory/waitlist/ui/steam_import_list_tile.dart';
 
 void showWaitlistSorting(BuildContext context) {
@@ -56,87 +57,73 @@ class WaitlistSortingPage extends ConsumerWidget {
       ),
     );
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          ListTile(
-            visualDensity: VisualDensity.compact,
-            tileColor: context.colors.canvas,
-            title: Text(
-              'Sort By',
-              style: context.textStyles.labelLarge.copyWith(
-                color: context.colors.scheme.outline,
-              ),
-            ),
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: WaitlistSorting.values.length,
-            itemBuilder: (context, index) {
-              final WaitlistSorting sorting = WaitlistSorting.values[index];
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const BottomSheetHeading(text: 'Sort By'),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: WaitlistSorting.values.length,
+              itemBuilder: (context, index) {
+                final WaitlistSorting sorting = WaitlistSorting.values[index];
 
-              return ListTile(
-                contentPadding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
-                selectedTileColor: context.colors.scheme.primaryContainer,
-                selectedColor: context.colors.scheme.onPrimaryContainer,
-                selected: sorting == waitlistSorting,
-                onTap: () async {
-                  ref
-                      .read(asyncSettingsProvider.notifier)
-                      .setWaitlistSorting(sorting);
-
-                  if (sorting == waitlistSorting) {
+                return ListTile(
+                  contentPadding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
+                  selectedTileColor: context.colors.scheme.primaryContainer,
+                  selectedColor: context.colors.scheme.onPrimaryContainer,
+                  selected: sorting == waitlistSorting,
+                  onTap: () async {
                     ref
                         .read(asyncSettingsProvider.notifier)
-                        .setWaitlistSortingDirection(
-                          waitlistSortingDirection ==
-                                  WaitlistSortingDirection.asc
-                              ? WaitlistSortingDirection.desc
-                              : WaitlistSortingDirection.asc,
-                        );
-                  }
-                },
-                title: Text(
-                  textLabels[sorting]?['title'] ?? 'Price',
-                  style: context.textStyles.titleMedium.copyWith(
-                    color: context.colors.scheme.onPrimaryContainer,
-                  ),
-                ),
-                trailing: Builder(
-                  builder: (context) {
-                    if (sorting == waitlistSorting) {
-                      return Chip(
-                        side: BorderSide.none,
-                        label: Text(
-                          textLabels[sorting]?[waitlistSortingDirection] ??
-                              'Unknown',
-                          style: context.textStyles.labelMedium.copyWith(
-                            color: context.colors.scheme.onPrimary,
-                          ),
-                        ),
-                        backgroundColor: context.colors.scheme.primary,
-                      );
-                    }
+                        .setWaitlistSorting(sorting);
 
-                    return const SizedBox.shrink();
+                    if (sorting == waitlistSorting) {
+                      ref
+                          .read(asyncSettingsProvider.notifier)
+                          .setWaitlistSortingDirection(
+                            waitlistSortingDirection ==
+                                    WaitlistSortingDirection.asc
+                                ? WaitlistSortingDirection.desc
+                                : WaitlistSortingDirection.asc,
+                          );
+                    }
                   },
-                ),
-              );
-            },
-          ),
-          ListTile(
-            visualDensity: VisualDensity.compact,
-            tileColor: context.colors.canvas,
-            title: Text(
-              'Steam Import',
-              style: context.textStyles.labelLarge.copyWith(
-                color: context.colors.scheme.outline,
-              ),
+                  title: Text(
+                    textLabels[sorting]?['title'] ?? 'Price',
+                    style: context.textStyles.titleMedium.copyWith(
+                      color: context.colors.scheme.onPrimaryContainer,
+                    ),
+                  ),
+                  trailing: Builder(
+                    builder: (context) {
+                      if (sorting == waitlistSorting) {
+                        return Chip(
+                          side: BorderSide.none,
+                          label: Text(
+                            textLabels[sorting]?[waitlistSortingDirection] ??
+                                'Unknown',
+                            style: context.textStyles.labelMedium.copyWith(
+                              color: context.colors.scheme.onPrimary,
+                            ),
+                          ),
+                          backgroundColor: context.colors.scheme.primary,
+                        );
+                      }
+
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                );
+              },
             ),
-          ),
-          const SteamImportListTile(),
-        ],
+            const BottomSheetHeading(text: 'Steam Import'),
+            const SteamImportListTile(),
+          ],
+        ),
       ),
     );
   }

@@ -19,22 +19,34 @@ import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/ui/theme.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
-import 'package:observatory/tasks/constants.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:workmanager/workmanager.dart';
 
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
+    await SettingsRepository.init();
+
     GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
     GetIt.I.registerSingleton<API>(await API.create());
     GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
 
-    if (task == TASK_CHECK_WAITLIST_NAME || task == TASK_CHECK_WAITLIST) {
-      return await checkWaitlistTask();
-    }
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-    return Future.value(false);
+    await FirebaseAppCheck.instance.activate();
+
+    FlutterError.onError = (errorDetails) {
+      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    };
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+
+      return true;
+    };
+
+    return await checkWaitlistTask();
   });
 }
 

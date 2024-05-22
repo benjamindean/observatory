@@ -8,33 +8,36 @@ import 'package:workmanager/workmanager.dart';
 
 Future<List<Deal>> getNewDiscountedDeals() async {
   final API api = GetIt.I<API>();
-  final SettingsRepository settingsRepository = GetIt.I<SettingsRepository>();
+  // final SettingsRepository settingsRepository = GetIt.I<SettingsRepository>();
 
   final List<Deal> waitlist = await api.fetchWaitlist();
-  final List<Deal> pastWaitlist = settingsRepository.getWaitlistPast();
 
-  await settingsRepository.setWaitlistPast(waitlist);
+  return waitlist;
 
-  return List.from(waitlist)
-    ..retainWhere((deal) {
-      final Deal pastValue = pastWaitlist.singleWhere(
-        (pastDeal) => pastDeal.id == deal.id,
-        orElse: () => const Deal(id: 'none'),
-      );
+  // final List<Deal> pastWaitlist = settingsRepository.getWaitlistPast();
 
-      if (pastValue.id == 'none') {
-        return true;
-      }
+  // await settingsRepository.setWaitlistPast(waitlist);
 
-      if ((pastValue.prices?.first.cut ?? 0) < (deal.prices?.first.cut ?? 0)) {
-        return true;
-      }
+  // return List.from(waitlist)
+  //   ..retainWhere((deal) {
+  //     final Deal pastValue = pastWaitlist.singleWhere(
+  //       (pastDeal) => pastDeal.id == deal.id,
+  //       orElse: () => const Deal(id: 'none'),
+  //     );
 
-      return false;
-    })
-    ..removeWhere(
-      (deal) => deal.prices == null || (deal.prices?.first.cut ?? 0) == 0,
-    );
+  //     if (pastValue.id == 'none') {
+  //       return true;
+  //     }
+
+  //     if ((pastValue.prices?.first.cut ?? 0) < (deal.prices?.first.cut ?? 0)) {
+  //       return true;
+  //     }
+
+  //     return false;
+  //   })
+  //   ..removeWhere(
+  //     (deal) => deal.prices == null || (deal.prices?.first.cut ?? 0) == 0,
+  //   );
 }
 
 Future<bool> checkWaitlistTask() async {
@@ -45,7 +48,7 @@ Future<bool> checkWaitlistTask() async {
     return false;
   }
 
-  return showWaitlistNotification(
+  return await showWaitlistNotification(
     deals: await getNewDiscountedDeals(),
   );
 }

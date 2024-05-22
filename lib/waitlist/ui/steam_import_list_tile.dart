@@ -91,7 +91,7 @@ class SteamImportListTile extends ConsumerWidget {
               },
         label: steamUserName.isNotEmpty
             ? const Text('Re-Import')
-            : const Text('Import'),
+            : const Text('Set Username'),
       ),
     );
   }

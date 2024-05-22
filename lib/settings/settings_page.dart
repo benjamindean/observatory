@@ -5,6 +5,7 @@ import 'package:observatory/settings/ui/theme_list_tile.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
 import 'package:observatory/settings/ui/waitlist_alerts_settings_tile.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
+import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:observatory/waitlist/waitlist_provider.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -158,7 +159,9 @@ class SettingsPage extends ConsumerWidget {
                         '${selectedCount.toString()} of ${totalStores.toString()}',
                       ),
                       onPressed: () {
-                        context.push('/store-select');
+                        checkWaitlistTask();
+
+                        // context.push('/store-select');
                       },
                     ),
                   ),
@@ -203,7 +206,7 @@ class SettingsPage extends ConsumerWidget {
                         title: const Text('Clear Waitlist'),
                         subtitle:
                             const Text('Clear all games from your waitlist.'),
-                        onTap: () {
+                        onTap: () async {
                           showAdaptiveDialog(
                             context: context,
                             builder: (context) {

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
+import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 
 void showDealsFilter(BuildContext context) {
   showModalBottomSheet(
@@ -30,17 +31,10 @@ class DealsFilter extends ConsumerWidget {
 
     return SingleChildScrollView(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ListTile(
-            visualDensity: VisualDensity.compact,
-            tileColor: context.colors.canvas,
-            title: Text(
-              'Deals Type',
-              style: context.textStyles.labelLarge.copyWith(
-                color: context.colors.scheme.outline,
-              ),
-            ),
-          ),
+          const BottomSheetHeading(text: 'Deals Type'),
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),

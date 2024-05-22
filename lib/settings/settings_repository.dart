@@ -257,7 +257,7 @@ class SettingsRepository {
   List<Deal> getWaitlistPast() {
     return settingsBox.get(
       PREF_WAITLIST_PAST,
-      defaultValue: [],
+      defaultValue: <Deal>[],
     );
   }
 
