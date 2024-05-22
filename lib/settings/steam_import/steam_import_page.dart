@@ -9,6 +9,7 @@ import 'package:observatory/settings/steam_import/ui/unfinished_import_dialog.da
 import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
+import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class SteamImportPage extends ConsumerWidget {
   const SteamImportPage({super.key});
@@ -84,10 +85,7 @@ class SteamImportPage extends ConsumerWidget {
                                 );
                               },
                         icon: steamImportState.isImporting
-                            ? Transform.scale(
-                                scale: 0.4,
-                                child: const CircularProgressIndicator(),
-                              )
+                            ? const ObservatoryIconProgressIndicator()
                             : const Icon(Icons.import_export_rounded),
                         label: const Text('Import'),
                       ),

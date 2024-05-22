@@ -1,5 +1,6 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:observatory/notifications/waitlist_notification.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
@@ -56,6 +57,8 @@ Future<bool> checkWaitlistTask() async {
 Future<void> enableCheckWaitlistTask({
   Duration frequency = const Duration(hours: 3),
 }) async {
+  Logger().d('Enabling $TASK_CHECK_WAITLIST task');
+
   return Workmanager().registerPeriodicTask(
     TASK_CHECK_WAITLIST,
     TASK_CHECK_WAITLIST,
@@ -68,5 +71,7 @@ Future<void> enableCheckWaitlistTask({
 }
 
 Future<void> disableCheckWaitlistTask() async {
+  Logger().d('Disabling $TASK_CHECK_WAITLIST task');
+
   return Workmanager().cancelByUniqueName(TASK_CHECK_WAITLIST);
 }

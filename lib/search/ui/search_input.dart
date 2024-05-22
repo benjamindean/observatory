@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/search/search_provider.dart';
 import 'package:observatory/search/search_state.dart';
+import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class SearchInput extends ConsumerWidget {
   final SearchType searchType;
@@ -45,10 +46,7 @@ class SearchInput extends ConsumerWidget {
         suffixIcon: Builder(
           builder: (context) {
             if (searchState.isLoading) {
-              return Transform.scale(
-                scale: 0.4,
-                child: const CircularProgressIndicator(),
-              );
+              return const ObservatoryIconProgressIndicator();
             }
 
             return Tooltip(

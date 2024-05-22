@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
 import 'package:observatory/settings/steam_import/steam_import_state.dart';
+import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class SteamImportForm extends ConsumerWidget {
   const SteamImportForm({
@@ -68,12 +69,7 @@ class SteamImportForm extends ConsumerWidget {
             padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
             child: FilledButton.icon(
               icon: steamImportState.isLoading
-                  ? Transform.scale(
-                      scale: 0.4,
-                      child: CircularProgressIndicator(
-                        color: context.colors.primary,
-                      ),
-                    )
+                  ? const ObservatoryIconProgressIndicator()
                   : const Icon(Icons.download),
               onPressed: steamImportState.isLoading
                   ? null
