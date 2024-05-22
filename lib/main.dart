@@ -22,31 +22,67 @@ import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:workmanager/workmanager.dart';
 
+Future<void> initSettings() async {
+  await SettingsRepository.init();
+
+  GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
+  GetIt.I.registerSingleton<API>(await API.create());
+  GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
+}
+
+Future<void> initFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  await FirebaseAppCheck.instance.activate();
+
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+
+    return true;
+  };
+}
+
+Future<void> initUniLinks() async {
+  try {
+    final String? initialLink = await getInitialLink();
+
+    if (initialLink == null) {
+      return;
+    }
+  } on PlatformException {
+    return;
+  }
+}
+
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
-    await SettingsRepository.init();
+    try {
+      await initSettings();
+      await initFirebase();
 
-    GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
-    GetIt.I.registerSingleton<API>(await API.create());
-    GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
+      return await checkWaitlistTask();
+    } catch (error, stackTrace) {
+      FirebaseCrashlytics.instance.recordError(error, stackTrace);
 
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+      AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: 11,
+          channelKey: 'observatory_channel',
+          title: 'Wailtist check failed',
+          body:
+              'An error occurred while checking your waitlist. Please check your settings.',
+          actionType: ActionType.Default,
+        ),
+      );
 
-    await FirebaseAppCheck.instance.activate();
-
-    FlutterError.onError = (errorDetails) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-    };
-    PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-
-      return true;
-    };
-
-    return await checkWaitlistTask();
+      return false;
+    }
   });
 }
 
@@ -77,41 +113,11 @@ class Observatory extends ConsumerWidget {
   }
 }
 
-Future<void> initUniLinks() async {
-  try {
-    final String? initialLink = await getInitialLink();
-
-    if (initialLink == null) {
-      return;
-    }
-  } on PlatformException {
-    return;
-  }
-}
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await SettingsRepository.init();
-
-  GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
-  GetIt.I.registerSingleton<API>(await API.create());
-  GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
-
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  await FirebaseAppCheck.instance.activate();
-
-  FlutterError.onError = (errorDetails) {
-    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  };
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-
-    return true;
-  };
+  await initSettings();
+  await initFirebase();
 
   FirebaseAnalytics.instance.logAppOpen();
 

@@ -29,47 +29,49 @@ class DealsFilter extends ConsumerWidget {
       ),
     );
 
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const BottomSheetHeading(text: 'Deals Type'),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: DealCategory.values.length,
-            itemBuilder: (context, index) {
-              final DealCategory category = DealCategory.values[index];
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const BottomSheetHeading(text: 'Deals Type'),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: DealCategory.values.length,
+              itemBuilder: (context, index) {
+                final DealCategory category = DealCategory.values[index];
 
-              return ListTile(
-                selectedTileColor: context.colors.scheme.primaryContainer,
-                selectedColor: context.colors.scheme.onPrimaryContainer,
-                selected: DealCategory.values[index] == dealsTab,
-                onTap: () async {
-                  return ref
-                      .read(asyncSettingsProvider.notifier)
-                      .setDealsTab(category)
-                      .then(
-                        (value) => context.pop(),
-                      );
-                },
-                title: Text(
-                  dealCategoryLabels[category]?['title'] ?? 'Unknown',
-                  style: context.textStyles.titleMedium.copyWith(
-                    color: context.colors.scheme.onPrimaryContainer,
+                return ListTile(
+                  selectedTileColor: context.colors.scheme.primaryContainer,
+                  selectedColor: context.colors.scheme.onPrimaryContainer,
+                  selected: DealCategory.values[index] == dealsTab,
+                  onTap: () async {
+                    return ref
+                        .read(asyncSettingsProvider.notifier)
+                        .setDealsTab(category)
+                        .then(
+                          (value) => context.pop(),
+                        );
+                  },
+                  title: Text(
+                    dealCategoryLabels[category]?['title'] ?? 'Unknown',
+                    style: context.textStyles.titleMedium.copyWith(
+                      color: context.colors.scheme.onPrimaryContainer,
+                    ),
                   ),
-                ),
-                subtitle: Text(
-                  dealCategoryLabels[category]?['subtitle'] ?? 'Unknown',
-                  style: context.textStyles.bodySmall.copyWith(
-                    color: context.colors.scheme.onPrimaryContainer,
+                  subtitle: Text(
+                    dealCategoryLabels[category]?['subtitle'] ?? 'Unknown',
+                    style: context.textStyles.bodySmall.copyWith(
+                      color: context.colors.scheme.onPrimaryContainer,
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

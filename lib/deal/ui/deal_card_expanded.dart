@@ -32,14 +32,14 @@ class DealCardExpanded extends ConsumerWidget {
       onTap: () => onCardTap(context),
       borderRadius: BorderRadius.circular(16),
       onLongPress: () {
+        HapticFeedback.mediumImpact();
+
         showModalBottomSheet(
           context: context,
           useSafeArea: true,
           builder: (BuildContext context) {
             return Consumer(
               builder: (context, ref, _) {
-                HapticFeedback.mediumImpact();
-
                 return DealBottomSheet(deal: deal);
               },
             );

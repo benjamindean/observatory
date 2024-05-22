@@ -17,7 +17,7 @@ class BottomSheetHeading extends StatelessWidget {
       title: Text(
         text,
         style: context.textStyles.labelLarge.copyWith(
-          color: context.colors.disabled,
+          color: context.colors.scheme.onSurfaceVariant,
         ),
       ),
     );

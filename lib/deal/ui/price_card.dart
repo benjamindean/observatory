@@ -28,12 +28,12 @@ class PriceCard extends StatelessWidget {
         );
       },
       onLongPress: () {
+        HapticFeedback.mediumImpact();
+
         showModalBottomSheet(
           context: context,
           useSafeArea: true,
           builder: (BuildContext context) {
-            HapticFeedback.mediumImpact();
-
             return PriceBottomSheet(price: price);
           },
         );
