@@ -19,6 +19,7 @@ import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/ui/theme.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
+import 'package:observatory/tasks/constants.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:workmanager/workmanager.dart';
 
@@ -63,23 +64,16 @@ Future<void> initUniLinks() async {
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
     try {
-      await initSettings();
-      await initFirebase();
+      if (task == TASK_CHECK_WAITLIST) {
+        await initSettings();
+        await initFirebase();
 
-      return await checkWaitlistTask();
+        return checkWaitlistTask();
+      }
+
+      return false;
     } catch (error, stackTrace) {
       FirebaseCrashlytics.instance.recordError(error, stackTrace);
-
-      AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: 11,
-          channelKey: 'observatory_channel',
-          title: 'Wailtist check failed',
-          body:
-              'An error occurred while checking your waitlist. Please check your settings.',
-          actionType: ActionType.Default,
-        ),
-      );
 
       return false;
     }
@@ -129,7 +123,6 @@ void main() async {
 
   Workmanager().initialize(
     callbackDispatcher,
-    isInDebugMode: true,
   );
 
   runApp(

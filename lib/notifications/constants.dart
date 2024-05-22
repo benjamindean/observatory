@@ -5,7 +5,7 @@ final NOTIFICATION_CHANNELS = [
     channelGroupKey: 'observatory_channel_group',
     channelKey: 'observatory_channel',
     channelName: 'Waitlist Notifications',
-    channelDescription: 'Notifications about discounts on waitlisted items',
+    channelDescription: 'Notifications about discounts on waitlisted items.',
   ),
 ];
 

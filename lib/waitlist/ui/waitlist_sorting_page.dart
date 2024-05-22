@@ -5,6 +5,7 @@ import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:observatory/waitlist/ui/steam_import_list_tile.dart';
+import 'package:observatory/waitlist/ui/waitlist_sorting_strings.dart';
 
 void showWaitlistSorting(BuildContext context) {
   showModalBottomSheet(
@@ -17,29 +18,6 @@ void showWaitlistSorting(BuildContext context) {
     },
   );
 }
-
-final textLabels = {
-  WaitlistSorting.date_added: {
-    'title': 'Date Added',
-    WaitlistSortingDirection.asc: 'New to Old',
-    WaitlistSortingDirection.desc: 'Old to New',
-  },
-  WaitlistSorting.price: {
-    'title': 'Price',
-    WaitlistSortingDirection.asc: 'High to Low',
-    WaitlistSortingDirection.desc: 'Low to High',
-  },
-  WaitlistSorting.price_cut: {
-    'title': 'Discount',
-    WaitlistSortingDirection.asc: 'High to Low',
-    WaitlistSortingDirection.desc: 'Low to High',
-  },
-  WaitlistSorting.title: {
-    'title': 'Title',
-    WaitlistSortingDirection.asc: 'A to Z',
-    WaitlistSortingDirection.desc: 'Z to A',
-  },
-};
 
 class WaitlistSortingPage extends ConsumerWidget {
   const WaitlistSortingPage({super.key});
@@ -93,7 +71,7 @@ class WaitlistSortingPage extends ConsumerWidget {
                     }
                   },
                   title: Text(
-                    textLabels[sorting]?['title'] ?? 'Price',
+                    waitlistSortingStrings[sorting]?['title'] ?? 'Price',
                     style: context.textStyles.titleMedium.copyWith(
                       color: context.colors.scheme.onPrimaryContainer,
                     ),
@@ -104,7 +82,8 @@ class WaitlistSortingPage extends ConsumerWidget {
                         return Chip(
                           side: BorderSide.none,
                           label: Text(
-                            textLabels[sorting]?[waitlistSortingDirection] ??
+                            waitlistSortingStrings[sorting]
+                                    ?[waitlistSortingDirection] ??
                                 'Unknown',
                             style: context.textStyles.labelMedium.copyWith(
                               color: context.colors.scheme.onPrimary,

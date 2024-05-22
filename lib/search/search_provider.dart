@@ -32,6 +32,7 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
       deals: null,
       isOpen: false,
       isFocused: false,
+      searchInputController: TextEditingController(),
     );
   }
 
@@ -73,8 +74,9 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
       query: query,
     );
 
-    final API api = GetIt.I<API>();
-    final List<Deal> results = await api.getSearchResults(query: query);
+    final List<Deal> results = await GetIt.I<API>().getSearchResults(
+      query: query,
+    );
     final List<Deal> deals = Set<Deal>.from(results).toList();
 
     FirebaseAnalytics.instance.logEvent(

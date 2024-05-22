@@ -108,13 +108,13 @@ class WaitListList extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CircularProgressIndicator(),
+              const ObservatoryProgressIndicator(),
               Padding(
                 padding: const EdgeInsets.only(top: 32.0),
                 child: Text(
                   'Importing Steam wishlist...',
-                  style: context.textStyles.labelLarge.copyWith(
-                    color: context.colors.scheme.onSurface,
+                  style: context.textStyles.titleMedium.copyWith(
+                    color: context.colors.scheme.onSurfaceVariant,
                   ),
                 ),
               ),
