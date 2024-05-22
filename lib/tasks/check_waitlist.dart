@@ -58,7 +58,7 @@ Future<void> enableCheckWaitlistTask({
 }) async {
   return Workmanager().registerPeriodicTask(
     TASK_CHECK_WAITLIST,
-    TASK_CHECK_WAITLIST_NAME,
+    TASK_CHECK_WAITLIST,
     frequency: frequency,
     initialDelay: const Duration(minutes: 1),
     constraints: Constraints(
