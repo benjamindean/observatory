@@ -14,16 +14,19 @@ enum SearchType {
 
 class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
   @override
-  SearchState build(SearchType arg) => SearchState(
-        query: null,
-        deals: null,
-        isOpen: false,
-        focusNode: FocusNode(),
-        searchInputController: TextEditingController(),
-      );
+  SearchState build(SearchType arg) {
+    return SearchState(
+      query: null,
+      deals: null,
+      isOpen: false,
+      focusNode: FocusNode(),
+      searchInputController: TextEditingController(),
+    );
+  }
 
   void reset() {
-    state.searchInputController.clear();
+    state.searchInputController.dispose();
+    state.focusNode.dispose();
 
     state = state.copyWith(
       query: null,
@@ -41,7 +44,6 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
   void setIsOpen() {
     state = state.copyWith(
       isOpen: true,
-      focusNode: FocusNode(),
     );
 
     state.focusNode.requestFocus();
