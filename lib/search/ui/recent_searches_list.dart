@@ -29,8 +29,8 @@ class RecentSearchesList extends ConsumerWidget {
                 icon: Icons.search_off_outlined,
                 helper: TextButton(
                   onPressed: () {
-                    ref.read(searchResultsProvider.notifier).setIsOpen(true);
                     ref.read(searchResultsProvider.notifier).setIsFocused(true);
+                    ref.read(searchResultsProvider.notifier).setIsOpen(true);
                   },
                   child: const Text('Search Now'),
                 ),
