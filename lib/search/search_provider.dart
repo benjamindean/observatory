@@ -39,11 +39,12 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
   }
 
   void setIsOpen() {
-    state.focusNode.requestFocus();
-
     state = state.copyWith(
       isOpen: true,
+      focusNode: FocusNode(),
     );
+
+    state.focusNode.requestFocus();
   }
 
   Future<void> performSearch(String query) async {

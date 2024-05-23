@@ -267,6 +267,8 @@ class SettingsRepository {
       return;
     }
 
+    await pastSavedDealsBox.clear();
+
     return pastSavedDealsBox.putAll({
       for (final deal in waitlist)
         deal.id: Deal(
