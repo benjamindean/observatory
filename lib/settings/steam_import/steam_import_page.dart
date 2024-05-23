@@ -6,8 +6,8 @@ import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/settings/steam_import/ui/steam_import_filter.dart';
 import 'package:observatory/settings/steam_import/ui/steam_import_form.dart';
 import 'package:observatory/settings/steam_import/ui/unfinished_import_dialog.dart';
-import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/ui/observatory_back_button.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 
@@ -26,13 +26,9 @@ class SteamImportPage extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Expanded(
+                const Expanded(
                   flex: 50,
-                  child: BackButton(
-                    style: IconButton.styleFrom(
-                      backgroundColor: context.elevatedCanvasColor,
-                    ),
-                  ),
+                  child: ObservatoryBackButton(),
                 ),
                 Expanded(
                   flex: 50,

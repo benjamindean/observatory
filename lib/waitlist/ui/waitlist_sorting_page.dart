@@ -86,10 +86,10 @@ class WaitlistSortingPage extends ConsumerWidget {
                                     ?[waitlistSortingDirection] ??
                                 'Unknown',
                             style: context.textStyles.labelMedium.copyWith(
-                              color: context.colors.scheme.onPrimary,
+                              color: context.colors.scheme.onSecondary,
                             ),
                           ),
-                          backgroundColor: context.colors.scheme.primary,
+                          backgroundColor: context.colors.scheme.secondary,
                         );
                       }
 

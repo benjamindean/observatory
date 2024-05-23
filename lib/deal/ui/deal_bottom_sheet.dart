@@ -28,7 +28,7 @@ class DealBottomSheet extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
-          tileColor: context.elevatedCanvasColor,
+          tileColor: context.highElevatedCanvasColor,
           contentPadding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
           title: Text(
             deal.titleParsed,

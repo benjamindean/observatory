@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deal/deal_functions.dart';
 import 'package:observatory/deal/ui/waitlist_button.dart';
-import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/ui/observatory_back_button.dart';
 
 class DealPageBottomAppBar extends ConsumerWidget {
   const DealPageBottomAppBar({
@@ -22,13 +22,9 @@ class DealPageBottomAppBar extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Expanded(
+          const Expanded(
             flex: 50,
-            child: BackButton(
-              style: IconButton.styleFrom(
-                backgroundColor: context.elevatedCanvasColor,
-              ),
-            ),
+            child: ObservatoryBackButton(),
           ),
           Expanded(
             flex: 50,
@@ -45,7 +41,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
                     icon: Icon(
                       Icons.open_in_browser,
                       color: deal.prices?.firstOrNull != null
-                          ? context.colors.scheme.tertiary
+                          ? context.colors.scheme.secondary
                           : context.colors.disabled,
                     ),
                   ),

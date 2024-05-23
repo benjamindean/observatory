@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:observatory/router.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/stores_select/stores_list_provider.dart';
-import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/store.dart';
+import 'package:observatory/shared/ui/observatory_back_button.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 
 class StoreSelectPage extends ConsumerWidget {
@@ -37,16 +37,11 @@ class StoreSelectPage extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Expanded(
+            const Expanded(
               flex: 50,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                child: BackButton(
-                  style: IconButton.styleFrom(
-                    backgroundColor: context.elevatedCanvasColor,
-                  ),
-                ),
-              ),
+                  padding: EdgeInsets.symmetric(horizontal: 6.0),
+                  child: ObservatoryBackButton()),
             ),
             Expanded(
               flex: 50,
