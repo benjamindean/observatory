@@ -66,7 +66,7 @@ class DealBottomSheet extends ConsumerWidget {
             ListTile(
               leading: Icon(
                 Icons.open_in_browser,
-                color: context.colors.scheme.tertiary,
+                color: context.colors.scheme.secondary,
               ),
               title: const Text('Open in Browser'),
               onTap: deal.prices?.firstOrNull != null

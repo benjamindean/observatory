@@ -55,7 +55,6 @@ class SearchNotifierMock extends FamilyNotifier<SearchState, SearchType>
         deals: results,
         focusNode: FocusNode(),
         isOpen: true,
-        isFocused: false,
         searchInputController: TextEditingController(
           text: 'Slay the Princess',
         ),
@@ -72,12 +71,7 @@ class SearchNotifierMock extends FamilyNotifier<SearchState, SearchType>
   }
 
   @override
-  void setIsOpen(bool isOpen) {
-    state = state;
-  }
-
-  @override
-  void setIsFocused(bool isFocused) {
+  void setIsOpen() {
     state = state;
   }
 

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
@@ -18,16 +19,15 @@ Future<List<Deal>> getNewDiscountedDeals() async {
 
   return List.from(waitlist)
     ..retainWhere((deal) {
-      final Deal pastValue = pastWaitlist.singleWhere(
+      final Deal? pastDeal = pastWaitlist.singleWhereOrNull(
         (pastDeal) => pastDeal.id == deal.id,
-        orElse: () => const Deal(id: 'none'),
       );
 
-      if (pastValue.id == 'none') {
+      if (pastDeal == null) {
         return true;
       }
 
-      if ((pastValue.prices?.first.cut ?? 0) < (deal.prices?.first.cut ?? 0)) {
+      if ((pastDeal.prices?.first.cut ?? 0) < (deal.prices?.first.cut ?? 0)) {
         return true;
       }
 

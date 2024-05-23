@@ -1,3 +1,4 @@
+import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/shared/models/deal.dart';
@@ -20,12 +21,21 @@ class DiscountedBadge extends ConsumerWidget {
         .toList();
 
     return Badge(
+      backgroundColor: context.colors.scheme.secondaryContainer,
       alignment: Alignment.center,
       isLabelVisible: discountedDeals.isNotEmpty,
       offset: const Offset(20.0, -8.0),
       label: discountedDeals.length > 100
-          ? const Text('100+')
-          : Text(discountedDeals.length.toString()),
+          ? Text(
+              '100+',
+              style: context.textStyles.labelSmall.copyWith(
+                color: context.colors.scheme.onSecondaryContainer,
+              ),
+            )
+          : Text(discountedDeals.length.toString(),
+              style: context.textStyles.labelSmall.copyWith(
+                color: context.colors.scheme.onSecondaryContainer,
+              )),
       child: const Icon(Icons.favorite),
     );
   }

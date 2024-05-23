@@ -21,27 +21,17 @@ class SearchAppBar extends ConsumerWidget {
       title: Builder(
         builder: (context) {
           if (searchState.isOpen) {
-            return PopScope(
-              canPop: !searchState.isOpen,
-              onPopInvoked: (bool canPop) {
-                if (!canPop) {
-                  ref.watch(searchResultsProvider.notifier).reset();
+            return SearchInput(
+              searchType: SearchType.search,
+              onChanged: (String value) {
+                ref.read(searchResultsProvider.notifier).setQuery(value);
+              },
+              onSubmitted: (String value) {
+                if (value.trim().isNotEmpty) {
+                  ref.read(searchResultsProvider.notifier).performSearch(value);
+                  ref.read(asynRecentsProvider.notifier).addRecent(value);
                 }
               },
-              child: SearchInput(
-                searchType: SearchType.search,
-                onChanged: (String value) {
-                  ref.read(searchResultsProvider.notifier).setQuery(value);
-                },
-                onSubmitted: (String value) {
-                  if (value.trim().isNotEmpty) {
-                    ref
-                        .read(searchResultsProvider.notifier)
-                        .performSearch(value);
-                    ref.read(asynRecentsProvider.notifier).addRecent(value);
-                  }
-                },
-              ),
             );
           }
 
@@ -57,8 +47,7 @@ class SearchAppBar extends ConsumerWidget {
 
             return FilledButton.icon(
               onPressed: () {
-                ref.read(searchResultsProvider.notifier).setIsFocused(true);
-                ref.read(searchResultsProvider.notifier).setIsOpen(true);
+                ref.read(searchResultsProvider.notifier).setIsOpen();
               },
               icon: const Icon(Icons.search),
               label: const Text('Search'),

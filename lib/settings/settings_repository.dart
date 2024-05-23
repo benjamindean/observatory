@@ -8,6 +8,7 @@ import 'package:observatory/shared/models/observatory_theme.dart';
 
 const SETTINGS_BOX_NAME = 'observatory_user_data';
 const SAVED_DEALS_BOX_NAME = 'observatory_saved_deals';
+const PAST_SAVED_DEALS_BOX_NAME = 'observatory_past_saved_deals';
 const RECENT_SEARCHES_BOX_NAME = 'observatory_recent_searches';
 
 const int IMAGE_WIDTH = 600;
@@ -46,6 +47,9 @@ class SettingsRepository {
   final Box<Deal> savedDealsBox = Hive.box<Deal>(
     SAVED_DEALS_BOX_NAME,
   );
+  final Box<Deal> pastSavedDealsBox = Hive.box<Deal>(
+    PAST_SAVED_DEALS_BOX_NAME,
+  );
   final Box<String> recentSearchesBox = Hive.box<String>(
     RECENT_SEARCHES_BOX_NAME,
   );
@@ -63,7 +67,6 @@ class SettingsRepository {
   final String PREF_WAITLIST_SORTING = 'observatory_waitlist_sorting';
   final String PREF_WAITLIST_SORTING_DIRECTION =
       'observatory_waitlist_sorting_direction';
-  final String PREF_WAITLIST_PAST = 'observatory_waitlist_past';
   final String PREF_STEAM_USERNAME = 'observatory_steam_username';
 
   static Future<void> init() async {
@@ -75,6 +78,7 @@ class SettingsRepository {
 
     await Hive.openBox(SETTINGS_BOX_NAME);
     await Hive.openBox<Deal>(SAVED_DEALS_BOX_NAME);
+    await Hive.openBox<Deal>(PAST_SAVED_DEALS_BOX_NAME);
     await Hive.openBox<String>(RECENT_SEARCHES_BOX_NAME);
   }
 
@@ -255,10 +259,7 @@ class SettingsRepository {
   }
 
   List<Deal> getWaitlistPast() {
-    return settingsBox.get(
-      PREF_WAITLIST_PAST,
-      defaultValue: <Deal>[],
-    );
+    return pastSavedDealsBox.values.toList();
   }
 
   Future<void> setWaitlistPast(List<Deal> waitlist) async {
@@ -266,19 +267,17 @@ class SettingsRepository {
       return;
     }
 
-    return settingsBox.put(
-      PREF_WAITLIST_PAST,
-      waitlist
-          .map(
-            (e) => Deal(
-              id: e.id,
-              slug: e.slug,
-              title: e.title,
-              prices: e.prices,
-            ),
-          )
-          .toList(),
-    );
+    return pastSavedDealsBox.putAll({
+      for (final deal in waitlist)
+        deal.id: Deal(
+          id: deal.id,
+          slug: deal.slug,
+          title: deal.title,
+          prices: deal.prices,
+          added: deal.added,
+          source: deal.source,
+        ),
+    });
   }
 
   WaitlistSortingDirection getWaitlistSortingDirection() {

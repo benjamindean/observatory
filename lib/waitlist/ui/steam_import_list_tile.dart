@@ -34,7 +34,9 @@ class SteamImportListTile extends ConsumerWidget {
             )
           : Text(steamUserName ?? 'None'),
       trailing: TextButton.icon(
-        icon: isImporting ? const ObservatoryIconProgressIndicator() : null,
+        icon: isImporting
+            ? const ObservatoryIconProgressIndicator()
+            : const Icon(Icons.refresh),
         onPressed: isImporting
             ? null
             : () {

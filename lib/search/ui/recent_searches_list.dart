@@ -29,8 +29,7 @@ class RecentSearchesList extends ConsumerWidget {
                 icon: Icons.search_off_outlined,
                 helper: TextButton(
                   onPressed: () {
-                    ref.read(searchResultsProvider.notifier).setIsFocused(true);
-                    ref.read(searchResultsProvider.notifier).setIsOpen(true);
+                    ref.read(searchResultsProvider.notifier).setIsOpen();
                   },
                   child: const Text('Search Now'),
                 ),
@@ -66,7 +65,7 @@ class RecentSearchesList extends ConsumerWidget {
                                 context.pop();
                               },
                               title: 'Clear all recent searches?',
-                              body: 'This operation is not undoable.',
+                              body: 'This operation cannot be undone.',
                               discardText: 'Cancel',
                               applyText: 'Clear',
                             );

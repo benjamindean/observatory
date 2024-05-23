@@ -118,8 +118,7 @@ class WaitlistAppBar extends ConsumerWidget {
               child: IconButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  ref.read(filterResultsProvider.notifier).setIsFocused(true);
-                  ref.read(filterResultsProvider.notifier).setIsOpen(true);
+                  ref.read(filterResultsProvider.notifier).setIsOpen();
                 },
                 icon: const Icon(Icons.search),
               ),

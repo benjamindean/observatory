@@ -17,21 +17,19 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
   SearchState build(SearchType arg) => SearchState(
         query: null,
         deals: null,
-        focusNode: FocusNode(),
         isOpen: false,
-        isFocused: false,
+        focusNode: FocusNode(),
         searchInputController: TextEditingController(),
       );
 
   void reset() {
     state.searchInputController.clear();
-    state.focusNode.unfocus();
 
     state = state.copyWith(
       query: null,
       deals: null,
       isOpen: false,
-      isFocused: false,
+      focusNode: FocusNode(),
       searchInputController: TextEditingController(),
     );
   }
@@ -40,22 +38,11 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
     state = state.copyWith(query: query);
   }
 
-  void setIsOpen(bool isOpen) {
-    state = state.copyWith(
-      isOpen: isOpen,
-      searchInputController: TextEditingController(),
-    );
-  }
-
-  void setIsFocused(bool isFocused) {
-    if (isFocused) {
-      state.focusNode.requestFocus();
-    } else {
-      state.focusNode.unfocus();
-    }
+  void setIsOpen() {
+    state.focusNode.requestFocus();
 
     state = state.copyWith(
-      isFocused: isFocused,
+      isOpen: true,
     );
   }
 
@@ -93,7 +80,8 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
 
   void clear() {
     state.searchInputController.clear();
-    setIsFocused(true);
+    state.focusNode.requestFocus();
+
     state = state.copyWith(
       query: null,
     );

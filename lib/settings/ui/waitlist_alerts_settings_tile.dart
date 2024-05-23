@@ -17,7 +17,7 @@ class WaitlistAlertsSettingsTile extends ConsumerWidget {
       value: isEnabled,
       title: const Text('Discount Alerts'),
       subtitle: const Text(
-        'Show notifications when games in your waitlist go on sale.',
+        'Receive notifications when games on your waitlist go on sale.',
       ),
       onChanged: (value) async {
         final bool isAllowed =

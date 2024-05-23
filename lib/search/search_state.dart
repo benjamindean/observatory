@@ -10,7 +10,6 @@ class SearchState with _$SearchState {
     required String? query,
     required List<Deal>? deals,
     @Default(false) bool isOpen,
-    @Default(false) bool isFocused,
     @Default(false) bool isLoading,
     required FocusNode focusNode,
     required TextEditingController searchInputController,

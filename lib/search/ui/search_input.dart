@@ -24,49 +24,51 @@ class SearchInput extends ConsumerWidget {
 
     final SearchState searchState = ref.watch(provider);
 
-    return TextField(
-      focusNode: searchState.focusNode,
-      controller: searchState.searchInputController,
-      decoration: InputDecoration(
-        fillColor: Colors.transparent,
-        hintText: 'Search',
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(30),
-        ),
-        prefixIcon: Tooltip(
-          message: 'Go Back',
-          child: IconButton(
-            icon: const Icon(Icons.arrow_back_outlined),
-            onPressed: () {
-              ref.read(provider.notifier).reset();
+    return Form(
+      child: TextField(
+        focusNode: searchState.focusNode,
+        controller: searchState.searchInputController,
+        decoration: InputDecoration(
+          fillColor: Colors.transparent,
+          hintText: 'Search',
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          prefixIcon: Tooltip(
+            message: 'Go Back',
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_outlined),
+              onPressed: () {
+                ref.read(provider.notifier).reset();
+              },
+            ),
+          ),
+          suffixIcon: Builder(
+            builder: (context) {
+              if (searchState.isLoading) {
+                return const ObservatoryIconProgressIndicator();
+              }
+
+              return Tooltip(
+                message: 'Reset Search',
+                child: IconButton(
+                  onPressed: () {
+                    if ((searchState.query ?? '').isEmpty) {
+                      return ref.read(provider.notifier).reset();
+                    }
+
+                    return ref.read(provider.notifier).clear();
+                  },
+                  icon: const Icon(Icons.clear_outlined),
+                ),
+              );
             },
           ),
         ),
-        suffixIcon: Builder(
-          builder: (context) {
-            if (searchState.isLoading) {
-              return const ObservatoryIconProgressIndicator();
-            }
-
-            return Tooltip(
-              message: 'Reset Search',
-              child: IconButton(
-                onPressed: () {
-                  if ((searchState.query ?? '').isEmpty) {
-                    return ref.read(provider.notifier).reset();
-                  }
-
-                  return ref.read(provider.notifier).clear();
-                },
-                icon: const Icon(Icons.clear_outlined),
-              ),
-            );
-          },
-        ),
+        onChanged: onChanged,
+        onSubmitted: onSubmitted,
       ),
-      onChanged: onChanged,
-      onSubmitted: onSubmitted,
     );
   }
 }
