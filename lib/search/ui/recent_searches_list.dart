@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/search/search_provider.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
@@ -80,7 +81,7 @@ class RecentSearchesList extends ConsumerWidget {
 
               return Card(
                 surfaceTintColor: context.colors.scheme.surfaceTint,
-                elevation: 2,
+                elevation: CARD_ELEVATION,
                 child: InkWell(
                   onTap: () async {
                     await ref

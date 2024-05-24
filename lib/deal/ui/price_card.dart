@@ -5,6 +5,7 @@ import 'package:observatory/deal/ui/price_bottom_sheet.dart';
 import 'package:observatory/deal/ui/price_cut.dart';
 import 'package:observatory/deal/ui/voucher_list_tile.dart';
 import 'package:observatory/shared/models/price.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PriceCard extends StatelessWidget {
@@ -40,7 +41,7 @@ class PriceCard extends StatelessWidget {
       },
       child: Card(
         surfaceTintColor: context.colors.scheme.surfaceTint,
-        elevation: 2,
+        elevation: CARD_ELEVATION,
         child: Column(
           children: [
             ListTile(

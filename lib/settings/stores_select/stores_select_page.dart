@@ -33,15 +33,15 @@ class StoreSelectPage extends ConsumerWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        color: context.colors.scheme.surface,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             const Expanded(
               flex: 50,
               child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 6.0),
-                  child: ObservatoryBackButton()),
+                padding: EdgeInsets.symmetric(horizontal: 6.0),
+                child: ObservatoryBackButton(),
+              ),
             ),
             Expanded(
               flex: 50,

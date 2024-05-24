@@ -20,7 +20,6 @@ class SteamImportPage extends ConsumerWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        color: context.colors.scheme.surface,
         child: Column(
           children: [
             Row(

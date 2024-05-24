@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deal/deal_functions.dart';
 import 'package:observatory/deal/ui/waitlist_button.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/observatory_back_button.dart';
 
 class DealPageBottomAppBar extends ConsumerWidget {
@@ -17,7 +18,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return BottomAppBar(
-      color: context.colors.scheme.surface,
+      elevation: APPBAR_ELEVATION,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
