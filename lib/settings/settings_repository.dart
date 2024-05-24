@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
+import 'package:observatory/shared/models/price.dart';
+import 'package:observatory/shared/models/shop.dart';
 
 const SETTINGS_BOX_NAME = 'observatory_user_data';
 const SAVED_DEALS_BOX_NAME = 'observatory_saved_deals';
@@ -72,6 +74,9 @@ class SettingsRepository {
   static Future<void> init() async {
     await Hive.initFlutter();
 
+    Hive.registerAdapter(ShopAdapter());
+    Hive.registerAdapter(PriceDetailsAdapter());
+    Hive.registerAdapter(PriceAdapter());
     Hive.registerAdapter(DealSourceAdapter());
     Hive.registerAdapter(DealAdapter());
     Hive.registerAdapter(ObservatoryThemeAdapter());
@@ -270,7 +275,7 @@ class SettingsRepository {
     await pastSavedDealsBox.clear();
 
     return pastSavedDealsBox.putAll({
-      for (final deal in waitlist)
+      for (final Deal deal in waitlist)
         deal.id: Deal(
           id: deal.id,
           slug: deal.slug,

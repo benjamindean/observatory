@@ -40,7 +40,7 @@ Future<List<Deal>> getNewDiscountedDeals() async {
       },
     );
 
-  await settingsRepository.setWaitlistPast(waitlist);
+  await settingsRepository.setWaitlistPast(List.from(waitlist));
 
   Logger().d({
     'waitlist': waitlist.length,

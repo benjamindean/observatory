@@ -28,7 +28,7 @@ class Deal with _$Deal {
     @Default('game') String type,
     @HiveField(2) @Default('') String title,
     String? steamId,
-    List<Price>? prices,
+    @HiveField(5) List<Price>? prices,
     Info? info,
     Overview? overview,
     @Default(false) bool isLoading,

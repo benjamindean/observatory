@@ -20,7 +20,9 @@ Shop _$ShopFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Shop {
+  @HiveField(0)
   int get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -33,7 +35,7 @@ abstract class $ShopCopyWith<$Res> {
   factory $ShopCopyWith(Shop value, $Res Function(Shop) then) =
       _$ShopCopyWithImpl<$Res, Shop>;
   @useResult
-  $Res call({int id, String name});
+  $Res call({@HiveField(0) int id, @HiveField(1) String name});
 }
 
 /// @nodoc
@@ -72,7 +74,7 @@ abstract class _$$ShopImplCopyWith<$Res> implements $ShopCopyWith<$Res> {
       __$$ShopImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name});
+  $Res call({@HiveField(0) int id, @HiveField(1) String name});
 }
 
 /// @nodoc
@@ -104,14 +106,17 @@ class __$$ShopImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ShopImpl implements _Shop {
-  const _$ShopImpl({required this.id, required this.name});
+  const _$ShopImpl(
+      {@HiveField(0) required this.id, @HiveField(1) required this.name});
 
   factory _$ShopImpl.fromJson(Map<String, dynamic> json) =>
       _$$ShopImplFromJson(json);
 
   @override
+  @HiveField(0)
   final int id;
   @override
+  @HiveField(1)
   final String name;
 
   @override
@@ -147,14 +152,17 @@ class _$ShopImpl implements _Shop {
 }
 
 abstract class _Shop implements Shop {
-  const factory _Shop({required final int id, required final String name}) =
-      _$ShopImpl;
+  const factory _Shop(
+      {@HiveField(0) required final int id,
+      @HiveField(1) required final String name}) = _$ShopImpl;
 
   factory _Shop.fromJson(Map<String, dynamic> json) = _$ShopImpl.fromJson;
 
   @override
+  @HiveField(0)
   int get id;
   @override
+  @HiveField(1)
   String get name;
   @override
   @JsonKey(ignore: true)

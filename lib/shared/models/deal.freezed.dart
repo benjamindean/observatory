@@ -28,6 +28,7 @@ mixin _$Deal {
   @HiveField(2)
   String get title => throw _privateConstructorUsedError;
   String? get steamId => throw _privateConstructorUsedError;
+  @HiveField(5)
   List<Price>? get prices => throw _privateConstructorUsedError;
   Info? get info => throw _privateConstructorUsedError;
   Overview? get overview => throw _privateConstructorUsedError;
@@ -53,7 +54,7 @@ abstract class $DealCopyWith<$Res> {
       String type,
       @HiveField(2) String title,
       String? steamId,
-      List<Price>? prices,
+      @HiveField(5) List<Price>? prices,
       Info? info,
       Overview? overview,
       bool isLoading,
@@ -175,7 +176,7 @@ abstract class _$$DealImplCopyWith<$Res> implements $DealCopyWith<$Res> {
       String type,
       @HiveField(2) String title,
       String? steamId,
-      List<Price>? prices,
+      @HiveField(5) List<Price>? prices,
       Info? info,
       Overview? overview,
       bool isLoading,
@@ -268,7 +269,7 @@ class _$DealImpl extends _Deal {
       this.type = 'game',
       @HiveField(2) this.title = '',
       this.steamId,
-      final List<Price>? prices,
+      @HiveField(5) final List<Price>? prices,
       this.info,
       this.overview,
       this.isLoading = false,
@@ -298,6 +299,7 @@ class _$DealImpl extends _Deal {
   final String? steamId;
   final List<Price>? _prices;
   @override
+  @HiveField(5)
   List<Price>? get prices {
     final value = _prices;
     if (value == null) return null;
@@ -384,7 +386,7 @@ abstract class _Deal extends Deal {
       final String type,
       @HiveField(2) final String title,
       final String? steamId,
-      final List<Price>? prices,
+      @HiveField(5) final List<Price>? prices,
       final Info? info,
       final Overview? overview,
       final bool isLoading,
@@ -408,6 +410,7 @@ abstract class _Deal extends Deal {
   @override
   String? get steamId;
   @override
+  @HiveField(5)
   List<Price>? get prices;
   @override
   Info? get info;

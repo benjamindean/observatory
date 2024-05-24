@@ -20,6 +20,7 @@ class DealAdapter extends TypeAdapter<Deal> {
       id: fields[0] as String,
       slug: fields[1] as String,
       title: fields[2] as String,
+      prices: (fields[5] as List?)?.cast<Price>(),
       added: fields[3] as int,
       source: fields[4] as DealSource,
     );
@@ -28,13 +29,15 @@ class DealAdapter extends TypeAdapter<Deal> {
   @override
   void write(BinaryWriter writer, Deal obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.slug)
       ..writeByte(2)
       ..write(obj.title)
+      ..writeByte(5)
+      ..write(obj.prices)
       ..writeByte(3)
       ..write(obj.added)
       ..writeByte(4)
