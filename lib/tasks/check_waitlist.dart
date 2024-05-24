@@ -15,9 +15,7 @@ Future<List<Deal>> getNewDiscountedDeals() async {
   final List<Deal> waitlist = await GetIt.I<API>().fetchWaitlist();
   final List<Deal> pastWaitlist = settingsRepository.getWaitlistPast();
 
-  await settingsRepository.setWaitlistPast(waitlist);
-
-  return List.from(waitlist)
+  final List<Deal> updatedDeals = List.from(waitlist)
     ..retainWhere((deal) {
       final Deal? pastDeal = pastWaitlist.singleWhereOrNull(
         (pastDeal) => pastDeal.id == deal.id,
@@ -27,15 +25,30 @@ Future<List<Deal>> getNewDiscountedDeals() async {
         return true;
       }
 
-      if ((pastDeal.prices?.first.cut ?? 0) < (deal.prices?.first.cut ?? 0)) {
+      if (deal.bestPrice.cut > pastDeal.bestPrice.cut) {
         return true;
       }
 
       return false;
     })
     ..removeWhere(
-      (deal) => deal.prices == null || (deal.prices?.first.cut ?? 0) == 0,
+      (deal) => deal.bestPrice.cut == 0,
+    )
+    ..sort(
+      (a, b) {
+        return (a.added).compareTo(b.added);
+      },
     );
+
+  await settingsRepository.setWaitlistPast(waitlist);
+
+  Logger().d({
+    'waitlist': waitlist.length,
+    'pastWaitlist': pastWaitlist.length,
+    'updatedDeals': updatedDeals.length,
+  });
+
+  return updatedDeals;
 }
 
 Future<bool> checkWaitlistTask() async {
