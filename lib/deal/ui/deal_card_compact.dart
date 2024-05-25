@@ -9,7 +9,6 @@ import 'package:observatory/deal/ui/deal_bottom_sheet.dart';
 import 'package:observatory/deal/ui/deal_card_compact_info_row.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/widgets/header_image.dart';
@@ -89,59 +88,33 @@ class DealCardCompact extends ConsumerWidget {
         child: Card(
           surfaceTintColor: context.colors.scheme.surfaceTint,
           elevation: CARD_ELEVATION,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                color: context.highElevatedCanvasColor,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          deal.titleParsed,
-                          maxLines: 1,
-                          style: context.themes.text.titleSmall?.copyWith(
-                            color: context.colors.scheme.onSurface,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Builder(
-                    builder: (context) {
-                      if (!showHeaders) {
-                        return const SizedBox.shrink();
-                      }
+          child: SizedBox(
+            height: showHeaders ? (IMAGE_HEIGHT / 3.4) : 80,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Builder(
+                  builder: (context) {
+                    if (!showHeaders) {
+                      return const SizedBox.shrink();
+                    }
 
-                      return Expanded(
-                        flex: 50,
-                        child: AspectRatio(
-                          aspectRatio: IMAGE_WIDTH / IMAGE_HEIGHT,
-                          child: HeaderImage(
-                            url: deal.headerImageURL,
-                            id: deal.id,
-                            isCompact: true,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  Expanded(
-                    flex: 50,
-                    child: DealCardCompactInfoRow(deal: deal),
-                  ),
-                ],
-              ),
-            ],
+                    return SizedBox(
+                      width: IMAGE_WIDTH / 3.4,
+                      child: HeaderImage(
+                        url: deal.headerImageURL,
+                        id: deal.id,
+                        isCompact: true,
+                      ),
+                    );
+                  },
+                ),
+                Expanded(
+                  child: DealCardCompactInfoRow(deal: deal),
+                ),
+              ],
+            ),
           ),
         ),
       ),

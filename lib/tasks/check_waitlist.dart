@@ -36,7 +36,7 @@ Future<List<Deal>> getNewDiscountedDeals() async {
     )
     ..sort(
       (a, b) {
-        return (a.added).compareTo(b.added);
+        return (b.added).compareTo(a.added);
       },
     );
 

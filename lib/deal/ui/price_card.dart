@@ -84,6 +84,7 @@ class PriceCard extends StatelessWidget {
               trailing: Text(
                 price.price.formattedPrice,
                 style: context.themes.text.titleLarge?.copyWith(
+                  fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                   color: context.colors.scheme.onSurface,
                 ),

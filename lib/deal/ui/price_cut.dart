@@ -11,7 +11,9 @@ class PriceCut extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle? textStyle = context.themes.text.titleLarge;
+    final TextStyle? textStyle = context.themes.text.titleLarge?.copyWith(
+      fontSize: 20.0,
+    );
     final int priceCutInt = priceCut.toInt();
 
     if (priceCutInt < 0) {
@@ -26,7 +28,6 @@ class PriceCut extends StatelessWidget {
       return Text(
         '0%',
         style: textStyle?.copyWith(
-          fontWeight: FontWeight.bold,
           color: context.colors.disabled,
         ),
       );
@@ -41,12 +42,11 @@ class PriceCut extends StatelessWidget {
     }
 
     return Text(
-      '$priceCutInt%',
+      '−$priceCutInt%',
       style: textStyle?.copyWith(
-        fontWeight: FontWeight.bold,
         color: context.colors.scheme.primary
-            .withGreen(160 - priceCutInt)
-            .withBlue(160 - priceCutInt),
+            .withGreen(130 - priceCutInt)
+            .withBlue(130 - priceCutInt),
       ),
     );
   }
