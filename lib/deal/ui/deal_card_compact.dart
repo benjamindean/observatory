@@ -102,6 +102,7 @@ class DealCardCompact extends ConsumerWidget {
 
                     return SizedBox(
                       width: IMAGE_WIDTH / 3.4,
+                      height: double.infinity,
                       child: HeaderImage(
                         url: deal.headerImageURL,
                         id: deal.id,
