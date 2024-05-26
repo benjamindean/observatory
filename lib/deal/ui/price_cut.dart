@@ -25,11 +25,23 @@ class PriceCut extends StatelessWidget {
     }
 
     if (priceCutInt == 0) {
-      return Text(
-        '0%',
-        style: textStyle?.copyWith(
-          color: context.colors.disabled,
-        ),
+      return Row(
+        children: [
+          Text(
+            '0',
+            style: textStyle?.copyWith(
+              color: context.colors.disabled,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 1.0),
+            child: Icon(
+              Icons.percent,
+              color: context.colors.disabled,
+              size: 22,
+            ),
+          ),
+        ],
       );
     }
 
@@ -65,7 +77,7 @@ class PriceCut extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 0.9),
+          padding: const EdgeInsets.only(top: 1.0),
           child: Icon(
             Icons.percent,
             color: highlightColor,
