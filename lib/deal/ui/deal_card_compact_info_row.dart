@@ -54,11 +54,11 @@ class DealCardCompactInfoRow extends StatelessWidget {
                     priceCut: price.cut,
                   ),
                   const Padding(
-                    padding: EdgeInsets.only(top: 1.0),
+                    padding: EdgeInsets.only(top: 2.0),
                     child: DotSeparator(),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 3.0),
+                    padding: const EdgeInsets.only(left: 3.5),
                     child: CurrentPrice(price: price),
                   ),
                 ],

@@ -26,6 +26,7 @@ class PriceCut extends StatelessWidget {
 
     if (priceCutInt == 0) {
       return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             '0',
@@ -65,8 +66,8 @@ class PriceCut extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 2.0, 2.0, 0),
           child: Container(
-            width: 7.0,
-            height: 1.6,
+            width: 6.0,
+            height: 1.8,
             color: highlightColor,
           ),
         ),

@@ -13,7 +13,7 @@ class BottomSheetHeading extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       visualDensity: VisualDensity.compact,
-      tileColor: context.colors.scheme.background,
+      tileColor: context.colors.scheme.surface,
       title: Text(
         text,
         style: context.textStyles.labelLarge.copyWith(

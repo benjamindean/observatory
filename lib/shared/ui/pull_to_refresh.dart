@@ -97,7 +97,7 @@ class PullToRefresh extends StatelessWidget {
         },
       ),
       onRefresh: () async {
-        HapticFeedback.lightImpact();
+        HapticFeedback.mediumImpact();
 
         return onRefresh();
       },

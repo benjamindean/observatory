@@ -184,6 +184,124 @@ final List<Deal> deals = [
     added: 0,
     source: DealSource.itad,
   ),
+  const Deal(
+    id: '018d937f-6140-7026-95d4-1dfca6fd8599',
+    slug: '',
+    type: 'game',
+    title: 'ANIMAL WELL',
+    steamId: null,
+    prices: [
+      Price(
+        price: PriceDetails(
+          amount: 24.99,
+          amountInt: 2499,
+          currency: 'USD',
+        ),
+        regular: PriceDetails(
+          amount: 24.99,
+          amountInt: 2499,
+          currency: 'USD',
+        ),
+        cut: 0.0,
+        shop: Shop(id: 61, name: 'Steam'),
+        drm: [],
+        url: 'https://itad.link/018f5d7e-6b40-72ab-82a7-06f150c0a246/',
+        voucher: null,
+        timestamp: '2024-05-23T19:15:19+02:00',
+      )
+    ],
+    info: null,
+    overview: null,
+    isLoading: false,
+    added: 1716465068207,
+    source: DealSource.itad,
+  ),
+  const Deal(
+    id: '018d937f-400f-7048-8e09-1475bfbd1fd8',
+    slug: '',
+    type: 'game',
+    title: 'Saturnalia',
+    steamId: null,
+    prices: [
+      Price(
+        price: PriceDetails(
+          amount: 8.99,
+          amountInt: 899,
+          currency: 'USD',
+        ),
+        regular: PriceDetails(
+          amount: 19.99,
+          amountInt: 1999,
+          currency: 'USD',
+        ),
+        cut: 55.0,
+        shop: Shop(id: 16, name: 'Epic Game Store'),
+        drm: [DRM(id: 16, name: 'Epic')],
+        url: 'https://itad.link/018d959d-63ff-71f1-81a2-53c3d649bd44/',
+        voucher: null,
+        timestamp: '2024-05-16T18:31:01+02:00',
+      ),
+      Price(
+        price: PriceDetails(
+          amount: 16.59,
+          amountInt: 1659,
+          currency: 'USD',
+        ),
+        regular: PriceDetails(
+          amount: 19.99,
+          amountInt: 1999,
+          currency: 'USD',
+        ),
+        cut: 17.0,
+        shop: Shop(id: 6, name: 'Fanatical'),
+        drm: [DRM(id: 61, name: 'Steam')],
+        url: 'https://itad.link/018ea9a5-2f30-7305-8859-de6841975b57/',
+        voucher: 'OMEN17',
+        timestamp: '2024-04-04T17:06:01+02:00',
+      ),
+      Price(
+        price: PriceDetails(
+          amount: 19.99,
+          amountInt: 1999,
+          currency: 'USD',
+        ),
+        regular: PriceDetails(
+          amount: 19.99,
+          amountInt: 1999,
+          currency: 'USD',
+        ),
+        cut: 0.0,
+        shop: Shop(id: 37, name: 'Humble Store'),
+        drm: [DRM(id: 61, name: 'Steam')],
+        url: 'https://itad.link/018f3c3d-ade5-700b-855a-821684353501/',
+        voucher: null,
+        timestamp: '2024-05-03T04:17:06+02:00',
+      ),
+      Price(
+        price: PriceDetails(
+          amount: 19.99,
+          amountInt: 1999,
+          currency: 'USD',
+        ),
+        regular: PriceDetails(
+          amount: 19.99,
+          amountInt: 1999,
+          currency: 'USD',
+        ),
+        cut: 0.0,
+        shop: Shop(id: 61, name: 'Steam'),
+        drm: [],
+        url: 'https://itad.link/018d9386-c0e0-709c-b62e-b597f09f033f/',
+        voucher: null,
+        timestamp: '2024-05-16T19:18:24+02:00',
+      )
+    ],
+    info: null,
+    overview: null,
+    isLoading: false,
+    added: 1690555884000,
+    source: DealSource.steam,
+  )
 ];
 
 class AsyncDealsNotifierMock
