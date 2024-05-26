@@ -22,7 +22,7 @@ class PriceListView extends ConsumerWidget {
             [
               ListTile(
                 title: Text(
-                  'No prices are available for this product in the selected stores.',
+                  'No prices are available for this product at the selected stores.',
                   style: TextStyle(
                     color: context.colors.disabled,
                   ),

@@ -41,13 +41,38 @@ class PriceCut extends StatelessWidget {
       );
     }
 
-    return Text(
-      '−$priceCutInt%',
-      style: textStyle?.copyWith(
-        color: context.colors.scheme.primary
-            .withGreen(130 - priceCutInt)
-            .withBlue(130 - priceCutInt),
-      ),
+    final Color highlightColor = context.colors.scheme.primary
+        .withGreen(160 - priceCutInt)
+        .withBlue(160 - priceCutInt);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 2.0, 2.0, 0),
+          child: Container(
+            width: 7.0,
+            height: 1.6,
+            color: highlightColor,
+          ),
+        ),
+        Text(
+          priceCutInt.toString(),
+          style: textStyle?.copyWith(
+            color: highlightColor,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 0.9),
+          child: Icon(
+            Icons.percent,
+            color: highlightColor,
+            size: 22,
+          ),
+        ),
+      ],
     );
   }
 }

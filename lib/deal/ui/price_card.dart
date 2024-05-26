@@ -1,6 +1,7 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:observatory/deal/ui/current_price.dart';
 import 'package:observatory/deal/ui/price_bottom_sheet.dart';
 import 'package:observatory/deal/ui/price_cut.dart';
 import 'package:observatory/deal/ui/voucher_list_tile.dart';
@@ -46,7 +47,7 @@ class PriceCard extends StatelessWidget {
           children: [
             ListTile(
               leading: SizedBox(
-                width: 50,
+                width: 60,
                 child: Center(
                   child: PriceCut(
                     priceCut: price.cut,
@@ -81,14 +82,7 @@ class PriceCard extends StatelessWidget {
                   ),
                 ],
               ),
-              trailing: Text(
-                price.price.formattedPrice,
-                style: context.themes.text.titleLarge?.copyWith(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: context.colors.scheme.onSurface,
-                ),
-              ),
+              trailing: CurrentPrice(price: price),
             ),
             if (price.voucher != null && price.voucher != '')
               VoucherListTile(price: price),

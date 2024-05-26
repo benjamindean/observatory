@@ -1,5 +1,6 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:observatory/deal/ui/current_price.dart';
 import 'package:observatory/deal/ui/price_cut.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/price.dart';
@@ -38,7 +39,7 @@ class DealCardCompactInfoRow extends StatelessWidget {
             builder: (context) {
               if (price == null) {
                 return Text(
-                  'No prices are available.',
+                  'No prices available.',
                   style: context.themes.text.labelMedium?.copyWith(
                     color: context.colors.disabled,
                   ),
@@ -46,21 +47,20 @@ class DealCardCompactInfoRow extends StatelessWidget {
               }
 
               return Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   PriceCut(
                     priceCut: price.cut,
                   ),
-                  const DotSeparator(),
-                  Text(
-                    price.price.formattedPrice,
-                    style: context.themes.text.titleLarge?.copyWith(
-                      fontSize: 20.0,
-                      // fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis,
-                      color: context.colors.scheme.onSurfaceVariant,
-                    ),
-                  )
+                  const Padding(
+                    padding: EdgeInsets.only(top: 1.0),
+                    child: DotSeparator(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 3.0),
+                    child: CurrentPrice(price: price),
+                  ),
                 ],
               );
             },

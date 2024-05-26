@@ -2,7 +2,9 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 
 class DotSeparator extends StatelessWidget {
-  const DotSeparator({super.key});
+  const DotSeparator({
+    super.key,
+  });
 
   static TextSpan textSpan(BuildContext context) {
     return TextSpan(
@@ -15,11 +17,15 @@ class DotSeparator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      ' • ',
-      textAlign: TextAlign.justify,
-      style: context.textStyles.titleLarge.copyWith(
-        color: context.colors.disabled,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+      child: Container(
+        width: 4.2,
+        height: 4.2,
+        decoration: BoxDecoration(
+          color: context.colors.disabled,
+          shape: BoxShape.circle,
+        ),
       ),
     );
   }

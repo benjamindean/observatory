@@ -1,6 +1,5 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:observatory/shared/context_extension.dart';
 
 class BottomSheetHeading extends StatelessWidget {
   final String text;
@@ -14,7 +13,7 @@ class BottomSheetHeading extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       visualDensity: VisualDensity.compact,
-      tileColor: context.highElevatedCanvasColor,
+      tileColor: context.colors.scheme.background,
       title: Text(
         text,
         style: context.textStyles.labelLarge.copyWith(

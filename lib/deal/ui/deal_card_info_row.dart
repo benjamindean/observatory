@@ -19,7 +19,7 @@ class DealCardInfoRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          flex: 22,
+          flex: 25,
           child: Column(
             children: [
               PriceCut(
@@ -36,7 +36,10 @@ class DealCardInfoRow extends StatelessWidget {
             title: Text(
               deal.titleParsed,
               maxLines: 2,
-              style: context.themes.text.titleMedium,
+              style: context.themes.text.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.colors.scheme.onSurface,
+              ),
               overflow: TextOverflow.ellipsis,
             ),
             subtitle: PriceNew(prices: deal.prices),
