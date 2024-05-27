@@ -150,6 +150,7 @@ class SettingsRepository {
             title: deal.title,
             added: deal.added,
             source: deal.source,
+            priceCutUpdatedAt: deal.priceCutUpdatedAt,
           ),
       },
     );

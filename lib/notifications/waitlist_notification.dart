@@ -11,7 +11,7 @@ Future<bool> showWaitlistNotification({
 
   final String notificationTitle = Intl.plural(
     deals.length,
-    one: '1 game from your waitlist is on sale!',
+    one: '${deals.length} game from your waitlist is on sale!',
     other: '${deals.length} games from your waitlist are on sale!',
   );
 
@@ -23,9 +23,11 @@ Future<bool> showWaitlistNotification({
 
   final String notificationBody = Intl.plural(
     deals.length,
-    one: '${deals[0].titleParsed} is ${deals[0].bestPrice.cut.toInt()}% off',
+    one: '${deals[0].titleParsed} is ${deals[0].bestPrice.cut.toInt()}% off.',
+    two:
+        '${deals[0].titleParsed} is ${deals[0].bestPrice.cut.toInt()}% off and ${deals[1].titleParsed} is ${deals[1].bestPrice.cut.toInt()}% off.',
     other:
-        '${deals[0].titleParsed} is ${deals[0].bestPrice.cut.toInt()}% off and ${deals.length - 1} other $restText on sale.',
+        '${deals[0].titleParsed} is ${deals[0].bestPrice.cut.toInt()}% off, ${deals[1].titleParsed} is ${deals[1].bestPrice.cut.toInt()}% off and ${deals.length - 2} other $restText on sale.',
   );
 
   return AwesomeNotifications().createNotification(
