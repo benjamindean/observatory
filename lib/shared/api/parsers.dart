@@ -30,7 +30,11 @@ class Parsers {
         deal['deals'].forEach((price) {
           mapOfPrices.putIfAbsent(deal['id'], () => []);
           mapOfPrices[deal['id']]?.add(
-            Price.fromJson(price),
+            Price.fromJson(price).copyWith(
+              timestampMs: DateTime.tryParse(
+                price['timestamp'],
+              )?.millisecondsSinceEpoch,
+            ),
           );
         });
       }

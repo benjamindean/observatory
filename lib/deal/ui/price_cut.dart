@@ -1,5 +1,6 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PriceCut extends StatelessWidget {
   final num priceCut;
@@ -75,6 +76,9 @@ class PriceCut extends StatelessWidget {
           priceCutInt.toString(),
           style: textStyle?.copyWith(
             color: highlightColor,
+            fontFamily: GoogleFonts.openSans(
+              fontWeight: FontWeight.w500,
+            ).fontFamily,
           ),
         ),
         Padding(

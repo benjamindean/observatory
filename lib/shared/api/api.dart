@@ -97,7 +97,10 @@ class API {
         'country': country,
       });
 
-      final response = await dio.post(url.toString(), data: json.encode(ids));
+      final response = await dio.post(
+        url.toString(),
+        data: json.encode(ids),
+      );
 
       return Parsers.overview(response);
     } catch (error, stackTrace) {

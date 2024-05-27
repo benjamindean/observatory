@@ -17,9 +17,9 @@ class PriceBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SafeArea(
-      child: Container(
-        color: context.colors.scheme.surface,
+    return Container(
+      color: context.colors.scheme.surface,
+      child: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

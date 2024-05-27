@@ -23,14 +23,13 @@ class DealAdapter extends TypeAdapter<Deal> {
       added: fields[3] as int,
       source: fields[4] as DealSource,
       prices: (fields[5] as List?)?.cast<Price>(),
-      priceCutUpdatedAt: fields[6] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Deal obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -42,9 +41,7 @@ class DealAdapter extends TypeAdapter<Deal> {
       ..writeByte(4)
       ..write(obj.source)
       ..writeByte(5)
-      ..write(obj.prices)
-      ..writeByte(6)
-      ..write(obj.priceCutUpdatedAt);
+      ..write(obj.prices);
   }
 
   @override
@@ -120,7 +117,6 @@ _$DealImpl _$$DealImplFromJson(Map<String, dynamic> json) => _$DealImpl(
       prices: (json['prices'] as List<dynamic>?)
           ?.map((e) => Price.fromJson(e as Map<String, dynamic>))
           .toList(),
-      priceCutUpdatedAt: (json['priceCutUpdatedAt'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$DealImplToJson(_$DealImpl instance) =>
@@ -136,7 +132,6 @@ Map<String, dynamic> _$$DealImplToJson(_$DealImpl instance) =>
       'added': instance.added,
       'source': _$DealSourceEnumMap[instance.source]!,
       'prices': instance.prices,
-      'priceCutUpdatedAt': instance.priceCutUpdatedAt,
     };
 
 const _$DealSourceEnumMap = {

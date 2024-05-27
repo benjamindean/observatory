@@ -57,6 +57,7 @@ const _$WaitlistSortingEnumMap = {
   WaitlistSorting.price_cut: 'price_cut',
   WaitlistSorting.price: 'price',
   WaitlistSorting.title: 'title',
+  WaitlistSorting.discount_date: 'discount_date',
 };
 
 const _$WaitlistSortingDirectionEnumMap = {

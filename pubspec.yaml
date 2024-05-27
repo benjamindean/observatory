@@ -90,3 +90,4 @@ flutter:
   assets:
     - assets/icon/observatory.png
     - assets/secrets.json
+    - assets/google_fonts/

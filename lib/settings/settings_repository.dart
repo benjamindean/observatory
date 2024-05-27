@@ -16,7 +16,13 @@ const RECENT_SEARCHES_BOX_NAME = 'observatory_recent_searches';
 const int IMAGE_WIDTH = 600;
 const int IMAGE_HEIGHT = 344;
 
-enum WaitlistSorting { date_added, price_cut, price, title }
+enum WaitlistSorting {
+  title,
+  date_added,
+  price_cut,
+  discount_date,
+  price,
+}
 
 enum WaitlistSortingDirection { asc, desc }
 
@@ -84,6 +90,7 @@ class SettingsRepository {
     await Hive.openBox(SETTINGS_BOX_NAME);
     await Hive.openBox<Deal>(SAVED_DEALS_BOX_NAME);
     await Hive.openBox<Deal>(PAST_SAVED_DEALS_BOX_NAME);
+    await Hive.openBox<Deal>(PAST_SAVED_DEALS_BOX_NAME);
     await Hive.openBox<String>(RECENT_SEARCHES_BOX_NAME);
   }
 
@@ -150,7 +157,6 @@ class SettingsRepository {
             title: deal.title,
             added: deal.added,
             source: deal.source,
-            priceCutUpdatedAt: deal.priceCutUpdatedAt,
           ),
       },
     );

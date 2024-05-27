@@ -77,6 +77,29 @@ class WaitListList extends ConsumerWidget {
               return (a.title).compareTo(b.title);
             },
           );
+      case WaitlistSorting.discount_date:
+        return [...deals]..sort(
+            (a, b) {
+              if (b.bestPrice.timestampMs == null ||
+                  a.bestPrice.timestampMs == null) {
+                return 0;
+              }
+
+              if (a.bestPrice.cut == 0 || b.bestPrice.cut == 0) {
+                return 0;
+              }
+
+              if (sortingDirection == WaitlistSortingDirection.desc) {
+                return a.bestPrice.timestampMs!.compareTo(
+                  b.bestPrice.timestampMs!,
+                );
+              }
+
+              return b.bestPrice.timestampMs!.compareTo(
+                a.bestPrice.timestampMs!,
+              );
+            },
+          );
 
       default:
         return deals;

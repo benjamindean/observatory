@@ -21,4 +21,9 @@ final waitlistSortingStrings = {
     WaitlistSortingDirection.asc: 'A to Z',
     WaitlistSortingDirection.desc: 'Z to A',
   },
+  WaitlistSorting.discount_date: {
+    'title': 'Discount Date',
+    WaitlistSortingDirection.asc: 'New to Old',
+    WaitlistSortingDirection.desc: 'Old to New'
+  },
 };

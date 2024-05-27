@@ -34,7 +34,6 @@ class Deal with _$Deal {
     @HiveField(3) @Default(0) int added,
     @HiveField(4) @Default(DealSource.itad) DealSource source,
     @HiveField(5) List<Price>? prices,
-    @HiveField(6) int? priceCutUpdatedAt,
   }) = _Deal;
 
   factory Deal.fromJson(Map<String, Object?> json) => _$DealFromJson(json);

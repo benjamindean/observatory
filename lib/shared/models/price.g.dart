@@ -63,13 +63,14 @@ class PriceAdapter extends TypeAdapter<Price> {
       shop: fields[3] as Shop,
       voucher: fields[4] as String?,
       timestamp: fields[5] as String,
+      timestampMs: fields[6] as num?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Price obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.price)
       ..writeByte(1)
@@ -81,7 +82,9 @@ class PriceAdapter extends TypeAdapter<Price> {
       ..writeByte(4)
       ..write(obj.voucher)
       ..writeByte(5)
-      ..write(obj.timestamp);
+      ..write(obj.timestamp)
+      ..writeByte(6)
+      ..write(obj.timestampMs);
   }
 
   @override
@@ -135,6 +138,7 @@ _$PriceImpl _$$PriceImplFromJson(Map<String, dynamic> json) => _$PriceImpl(
       url: json['url'] as String? ?? '',
       voucher: json['voucher'] as String?,
       timestamp: json['timestamp'] as String? ?? '',
+      timestampMs: json['timestampMs'] as num?,
     );
 
 Map<String, dynamic> _$$PriceImplToJson(_$PriceImpl instance) =>
@@ -147,4 +151,5 @@ Map<String, dynamic> _$$PriceImplToJson(_$PriceImpl instance) =>
       'url': instance.url,
       'voucher': instance.voucher,
       'timestamp': instance.timestamp,
+      'timestampMs': instance.timestampMs,
     };
