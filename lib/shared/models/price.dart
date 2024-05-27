@@ -58,7 +58,7 @@ class Price with _$Price {
     @Default('') String url,
     @HiveField(4) String? voucher,
     @HiveField(5) @Default('') String timestamp,
-    @HiveField(6) num? timestampMs,
+    @HiveField(6) int? timestampMs,
   }) = _Price;
 
   String get formattedDRM {

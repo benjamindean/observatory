@@ -63,7 +63,7 @@ class PriceAdapter extends TypeAdapter<Price> {
       shop: fields[3] as Shop,
       voucher: fields[4] as String?,
       timestamp: fields[5] as String,
-      timestampMs: fields[6] as num?,
+      timestampMs: fields[6] as int?,
     );
   }
 
@@ -138,7 +138,7 @@ _$PriceImpl _$$PriceImplFromJson(Map<String, dynamic> json) => _$PriceImpl(
       url: json['url'] as String? ?? '',
       voucher: json['voucher'] as String?,
       timestamp: json['timestamp'] as String? ?? '',
-      timestampMs: json['timestampMs'] as num?,
+      timestampMs: (json['timestampMs'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$PriceImplToJson(_$PriceImpl instance) =>

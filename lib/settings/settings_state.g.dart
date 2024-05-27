@@ -53,11 +53,11 @@ const _$DealCardTypeEnumMap = {
 };
 
 const _$WaitlistSortingEnumMap = {
+  WaitlistSorting.title: 'title',
   WaitlistSorting.date_added: 'date_added',
   WaitlistSorting.price_cut: 'price_cut',
-  WaitlistSorting.price: 'price',
-  WaitlistSorting.title: 'title',
   WaitlistSorting.discount_date: 'discount_date',
+  WaitlistSorting.price: 'price',
 };
 
 const _$WaitlistSortingDirectionEnumMap = {

@@ -78,28 +78,34 @@ class WaitListList extends ConsumerWidget {
             },
           );
       case WaitlistSorting.discount_date:
-        return [...deals]..sort(
+        final List<Deal> bottomDeals = [];
+        final List<Deal> discountedDeals = deals.where(
+          (deal) {
+            if (deal.bestPrice.cut == 0) {
+              bottomDeals.add(deal);
+
+              return false;
+            }
+
+            return true;
+          },
+        ).toList();
+
+        return [...discountedDeals]
+          ..sort(
             (a, b) {
-              if (b.bestPrice.timestampMs == null ||
-                  a.bestPrice.timestampMs == null) {
-                return 0;
-              }
-
-              if (a.bestPrice.cut == 0 || b.bestPrice.cut == 0) {
-                return 0;
-              }
-
               if (sortingDirection == WaitlistSortingDirection.desc) {
-                return a.bestPrice.timestampMs!.compareTo(
-                  b.bestPrice.timestampMs!,
+                return (a.bestPrice.timestampMs ?? 0).compareTo(
+                  b.bestPrice.timestampMs ?? 0,
                 );
               }
 
-              return b.bestPrice.timestampMs!.compareTo(
-                a.bestPrice.timestampMs!,
+              return (b.bestPrice.timestampMs ?? 0).compareTo(
+                a.bestPrice.timestampMs ?? 0,
               );
             },
-          );
+          )
+          ..addAll(bottomDeals);
 
       default:
         return deals;

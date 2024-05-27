@@ -377,7 +377,7 @@ mixin _$Price {
   @HiveField(5)
   String get timestamp => throw _privateConstructorUsedError;
   @HiveField(6)
-  num? get timestampMs => throw _privateConstructorUsedError;
+  int? get timestampMs => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -398,7 +398,7 @@ abstract class $PriceCopyWith<$Res> {
       String url,
       @HiveField(4) String? voucher,
       @HiveField(5) String timestamp,
-      @HiveField(6) num? timestampMs});
+      @HiveField(6) int? timestampMs});
 
   $PriceDetailsCopyWith<$Res> get price;
   $PriceDetailsCopyWith<$Res> get regular;
@@ -464,7 +464,7 @@ class _$PriceCopyWithImpl<$Res, $Val extends Price>
       timestampMs: freezed == timestampMs
           ? _value.timestampMs
           : timestampMs // ignore: cast_nullable_to_non_nullable
-              as num?,
+              as int?,
     ) as $Val);
   }
 
@@ -509,7 +509,7 @@ abstract class _$$PriceImplCopyWith<$Res> implements $PriceCopyWith<$Res> {
       String url,
       @HiveField(4) String? voucher,
       @HiveField(5) String timestamp,
-      @HiveField(6) num? timestampMs});
+      @HiveField(6) int? timestampMs});
 
   @override
   $PriceDetailsCopyWith<$Res> get price;
@@ -576,7 +576,7 @@ class __$$PriceImplCopyWithImpl<$Res>
       timestampMs: freezed == timestampMs
           ? _value.timestampMs
           : timestampMs // ignore: cast_nullable_to_non_nullable
-              as num?,
+              as int?,
     ));
   }
 }
@@ -634,7 +634,7 @@ class _$PriceImpl extends _Price {
   final String timestamp;
   @override
   @HiveField(6)
-  final num? timestampMs;
+  final int? timestampMs;
 
   @override
   String toString() {
@@ -697,7 +697,7 @@ abstract class _Price extends Price {
       final String url,
       @HiveField(4) final String? voucher,
       @HiveField(5) final String timestamp,
-      @HiveField(6) final num? timestampMs}) = _$PriceImpl;
+      @HiveField(6) final int? timestampMs}) = _$PriceImpl;
   const _Price._() : super._();
 
   factory _Price.fromJson(Map<String, dynamic> json) = _$PriceImpl.fromJson;
@@ -726,7 +726,7 @@ abstract class _Price extends Price {
   String get timestamp;
   @override
   @HiveField(6)
-  num? get timestampMs;
+  int? get timestampMs;
   @override
   @JsonKey(ignore: true)
   _$$PriceImplCopyWith<_$PriceImpl> get copyWith =>

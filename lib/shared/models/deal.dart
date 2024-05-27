@@ -44,7 +44,7 @@ class Deal with _$Deal {
           price: PriceDetails(amount: 0, amountInt: 0, currency: 'Unknown'),
           regular: PriceDetails(amount: 0, amountInt: 0, currency: 'Unknown'),
           shop: Shop(id: 0, name: 'name'),
-          cut: 0,
+          cut: 0.0,
           drm: [],
           url: '',
         );
