@@ -50,6 +50,7 @@ class WaitlistSortingPage extends ConsumerWidget {
                 final WaitlistSorting sorting = WaitlistSorting.values[index];
 
                 return ListTile(
+                  key: ValueKey('waitlist_sorting_${sorting.name}'),
                   contentPadding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
                   selectedTileColor: context.colors.scheme.primaryContainer,
                   selectedColor: context.colors.scheme.onPrimaryContainer,

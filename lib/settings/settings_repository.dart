@@ -77,6 +77,12 @@ class SettingsRepository {
       'observatory_waitlist_sorting_direction';
   final String PREF_STEAM_USERNAME = 'observatory_steam_username';
 
+  final DealCategory defaultCategory = DealCategory.steam_top_sellers;
+  final WaitlistSorting defaultWaitlistSorting = WaitlistSorting.discount_date;
+  final DealCardType defaultDealCardType = DealCardType.compact;
+  final WaitlistSortingDirection defaultWaitlistSortingDirection =
+      WaitlistSortingDirection.asc;
+
   static Future<void> init() async {
     await Hive.initFlutter();
 
@@ -193,10 +199,10 @@ class SettingsRepository {
   DealCategory getDealsTab() {
     final String category = settingsBox.get(
       PREF_DEALS_TAB,
-      defaultValue: DealCategory.all.name.toString(),
+      defaultValue: defaultCategory.name.toString(),
     );
 
-    return DealCategory.values.asNameMap()[category]!;
+    return DealCategory.values.asNameMap()[category] ?? defaultCategory;
   }
 
   Future<void> setDealsTab(DealCategory category) async {
@@ -241,10 +247,10 @@ class SettingsRepository {
   DealCardType getDealCardType() {
     final String type = settingsBox.get(
       PREF_DEAL_CARD_TYPE,
-      defaultValue: DealCardType.compact.name.toString(),
+      defaultValue: defaultDealCardType.name.toString(),
     );
 
-    return DealCardType.values.asNameMap()[type]!;
+    return DealCardType.values.asNameMap()[type] ?? defaultDealCardType;
   }
 
   Future<void> setDealCardType(DealCardType type) async {
@@ -257,10 +263,11 @@ class SettingsRepository {
   WaitlistSorting getWaitlistSorting() {
     final String sorting = settingsBox.get(
       PREF_WAITLIST_SORTING,
-      defaultValue: WaitlistSorting.date_added.name.toString(),
+      defaultValue: defaultWaitlistSorting.name.toString(),
     );
 
-    return WaitlistSorting.values.asNameMap()[sorting]!;
+    return WaitlistSorting.values.asNameMap()[sorting] ??
+        defaultWaitlistSorting;
   }
 
   Future<void> setWaitlistSorting(WaitlistSorting sorting) async {
@@ -297,10 +304,11 @@ class SettingsRepository {
   WaitlistSortingDirection getWaitlistSortingDirection() {
     final String? sorting = settingsBox.get(
       PREF_WAITLIST_SORTING_DIRECTION,
-      defaultValue: WaitlistSortingDirection.asc.name.toString(),
+      defaultValue: defaultWaitlistSortingDirection.name.toString(),
     );
 
-    return WaitlistSortingDirection.values.asNameMap()[sorting]!;
+    return WaitlistSortingDirection.values.asNameMap()[sorting] ??
+        defaultWaitlistSortingDirection;
   }
 
   Future<void> setWaitlistSortingDirection(
@@ -316,7 +324,11 @@ class SettingsRepository {
     return settingsBox.get(PREF_STEAM_USERNAME);
   }
 
-  Future<void> setSteamUsername(String username) async {
+  Future<void> setSteamUsername(String? username) async {
+    if (username == null) {
+      return;
+    }
+
     return settingsBox.put(
       PREF_STEAM_USERNAME,
       username,

@@ -245,7 +245,7 @@ class WaitListList extends ConsumerWidget {
           final List<Deal> foundGames = data.deals
               .where(
                 (deal) => deal.title.toLowerCase().contains(
-                      searchState.query!.toLowerCase(),
+                      searchState.query?.toLowerCase() ?? '',
                     ),
               )
               .toList();

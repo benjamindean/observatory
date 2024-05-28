@@ -43,7 +43,7 @@ class UnfinishedImportDialog extends ConsumerWidget {
                       TextSpan(
                         text: result.length.toString(),
                         style:
-                            context.themes.snackBar.contentTextStyle!.copyWith(
+                            context.themes.snackBar.contentTextStyle?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),

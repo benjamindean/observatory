@@ -147,13 +147,15 @@ class SteamImportPage extends ConsumerWidget {
                     );
                   }
 
+                  final List<Deal> importDeals = steamImportState.deals ?? [];
+
                   return Column(
                     children: [
                       Expanded(
                         child: ListView.builder(
-                          itemCount: steamImportState.deals!.length,
+                          itemCount: importDeals.length,
                           itemBuilder: (context, index) {
-                            final Deal deal = steamImportState.deals![index];
+                            final Deal deal = importDeals[index];
 
                             return CheckboxListTile(
                               controlAffinity: ListTileControlAffinity.leading,
@@ -201,7 +203,7 @@ class ImportSuccessSnackBarContent extends StatelessWidget {
           const TextSpan(text: 'Successfully imported '),
           TextSpan(
             text: count,
-            style: context.themes.snackBar.contentTextStyle!.copyWith(
+            style: context.themes.snackBar.contentTextStyle?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),

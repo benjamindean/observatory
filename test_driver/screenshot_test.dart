@@ -39,7 +39,12 @@ void main() async {
 
     await takeScreenshot('deals_page_filters');
 
-    await driver.tap(find.byValueKey('deals_filter_steam_top_sellers'));
+    await driver.scroll(
+      find.byValueKey('deals_filter_all'),
+      0,
+      1000,
+      const Duration(milliseconds: 200),
+    );
   });
 
   test('Waitlist Page', () async {
@@ -47,6 +52,17 @@ void main() async {
     await driver.waitFor(find.byValueKey('waitlist_scroll_view'));
 
     await takeScreenshot('waitlist_page');
+
+    await driver.tap(find.byValueKey('navigation_waitlist'));
+
+    await takeScreenshot('waitlist_page_filters');
+
+    await driver.scroll(
+      find.byValueKey('waitlist_sorting_title'),
+      0,
+      1000,
+      const Duration(milliseconds: 200),
+    );
   });
 
   test('Search Page', () async {

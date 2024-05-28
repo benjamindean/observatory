@@ -28,7 +28,7 @@ class SteamImportFilter extends ConsumerWidget {
             onTap: () async {
               return ref
                   .watch(steamImportProvider.notifier)
-                  .set(steamImportState.deals!);
+                  .set(steamImportState.deals ?? []);
             },
           ),
           ListTile(

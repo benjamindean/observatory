@@ -76,7 +76,7 @@ class SteamImportForm extends ConsumerWidget {
                   : () async {
                       if (formKey.currentState?.saveAndValidate() ?? false) {
                         final String value =
-                            formKey.currentState!.fields['username']!.value;
+                            formKey.currentState?.fields['username']?.value;
 
                         if (value.trim().isNotEmpty) {
                           ref.read(steamImportProvider.notifier).fetch().then(
@@ -97,8 +97,8 @@ class SteamImportForm extends ConsumerWidget {
                                         TextSpan(
                                           text: result.length.toString(),
                                           style: context
-                                              .themes.snackBar.contentTextStyle!
-                                              .copyWith(
+                                              .themes.snackBar.contentTextStyle
+                                              ?.copyWith(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),

@@ -31,7 +31,7 @@ class SearchList extends ConsumerWidget {
           return const RecentSearchesList();
         }
 
-        if (searchState.deals != null && searchState.deals!.isEmpty) {
+        if (searchState.deals != null && searchState.deals?.isEmpty == true) {
           return const SliverFillRemaining(
             hasScrollBody: false,
             child: Center(

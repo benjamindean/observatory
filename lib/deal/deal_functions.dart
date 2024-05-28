@@ -85,7 +85,7 @@ void addDealToWaitlist({
                 padding: const EdgeInsets.only(right: 16.0),
                 child: Icon(
                   Icons.remove_circle,
-                  color: context.themes.snackBar.contentTextStyle!.color,
+                  color: context.themes.snackBar.contentTextStyle?.color,
                 ),
               ),
               Flexible(
@@ -95,7 +95,7 @@ void addDealToWaitlist({
                       TextSpan(
                         text: deal.titleParsed,
                         style:
-                            context.themes.snackBar.contentTextStyle!.copyWith(
+                            context.themes.snackBar.contentTextStyle?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -159,7 +159,7 @@ void removeDealFromWaitlist({
                 padding: const EdgeInsets.only(right: 16.0),
                 child: Icon(
                   Icons.check_circle,
-                  color: context.themes.snackBar.contentTextStyle!.color,
+                  color: context.themes.snackBar.contentTextStyle?.color,
                 ),
               ),
               Flexible(
@@ -169,7 +169,7 @@ void removeDealFromWaitlist({
                       TextSpan(
                         text: deal.titleParsed,
                         style:
-                            context.themes.snackBar.contentTextStyle!.copyWith(
+                            context.themes.snackBar.contentTextStyle?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),

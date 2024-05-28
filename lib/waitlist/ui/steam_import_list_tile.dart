@@ -72,7 +72,7 @@ class SteamImportListTile extends ConsumerWidget {
                             child: Icon(
                               Icons.error,
                               color: context
-                                  .themes.snackBar.contentTextStyle!.color,
+                                  .themes.snackBar.contentTextStyle?.color,
                             ),
                           ),
                           const Expanded(
