@@ -13,6 +13,18 @@ class SteamImportListTile extends ConsumerWidget {
     super.key,
   });
 
+  Widget getIcon(String? steamUserName, bool isImporting) {
+    if (isImporting) {
+      return const ObservatoryIconProgressIndicator();
+    }
+
+    if (steamUserName?.isEmpty != false) {
+      return const Icon(Icons.person_add);
+    }
+
+    return const Icon(Icons.refresh);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final SteamImportState steamImportState = ref.watch(
@@ -34,9 +46,7 @@ class SteamImportListTile extends ConsumerWidget {
             )
           : Text(steamUserName ?? 'None'),
       trailing: TextButton.icon(
-        icon: isImporting
-            ? const ObservatoryIconProgressIndicator()
-            : const Icon(Icons.refresh),
+        icon: getIcon(steamUserName, isImporting),
         onPressed: isImporting
             ? null
             : () {
