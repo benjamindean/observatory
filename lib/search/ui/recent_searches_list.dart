@@ -58,9 +58,8 @@ class RecentSearchesList extends ConsumerWidget {
                               onApply: () async {
                                 ref
                                     .read(asynRecentsProvider.notifier)
-                                    .clearRecents();
-
-                                context.pop();
+                                    .clearRecents()
+                                    .then((value) => context.pop());
                               },
                               onDiscard: () {
                                 context.pop();

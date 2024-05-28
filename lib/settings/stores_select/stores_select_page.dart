@@ -145,7 +145,7 @@ class StoreSelectPage extends ConsumerWidget {
                     return ObservatoryDialog(
                       title: 'Unsaved Stores Configuration',
                       body:
-                          'It looks like you have unsaved changes to your store configuration. What do you want to do?',
+                          'It looks like you have unsaved changes to your store configuration. What would you like to do?',
                       applyText: 'Save',
                       discardText: 'Discard',
                       onDiscard: () {

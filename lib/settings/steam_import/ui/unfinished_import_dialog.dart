@@ -19,7 +19,8 @@ class UnfinishedImportDialog extends ConsumerWidget {
       applyText: 'Import',
       discardText: 'Abort',
       onDiscard: () {
-        context.pop();
+        ref.read(steamImportProvider.notifier).reset();
+
         context.pop();
       },
       onApply: () async {

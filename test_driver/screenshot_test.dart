@@ -34,6 +34,12 @@ void main() async {
     await driver.waitFor(find.byValueKey('deals_scroll_view'));
 
     await takeScreenshot('deals_page');
+
+    await driver.tap(find.byValueKey('navigation_deals'));
+
+    await takeScreenshot('deals_page_filters');
+
+    await driver.tap(find.byValueKey('deals_filter_steam_top_sellers'));
   });
 
   test('Waitlist Page', () async {
@@ -55,6 +61,8 @@ void main() async {
     await driver.waitFor(find.byValueKey('waitlist_scroll_view'));
     await driver.tap(find.text('Lies Of P'));
     await driver.waitFor(find.byValueKey('deal_scroll_view'));
+
+    await takeScreenshot('deal_page_top');
 
     await driver.scroll(
       find.byValueKey('deal_scroll_view'),

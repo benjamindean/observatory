@@ -45,9 +45,8 @@ class ObservatoryDialog extends StatelessWidget {
           onPressed: onDiscard,
           child: Text(
             discardText,
-            style: TextStyle(
-              color: context.colors.scheme.tertiary,
-              fontWeight: FontWeight.bold,
+            style: context.textStyles.titleSmall.copyWith(
+              color: context.colors.scheme.onSurface,
             ),
           ),
         ),
@@ -55,7 +54,7 @@ class ObservatoryDialog extends StatelessWidget {
           onPressed: onApply,
           child: Text(
             applyText,
-            style: TextStyle(
+            style: context.textStyles.titleSmall.copyWith(
               color: context.colors.scheme.primary,
               fontWeight: FontWeight.bold,
             ),
