@@ -4,8 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/search/search_provider.dart';
 import 'package:observatory/search/search_state.dart';
 import 'package:observatory/search/ui/search_input.dart';
+import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/widgets/settings_button.dart';
 import 'package:observatory/waitlist/ui/waitlist_sorting_page.dart';
+import 'package:observatory/waitlist/ui/waitlist_sorting_strings.dart';
 
 class WaitlistAppBar extends ConsumerWidget {
   const WaitlistAppBar({
@@ -15,6 +18,16 @@ class WaitlistAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final SearchState searchState = ref.watch(filterResultsProvider);
+    final WaitlistSortingDirection waitlistSortingDirection = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.requireValue.waitlistSortingDirection,
+      ),
+    );
+    final WaitlistSorting waitlistSorting = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.requireValue.waitlistSorting,
+      ),
+    );
 
     return SliverAppBar(
       floating: true,
@@ -80,9 +93,13 @@ class WaitlistAppBar extends ConsumerWidget {
 
             return FilledButton.icon(
               onPressed: () => showWaitlistSorting(context),
-              icon: const Icon(Icons.sort),
+              icon: waitlistSortingDirection == WaitlistSortingDirection.desc
+                  ? const Icon(Icons.arrow_upward_rounded)
+                  : const Icon(Icons.arrow_downward_rounded),
               label: Text(
-                'Waitlist',
+                waitlistSortingStrings[waitlistSorting]?['title'] ??
+                    waitlistSortingStrings[WaitlistSorting.date_added]![
+                        'title']!,
                 style: context.textStyles.labelLarge.copyWith(
                   color: context.colors.scheme.onPrimary,
                 ),
@@ -101,8 +118,7 @@ class WaitlistAppBar extends ConsumerWidget {
               child: IconButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  ref.read(filterResultsProvider.notifier).setIsOpen(true);
-                  ref.read(filterResultsProvider.notifier).setIsFocused(true);
+                  ref.read(filterResultsProvider.notifier).setIsOpen();
                 },
                 icon: const Icon(Icons.search),
               ),

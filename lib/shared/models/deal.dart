@@ -28,12 +28,12 @@ class Deal with _$Deal {
     @Default('game') String type,
     @HiveField(2) @Default('') String title,
     String? steamId,
-    List<Price>? prices,
     Info? info,
     Overview? overview,
     @Default(false) bool isLoading,
     @HiveField(3) @Default(0) int added,
     @HiveField(4) @Default(DealSource.itad) DealSource source,
+    @HiveField(5) List<Price>? prices,
   }) = _Deal;
 
   factory Deal.fromJson(Map<String, Object?> json) => _$DealFromJson(json);
@@ -44,7 +44,7 @@ class Deal with _$Deal {
           price: PriceDetails(amount: 0, amountInt: 0, currency: 'Unknown'),
           regular: PriceDetails(amount: 0, amountInt: 0, currency: 'Unknown'),
           shop: Shop(id: 0, name: 'name'),
-          cut: 0,
+          cut: 0.0,
           drm: [],
           url: '',
         );

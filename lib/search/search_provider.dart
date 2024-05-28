@@ -14,24 +14,26 @@ enum SearchType {
 
 class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
   @override
-  SearchState build(SearchType arg) => SearchState(
-        query: null,
-        deals: null,
-        focusNode: FocusNode(),
-        isOpen: false,
-        isFocused: false,
-        searchInputController: TextEditingController(),
-      );
+  SearchState build(SearchType arg) {
+    return SearchState(
+      query: null,
+      deals: null,
+      isOpen: false,
+      focusNode: FocusNode(),
+      searchInputController: TextEditingController(),
+    );
+  }
 
   void reset() {
-    state.searchInputController.clear();
-    state.focusNode.unfocus();
+    state.searchInputController.dispose();
+    state.focusNode.dispose();
 
     state = state.copyWith(
       query: null,
       deals: null,
       isOpen: false,
-      isFocused: false,
+      focusNode: FocusNode(),
+      searchInputController: TextEditingController(),
     );
   }
 
@@ -39,23 +41,12 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
     state = state.copyWith(query: query);
   }
 
-  void setIsOpen(bool isOpen) {
+  void setIsOpen() {
     state = state.copyWith(
-      isOpen: isOpen,
-      searchInputController: TextEditingController(),
+      isOpen: true,
     );
-  }
 
-  void setIsFocused(bool isFocused) {
-    if (isFocused) {
-      state.focusNode.requestFocus();
-    } else {
-      state.focusNode.unfocus();
-    }
-
-    state = state.copyWith(
-      isFocused: isFocused,
-    );
+    state.focusNode.requestFocus();
   }
 
   Future<void> performSearch(String query) async {
@@ -73,8 +64,9 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
       query: query,
     );
 
-    final API api = GetIt.I<API>();
-    final List<Deal> results = await api.getSearchResults(query: query);
+    final List<Deal> results = await GetIt.I<API>().getSearchResults(
+      query: query,
+    );
     final List<Deal> deals = Set<Deal>.from(results).toList();
 
     FirebaseAnalytics.instance.logEvent(
@@ -91,7 +83,8 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
 
   void clear() {
     state.searchInputController.clear();
-    setIsFocused(true);
+    state.focusNode.requestFocus();
+
     state = state.copyWith(
       query: null,
     );

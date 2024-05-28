@@ -1,5 +1,6 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PriceCut extends StatelessWidget {
   final num priceCut;
@@ -11,7 +12,9 @@ class PriceCut extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle? textStyle = context.themes.text.titleLarge;
+    final TextStyle? textStyle = context.themes.text.titleLarge?.copyWith(
+      fontSize: 20.0,
+    );
     final int priceCutInt = priceCut.toInt();
 
     if (priceCutInt < 0) {
@@ -23,12 +26,24 @@ class PriceCut extends StatelessWidget {
     }
 
     if (priceCutInt == 0) {
-      return Text(
-        '0%',
-        style: textStyle?.copyWith(
-          fontWeight: FontWeight.bold,
-          color: context.colors.disabled,
-        ),
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '0',
+            style: textStyle?.copyWith(
+              color: context.colors.disabled,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 1.0),
+            child: Icon(
+              Icons.percent,
+              color: context.colors.disabled,
+              size: 22,
+            ),
+          ),
+        ],
       );
     }
 
@@ -40,14 +55,41 @@ class PriceCut extends StatelessWidget {
       );
     }
 
-    return Text(
-      '$priceCutInt%',
-      style: textStyle?.copyWith(
-        fontWeight: FontWeight.bold,
-        color: context.colors.scheme.primary
-            .withGreen(160 - priceCutInt)
-            .withBlue(160 - priceCutInt),
-      ),
+    final Color highlightColor = context.colors.scheme.primary
+        .withGreen(160 - priceCutInt)
+        .withBlue(160 - priceCutInt);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 2.0, 2.0, 0),
+          child: Container(
+            width: 6.0,
+            height: 1.8,
+            color: highlightColor,
+          ),
+        ),
+        Text(
+          priceCutInt.toString(),
+          style: textStyle?.copyWith(
+            color: highlightColor,
+            fontFamily: GoogleFonts.openSans(
+              fontWeight: FontWeight.w500,
+            ).fontFamily,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 1.0),
+          child: Icon(
+            Icons.percent,
+            color: highlightColor,
+            size: 22,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -77,6 +77,35 @@ class WaitListList extends ConsumerWidget {
               return (a.title).compareTo(b.title);
             },
           );
+      case WaitlistSorting.discount_date:
+        final List<Deal> bottomDeals = [];
+        final List<Deal> discountedDeals = deals.where(
+          (deal) {
+            if (deal.bestPrice.cut == 0) {
+              bottomDeals.add(deal);
+
+              return false;
+            }
+
+            return true;
+          },
+        ).toList();
+
+        return [...discountedDeals]
+          ..sort(
+            (a, b) {
+              if (sortingDirection == WaitlistSortingDirection.desc) {
+                return (a.bestPrice.timestampMs ?? 0).compareTo(
+                  b.bestPrice.timestampMs ?? 0,
+                );
+              }
+
+              return (b.bestPrice.timestampMs ?? 0).compareTo(
+                a.bestPrice.timestampMs ?? 0,
+              );
+            },
+          )
+          ..addAll(bottomDeals);
 
       default:
         return deals;
@@ -108,13 +137,13 @@ class WaitListList extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CircularProgressIndicator(),
+              const ObservatoryProgressIndicator(),
               Padding(
                 padding: const EdgeInsets.only(top: 32.0),
                 child: Text(
                   'Importing Steam wishlist...',
-                  style: context.textStyles.labelLarge.copyWith(
-                    color: context.colors.scheme.onSurface,
+                  style: context.textStyles.titleMedium.copyWith(
+                    color: context.colors.scheme.onSurfaceVariant,
                   ),
                 ),
               ),
@@ -216,7 +245,7 @@ class WaitListList extends ConsumerWidget {
           final List<Deal> foundGames = data.deals
               .where(
                 (deal) => deal.title.toLowerCase().contains(
-                      searchState.query!.toLowerCase(),
+                      searchState.query?.toLowerCase() ?? '',
                     ),
               )
               .toList();

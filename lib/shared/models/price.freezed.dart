@@ -166,8 +166,11 @@ PriceDetails _$PriceDetailsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PriceDetails {
+  @HiveField(0)
   double get amount => throw _privateConstructorUsedError;
+  @HiveField(1)
   int get amountInt => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get currency => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -182,7 +185,10 @@ abstract class $PriceDetailsCopyWith<$Res> {
           PriceDetails value, $Res Function(PriceDetails) then) =
       _$PriceDetailsCopyWithImpl<$Res, PriceDetails>;
   @useResult
-  $Res call({double amount, int amountInt, String currency});
+  $Res call(
+      {@HiveField(0) double amount,
+      @HiveField(1) int amountInt,
+      @HiveField(2) String currency});
 }
 
 /// @nodoc
@@ -227,7 +233,10 @@ abstract class _$$PriceDetailsImplCopyWith<$Res>
       __$$PriceDetailsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double amount, int amountInt, String currency});
+  $Res call(
+      {@HiveField(0) double amount,
+      @HiveField(1) int amountInt,
+      @HiveField(2) String currency});
 }
 
 /// @nodoc
@@ -266,7 +275,9 @@ class __$$PriceDetailsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PriceDetailsImpl extends _PriceDetails {
   const _$PriceDetailsImpl(
-      {this.amount = 0, this.amountInt = 0, this.currency = 'USD'})
+      {@HiveField(0) this.amount = 0,
+      @HiveField(1) this.amountInt = 0,
+      @HiveField(2) this.currency = 'USD'})
       : super._();
 
   factory _$PriceDetailsImpl.fromJson(Map<String, dynamic> json) =>
@@ -274,12 +285,15 @@ class _$PriceDetailsImpl extends _PriceDetails {
 
   @override
   @JsonKey()
+  @HiveField(0)
   final double amount;
   @override
   @JsonKey()
+  @HiveField(1)
   final int amountInt;
   @override
   @JsonKey()
+  @HiveField(2)
   final String currency;
 
   @override
@@ -319,19 +333,22 @@ class _$PriceDetailsImpl extends _PriceDetails {
 
 abstract class _PriceDetails extends PriceDetails {
   const factory _PriceDetails(
-      {final double amount,
-      final int amountInt,
-      final String currency}) = _$PriceDetailsImpl;
+      {@HiveField(0) final double amount,
+      @HiveField(1) final int amountInt,
+      @HiveField(2) final String currency}) = _$PriceDetailsImpl;
   const _PriceDetails._() : super._();
 
   factory _PriceDetails.fromJson(Map<String, dynamic> json) =
       _$PriceDetailsImpl.fromJson;
 
   @override
+  @HiveField(0)
   double get amount;
   @override
+  @HiveField(1)
   int get amountInt;
   @override
+  @HiveField(2)
   String get currency;
   @override
   @JsonKey(ignore: true)
@@ -345,14 +362,22 @@ Price _$PriceFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Price {
+  @HiveField(0)
   PriceDetails get price => throw _privateConstructorUsedError;
+  @HiveField(1)
   PriceDetails get regular => throw _privateConstructorUsedError;
+  @HiveField(2)
   double get cut => throw _privateConstructorUsedError;
+  @HiveField(3)
   Shop get shop => throw _privateConstructorUsedError;
   List<DRM> get drm => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
+  @HiveField(4)
   String? get voucher => throw _privateConstructorUsedError;
+  @HiveField(5)
   String get timestamp => throw _privateConstructorUsedError;
+  @HiveField(6)
+  int? get timestampMs => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -365,14 +390,15 @@ abstract class $PriceCopyWith<$Res> {
       _$PriceCopyWithImpl<$Res, Price>;
   @useResult
   $Res call(
-      {PriceDetails price,
-      PriceDetails regular,
-      double cut,
-      Shop shop,
+      {@HiveField(0) PriceDetails price,
+      @HiveField(1) PriceDetails regular,
+      @HiveField(2) double cut,
+      @HiveField(3) Shop shop,
       List<DRM> drm,
       String url,
-      String? voucher,
-      String timestamp});
+      @HiveField(4) String? voucher,
+      @HiveField(5) String timestamp,
+      @HiveField(6) int? timestampMs});
 
   $PriceDetailsCopyWith<$Res> get price;
   $PriceDetailsCopyWith<$Res> get regular;
@@ -400,6 +426,7 @@ class _$PriceCopyWithImpl<$Res, $Val extends Price>
     Object? url = null,
     Object? voucher = freezed,
     Object? timestamp = null,
+    Object? timestampMs = freezed,
   }) {
     return _then(_value.copyWith(
       price: null == price
@@ -434,6 +461,10 @@ class _$PriceCopyWithImpl<$Res, $Val extends Price>
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as String,
+      timestampMs: freezed == timestampMs
+          ? _value.timestampMs
+          : timestampMs // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 
@@ -470,14 +501,15 @@ abstract class _$$PriceImplCopyWith<$Res> implements $PriceCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {PriceDetails price,
-      PriceDetails regular,
-      double cut,
-      Shop shop,
+      {@HiveField(0) PriceDetails price,
+      @HiveField(1) PriceDetails regular,
+      @HiveField(2) double cut,
+      @HiveField(3) Shop shop,
       List<DRM> drm,
       String url,
-      String? voucher,
-      String timestamp});
+      @HiveField(4) String? voucher,
+      @HiveField(5) String timestamp,
+      @HiveField(6) int? timestampMs});
 
   @override
   $PriceDetailsCopyWith<$Res> get price;
@@ -506,6 +538,7 @@ class __$$PriceImplCopyWithImpl<$Res>
     Object? url = null,
     Object? voucher = freezed,
     Object? timestamp = null,
+    Object? timestampMs = freezed,
   }) {
     return _then(_$PriceImpl(
       price: null == price
@@ -540,6 +573,10 @@ class __$$PriceImplCopyWithImpl<$Res>
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as String,
+      timestampMs: freezed == timestampMs
+          ? _value.timestampMs
+          : timestampMs // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -548,14 +585,15 @@ class __$$PriceImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PriceImpl extends _Price {
   const _$PriceImpl(
-      {required this.price,
-      required this.regular,
-      this.cut = 0,
-      required this.shop,
+      {@HiveField(0) required this.price,
+      @HiveField(1) required this.regular,
+      @HiveField(2) this.cut = 0,
+      @HiveField(3) required this.shop,
       final List<DRM> drm = const [],
       this.url = '',
-      this.voucher,
-      this.timestamp = ''})
+      @HiveField(4) this.voucher,
+      @HiveField(5) this.timestamp = '',
+      @HiveField(6) this.timestampMs})
       : _drm = drm,
         super._();
 
@@ -563,13 +601,17 @@ class _$PriceImpl extends _Price {
       _$$PriceImplFromJson(json);
 
   @override
+  @HiveField(0)
   final PriceDetails price;
   @override
+  @HiveField(1)
   final PriceDetails regular;
   @override
   @JsonKey()
+  @HiveField(2)
   final double cut;
   @override
+  @HiveField(3)
   final Shop shop;
   final List<DRM> _drm;
   @override
@@ -584,14 +626,19 @@ class _$PriceImpl extends _Price {
   @JsonKey()
   final String url;
   @override
+  @HiveField(4)
   final String? voucher;
   @override
   @JsonKey()
+  @HiveField(5)
   final String timestamp;
+  @override
+  @HiveField(6)
+  final int? timestampMs;
 
   @override
   String toString() {
-    return 'Price(price: $price, regular: $regular, cut: $cut, shop: $shop, drm: $drm, url: $url, voucher: $voucher, timestamp: $timestamp)';
+    return 'Price(price: $price, regular: $regular, cut: $cut, shop: $shop, drm: $drm, url: $url, voucher: $voucher, timestamp: $timestamp, timestampMs: $timestampMs)';
   }
 
   @override
@@ -607,13 +654,24 @@ class _$PriceImpl extends _Price {
             (identical(other.url, url) || other.url == url) &&
             (identical(other.voucher, voucher) || other.voucher == voucher) &&
             (identical(other.timestamp, timestamp) ||
-                other.timestamp == timestamp));
+                other.timestamp == timestamp) &&
+            (identical(other.timestampMs, timestampMs) ||
+                other.timestampMs == timestampMs));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, price, regular, cut, shop,
-      const DeepCollectionEquality().hash(_drm), url, voucher, timestamp);
+  int get hashCode => Object.hash(
+      runtimeType,
+      price,
+      regular,
+      cut,
+      shop,
+      const DeepCollectionEquality().hash(_drm),
+      url,
+      voucher,
+      timestamp,
+      timestampMs);
 
   @JsonKey(ignore: true)
   @override
@@ -631,34 +689,44 @@ class _$PriceImpl extends _Price {
 
 abstract class _Price extends Price {
   const factory _Price(
-      {required final PriceDetails price,
-      required final PriceDetails regular,
-      final double cut,
-      required final Shop shop,
+      {@HiveField(0) required final PriceDetails price,
+      @HiveField(1) required final PriceDetails regular,
+      @HiveField(2) final double cut,
+      @HiveField(3) required final Shop shop,
       final List<DRM> drm,
       final String url,
-      final String? voucher,
-      final String timestamp}) = _$PriceImpl;
+      @HiveField(4) final String? voucher,
+      @HiveField(5) final String timestamp,
+      @HiveField(6) final int? timestampMs}) = _$PriceImpl;
   const _Price._() : super._();
 
   factory _Price.fromJson(Map<String, dynamic> json) = _$PriceImpl.fromJson;
 
   @override
+  @HiveField(0)
   PriceDetails get price;
   @override
+  @HiveField(1)
   PriceDetails get regular;
   @override
+  @HiveField(2)
   double get cut;
   @override
+  @HiveField(3)
   Shop get shop;
   @override
   List<DRM> get drm;
   @override
   String get url;
   @override
+  @HiveField(4)
   String? get voucher;
   @override
+  @HiveField(5)
   String get timestamp;
+  @override
+  @HiveField(6)
+  int? get timestampMs;
   @override
   @JsonKey(ignore: true)
   _$$PriceImplCopyWith<_$PriceImpl> get copyWith =>

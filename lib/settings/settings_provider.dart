@@ -10,6 +10,7 @@ import 'package:observatory/settings/settings_state.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/models/store.dart';
+import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:observatory/waitlist/waitlist_provider.dart';
 
 class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
@@ -29,7 +30,7 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
       showHeaders: repository.getShowHeaders(),
       stores: stores,
       dealsTab: repository.getDealsTab(),
-      waitlistNotifications: repository.getWaitlistNotifications(),
+      waitlistNotifications: await repository.getWaitlistNotifications(),
       waitlistSorting: repository.getWaitlistSorting(),
       waitlistSortingDirection: repository.getWaitlistSortingDirection(),
       dealCardType: repository.getDealCardType(),
@@ -101,9 +102,11 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
       () async {
         await repository.setWaitlistNotifications(isEnabled);
 
-        // isEnabled
-        //     ? await enableCheckWaitlistTask()
-        //     : await disableCheckWaitlistTask();
+        if (isEnabled) {
+          await enableCheckWaitlistTask();
+        } else {
+          await disableCheckWaitlistTask();
+        }
 
         return state.requireValue.copyWith(
           waitlistNotifications: isEnabled,

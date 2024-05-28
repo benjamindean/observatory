@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/search/search_provider.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
@@ -29,8 +30,7 @@ class RecentSearchesList extends ConsumerWidget {
                 icon: Icons.search_off_outlined,
                 helper: TextButton(
                   onPressed: () {
-                    ref.read(searchResultsProvider.notifier).setIsOpen(true);
-                    ref.read(searchResultsProvider.notifier).setIsFocused(true);
+                    ref.read(searchResultsProvider.notifier).setIsOpen();
                   },
                   child: const Text('Search Now'),
                 ),
@@ -58,15 +58,14 @@ class RecentSearchesList extends ConsumerWidget {
                               onApply: () async {
                                 ref
                                     .read(asynRecentsProvider.notifier)
-                                    .clearRecents();
-
-                                context.pop();
+                                    .clearRecents()
+                                    .then((value) => context.pop());
                               },
                               onDiscard: () {
                                 context.pop();
                               },
                               title: 'Clear all recent searches?',
-                              body: 'This operation is not undoable.',
+                              body: 'This operation cannot be undone.',
                               discardText: 'Cancel',
                               applyText: 'Clear',
                             );
@@ -81,7 +80,7 @@ class RecentSearchesList extends ConsumerWidget {
 
               return Card(
                 surfaceTintColor: context.colors.scheme.surfaceTint,
-                elevation: 2,
+                elevation: CARD_ELEVATION,
                 child: InkWell(
                   onTap: () async {
                     await ref

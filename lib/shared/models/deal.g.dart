@@ -22,13 +22,14 @@ class DealAdapter extends TypeAdapter<Deal> {
       title: fields[2] as String,
       added: fields[3] as int,
       source: fields[4] as DealSource,
+      prices: (fields[5] as List?)?.cast<Price>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Deal obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class DealAdapter extends TypeAdapter<Deal> {
       ..writeByte(3)
       ..write(obj.added)
       ..writeByte(4)
-      ..write(obj.source);
+      ..write(obj.source)
+      ..writeByte(5)
+      ..write(obj.prices);
   }
 
   @override
@@ -101,9 +104,6 @@ _$DealImpl _$$DealImplFromJson(Map<String, dynamic> json) => _$DealImpl(
       type: json['type'] as String? ?? 'game',
       title: json['title'] as String? ?? '',
       steamId: json['steamId'] as String?,
-      prices: (json['prices'] as List<dynamic>?)
-          ?.map((e) => Price.fromJson(e as Map<String, dynamic>))
-          .toList(),
       info: json['info'] == null
           ? null
           : Info.fromJson(json['info'] as Map<String, dynamic>),
@@ -114,6 +114,9 @@ _$DealImpl _$$DealImplFromJson(Map<String, dynamic> json) => _$DealImpl(
       added: (json['added'] as num?)?.toInt() ?? 0,
       source: $enumDecodeNullable(_$DealSourceEnumMap, json['source']) ??
           DealSource.itad,
+      prices: (json['prices'] as List<dynamic>?)
+          ?.map((e) => Price.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$DealImplToJson(_$DealImpl instance) =>
@@ -123,12 +126,12 @@ Map<String, dynamic> _$$DealImplToJson(_$DealImpl instance) =>
       'type': instance.type,
       'title': instance.title,
       'steamId': instance.steamId,
-      'prices': instance.prices,
       'info': instance.info,
       'overview': instance.overview,
       'isLoading': instance.isLoading,
       'added': instance.added,
       'source': _$DealSourceEnumMap[instance.source]!,
+      'prices': instance.prices,
     };
 
 const _$DealSourceEnumMap = {

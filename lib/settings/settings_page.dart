@@ -3,6 +3,7 @@ import 'package:observatory/settings/purchase/purchase_tile.dart';
 import 'package:observatory/settings/ui/about_links.dart';
 import 'package:observatory/settings/ui/theme_list_tile.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
+import 'package:observatory/settings/ui/waitlist_alerts_settings_tile.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/waitlist/waitlist_provider.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -181,6 +182,9 @@ class SettingsPage extends ConsumerWidget {
                       },
                     ),
                   ),
+                  WaitlistAlertsSettingsTile(
+                    isEnabled: settings.value?.waitlistNotifications ?? false,
+                  ),
                   const ListHeading(title: 'Internal'),
                   SwitchListTile(
                     value: settings.value?.crashlyticsEnabled ?? false,
@@ -199,7 +203,7 @@ class SettingsPage extends ConsumerWidget {
                         title: const Text('Clear Waitlist'),
                         subtitle:
                             const Text('Clear all games from your waitlist.'),
-                        onTap: () {
+                        onTap: () async {
                           showAdaptiveDialog(
                             context: context,
                             builder: (context) {

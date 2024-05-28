@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:observatory/waitlist/ui/steam_import_list_tile.dart';
+import 'package:observatory/waitlist/ui/waitlist_sorting_strings.dart';
 
 void showWaitlistSorting(BuildContext context) {
   showModalBottomSheet(
@@ -16,29 +18,6 @@ void showWaitlistSorting(BuildContext context) {
     },
   );
 }
-
-final textLabels = {
-  WaitlistSorting.date_added: {
-    'title': 'Date Added',
-    WaitlistSortingDirection.asc: 'New to Old',
-    WaitlistSortingDirection.desc: 'Old to New',
-  },
-  WaitlistSorting.price: {
-    'title': 'Price',
-    WaitlistSortingDirection.asc: 'High to Low',
-    WaitlistSortingDirection.desc: 'Low to High',
-  },
-  WaitlistSorting.price_cut: {
-    'title': 'Discount',
-    WaitlistSortingDirection.asc: 'High to Low',
-    WaitlistSortingDirection.desc: 'Low to High',
-  },
-  WaitlistSorting.title: {
-    'title': 'Title',
-    WaitlistSortingDirection.asc: 'A to Z',
-    WaitlistSortingDirection.desc: 'Z to A',
-  },
-};
 
 class WaitlistSortingPage extends ConsumerWidget {
   const WaitlistSortingPage({super.key});
@@ -56,87 +35,75 @@ class WaitlistSortingPage extends ConsumerWidget {
       ),
     );
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          ListTile(
-            visualDensity: VisualDensity.compact,
-            tileColor: context.colors.canvas,
-            title: Text(
-              'Sort By',
-              style: context.textStyles.labelLarge.copyWith(
-                color: context.colors.scheme.outline,
-              ),
-            ),
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: WaitlistSorting.values.length,
-            itemBuilder: (context, index) {
-              final WaitlistSorting sorting = WaitlistSorting.values[index];
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const BottomSheetHeading(text: 'Sort By'),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: WaitlistSorting.values.length,
+              itemBuilder: (context, index) {
+                final WaitlistSorting sorting = WaitlistSorting.values[index];
 
-              return ListTile(
-                contentPadding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
-                selectedTileColor: context.colors.scheme.primaryContainer,
-                selectedColor: context.colors.scheme.onPrimaryContainer,
-                selected: sorting == waitlistSorting,
-                onTap: () async {
-                  ref
-                      .read(asyncSettingsProvider.notifier)
-                      .setWaitlistSorting(sorting);
-
-                  if (sorting == waitlistSorting) {
+                return ListTile(
+                  key: ValueKey('waitlist_sorting_${sorting.name}'),
+                  contentPadding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
+                  selectedTileColor: context.colors.scheme.primaryContainer,
+                  selectedColor: context.colors.scheme.onPrimaryContainer,
+                  selected: sorting == waitlistSorting,
+                  onTap: () async {
                     ref
                         .read(asyncSettingsProvider.notifier)
-                        .setWaitlistSortingDirection(
-                          waitlistSortingDirection ==
-                                  WaitlistSortingDirection.asc
-                              ? WaitlistSortingDirection.desc
-                              : WaitlistSortingDirection.asc,
-                        );
-                  }
-                },
-                title: Text(
-                  textLabels[sorting]?['title'] ?? 'Price',
-                  style: context.textStyles.titleMedium.copyWith(
-                    color: context.colors.scheme.onPrimaryContainer,
-                  ),
-                ),
-                trailing: Builder(
-                  builder: (context) {
-                    if (sorting == waitlistSorting) {
-                      return Chip(
-                        side: BorderSide.none,
-                        label: Text(
-                          textLabels[sorting]?[waitlistSortingDirection] ??
-                              'Unknown',
-                          style: context.textStyles.labelMedium.copyWith(
-                            color: context.colors.scheme.onPrimary,
-                          ),
-                        ),
-                        backgroundColor: context.colors.scheme.primary,
-                      );
-                    }
+                        .setWaitlistSorting(sorting);
 
-                    return const SizedBox.shrink();
+                    if (sorting == waitlistSorting) {
+                      ref
+                          .read(asyncSettingsProvider.notifier)
+                          .setWaitlistSortingDirection(
+                            waitlistSortingDirection ==
+                                    WaitlistSortingDirection.asc
+                                ? WaitlistSortingDirection.desc
+                                : WaitlistSortingDirection.asc,
+                          );
+                    }
                   },
-                ),
-              );
-            },
-          ),
-          ListTile(
-            visualDensity: VisualDensity.compact,
-            tileColor: context.colors.canvas,
-            title: Text(
-              'Steam Import',
-              style: context.textStyles.labelLarge.copyWith(
-                color: context.colors.scheme.outline,
-              ),
+                  title: Text(
+                    waitlistSortingStrings[sorting]?['title'] ?? 'Price',
+                    style: context.textStyles.titleMedium.copyWith(
+                      color: context.colors.scheme.onPrimaryContainer,
+                    ),
+                  ),
+                  trailing: Builder(
+                    builder: (context) {
+                      if (sorting == waitlistSorting) {
+                        return Chip(
+                          side: BorderSide.none,
+                          label: Text(
+                            waitlistSortingStrings[sorting]
+                                    ?[waitlistSortingDirection] ??
+                                'Unknown',
+                            style: context.textStyles.labelMedium.copyWith(
+                              color: context.colors.scheme.onSecondary,
+                            ),
+                          ),
+                          backgroundColor: context.colors.scheme.secondary,
+                        );
+                      }
+
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                );
+              },
             ),
-          ),
-          const SteamImportListTile(),
-        ],
+            const BottomSheetHeading(text: 'Steam Import'),
+            const SteamImportListTile(),
+          ],
+        ),
       ),
     );
   }

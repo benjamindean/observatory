@@ -8,6 +8,7 @@ import 'package:observatory/deal/ui/deal_card_info_row.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/widgets/header_image.dart';
 
 class DealCardExpanded extends ConsumerWidget {
@@ -32,14 +33,14 @@ class DealCardExpanded extends ConsumerWidget {
       onTap: () => onCardTap(context),
       borderRadius: BorderRadius.circular(16),
       onLongPress: () {
+        HapticFeedback.mediumImpact();
+
         showModalBottomSheet(
           context: context,
           useSafeArea: true,
           builder: (BuildContext context) {
             return Consumer(
               builder: (context, ref, _) {
-                HapticFeedback.mediumImpact();
-
                 return DealBottomSheet(deal: deal);
               },
             );
@@ -48,7 +49,7 @@ class DealCardExpanded extends ConsumerWidget {
       },
       child: Card(
         surfaceTintColor: context.colors.scheme.surfaceTint,
-        elevation: 2,
+        elevation: CARD_ELEVATION,
         child: Column(
           children: <Widget>[
             Builder(

@@ -6,11 +6,24 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
 import 'package:observatory/settings/steam_import/steam_import_state.dart';
+import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class SteamImportListTile extends ConsumerWidget {
   const SteamImportListTile({
     super.key,
   });
+
+  Widget getIcon(String? steamUserName, bool isImporting) {
+    if (isImporting) {
+      return const ObservatoryIconProgressIndicator();
+    }
+
+    if (steamUserName?.isEmpty != false) {
+      return const Icon(Icons.person_add);
+    }
+
+    return const Icon(Icons.refresh);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,33 +31,27 @@ class SteamImportListTile extends ConsumerWidget {
       steamImportProvider,
     );
 
-    final String steamUserName =
-        steamImportState.usernameInputController.value.text;
+    final String? steamUserName = steamImportState.username;
     final bool isImporting =
         steamImportState.isImporting || steamImportState.isLoading;
 
     return ListTile(
       contentPadding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
-      title: steamUserName.isEmpty
+      title: steamUserName?.isEmpty != false
           ? Text(
-              'No Steam Username set',
+              'No Steam username set',
               style: context.textStyles.titleMedium.copyWith(
                 color: context.colors.disabled,
               ),
             )
-          : Text(steamUserName),
+          : Text(steamUserName ?? 'None'),
       trailing: TextButton.icon(
-        icon: isImporting
-            ? Transform.scale(
-                scale: 0.4,
-                child: const CircularProgressIndicator(),
-              )
-            : null,
+        icon: getIcon(steamUserName, isImporting),
         onPressed: isImporting
             ? null
             : () {
                 try {
-                  if (steamUserName.isEmpty) {
+                  if (steamUserName?.isEmpty != false) {
                     context.push('/steam-import');
                   } else {
                     ref
@@ -75,7 +82,7 @@ class SteamImportListTile extends ConsumerWidget {
                             child: Icon(
                               Icons.error,
                               color: context
-                                  .themes.snackBar.contentTextStyle!.color,
+                                  .themes.snackBar.contentTextStyle?.color,
                             ),
                           ),
                           const Expanded(
@@ -89,9 +96,9 @@ class SteamImportListTile extends ConsumerWidget {
                   );
                 }
               },
-        label: steamUserName.isNotEmpty
+        label: steamUserName?.isNotEmpty == true
             ? const Text('Re-Import')
-            : const Text('Import'),
+            : const Text('Set Username'),
       ),
     );
   }

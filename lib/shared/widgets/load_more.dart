@@ -25,23 +25,24 @@ class LoadMoreState extends State<LoadMore> {
           padding: const EdgeInsets.all(20),
           child: Builder(
             builder: (BuildContext context) {
-              if (isLoading) {
-                return const ObservatoryProgressIndicator();
-              }
+              return OutlinedButton.icon(
+                icon: isLoading
+                    ? const ObservatoryIconProgressIndicator()
+                    : const Icon(Icons.download_rounded),
+                label: const Text('Load More'),
+                onPressed: isLoading
+                    ? null
+                    : () async {
+                        setState(() {
+                          isLoading = true;
+                        });
 
-              return OutlinedButton(
-                child: const Text('Load More'),
-                onPressed: () async {
-                  setState(() {
-                    isLoading = true;
-                  });
+                        await widget.onPress();
 
-                  await widget.onPress();
-
-                  setState(() {
-                    isLoading = false;
-                  });
-                },
+                        setState(() {
+                          isLoading = false;
+                        });
+                      },
               );
             },
           ),

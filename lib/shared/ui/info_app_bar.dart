@@ -11,8 +11,11 @@ class InfoAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Center(
-        child: child,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 9.0),
+        child: Center(
+          child: child,
+        ),
       ),
     );
   }

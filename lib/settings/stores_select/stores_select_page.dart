@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:observatory/router.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/stores_select/stores_list_provider.dart';
-import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/store.dart';
+import 'package:observatory/shared/ui/observatory_back_button.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 
 class StoreSelectPage extends ConsumerWidget {
@@ -33,19 +33,14 @@ class StoreSelectPage extends ConsumerWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        color: context.colors.scheme.surface,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Expanded(
+            const Expanded(
               flex: 50,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                child: BackButton(
-                  style: IconButton.styleFrom(
-                    backgroundColor: context.elevatedCanvasColor,
-                  ),
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 6.0),
+                child: ObservatoryBackButton(),
               ),
             ),
             Expanded(
@@ -61,56 +56,54 @@ class StoreSelectPage extends ConsumerWidget {
                           useSafeArea: true,
                           context: rootNavigatorKey.currentContext!,
                           builder: (BuildContext context) {
-                            return Wrap(
-                              children: [
-                                ListTile(
-                                  title: Text(
-                                    'Only Steam',
-                                    style: context.textStyles.titleMedium,
-                                  ),
-                                  subtitle: Text(
-                                    'Select only Steam',
-                                    style: context.textStyles.bodySmall,
-                                  ),
-                                  onTap: () async {
-                                    final int steamId = stores
-                                        .where(
-                                          (element) =>
-                                              element.title.toLowerCase() ==
-                                              'steam',
-                                        )
-                                        .first
-                                        .id;
+                            return SafeArea(
+                              child: Wrap(
+                                children: [
+                                  ListTile(
+                                    title: Text(
+                                      'Only Steam',
+                                      style: context.textStyles.titleMedium,
+                                    ),
+                                    subtitle: Text(
+                                      'Select only Steam',
+                                      style: context.textStyles.bodySmall,
+                                    ),
+                                    onTap: () async {
+                                      final int steamId = stores
+                                          .where(
+                                            (element) =>
+                                                element.title.toLowerCase() ==
+                                                'steam',
+                                          )
+                                          .first
+                                          .id;
 
-                                    ref
-                                        .watch(listProvider.notifier)
-                                        .set([steamId]);
+                                      ref
+                                          .watch(listProvider.notifier)
+                                          .set([steamId]);
 
-                                    context.pop();
-                                  },
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    'All Stores',
-                                    style: context.textStyles.titleMedium,
+                                      context.pop();
+                                    },
                                   ),
-                                  subtitle: Text(
-                                    'Select all stores',
-                                    style: context.textStyles.bodySmall,
-                                  ),
-                                  onTap: () async {
-                                    ref.watch(listProvider.notifier).set(
-                                          stores.map((e) => e.id).toList(),
-                                        );
+                                  ListTile(
+                                    title: Text(
+                                      'All Stores',
+                                      style: context.textStyles.titleMedium,
+                                    ),
+                                    subtitle: Text(
+                                      'Select all stores',
+                                      style: context.textStyles.bodySmall,
+                                    ),
+                                    onTap: () async {
+                                      ref.watch(listProvider.notifier).set(
+                                            stores.map((e) => e.id).toList(),
+                                          );
 
-                                    context.pop();
-                                  },
-                                ),
-                                Container(
-                                  color: BottomAppBarTheme.of(context).color,
-                                  height: const SliverAppBar().toolbarHeight,
-                                ),
-                              ],
+                                      context.pop();
+                                    },
+                                  ),
+                                ],
+                              ),
                             );
                           },
                         );
@@ -152,7 +145,7 @@ class StoreSelectPage extends ConsumerWidget {
                     return ObservatoryDialog(
                       title: 'Unsaved Stores Configuration',
                       body:
-                          'It looks like you have unsaved changes to your store configuration. What do you want to do?',
+                          'It looks like you have unsaved changes to your store configuration. What would you like to do?',
                       applyText: 'Save',
                       discardText: 'Discard',
                       onDiscard: () {

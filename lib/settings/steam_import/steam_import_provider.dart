@@ -13,6 +13,7 @@ class SteamImportNotifier extends AutoDisposeNotifier<SteamImportState> {
   @override
   SteamImportState build() {
     return SteamImportState(
+      username: GetIt.I<SettingsRepository>().getSteamUsername(),
       focusNode: FocusNode(),
       usernameInputController: TextEditingController(
         text: GetIt.I<SettingsRepository>().getSteamUsername(),
@@ -77,7 +78,7 @@ class SteamImportNotifier extends AutoDisposeNotifier<SteamImportState> {
       }
 
       if (state.username != null) {
-        await GetIt.I<SettingsRepository>().setSteamUsername(state.username!);
+        await GetIt.I<SettingsRepository>().setSteamUsername(state.username);
       }
 
       await ref.watch(asyncWaitListProvider.notifier).reset();

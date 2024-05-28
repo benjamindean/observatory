@@ -19,7 +19,8 @@ class UnfinishedImportDialog extends ConsumerWidget {
       applyText: 'Import',
       discardText: 'Abort',
       onDiscard: () {
-        context.pop();
+        ref.read(steamImportProvider.notifier).reset();
+
         context.pop();
       },
       onApply: () async {
@@ -42,7 +43,7 @@ class UnfinishedImportDialog extends ConsumerWidget {
                       TextSpan(
                         text: result.length.toString(),
                         style:
-                            context.themes.snackBar.contentTextStyle!.copyWith(
+                            context.themes.snackBar.contentTextStyle?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),

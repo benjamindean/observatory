@@ -6,9 +6,10 @@ import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/settings/steam_import/ui/steam_import_filter.dart';
 import 'package:observatory/settings/steam_import/ui/steam_import_form.dart';
 import 'package:observatory/settings/steam_import/ui/unfinished_import_dialog.dart';
-import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/ui/observatory_back_button.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
+import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class SteamImportPage extends ConsumerWidget {
   const SteamImportPage({super.key});
@@ -19,19 +20,14 @@ class SteamImportPage extends ConsumerWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        color: context.colors.scheme.surface,
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Expanded(
+                const Expanded(
                   flex: 50,
-                  child: BackButton(
-                    style: IconButton.styleFrom(
-                      backgroundColor: context.elevatedCanvasColor,
-                    ),
-                  ),
+                  child: ObservatoryBackButton(),
                 ),
                 Expanded(
                   flex: 50,
@@ -84,10 +80,7 @@ class SteamImportPage extends ConsumerWidget {
                                 );
                               },
                         icon: steamImportState.isImporting
-                            ? Transform.scale(
-                                scale: 0.4,
-                                child: const CircularProgressIndicator(),
-                              )
+                            ? const ObservatoryIconProgressIndicator()
                             : const Icon(Icons.import_export_rounded),
                         label: const Text('Import'),
                       ),
@@ -154,13 +147,15 @@ class SteamImportPage extends ConsumerWidget {
                     );
                   }
 
+                  final List<Deal> importDeals = steamImportState.deals ?? [];
+
                   return Column(
                     children: [
                       Expanded(
                         child: ListView.builder(
-                          itemCount: steamImportState.deals!.length,
+                          itemCount: importDeals.length,
                           itemBuilder: (context, index) {
-                            final Deal deal = steamImportState.deals![index];
+                            final Deal deal = importDeals[index];
 
                             return CheckboxListTile(
                               controlAffinity: ListTileControlAffinity.leading,
@@ -208,7 +203,7 @@ class ImportSuccessSnackBarContent extends StatelessWidget {
           const TextSpan(text: 'Successfully imported '),
           TextSpan(
             text: count,
-            style: context.themes.snackBar.contentTextStyle!.copyWith(
+            style: context.themes.snackBar.contentTextStyle?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),

@@ -13,40 +13,39 @@ class SteamImportFilter extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final SteamImportState steamImportState = ref.watch(steamImportProvider);
 
-    return Wrap(
-      children: [
-        ListTile(
-          title: Text(
-            'All',
-            style: context.textStyles.titleMedium,
+    return SafeArea(
+      child: Wrap(
+        children: [
+          ListTile(
+            title: Text(
+              'All',
+              style: context.textStyles.titleMedium,
+            ),
+            subtitle: Text(
+              'Select all games',
+              style: context.textStyles.bodySmall,
+            ),
+            onTap: () async {
+              return ref
+                  .watch(steamImportProvider.notifier)
+                  .set(steamImportState.deals ?? []);
+            },
           ),
-          subtitle: Text(
-            'Select all games',
-            style: context.textStyles.bodySmall,
+          ListTile(
+            title: Text(
+              'None',
+              style: context.textStyles.titleMedium,
+            ),
+            subtitle: Text(
+              'De-select all games',
+              style: context.textStyles.bodySmall,
+            ),
+            onTap: () async {
+              return ref.watch(steamImportProvider.notifier).set([]);
+            },
           ),
-          onTap: () async {
-            return ref
-                .watch(steamImportProvider.notifier)
-                .set(steamImportState.deals!);
-          },
-        ),
-        ListTile(
-          title: Text(
-            'None',
-            style: context.textStyles.titleMedium,
-          ),
-          subtitle: Text(
-            'De-select all games',
-            style: context.textStyles.bodySmall,
-          ),
-          onTap: () async {
-            return ref.watch(steamImportProvider.notifier).set([]);
-          },
-        ),
-        Container(
-          height: const SliverAppBar().toolbarHeight,
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

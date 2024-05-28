@@ -19,7 +19,6 @@ mixin _$SearchState {
   String? get query => throw _privateConstructorUsedError;
   List<Deal>? get deals => throw _privateConstructorUsedError;
   bool get isOpen => throw _privateConstructorUsedError;
-  bool get isFocused => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   FocusNode get focusNode => throw _privateConstructorUsedError;
   TextEditingController get searchInputController =>
@@ -40,7 +39,6 @@ abstract class $SearchStateCopyWith<$Res> {
       {String? query,
       List<Deal>? deals,
       bool isOpen,
-      bool isFocused,
       bool isLoading,
       FocusNode focusNode,
       TextEditingController searchInputController});
@@ -62,7 +60,6 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     Object? query = freezed,
     Object? deals = freezed,
     Object? isOpen = null,
-    Object? isFocused = null,
     Object? isLoading = null,
     Object? focusNode = null,
     Object? searchInputController = null,
@@ -79,10 +76,6 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
       isOpen: null == isOpen
           ? _value.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFocused: null == isFocused
-          ? _value.isFocused
-          : isFocused // ignore: cast_nullable_to_non_nullable
               as bool,
       isLoading: null == isLoading
           ? _value.isLoading
@@ -112,7 +105,6 @@ abstract class _$$SearchStateImplCopyWith<$Res>
       {String? query,
       List<Deal>? deals,
       bool isOpen,
-      bool isFocused,
       bool isLoading,
       FocusNode focusNode,
       TextEditingController searchInputController});
@@ -132,7 +124,6 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     Object? query = freezed,
     Object? deals = freezed,
     Object? isOpen = null,
-    Object? isFocused = null,
     Object? isLoading = null,
     Object? focusNode = null,
     Object? searchInputController = null,
@@ -149,10 +140,6 @@ class __$$SearchStateImplCopyWithImpl<$Res>
       isOpen: null == isOpen
           ? _value.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFocused: null == isFocused
-          ? _value.isFocused
-          : isFocused // ignore: cast_nullable_to_non_nullable
               as bool,
       isLoading: null == isLoading
           ? _value.isLoading
@@ -177,7 +164,6 @@ class _$SearchStateImpl implements _SearchState {
       {required this.query,
       required final List<Deal>? deals,
       this.isOpen = false,
-      this.isFocused = false,
       this.isLoading = false,
       required this.focusNode,
       required this.searchInputController})
@@ -200,9 +186,6 @@ class _$SearchStateImpl implements _SearchState {
   final bool isOpen;
   @override
   @JsonKey()
-  final bool isFocused;
-  @override
-  @JsonKey()
   final bool isLoading;
   @override
   final FocusNode focusNode;
@@ -211,7 +194,7 @@ class _$SearchStateImpl implements _SearchState {
 
   @override
   String toString() {
-    return 'SearchState(query: $query, deals: $deals, isOpen: $isOpen, isFocused: $isFocused, isLoading: $isLoading, focusNode: $focusNode, searchInputController: $searchInputController)';
+    return 'SearchState(query: $query, deals: $deals, isOpen: $isOpen, isLoading: $isLoading, focusNode: $focusNode, searchInputController: $searchInputController)';
   }
 
   @override
@@ -222,8 +205,6 @@ class _$SearchStateImpl implements _SearchState {
             (identical(other.query, query) || other.query == query) &&
             const DeepCollectionEquality().equals(other._deals, _deals) &&
             (identical(other.isOpen, isOpen) || other.isOpen == isOpen) &&
-            (identical(other.isFocused, isFocused) ||
-                other.isFocused == isFocused) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.focusNode, focusNode) ||
@@ -238,7 +219,6 @@ class _$SearchStateImpl implements _SearchState {
       query,
       const DeepCollectionEquality().hash(_deals),
       isOpen,
-      isFocused,
       isLoading,
       focusNode,
       searchInputController);
@@ -255,7 +235,6 @@ abstract class _SearchState implements SearchState {
           {required final String? query,
           required final List<Deal>? deals,
           final bool isOpen,
-          final bool isFocused,
           final bool isLoading,
           required final FocusNode focusNode,
           required final TextEditingController searchInputController}) =
@@ -267,8 +246,6 @@ abstract class _SearchState implements SearchState {
   List<Deal>? get deals;
   @override
   bool get isOpen;
-  @override
-  bool get isFocused;
   @override
   bool get isLoading;
   @override

@@ -1,10 +1,12 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:observatory/deal/ui/current_price.dart';
 import 'package:observatory/deal/ui/price_bottom_sheet.dart';
 import 'package:observatory/deal/ui/price_cut.dart';
 import 'package:observatory/deal/ui/voucher_list_tile.dart';
 import 'package:observatory/shared/models/price.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PriceCard extends StatelessWidget {
@@ -28,24 +30,24 @@ class PriceCard extends StatelessWidget {
         );
       },
       onLongPress: () {
+        HapticFeedback.mediumImpact();
+
         showModalBottomSheet(
           context: context,
           useSafeArea: true,
           builder: (BuildContext context) {
-            HapticFeedback.mediumImpact();
-
             return PriceBottomSheet(price: price);
           },
         );
       },
       child: Card(
         surfaceTintColor: context.colors.scheme.surfaceTint,
-        elevation: 2,
+        elevation: CARD_ELEVATION,
         child: Column(
           children: [
             ListTile(
               leading: SizedBox(
-                width: 50,
+                width: 60,
                 child: Center(
                   child: PriceCut(
                     priceCut: price.cut,
@@ -80,13 +82,7 @@ class PriceCard extends StatelessWidget {
                   ),
                 ],
               ),
-              trailing: Text(
-                price.price.formattedPrice,
-                style: context.themes.text.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: context.colors.scheme.onSurface,
-                ),
-              ),
+              trailing: CurrentPrice(price: price),
             ),
             if (price.voucher != null && price.voucher != '')
               VoucherListTile(price: price),

@@ -1,19 +1,29 @@
 import 'dart:async';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
+import 'package:observatory/shared/models/price.dart';
+import 'package:observatory/shared/models/shop.dart';
 
 const SETTINGS_BOX_NAME = 'observatory_user_data';
 const SAVED_DEALS_BOX_NAME = 'observatory_saved_deals';
+const PAST_SAVED_DEALS_BOX_NAME = 'observatory_past_saved_deals';
 const RECENT_SEARCHES_BOX_NAME = 'observatory_recent_searches';
 
 const int IMAGE_WIDTH = 600;
 const int IMAGE_HEIGHT = 344;
 
-enum WaitlistSorting { date_added, price_cut, price, title }
+enum WaitlistSorting {
+  title,
+  date_added,
+  price_cut,
+  discount_date,
+  price,
+}
 
 enum WaitlistSortingDirection { asc, desc }
 
@@ -46,6 +56,9 @@ class SettingsRepository {
   final Box<Deal> savedDealsBox = Hive.box<Deal>(
     SAVED_DEALS_BOX_NAME,
   );
+  final Box<Deal> pastSavedDealsBox = Hive.box<Deal>(
+    PAST_SAVED_DEALS_BOX_NAME,
+  );
   final Box<String> recentSearchesBox = Hive.box<String>(
     RECENT_SEARCHES_BOX_NAME,
   );
@@ -63,18 +76,28 @@ class SettingsRepository {
   final String PREF_WAITLIST_SORTING = 'observatory_waitlist_sorting';
   final String PREF_WAITLIST_SORTING_DIRECTION =
       'observatory_waitlist_sorting_direction';
-  final String PREF_WAITLIST_PAST = 'observatory_waitlist_past';
   final String PREF_STEAM_USERNAME = 'observatory_steam_username';
+
+  final DealCategory defaultCategory = DealCategory.steam_top_sellers;
+  final WaitlistSorting defaultWaitlistSorting = WaitlistSorting.discount_date;
+  final DealCardType defaultDealCardType = DealCardType.compact;
+  final WaitlistSortingDirection defaultWaitlistSortingDirection =
+      WaitlistSortingDirection.asc;
 
   static Future<void> init() async {
     await Hive.initFlutter();
 
+    Hive.registerAdapter(ShopAdapter());
+    Hive.registerAdapter(PriceDetailsAdapter());
+    Hive.registerAdapter(PriceAdapter());
     Hive.registerAdapter(DealSourceAdapter());
     Hive.registerAdapter(DealAdapter());
     Hive.registerAdapter(ObservatoryThemeAdapter());
 
     await Hive.openBox(SETTINGS_BOX_NAME);
     await Hive.openBox<Deal>(SAVED_DEALS_BOX_NAME);
+    await Hive.openBox<Deal>(PAST_SAVED_DEALS_BOX_NAME);
+    await Hive.openBox<Deal>(PAST_SAVED_DEALS_BOX_NAME);
     await Hive.openBox<String>(RECENT_SEARCHES_BOX_NAME);
   }
 
@@ -177,10 +200,10 @@ class SettingsRepository {
   DealCategory getDealsTab() {
     final String category = settingsBox.get(
       PREF_DEALS_TAB,
-      defaultValue: DealCategory.all.name.toString(),
+      defaultValue: defaultCategory.name.toString(),
     );
 
-    return DealCategory.values.asNameMap()[category]!;
+    return DealCategory.values.asNameMap()[category] ?? defaultCategory;
   }
 
   Future<void> setDealsTab(DealCategory category) async {
@@ -190,11 +213,15 @@ class SettingsRepository {
     );
   }
 
-  bool getWaitlistNotifications() {
+  Future<bool> getWaitlistNotifications() async {
+    final bool isEnabledOnSystem =
+        await AwesomeNotifications().isNotificationAllowed();
+
     return settingsBox.get(
-      PREF_WAITLIST_NOTIFICATIONS,
-      defaultValue: false,
-    );
+          PREF_WAITLIST_NOTIFICATIONS,
+          defaultValue: false,
+        ) &&
+        isEnabledOnSystem;
   }
 
   Future<void> setWaitlistNotifications(bool isEnabled) async {
@@ -225,10 +252,10 @@ class SettingsRepository {
   DealCardType getDealCardType() {
     final String type = settingsBox.get(
       PREF_DEAL_CARD_TYPE,
-      defaultValue: DealCardType.compact.name.toString(),
+      defaultValue: defaultDealCardType.name.toString(),
     );
 
-    return DealCardType.values.asNameMap()[type]!;
+    return DealCardType.values.asNameMap()[type] ?? defaultDealCardType;
   }
 
   Future<void> setDealCardType(DealCardType type) async {
@@ -241,10 +268,11 @@ class SettingsRepository {
   WaitlistSorting getWaitlistSorting() {
     final String sorting = settingsBox.get(
       PREF_WAITLIST_SORTING,
-      defaultValue: WaitlistSorting.date_added.name.toString(),
+      defaultValue: defaultWaitlistSorting.name.toString(),
     );
 
-    return WaitlistSorting.values.asNameMap()[sorting]!;
+    return WaitlistSorting.values.asNameMap()[sorting] ??
+        defaultWaitlistSorting;
   }
 
   Future<void> setWaitlistSorting(WaitlistSorting sorting) async {
@@ -255,10 +283,7 @@ class SettingsRepository {
   }
 
   List<Deal> getWaitlistPast() {
-    return settingsBox.get(
-      PREF_WAITLIST_PAST,
-      defaultValue: [],
-    );
+    return pastSavedDealsBox.values.toList();
   }
 
   Future<void> setWaitlistPast(List<Deal> waitlist) async {
@@ -266,28 +291,29 @@ class SettingsRepository {
       return;
     }
 
-    return settingsBox.put(
-      PREF_WAITLIST_PAST,
-      waitlist
-          .map(
-            (e) => Deal(
-              id: e.id,
-              slug: e.slug,
-              title: e.title,
-              prices: e.prices,
-            ),
-          )
-          .toList(),
-    );
+    await pastSavedDealsBox.clear();
+
+    return pastSavedDealsBox.putAll({
+      for (final Deal deal in waitlist)
+        deal.id: Deal(
+          id: deal.id,
+          slug: deal.slug,
+          title: deal.title,
+          prices: deal.prices,
+          added: deal.added,
+          source: deal.source,
+        ),
+    });
   }
 
   WaitlistSortingDirection getWaitlistSortingDirection() {
     final String? sorting = settingsBox.get(
       PREF_WAITLIST_SORTING_DIRECTION,
-      defaultValue: WaitlistSortingDirection.asc.name.toString(),
+      defaultValue: defaultWaitlistSortingDirection.name.toString(),
     );
 
-    return WaitlistSortingDirection.values.asNameMap()[sorting]!;
+    return WaitlistSortingDirection.values.asNameMap()[sorting] ??
+        defaultWaitlistSortingDirection;
   }
 
   Future<void> setWaitlistSortingDirection(
@@ -303,7 +329,11 @@ class SettingsRepository {
     return settingsBox.get(PREF_STEAM_USERNAME);
   }
 
-  Future<void> setSteamUsername(String username) async {
+  Future<void> setSteamUsername(String? username) async {
+    if (username == null) {
+      return;
+    }
+
     return settingsBox.put(
       PREF_STEAM_USERNAME,
       username,

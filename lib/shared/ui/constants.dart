@@ -1,0 +1,2 @@
+const CARD_ELEVATION = 2.0;
+const APPBAR_ELEVATION = 2.0;

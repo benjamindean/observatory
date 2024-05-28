@@ -18,7 +18,8 @@ class VoucherListTile extends StatelessWidget {
       color: context.highElevatedCanvasColor,
       child: ListTile(
         onTap: () async {
-          await Clipboard.setData(ClipboardData(text: price.voucher!)).then(
+          await Clipboard.setData(ClipboardData(text: price.voucher ?? ''))
+              .then(
             (value) => ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: RichText(
@@ -31,7 +32,7 @@ class VoucherListTile extends StatelessWidget {
                       TextSpan(
                         text: price.voucher ?? 'None',
                         style:
-                            context.themes.snackBar.contentTextStyle!.copyWith(
+                            context.themes.snackBar.contentTextStyle?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),

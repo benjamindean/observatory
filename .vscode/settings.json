@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/Users/berma/Documents/Github/observatory/linux"
+    "cmake.sourceDirectory": "C:/Users/berma/Documents/Github/observatory/linux",
+    "dart.flutterSdkPath": "/opt/flutter"
 }

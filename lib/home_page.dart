@@ -30,8 +30,7 @@ class HomePage extends ConsumerWidget {
           child.goBranch(index);
 
           if (index == 1 && index == child.currentIndex) {
-            ref.watch(searchResultsProvider.notifier).setIsOpen(true);
-            ref.watch(searchResultsProvider.notifier).setIsFocused(true);
+            ref.watch(searchResultsProvider.notifier).setIsOpen();
           }
 
           if (index == 0 && index == child.currentIndex) {

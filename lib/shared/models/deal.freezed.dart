@@ -28,7 +28,6 @@ mixin _$Deal {
   @HiveField(2)
   String get title => throw _privateConstructorUsedError;
   String? get steamId => throw _privateConstructorUsedError;
-  List<Price>? get prices => throw _privateConstructorUsedError;
   Info? get info => throw _privateConstructorUsedError;
   Overview? get overview => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
@@ -36,6 +35,8 @@ mixin _$Deal {
   int get added => throw _privateConstructorUsedError;
   @HiveField(4)
   DealSource get source => throw _privateConstructorUsedError;
+  @HiveField(5)
+  List<Price>? get prices => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,12 +54,12 @@ abstract class $DealCopyWith<$Res> {
       String type,
       @HiveField(2) String title,
       String? steamId,
-      List<Price>? prices,
       Info? info,
       Overview? overview,
       bool isLoading,
       @HiveField(3) int added,
-      @HiveField(4) DealSource source});
+      @HiveField(4) DealSource source,
+      @HiveField(5) List<Price>? prices});
 
   $InfoCopyWith<$Res>? get info;
   $OverviewCopyWith<$Res>? get overview;
@@ -82,12 +83,12 @@ class _$DealCopyWithImpl<$Res, $Val extends Deal>
     Object? type = null,
     Object? title = null,
     Object? steamId = freezed,
-    Object? prices = freezed,
     Object? info = freezed,
     Object? overview = freezed,
     Object? isLoading = null,
     Object? added = null,
     Object? source = null,
+    Object? prices = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -110,10 +111,6 @@ class _$DealCopyWithImpl<$Res, $Val extends Deal>
           ? _value.steamId
           : steamId // ignore: cast_nullable_to_non_nullable
               as String?,
-      prices: freezed == prices
-          ? _value.prices
-          : prices // ignore: cast_nullable_to_non_nullable
-              as List<Price>?,
       info: freezed == info
           ? _value.info
           : info // ignore: cast_nullable_to_non_nullable
@@ -134,6 +131,10 @@ class _$DealCopyWithImpl<$Res, $Val extends Deal>
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
               as DealSource,
+      prices: freezed == prices
+          ? _value.prices
+          : prices // ignore: cast_nullable_to_non_nullable
+              as List<Price>?,
     ) as $Val);
   }
 
@@ -175,12 +176,12 @@ abstract class _$$DealImplCopyWith<$Res> implements $DealCopyWith<$Res> {
       String type,
       @HiveField(2) String title,
       String? steamId,
-      List<Price>? prices,
       Info? info,
       Overview? overview,
       bool isLoading,
       @HiveField(3) int added,
-      @HiveField(4) DealSource source});
+      @HiveField(4) DealSource source,
+      @HiveField(5) List<Price>? prices});
 
   @override
   $InfoCopyWith<$Res>? get info;
@@ -203,12 +204,12 @@ class __$$DealImplCopyWithImpl<$Res>
     Object? type = null,
     Object? title = null,
     Object? steamId = freezed,
-    Object? prices = freezed,
     Object? info = freezed,
     Object? overview = freezed,
     Object? isLoading = null,
     Object? added = null,
     Object? source = null,
+    Object? prices = freezed,
   }) {
     return _then(_$DealImpl(
       id: null == id
@@ -231,10 +232,6 @@ class __$$DealImplCopyWithImpl<$Res>
           ? _value.steamId
           : steamId // ignore: cast_nullable_to_non_nullable
               as String?,
-      prices: freezed == prices
-          ? _value._prices
-          : prices // ignore: cast_nullable_to_non_nullable
-              as List<Price>?,
       info: freezed == info
           ? _value.info
           : info // ignore: cast_nullable_to_non_nullable
@@ -255,6 +252,10 @@ class __$$DealImplCopyWithImpl<$Res>
           ? _value.source
           : source // ignore: cast_nullable_to_non_nullable
               as DealSource,
+      prices: freezed == prices
+          ? _value._prices
+          : prices // ignore: cast_nullable_to_non_nullable
+              as List<Price>?,
     ));
   }
 }
@@ -268,12 +269,12 @@ class _$DealImpl extends _Deal {
       this.type = 'game',
       @HiveField(2) this.title = '',
       this.steamId,
-      final List<Price>? prices,
       this.info,
       this.overview,
       this.isLoading = false,
       @HiveField(3) this.added = 0,
-      @HiveField(4) this.source = DealSource.itad})
+      @HiveField(4) this.source = DealSource.itad,
+      @HiveField(5) final List<Price>? prices})
       : _prices = prices,
         super._();
 
@@ -296,16 +297,6 @@ class _$DealImpl extends _Deal {
   final String title;
   @override
   final String? steamId;
-  final List<Price>? _prices;
-  @override
-  List<Price>? get prices {
-    final value = _prices;
-    if (value == null) return null;
-    if (_prices is EqualUnmodifiableListView) return _prices;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
   @override
   final Info? info;
   @override
@@ -321,10 +312,20 @@ class _$DealImpl extends _Deal {
   @JsonKey()
   @HiveField(4)
   final DealSource source;
+  final List<Price>? _prices;
+  @override
+  @HiveField(5)
+  List<Price>? get prices {
+    final value = _prices;
+    if (value == null) return null;
+    if (_prices is EqualUnmodifiableListView) return _prices;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'Deal(id: $id, slug: $slug, type: $type, title: $title, steamId: $steamId, prices: $prices, info: $info, overview: $overview, isLoading: $isLoading, added: $added, source: $source)';
+    return 'Deal(id: $id, slug: $slug, type: $type, title: $title, steamId: $steamId, info: $info, overview: $overview, isLoading: $isLoading, added: $added, source: $source, prices: $prices)';
   }
 
   @override
@@ -337,14 +338,14 @@ class _$DealImpl extends _Deal {
             (identical(other.type, type) || other.type == type) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.steamId, steamId) || other.steamId == steamId) &&
-            const DeepCollectionEquality().equals(other._prices, _prices) &&
             (identical(other.info, info) || other.info == info) &&
             (identical(other.overview, overview) ||
                 other.overview == overview) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.added, added) || other.added == added) &&
-            (identical(other.source, source) || other.source == source));
+            (identical(other.source, source) || other.source == source) &&
+            const DeepCollectionEquality().equals(other._prices, _prices));
   }
 
   @JsonKey(ignore: true)
@@ -356,12 +357,12 @@ class _$DealImpl extends _Deal {
       type,
       title,
       steamId,
-      const DeepCollectionEquality().hash(_prices),
       info,
       overview,
       isLoading,
       added,
-      source);
+      source,
+      const DeepCollectionEquality().hash(_prices));
 
   @JsonKey(ignore: true)
   @override
@@ -384,12 +385,12 @@ abstract class _Deal extends Deal {
       final String type,
       @HiveField(2) final String title,
       final String? steamId,
-      final List<Price>? prices,
       final Info? info,
       final Overview? overview,
       final bool isLoading,
       @HiveField(3) final int added,
-      @HiveField(4) final DealSource source}) = _$DealImpl;
+      @HiveField(4) final DealSource source,
+      @HiveField(5) final List<Price>? prices}) = _$DealImpl;
   const _Deal._() : super._();
 
   factory _Deal.fromJson(Map<String, dynamic> json) = _$DealImpl.fromJson;
@@ -408,8 +409,6 @@ abstract class _Deal extends Deal {
   @override
   String? get steamId;
   @override
-  List<Price>? get prices;
-  @override
   Info? get info;
   @override
   Overview? get overview;
@@ -421,6 +420,9 @@ abstract class _Deal extends Deal {
   @override
   @HiveField(4)
   DealSource get source;
+  @override
+  @HiveField(5)
+  List<Price>? get prices;
   @override
   @JsonKey(ignore: true)
   _$$DealImplCopyWith<_$DealImpl> get copyWith =>

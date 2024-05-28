@@ -1,7 +1,7 @@
 name: observatory
 description: Game price tracker.
 publish_to: 'none' 
-version: 1.0.3
+version: 1.1.0
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
@@ -47,6 +47,10 @@ dependencies:
   easy_refresh: ^3.4.0
   firebase_analytics: ^10.10.5
   awesome_notifications: ^0.9.3+1
+  workmanager:
+    git:
+        url: https://github.com/fluttercommunity/flutter_workmanager.git
+        ref: b783000
 
 dependency_overrides:
   intl: any
@@ -86,3 +90,4 @@ flutter:
   assets:
     - assets/icon/observatory.png
     - assets/secrets.json
+    - assets/google_fonts/

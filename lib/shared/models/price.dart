@@ -1,5 +1,6 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:intl/intl.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:observatory/shared/models/shop.dart';
 
@@ -17,13 +18,14 @@ class DRM with _$DRM {
 }
 
 @freezed
+@HiveType(typeId: 6)
 class PriceDetails with _$PriceDetails {
   const PriceDetails._();
 
   const factory PriceDetails({
-    @Default(0) double amount,
-    @Default(0) int amountInt,
-    @Default('USD') String currency,
+    @HiveField(0) @Default(0) double amount,
+    @HiveField(1) @Default(0) int amountInt,
+    @HiveField(2) @Default('USD') String currency,
   }) = _PriceDetails;
 
   factory PriceDetails.fromJson(Map<String, Object?> json) =>
@@ -43,18 +45,20 @@ class PriceDetails with _$PriceDetails {
 }
 
 @freezed
+@HiveType(typeId: 4)
 class Price with _$Price {
   const Price._();
 
   const factory Price({
-    required PriceDetails price,
-    required PriceDetails regular,
-    @Default(0) double cut,
-    required Shop shop,
+    @HiveField(0) required PriceDetails price,
+    @HiveField(1) required PriceDetails regular,
+    @HiveField(2) @Default(0) double cut,
+    @HiveField(3) required Shop shop,
     @Default([]) List<DRM> drm,
     @Default('') String url,
-    String? voucher,
-    @Default('') String timestamp,
+    @HiveField(4) String? voucher,
+    @HiveField(5) @Default('') String timestamp,
+    @HiveField(6) int? timestampMs,
   }) = _Price;
 
   String get formattedDRM {

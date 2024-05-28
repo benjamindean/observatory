@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import awesome_notifications
+import workmanager
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -10,10 +11,16 @@ import awesome_notifications
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
 
-    SwiftAwesomeNotificationsPlugin.setPluginRegistrantCallback { registry in          
+    SwiftAwesomeNotificationsPlugin.setPluginRegistrantCallback { registry in
         SwiftAwesomeNotificationsPlugin.register(
           with: registry.registrar(forPlugin: "io.flutter.plugins.awesomenotifications.AwesomeNotificationsPlugin")!)
     }
+
+    WorkmanagerPlugin.setPluginRegistrantCallback { registry in
+        GeneratedPluginRegistrant.register(with: registry)
+    }
+
+    WorkmanagerPlugin.registerPeriodicTask(withIdentifier: "observatory-waitlist-check", frequency: NSNumber(value: 2 * 60 * 60))
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }

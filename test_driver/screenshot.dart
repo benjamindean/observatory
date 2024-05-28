@@ -20,7 +20,7 @@ import './mocks/search_mocks.dart';
 void main() async {
   WidgetsApp.debugAllowBannerOverride = false;
 
-  enableFlutterDriverExtension();
+  enableFlutterDriverExtension(enableTextEntryEmulation: false);
 
   await SettingsRepository.init();
 

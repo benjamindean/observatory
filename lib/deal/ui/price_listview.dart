@@ -14,7 +14,9 @@ class PriceListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (prices == null) {
+    final List<Price> allPrices = prices ?? [];
+
+    if (allPrices.isEmpty) {
       return SliverPadding(
         padding: const EdgeInsets.only(bottom: 16.0),
         sliver: SliverList(
@@ -22,7 +24,7 @@ class PriceListView extends ConsumerWidget {
             [
               ListTile(
                 title: Text(
-                  'No prices are available for this product in the selected stores.',
+                  'No prices are available for this product at the selected stores.',
                   style: TextStyle(
                     color: context.colors.disabled,
                   ),
@@ -40,10 +42,10 @@ class PriceListView extends ConsumerWidget {
         delegate: SliverChildBuilderDelegate(
           (context, index) {
             return PriceCard(
-              price: prices![index],
+              price: allPrices[index],
             );
           },
-          childCount: prices!.length,
+          childCount: allPrices.length,
         ),
       ),
     );

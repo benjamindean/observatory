@@ -32,12 +32,14 @@ class LinksTile extends StatelessWidget {
         children: [
           Builder(
             builder: (context) {
-              if (deal.steamPrice != null) {
+              final Uri? uri = Uri.tryParse(deal.steamPrice?.url ?? '');
+
+              if (uri != null) {
                 return SearchOnTile(
                   deal: deal,
                   title: 'Open on Steam',
                   leading: FontAwesomeIcons.steam,
-                  link: Uri.parse(deal.steamPrice!.url),
+                  link: uri,
                 );
               }
 

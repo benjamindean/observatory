@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
+import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 
 void showDealsFilter(BuildContext context) {
   showModalBottomSheet(
@@ -28,54 +29,50 @@ class DealsFilter extends ConsumerWidget {
       ),
     );
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          ListTile(
-            visualDensity: VisualDensity.compact,
-            tileColor: context.colors.canvas,
-            title: Text(
-              'Deals Type',
-              style: context.textStyles.labelLarge.copyWith(
-                color: context.colors.scheme.outline,
-              ),
-            ),
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: DealCategory.values.length,
-            itemBuilder: (context, index) {
-              final DealCategory category = DealCategory.values[index];
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const BottomSheetHeading(text: 'Deals Type'),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: DealCategory.values.length,
+              itemBuilder: (context, index) {
+                final DealCategory category = DealCategory.values[index];
 
-              return ListTile(
-                selectedTileColor: context.colors.scheme.primaryContainer,
-                selectedColor: context.colors.scheme.onPrimaryContainer,
-                selected: DealCategory.values[index] == dealsTab,
-                onTap: () async {
-                  return ref
-                      .read(asyncSettingsProvider.notifier)
-                      .setDealsTab(category)
-                      .then(
-                        (value) => context.pop(),
-                      );
-                },
-                title: Text(
-                  dealCategoryLabels[category]?['title'] ?? 'Unknown',
-                  style: context.textStyles.titleMedium.copyWith(
-                    color: context.colors.scheme.onPrimaryContainer,
+                return ListTile(
+                  key: ValueKey('deals_filter_${category.name}'),
+                  selectedTileColor: context.colors.scheme.primaryContainer,
+                  selectedColor: context.colors.scheme.onPrimaryContainer,
+                  selected: DealCategory.values[index] == dealsTab,
+                  onTap: () async {
+                    return ref
+                        .read(asyncSettingsProvider.notifier)
+                        .setDealsTab(category)
+                        .then(
+                          (value) => context.pop(),
+                        );
+                  },
+                  title: Text(
+                    dealCategoryLabels[category]?['title'] ?? 'Unknown',
+                    style: context.textStyles.titleMedium.copyWith(
+                      color: context.colors.scheme.onPrimaryContainer,
+                    ),
                   ),
-                ),
-                subtitle: Text(
-                  dealCategoryLabels[category]?['subtitle'] ?? 'Unknown',
-                  style: context.textStyles.bodySmall.copyWith(
-                    color: context.colors.scheme.onPrimaryContainer,
+                  subtitle: Text(
+                    dealCategoryLabels[category]?['subtitle'] ?? 'Unknown',
+                    style: context.textStyles.bodySmall.copyWith(
+                      color: context.colors.scheme.onPrimaryContainer,
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -17,7 +17,7 @@ class PriceNew extends ConsumerWidget {
 
     if (price == null) {
       return Text(
-        'No prices are available.',
+        'No prices available.',
         style: TextStyle(color: context.colors.disabled),
       );
     }
@@ -27,7 +27,6 @@ class PriceNew extends ConsumerWidget {
         Text(
           price.price.formattedPrice,
           style: context.themes.text.labelLarge?.copyWith(
-            fontWeight: FontWeight.bold,
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -38,7 +37,6 @@ class PriceNew extends ConsumerWidget {
           child: Text(
             price.shop.name,
             style: context.themes.text.labelLarge?.copyWith(
-              fontWeight: FontWeight.bold,
               overflow: TextOverflow.ellipsis,
             ),
           ),
