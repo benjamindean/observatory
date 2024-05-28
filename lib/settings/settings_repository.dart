@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -212,11 +213,15 @@ class SettingsRepository {
     );
   }
 
-  bool getWaitlistNotifications() {
+  Future<bool> getWaitlistNotifications() async {
+    final bool isEnabledOnSystem =
+        await AwesomeNotifications().isNotificationAllowed();
+
     return settingsBox.get(
-      PREF_WAITLIST_NOTIFICATIONS,
-      defaultValue: false,
-    );
+          PREF_WAITLIST_NOTIFICATIONS,
+          defaultValue: false,
+        ) &&
+        isEnabledOnSystem;
   }
 
   Future<void> setWaitlistNotifications(bool isEnabled) async {

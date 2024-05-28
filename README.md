@@ -13,19 +13,21 @@ Observatory is the essential app for tracking PC game prices and discounts exclu
 ## Screenshots
 
 <p align="middle">
-  <img src="./screenshots/ios/iPhone 8 Plus_deals_page.png" width="24%" />
-  <img src="./screenshots/ios/iPhone 8 Plus_deal_page.png" width="24%" />
-  <img src="./screenshots/ios/iPhone 8 Plus_waitlist_page.png" width="24%" />
-  <img src="./screenshots/ios/iPhone 8 Plus_search_page.png" width="24%" />
+  <img src="./screenshots/ios/iPhone 14 Pro Max_deals_page.png" width="24%" />
+  <img src="./screenshots/ios/iPhone 14 Pro Max_deal_page.png" width="24%" />
+  <img src="./screenshots/ios/iPhone 14 Pro Max_waitlist_page.png" width="24%" />
+  <img src="./screenshots/ios/iPhone 14 Pro Max_search_page.png" width="24%" />
 </p>
 
 ## Features
 
 - Track discounts from 30+ legitimate resellers.
 - Add games to your waitlist.
+- Get notifications when your waitlisted games go on sale.
 - Import your wishlist from Steam.
 - Search games.
 - View store-specific coupons if available.
+- Select from 30+ color schemes to customize the app's appearance.
 
 ## FAQ
 
@@ -37,6 +39,9 @@ Observatory is the essential app for tracking PC game prices and discounts exclu
 
 **Q:** Will these keys get my Steam account blocked?  
 **A:** No, all the stores within the app are legitimate key resellers, so there should be no "grey" keys whatsoever.
+
+**Q:** I enabled notifications, but I'm not receiving them. What's wrong?
+**A:** Observatory doesn't use push notifications; it utilizes local notifications. For notifications to function, the app needs to be in a suspended state. If it's terminated (removed from your recent app list), background operations cease. If you want to manually check for recently discounted games, select the **Discount Date** filter on the Waitlist page.
 
 ## Contributing
 

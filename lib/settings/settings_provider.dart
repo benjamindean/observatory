@@ -30,7 +30,7 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
       showHeaders: repository.getShowHeaders(),
       stores: stores,
       dealsTab: repository.getDealsTab(),
-      waitlistNotifications: repository.getWaitlistNotifications(),
+      waitlistNotifications: await repository.getWaitlistNotifications(),
       waitlistSorting: repository.getWaitlistSorting(),
       waitlistSortingDirection: repository.getWaitlistSortingDirection(),
       dealCardType: repository.getDealCardType(),

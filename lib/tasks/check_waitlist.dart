@@ -52,7 +52,10 @@ Future<List<Deal>> getNewDiscountedDeals() async {
 }
 
 Future<bool> checkWaitlistTask() async {
-  if (!GetIt.I.get<SettingsRepository>().getWaitlistNotifications()) {
+  final bool isEnabled =
+      await GetIt.I.get<SettingsRepository>().getWaitlistNotifications();
+
+  if (!isEnabled) {
     return false;
   }
 
