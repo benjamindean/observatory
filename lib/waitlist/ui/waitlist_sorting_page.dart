@@ -48,13 +48,14 @@ class WaitlistSortingPage extends ConsumerWidget {
               itemCount: WaitlistSorting.values.length,
               itemBuilder: (context, index) {
                 final WaitlistSorting sorting = WaitlistSorting.values[index];
+                final bool isSelected = sorting == waitlistSorting;
 
                 return ListTile(
                   key: ValueKey('waitlist_sorting_${sorting.name}'),
                   contentPadding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
-                  selectedTileColor: context.colors.scheme.primaryContainer,
-                  selectedColor: context.colors.scheme.onPrimaryContainer,
-                  selected: sorting == waitlistSorting,
+                  selectedTileColor: context.colors.scheme.secondaryContainer,
+                  selectedColor: context.colors.scheme.onSecondaryContainer,
+                  selected: isSelected,
                   onTap: () async {
                     ref
                         .read(asyncSettingsProvider.notifier)
@@ -74,8 +75,9 @@ class WaitlistSortingPage extends ConsumerWidget {
                   title: Text(
                     waitlistSortingStrings[sorting]?['title'] ?? 'Price',
                     style: context.textStyles.titleMedium.copyWith(
-                      color: context.colors.scheme.onPrimaryContainer,
-                    ),
+                        color: isSelected
+                            ? context.colors.scheme.onSecondaryContainer
+                            : context.colors.scheme.onSurface),
                   ),
                   trailing: Builder(
                     builder: (context) {

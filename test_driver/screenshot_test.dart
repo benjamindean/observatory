@@ -93,6 +93,12 @@ void main() async {
   });
 
   test('Change Theme', () async {
+    final List<String> schemes = [
+      'color_scheme_blue',
+      'color_scheme_sakura',
+      'color_scheme_gold'
+    ];
+
     await driver.tap(find.byTooltip('Go to Settings'));
     await driver.waitFor(find.text('Appearance'));
     await driver.tap(find.byValueKey('theme_togge_light'));
@@ -100,5 +106,22 @@ void main() async {
     await driver.waitFor(find.byValueKey('waitlist_scroll_view'));
 
     await takeScreenshot('waitlist_page_light');
+
+    for (String scheme in schemes) {
+      await driver.tap(find.byTooltip('Go to Settings'));
+      await driver.waitFor(find.text('Appearance'));
+      await driver.tap(find.byValueKey('theme_togge_dark'));
+
+      await driver.scrollUntilVisible(
+        find.byValueKey('color_scheme_list'),
+        find.byValueKey(scheme),
+      );
+
+      await driver.tap(find.byValueKey(scheme));
+      await driver.tap(find.pageBack());
+      await driver.waitFor(find.byValueKey('waitlist_scroll_view'));
+
+      await takeScreenshot('waitlist_page_$scheme');
+    }
   });
 }

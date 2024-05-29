@@ -24,8 +24,8 @@ class RegionSelect extends ConsumerWidget {
             itemCount: regions.length,
             itemBuilder: (context, index) {
               return ListTile(
-                selectedTileColor: context.colors.scheme.primaryContainer,
-                selectedColor: context.colors.scheme.onPrimaryContainer,
+                selectedTileColor: context.colors.scheme.secondaryContainer,
+                selectedColor: context.colors.scheme.onSecondaryContainer,
                 title: Row(
                   children: [
                     Padding(

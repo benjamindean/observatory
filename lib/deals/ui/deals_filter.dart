@@ -42,12 +42,13 @@ class DealsFilter extends ConsumerWidget {
               itemCount: DealCategory.values.length,
               itemBuilder: (context, index) {
                 final DealCategory category = DealCategory.values[index];
+                final bool isSelected = DealCategory.values[index] == dealsTab;
 
                 return ListTile(
                   key: ValueKey('deals_filter_${category.name}'),
-                  selectedTileColor: context.colors.scheme.primaryContainer,
-                  selectedColor: context.colors.scheme.onPrimaryContainer,
-                  selected: DealCategory.values[index] == dealsTab,
+                  selectedTileColor: context.colors.scheme.secondaryContainer,
+                  selectedColor: context.colors.scheme.onSecondaryContainer,
+                  selected: isSelected,
                   onTap: () async {
                     return ref
                         .read(asyncSettingsProvider.notifier)
@@ -59,13 +60,17 @@ class DealsFilter extends ConsumerWidget {
                   title: Text(
                     dealCategoryLabels[category]?['title'] ?? 'Unknown',
                     style: context.textStyles.titleMedium.copyWith(
-                      color: context.colors.scheme.onPrimaryContainer,
+                      color: isSelected
+                          ? context.colors.scheme.onSecondaryContainer
+                          : context.colors.scheme.onSurface,
                     ),
                   ),
                   subtitle: Text(
                     dealCategoryLabels[category]?['subtitle'] ?? 'Unknown',
                     style: context.textStyles.bodySmall.copyWith(
-                      color: context.colors.scheme.onPrimaryContainer,
+                      color: isSelected
+                          ? context.colors.scheme.onSecondaryContainer
+                          : context.colors.scheme.onSurface,
                     ),
                   ),
                 );
