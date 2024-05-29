@@ -15,15 +15,15 @@ class PriceCut extends StatelessWidget {
     final HSLColor color = HSLColor.fromColor(primary);
 
     if (1 <= cut && cut <= 10) {
-      return color.withSaturation(0.2).toColor();
-    }
-
-    if (11 <= cut && cut <= 50) {
       return color.withSaturation(0.4).toColor();
     }
 
-    if (51 <= cut && cut <= 80) {
+    if (11 <= cut && cut <= 50) {
       return color.withSaturation(0.6).toColor();
+    }
+
+    if (51 <= cut && cut <= 80) {
+      return color.withSaturation(0.8).toColor();
     }
 
     return color.withSaturation(1.0).toColor();
