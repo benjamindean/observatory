@@ -1,4 +1,5 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,6 +10,24 @@ class PriceCut extends StatelessWidget {
     super.key,
     this.priceCut = 0,
   });
+
+  Color getPriceColor(int cut, Color primary) {
+    final HSLColor color = HSLColor.fromColor(primary);
+
+    if (1 <= cut && cut <= 10) {
+      return color.withSaturation(0.2).toColor();
+    }
+
+    if (11 <= cut && cut <= 50) {
+      return color.withSaturation(0.4).toColor();
+    }
+
+    if (51 <= cut && cut <= 80) {
+      return color.withSaturation(0.6).toColor();
+    }
+
+    return color.withSaturation(1.0).toColor();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +74,10 @@ class PriceCut extends StatelessWidget {
       );
     }
 
-    final Color highlightColor = context.colors.scheme.primary
-        .withGreen(160 - priceCutInt)
-        .withBlue(160 - priceCutInt);
+    final Color highlightColor = getPriceColor(
+      priceCutInt,
+      context.colors.scheme.primary.darken(15),
+    );
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
