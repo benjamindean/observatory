@@ -77,8 +77,11 @@ class SteamImportListTile extends ConsumerWidget {
                   return ObservatorySnackBar.show(
                     context,
                     icon: Icons.error,
-                    content: const Text(
+                    content: Text(
                       'There was an error importing your wishlist. Please check if your Steam profile is public and try again.',
+                      style: context.themes.snackBar.contentTextStyle?.copyWith(
+                        color: context.colors.scheme.onInverseSurface,
+                      ),
                     ),
                   );
                 }

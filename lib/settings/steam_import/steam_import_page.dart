@@ -73,21 +73,40 @@ class SteamImportPage extends ConsumerWidget {
                                       content: RichText(
                                         text: TextSpan(
                                           style: context
-                                              .themes.snackBar.contentTextStyle,
+                                              .themes.snackBar.contentTextStyle
+                                              ?.copyWith(
+                                            color: context
+                                                .colors.scheme.onInverseSurface,
+                                          ),
                                           children: [
-                                            const TextSpan(
-                                                text: 'Successfully imported '),
+                                            TextSpan(
+                                              text: 'Successfully imported ',
+                                              style: context.themes.snackBar
+                                                  .contentTextStyle
+                                                  ?.copyWith(
+                                                color: context.colors.scheme
+                                                    .onInverseSurface,
+                                              ),
+                                            ),
                                             TextSpan(
                                               text: result.length.toString(),
                                               style: context.themes.snackBar
                                                   .contentTextStyle
                                                   ?.copyWith(
                                                 fontWeight: FontWeight.bold,
+                                                color: context.colors.scheme
+                                                    .onInverseSurface,
                                               ),
                                             ),
-                                            const TextSpan(
-                                                text:
-                                                    ' games to your waitlist!'),
+                                            TextSpan(
+                                              text: ' games to your waitlist!',
+                                              style: context.themes.snackBar
+                                                  .contentTextStyle
+                                                  ?.copyWith(
+                                                color: context.colors.scheme
+                                                    .onInverseSurface,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),

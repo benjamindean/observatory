@@ -84,11 +84,14 @@ void addDealToWaitlist({
                 text: deal.titleParsed,
                 style: context.themes.snackBar.contentTextStyle?.copyWith(
                   fontWeight: FontWeight.bold,
+                  color: context.colors.scheme.onInverseSurface,
                 ),
               ),
               TextSpan(
                 text: ' has been removed from your waitlist.',
-                style: context.themes.snackBar.contentTextStyle,
+                style: context.themes.snackBar.contentTextStyle?.copyWith(
+                  color: context.colors.scheme.onInverseSurface,
+                ),
               ),
             ],
           ),
@@ -140,11 +143,14 @@ void removeDealFromWaitlist({
                 text: deal.titleParsed,
                 style: context.themes.snackBar.contentTextStyle?.copyWith(
                   fontWeight: FontWeight.bold,
+                  color: context.colors.scheme.onInverseSurface,
                 ),
               ),
               TextSpan(
                 text: ' has been added to your waitlist.',
-                style: context.themes.snackBar.contentTextStyle,
+                style: context.themes.snackBar.contentTextStyle?.copyWith(
+                  color: context.colors.scheme.onInverseSurface,
+                ),
               ),
             ],
           ),
