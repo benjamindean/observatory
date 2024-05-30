@@ -28,17 +28,22 @@ class VoucherListTile extends StatelessWidget {
                   children: <TextSpan>[
                     TextSpan(
                       text: 'Voucher ',
-                      style: context.themes.snackBar.contentTextStyle,
+                      style: context.themes.snackBar.contentTextStyle?.copyWith(
+                        color: context.colors.scheme.onInverseSurface,
+                      ),
                     ),
                     TextSpan(
                       text: price.voucher ?? 'None',
                       style: context.themes.snackBar.contentTextStyle?.copyWith(
                         fontWeight: FontWeight.bold,
+                        color: context.colors.scheme.onInverseSurface,
                       ),
                     ),
                     TextSpan(
                       text: ' copied to clipboard.',
-                      style: context.themes.snackBar.contentTextStyle,
+                      style: context.themes.snackBar.contentTextStyle?.copyWith(
+                        color: context.colors.scheme.onInverseSurface,
+                      ),
                     ),
                   ],
                 ),

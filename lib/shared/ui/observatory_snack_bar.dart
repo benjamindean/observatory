@@ -1,5 +1,6 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:observatory/shared/ui/constants.dart';
 
 class ObservatorySnackBar {
   final Widget content;
@@ -21,16 +22,16 @@ class ObservatorySnackBar {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        elevation: 0,
+        elevation: CARD_ELEVATION,
         margin: const EdgeInsets.all(12.0),
-        backgroundColor: context.colors.scheme.primary,
+        backgroundColor: context.colors.scheme.inverseSurface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
         behavior: SnackBarBehavior.floating,
         action: onAction != null
             ? SnackBarAction(
-                textColor: context.colors.scheme.onPrimary,
+                textColor: context.colors.scheme.inversePrimary,
                 label: 'Undo',
                 onPressed: onAction,
               )
@@ -42,7 +43,7 @@ class ObservatorySnackBar {
                 padding: const EdgeInsets.only(right: 12.0),
                 child: Icon(
                   icon,
-                  color: context.themes.snackBar.contentTextStyle?.color,
+                  color: context.colors.scheme.onInverseSurface,
                 ),
               ),
             Expanded(

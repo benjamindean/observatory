@@ -91,7 +91,11 @@ class SteamImportForm extends ConsumerWidget {
                                 content: RichText(
                                   text: TextSpan(
                                     style: context
-                                        .themes.snackBar.contentTextStyle,
+                                        .themes.snackBar.contentTextStyle
+                                        ?.copyWith(
+                                      color: context
+                                          .colors.scheme.onInverseSurface,
+                                    ),
                                     children: [
                                       const TextSpan(text: 'Found '),
                                       TextSpan(
@@ -100,18 +104,35 @@ class SteamImportForm extends ConsumerWidget {
                                             .themes.snackBar.contentTextStyle
                                             ?.copyWith(
                                           fontWeight: FontWeight.bold,
+                                          color: context
+                                              .colors.scheme.onInverseSurface,
                                         ),
                                       ),
-                                      const TextSpan(
-                                          text: ' games in your wishlist. '),
-                                      const TextSpan(
+                                      TextSpan(
+                                        text: ' games in your wishlist. ',
+                                        style: context
+                                            .themes.snackBar.contentTextStyle
+                                            ?.copyWith(
+                                          color: context
+                                              .colors.scheme.onInverseSurface,
+                                        ),
+                                      ),
+                                      TextSpan(
                                         text:
                                             'Please verify that everything is correct and then press ',
+                                        style: context
+                                            .themes.snackBar.contentTextStyle
+                                            ?.copyWith(
+                                          color: context
+                                              .colors.scheme.onInverseSurface,
+                                        ),
                                       ),
-                                      const TextSpan(
+                                      TextSpan(
                                         text: 'Import.',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
+                                          color: context
+                                              .colors.scheme.onInverseSurface,
                                         ),
                                       ),
                                     ],
