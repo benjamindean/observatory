@@ -57,7 +57,7 @@ class PriceCut extends StatelessWidget {
     }
 
     final Color highlightColor = HSLColor.fromColor(
-      context.colors.scheme.primary.darken(15),
+      context.colors.scheme.primary.darken(10),
     ).withSaturation((priceCutInt / 100).clamp(0.4, 1.0)).toColor();
 
     return Row(
