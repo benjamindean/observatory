@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
 import 'package:observatory/settings/steam_import/steam_import_state.dart';
+import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class SteamImportForm extends ConsumerWidget {
@@ -85,37 +86,35 @@ class SteamImportForm extends ConsumerWidget {
                                 return;
                               }
 
-                              ScaffoldMessenger.of(context).clearSnackBars();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: RichText(
-                                    text: TextSpan(
-                                      style: context
-                                          .themes.snackBar.contentTextStyle,
-                                      children: [
-                                        const TextSpan(text: 'Found '),
-                                        TextSpan(
-                                          text: result.length.toString(),
-                                          style: context
-                                              .themes.snackBar.contentTextStyle
-                                              ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                              return ObservatorySnackBar.show(
+                                context,
+                                content: RichText(
+                                  text: TextSpan(
+                                    style: context
+                                        .themes.snackBar.contentTextStyle,
+                                    children: [
+                                      const TextSpan(text: 'Found '),
+                                      TextSpan(
+                                        text: result.length.toString(),
+                                        style: context
+                                            .themes.snackBar.contentTextStyle
+                                            ?.copyWith(
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        const TextSpan(
-                                            text: ' games in your wishlist. '),
-                                        const TextSpan(
-                                          text:
-                                              'Please verify that everything is correct and then press ',
+                                      ),
+                                      const TextSpan(
+                                          text: ' games in your wishlist. '),
+                                      const TextSpan(
+                                        text:
+                                            'Please verify that everything is correct and then press ',
+                                      ),
+                                      const TextSpan(
+                                        text: 'Import.',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        const TextSpan(
-                                          text: 'Import.',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               );

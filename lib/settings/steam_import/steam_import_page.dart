@@ -8,6 +8,7 @@ import 'package:observatory/settings/steam_import/ui/steam_import_form.dart';
 import 'package:observatory/settings/steam_import/ui/unfinished_import_dialog.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/observatory_back_button.dart';
+import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 
@@ -67,12 +68,27 @@ class SteamImportPage extends ConsumerWidget {
                                       return;
                                     }
 
-                                    ScaffoldMessenger.of(context)
-                                        .clearSnackBars();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: ImportSuccessSnackBarContent(
-                                          count: result.length.toString(),
+                                    return ObservatorySnackBar.show(
+                                      context,
+                                      content: RichText(
+                                        text: TextSpan(
+                                          style: context
+                                              .themes.snackBar.contentTextStyle,
+                                          children: [
+                                            const TextSpan(
+                                                text: 'Successfully imported '),
+                                            TextSpan(
+                                              text: result.length.toString(),
+                                              style: context.themes.snackBar
+                                                  .contentTextStyle
+                                                  ?.copyWith(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const TextSpan(
+                                                text:
+                                                    ' games to your waitlist!'),
+                                          ],
                                         ),
                                       ),
                                     );
@@ -180,34 +196,6 @@ class SteamImportPage extends ConsumerWidget {
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class ImportSuccessSnackBarContent extends StatelessWidget {
-  final String count;
-
-  const ImportSuccessSnackBarContent({
-    super.key,
-    required this.count,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        style: context.themes.snackBar.contentTextStyle,
-        children: [
-          const TextSpan(text: 'Successfully imported '),
-          TextSpan(
-            text: count,
-            style: context.themes.snackBar.contentTextStyle?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const TextSpan(text: ' games to your waitlist!'),
         ],
       ),
     );

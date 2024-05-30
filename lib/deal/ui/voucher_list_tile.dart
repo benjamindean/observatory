@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/price.dart';
+import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 
 class VoucherListTile extends StatelessWidget {
   const VoucherListTile({
@@ -20,28 +21,26 @@ class VoucherListTile extends StatelessWidget {
         onTap: () async {
           await Clipboard.setData(ClipboardData(text: price.voucher ?? ''))
               .then(
-            (value) => ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Voucher ',
-                        style: context.themes.snackBar.contentTextStyle,
+            (value) => ObservatorySnackBar.show(
+              context,
+              content: RichText(
+                text: TextSpan(
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'Voucher ',
+                      style: context.themes.snackBar.contentTextStyle,
+                    ),
+                    TextSpan(
+                      text: price.voucher ?? 'None',
+                      style: context.themes.snackBar.contentTextStyle?.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
-                      TextSpan(
-                        text: price.voucher ?? 'None',
-                        style:
-                            context.themes.snackBar.contentTextStyle?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextSpan(
-                        text: ' copied to clipboard.',
-                        style: context.themes.snackBar.contentTextStyle,
-                      ),
-                    ],
-                  ),
+                    ),
+                    TextSpan(
+                      text: ' copied to clipboard.',
+                      style: context.themes.snackBar.contentTextStyle,
+                    ),
+                  ],
                 ),
               ),
             ),

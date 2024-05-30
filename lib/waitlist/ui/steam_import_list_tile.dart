@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
 import 'package:observatory/settings/steam_import/steam_import_state.dart';
+import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class SteamImportListTile extends ConsumerWidget {
@@ -73,25 +74,11 @@ class SteamImportListTile extends ConsumerWidget {
 
                   context.pop();
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 16.0),
-                            child: Icon(
-                              Icons.error,
-                              color: context
-                                  .themes.snackBar.contentTextStyle?.color,
-                            ),
-                          ),
-                          const Expanded(
-                            child: Text(
-                              'There was an error importing your wishlist. Please check if your Steam profile is public and try again.',
-                            ),
-                          )
-                        ],
-                      ),
+                  return ObservatorySnackBar.show(
+                    context,
+                    icon: Icons.error,
+                    content: const Text(
+                      'There was an error importing your wishlist. Please check if your Steam profile is public and try again.',
                     ),
                   );
                 }

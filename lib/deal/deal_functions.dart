@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/price.dart';
+import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/waitlist/waitlist_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -68,45 +69,27 @@ void addDealToWaitlist({
         return;
       }
 
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          action: SnackBarAction(
-            label: 'Undo',
-            onPressed: () async {
-              await ref
-                  .watch(asyncWaitListProvider.notifier)
-                  .addToWaitlist(updatedDeal);
-            },
-          ),
-          content: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: Icon(
-                  Icons.remove_circle,
-                  color: context.themes.snackBar.contentTextStyle?.color,
+      return ObservatorySnackBar.show(
+        context,
+        onAction: () async {
+          await ref
+              .watch(asyncWaitListProvider.notifier)
+              .addToWaitlist(updatedDeal);
+        },
+        icon: Icons.remove_circle,
+        content: RichText(
+          text: TextSpan(
+            children: <TextSpan>[
+              TextSpan(
+                text: deal.titleParsed,
+                style: context.themes.snackBar.contentTextStyle?.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Flexible(
-                child: RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: deal.titleParsed,
-                        style:
-                            context.themes.snackBar.contentTextStyle?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextSpan(
-                        text: ' has been removed from your waitlist.',
-                        style: context.themes.snackBar.contentTextStyle,
-                      ),
-                    ],
-                  ),
-                ),
-              )
+              TextSpan(
+                text: ' has been removed from your waitlist.',
+                style: context.themes.snackBar.contentTextStyle,
+              ),
             ],
           ),
         ),
@@ -142,45 +125,27 @@ void removeDealFromWaitlist({
         return;
       }
 
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          action: SnackBarAction(
-            label: 'Undo',
-            onPressed: () async {
-              await ref
-                  .watch(asyncWaitListProvider.notifier)
-                  .removeFromWaitList(updatedDeal);
-            },
-          ),
-          content: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: Icon(
-                  Icons.check_circle,
-                  color: context.themes.snackBar.contentTextStyle?.color,
+      return ObservatorySnackBar.show(
+        context,
+        onAction: () async {
+          await ref
+              .watch(asyncWaitListProvider.notifier)
+              .removeFromWaitList(updatedDeal);
+        },
+        icon: Icons.add_circle_outlined,
+        content: RichText(
+          text: TextSpan(
+            children: <TextSpan>[
+              TextSpan(
+                text: deal.titleParsed,
+                style: context.themes.snackBar.contentTextStyle?.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Flexible(
-                child: RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: deal.titleParsed,
-                        style:
-                            context.themes.snackBar.contentTextStyle?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextSpan(
-                        text: ' has been added to your waitlist.',
-                        style: context.themes.snackBar.contentTextStyle,
-                      ),
-                    ],
-                  ),
-                ),
-              )
+              TextSpan(
+                text: ' has been added to your waitlist.',
+                style: context.themes.snackBar.contentTextStyle,
+              ),
             ],
           ),
         ),
