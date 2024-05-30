@@ -2,6 +2,12 @@ import 'package:emulators/emulators.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
+final List<String> testColorSchemes = [
+  'color_scheme_blue',
+  'color_scheme_sakura',
+  'color_scheme_gold'
+];
+
 void main() async {
   final FlutterDriver driver = await FlutterDriver.connect();
   final Emulators emulators = await Emulators.build();
@@ -26,13 +32,31 @@ void main() async {
     await screenshot.capture(identifier);
   }
 
-  test('Deals Page', () async {
+  toggleTheme(String theme) async {
+    await driver.tap(find.byTooltip('Go to Settings'));
+    await driver.waitFor(find.text('Appearance'));
+    await driver.tap(find.byValueKey('theme_togge_$theme'));
+    await driver.tap(find.pageBack());
+  }
+
+  toggleColorScheme(String scheme) async {
     await driver.tap(find.byTooltip('Go to Settings'));
     await driver.waitFor(find.text('Appearance'));
     await driver.tap(find.byValueKey('theme_togge_dark'));
-    await driver.tap(find.pageBack());
-    await driver.waitFor(find.byValueKey('deals_scroll_view'));
 
+    await driver.scrollUntilVisible(
+      find.byValueKey('color_scheme_list'),
+      find.byValueKey(scheme),
+      dxScroll: -300,
+      timeout: const Duration(minutes: 1),
+    );
+
+    await driver.tap(find.byValueKey(scheme));
+    await driver.tap(find.pageBack());
+  }
+
+  test('Deals Page', () async {
+    await toggleTheme('dark');
     await takeScreenshot('deals_page');
 
     await driver.tap(find.byValueKey('navigation_deals'));
@@ -49,7 +73,6 @@ void main() async {
 
   test('Waitlist Page', () async {
     await driver.tap(find.byValueKey('navigation_waitlist'));
-    await driver.waitFor(find.byValueKey('waitlist_scroll_view'));
 
     await takeScreenshot('waitlist_page');
 
@@ -93,32 +116,22 @@ void main() async {
   });
 
   test('Change Theme', () async {
-    final List<String> schemes = [
-      'color_scheme_blue',
-      'color_scheme_sakura',
-      'color_scheme_gold'
-    ];
+    await takeScreenshot('waitlist_page');
 
-    await driver.tap(find.byTooltip('Go to Settings'));
-    await driver.waitFor(find.text('Appearance'));
-    await driver.tap(find.byValueKey('theme_togge_light'));
-    await driver.tap(find.pageBack());
-    await driver.waitFor(find.byValueKey('waitlist_scroll_view'));
+    await toggleTheme('light');
 
     await takeScreenshot('waitlist_page_light');
 
-    for (String scheme in schemes) {
-      await driver.tap(find.byTooltip('Go to Settings'));
-      await driver.waitFor(find.text('Appearance'));
-      await driver.tap(find.byValueKey('theme_togge_dark'));
+    await driver.tap(find.byValueKey('navigation_deals'));
 
-      await driver.scrollUntilVisible(
-        find.byValueKey('color_scheme_list'),
-        find.byValueKey(scheme),
-      );
+    await takeScreenshot('deals_page_light');
 
-      await driver.tap(find.byValueKey(scheme));
-      await driver.tap(find.pageBack());
+    await driver.tap(find.byValueKey('navigation_waitlist'));
+
+    await toggleTheme('dark');
+
+    for (String scheme in testColorSchemes) {
+      await toggleColorScheme(scheme);
       await driver.waitFor(find.byValueKey('waitlist_scroll_view'));
 
       await takeScreenshot('waitlist_page_$scheme');
