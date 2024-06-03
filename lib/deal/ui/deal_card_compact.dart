@@ -105,7 +105,6 @@ class DealCardCompact extends ConsumerWidget {
                       height: double.infinity,
                       child: HeaderImage(
                         url: deal.headerImageURL,
-                        id: deal.id,
                         isCompact: true,
                       ),
                     );

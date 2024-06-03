@@ -51,6 +51,8 @@ dependencies:
     git:
         url: https://github.com/fluttercommunity/flutter_workmanager.git
         ref: b783000
+  photo_view: ^0.15.0
+  cloud_functions: ^4.7.6
 
 dependency_overrides:
   intl: any

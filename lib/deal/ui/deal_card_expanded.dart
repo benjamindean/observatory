@@ -62,7 +62,6 @@ class DealCardExpanded extends ConsumerWidget {
                   aspectRatio: IMAGE_WIDTH / IMAGE_HEIGHT,
                   child: HeaderImage(
                     url: deal.headerImageURL,
-                    id: deal.id,
                   ),
                 );
               },

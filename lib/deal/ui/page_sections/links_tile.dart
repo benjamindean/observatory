@@ -1,7 +1,7 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:observatory/deal/ui/search_on_tile.dart';
+import 'package:observatory/deal/ui/page_sections/search_on_tile.dart';
 import 'package:observatory/shared/models/deal.dart';
 
 class LinksTile extends StatelessWidget {
@@ -17,10 +17,13 @@ class LinksTile extends StatelessWidget {
     return ListTileTheme(
       dense: true,
       child: ExpansionTile(
-        title: Text(
-          'Links',
-          style: context.themes.text.labelLarge?.copyWith(
-            color: context.colors.hint,
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 2.0),
+          child: Text(
+            'Links',
+            style: context.themes.text.labelLarge?.copyWith(
+              color: context.colors.hint,
+            ),
           ),
         ),
         subtitle: Text(

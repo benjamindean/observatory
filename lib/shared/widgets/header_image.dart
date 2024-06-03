@@ -4,14 +4,12 @@ import 'package:observatory/shared/widgets/image_error.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class HeaderImage extends StatelessWidget {
-  final String id;
   final String? url;
   final bool isCompact;
 
   const HeaderImage({
     super.key,
     this.url,
-    required this.id,
     this.isCompact = false,
   });
 

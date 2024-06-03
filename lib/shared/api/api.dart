@@ -1,15 +1,18 @@
 import 'dart:convert';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/api/utils.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/models/igdb/igdb_game.dart';
 import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';
@@ -405,6 +408,54 @@ class API {
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch steam ID mappings',
+        error: error,
+      );
+
+      FirebaseCrashlytics.instance.recordError(
+        error,
+        stackTrace,
+      );
+
+      return null;
+    }
+  }
+
+  Future<List<IGDBGame>?> searchIGDB({
+    required String title,
+  }) async {
+    try {
+      final tokenData =
+          await FirebaseFunctions.instance.httpsCallable('getIGDBToken').call();
+
+      final Uri url = Uri.https('api.igdb.com', '/v4/search');
+
+      final response = await dio.post(
+        options: Options(
+          headers: {
+            'Client-ID': GetIt.I<Secret>().igdbClientId,
+            'Authorization': 'Bearer ${tokenData.data['token']}',
+          },
+        ),
+        url.toString(),
+        data: [
+          'search "$title";',
+          'where game != null;',
+          'fields',
+          'game.name,',
+          'game.slug,',
+          'game.summary,',
+          'game.storyline,',
+          'game.url,',
+          'game.screenshots.*,',
+          'game.cover.*,',
+          'game.platforms.*;',
+        ].join(' '),
+      );
+
+      return Parsers.igdbSearchResult(response);
+    } catch (error, stackTrace) {
+      Logger().e(
+        'Failed to fetch IGDB search result',
         error: error,
       );
 

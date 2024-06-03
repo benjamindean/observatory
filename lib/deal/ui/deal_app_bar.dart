@@ -57,7 +57,6 @@ class DealAppBar extends ConsumerWidget {
                 ),
                 child: HeaderImage(
                   url: deal.headerImageURL,
-                  id: deal.id,
                 ),
               )
             : null,

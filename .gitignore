@@ -245,6 +245,10 @@ GoogleService-Info.plist
 firebase_options.dart
 firebase_app_id_file.json
 firebase.json
+.firebaserc
+firestore.indexes.json
+firestore.rules
+functions/
 
 # Plugins (already resolved through pubspec.yaml)
 .flutter-plugins

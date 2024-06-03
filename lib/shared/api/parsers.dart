@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:observatory/shared/models/chart_entry.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/models/igdb/igdb_game.dart';
 import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';
@@ -92,6 +93,23 @@ class Parsers {
     return [...specials, ...featuredWin, ...featuredMac, ...featuredLinux]
         .map((result) => SteamFeaturedItem.fromJson(result))
         .toSet()
+        .toList();
+  }
+
+  static List<IGDBGame>? igdbSearchResult(contents) {
+    final dynamic rawResponse = json.decode(contents.toString());
+
+    if (rawResponse == null || rawResponse.isEmpty) {
+      return null;
+    }
+
+    return List.from(rawResponse)
+        .map(
+          (result) => result['game'] != null
+              ? IGDBGame.fromJson(result['game'])
+              : const IGDBGame(id: -1),
+        )
+        .where((element) => element.id != -1)
         .toList();
   }
 }

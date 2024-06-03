@@ -28,13 +28,17 @@ class BundlesTile extends ConsumerWidget {
     return IgnorePointer(
       ignoring: !isEnabled,
       child: ListTileTheme(
-        dense: true,
         child: ExpansionTile(
           trailing: isEnabled ? null : const SizedBox.shrink(),
-          title: Text(
-            'Bundles',
-            style: context.themes.text.labelLarge?.copyWith(
-              color: context.colors.hint,
+          title: Padding(
+            padding: const EdgeInsets.only(
+              bottom: 2.0,
+            ),
+            child: Text(
+              'Bundles',
+              style: context.themes.text.labelLarge?.copyWith(
+                color: context.colors.hint,
+              ),
             ),
           ),
           subtitle: AnimatedSwitcher(
