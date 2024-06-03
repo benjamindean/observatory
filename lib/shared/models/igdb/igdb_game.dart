@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hive_flutter/adapters.dart';
 
 part 'igdb_game.freezed.dart';
 part 'igdb_game.g.dart';
@@ -88,4 +89,18 @@ class IGDBCover with _$IGDBCover {
 
   factory IGDBCover.fromJson(Map<String, Object?> json) =>
       _$IGDBCoverFromJson(json);
+}
+
+@freezed
+@HiveType(typeId: 7)
+class IGDBAccessToken with _$IGDBAccessToken {
+  const IGDBAccessToken._();
+
+  const factory IGDBAccessToken({
+    @HiveField(0) String? token,
+    @HiveField(1) @Default(0) int expires_at,
+  }) = _IGDBAccessToken;
+
+  factory IGDBAccessToken.fromJson(Map<String, Object?> json) =>
+      _$IGDBAccessTokenFromJson(json);
 }

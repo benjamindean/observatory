@@ -35,35 +35,36 @@ class SscreenshotsTile extends ConsumerWidget {
         backgroundColor: Colors.transparent,
         shape: const ContinuousRectangleBorder(),
         isScrollControlled: true,
-        useSafeArea: true,
         builder: (context) {
-          return SafeArea(
-            child: PhotoViewGestureDetectorScope(
-              axis: Axis.vertical,
-              child: PhotoViewGallery.builder(
-                pageController: PageController(initialPage: index),
-                gaplessPlayback: true,
-                backgroundDecoration: BoxDecoration(
+          return PhotoViewGestureDetectorScope(
+            axis: Axis.vertical,
+            child: PhotoViewGallery.builder(
+              pageController: PageController(initialPage: index),
+              gaplessPlayback: true,
+              backgroundDecoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.8),
+              ),
+              loadingBuilder: (context, event) => Container(
+                decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.8),
                 ),
-                loadingBuilder: (context, event) => const Opacity(
-                  opacity: 0.3,
+                child: const Center(
                   child: ObservatoryProgressIndicator(
-                    size: 30,
+                    size: 40,
                   ),
                 ),
-                scrollPhysics: const BouncingScrollPhysics(),
-                builder: (context, index) {
-                  final IGDBScreenshot screenshot = screenshots[index];
-
-                  return PhotoViewGalleryPageOptions(
-                    imageProvider: CachedNetworkImageProvider(
-                      screenshot.getURL() ?? '',
-                    ),
-                  );
-                },
-                itemCount: screenshots.length,
               ),
+              scrollPhysics: const BouncingScrollPhysics(),
+              builder: (context, index) {
+                final IGDBScreenshot screenshot = screenshots[index];
+
+                return PhotoViewGalleryPageOptions(
+                  imageProvider: CachedNetworkImageProvider(
+                    screenshot.getURL() ?? '',
+                  ),
+                );
+              },
+              itemCount: screenshots.length,
             ),
           );
         },

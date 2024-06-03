@@ -3,6 +3,47 @@
 part of 'igdb_game.dart';
 
 // **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class IGDBAccessTokenAdapter extends TypeAdapter<IGDBAccessToken> {
+  @override
+  final int typeId = 7;
+
+  @override
+  IGDBAccessToken read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return IGDBAccessToken(
+      token: fields[0] as String?,
+      expires_at: fields[1] as int,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, IGDBAccessToken obj) {
+    writer
+      ..writeByte(2)
+      ..writeByte(0)
+      ..write(obj.token)
+      ..writeByte(1)
+      ..write(obj.expires_at);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is IGDBAccessTokenAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+// **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
@@ -75,4 +116,18 @@ Map<String, dynamic> _$$IGDBCoverImplToJson(_$IGDBCoverImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'url': instance.url,
+    };
+
+_$IGDBAccessTokenImpl _$$IGDBAccessTokenImplFromJson(
+        Map<String, dynamic> json) =>
+    _$IGDBAccessTokenImpl(
+      token: json['token'] as String?,
+      expires_at: (json['expires_at'] as num?)?.toInt() ?? 0,
+    );
+
+Map<String, dynamic> _$$IGDBAccessTokenImplToJson(
+        _$IGDBAccessTokenImpl instance) =>
+    <String, dynamic>{
+      'token': instance.token,
+      'expires_at': instance.expires_at,
     };

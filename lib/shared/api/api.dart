@@ -424,16 +424,14 @@ class API {
     required String title,
   }) async {
     try {
-      final tokenData =
-          await FirebaseFunctions.instance.httpsCallable('getIGDBToken').call();
-
+      final IGDBAccessToken? token = await getIGDBToken();
       final Uri url = Uri.https('api.igdb.com', '/v4/search');
 
       final response = await dio.post(
         options: Options(
           headers: {
             'Client-ID': GetIt.I<Secret>().igdbClientId,
-            'Authorization': 'Bearer ${tokenData.data['token']}',
+            'Authorization': 'Bearer ${token?.token}',
           },
         ),
         url.toString(),
@@ -466,5 +464,33 @@ class API {
 
       return null;
     }
+  }
+
+  Future<IGDBAccessToken?> getIGDBToken() async {
+    final IGDBAccessToken? cachedToken =
+        settingsReporsitory.getIGDBAccessToken();
+
+    if (cachedToken != null) {
+      final double currentDate = DateTime.now().millisecondsSinceEpoch / 1000;
+      final bool isExpired = cachedToken.expires_at < currentDate;
+
+      if (isExpired) {
+        return await getNewIGDBToken();
+      }
+
+      return cachedToken;
+    }
+
+    return await getNewIGDBToken();
+  }
+
+  Future<IGDBAccessToken?> getNewIGDBToken() async {
+    final tokenData =
+        await FirebaseFunctions.instance.httpsCallable('getIGDBToken').call();
+    final IGDBAccessToken token = IGDBAccessToken.fromJson(tokenData.data);
+
+    await settingsReporsitory.setIGDBAccessToken(token);
+
+    return token;
   }
 }

@@ -821,3 +821,169 @@ abstract class _IGDBCover extends IGDBCover {
   _$$IGDBCoverImplCopyWith<_$IGDBCoverImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+IGDBAccessToken _$IGDBAccessTokenFromJson(Map<String, dynamic> json) {
+  return _IGDBAccessToken.fromJson(json);
+}
+
+/// @nodoc
+mixin _$IGDBAccessToken {
+  @HiveField(0)
+  String? get token => throw _privateConstructorUsedError;
+  @HiveField(1)
+  int get expires_at => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $IGDBAccessTokenCopyWith<IGDBAccessToken> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $IGDBAccessTokenCopyWith<$Res> {
+  factory $IGDBAccessTokenCopyWith(
+          IGDBAccessToken value, $Res Function(IGDBAccessToken) then) =
+      _$IGDBAccessTokenCopyWithImpl<$Res, IGDBAccessToken>;
+  @useResult
+  $Res call({@HiveField(0) String? token, @HiveField(1) int expires_at});
+}
+
+/// @nodoc
+class _$IGDBAccessTokenCopyWithImpl<$Res, $Val extends IGDBAccessToken>
+    implements $IGDBAccessTokenCopyWith<$Res> {
+  _$IGDBAccessTokenCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = freezed,
+    Object? expires_at = null,
+  }) {
+    return _then(_value.copyWith(
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
+      expires_at: null == expires_at
+          ? _value.expires_at
+          : expires_at // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$IGDBAccessTokenImplCopyWith<$Res>
+    implements $IGDBAccessTokenCopyWith<$Res> {
+  factory _$$IGDBAccessTokenImplCopyWith(_$IGDBAccessTokenImpl value,
+          $Res Function(_$IGDBAccessTokenImpl) then) =
+      __$$IGDBAccessTokenImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@HiveField(0) String? token, @HiveField(1) int expires_at});
+}
+
+/// @nodoc
+class __$$IGDBAccessTokenImplCopyWithImpl<$Res>
+    extends _$IGDBAccessTokenCopyWithImpl<$Res, _$IGDBAccessTokenImpl>
+    implements _$$IGDBAccessTokenImplCopyWith<$Res> {
+  __$$IGDBAccessTokenImplCopyWithImpl(
+      _$IGDBAccessTokenImpl _value, $Res Function(_$IGDBAccessTokenImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = freezed,
+    Object? expires_at = null,
+  }) {
+    return _then(_$IGDBAccessTokenImpl(
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
+      expires_at: null == expires_at
+          ? _value.expires_at
+          : expires_at // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$IGDBAccessTokenImpl extends _IGDBAccessToken {
+  const _$IGDBAccessTokenImpl(
+      {@HiveField(0) this.token, @HiveField(1) this.expires_at = 0})
+      : super._();
+
+  factory _$IGDBAccessTokenImpl.fromJson(Map<String, dynamic> json) =>
+      _$$IGDBAccessTokenImplFromJson(json);
+
+  @override
+  @HiveField(0)
+  final String? token;
+  @override
+  @JsonKey()
+  @HiveField(1)
+  final int expires_at;
+
+  @override
+  String toString() {
+    return 'IGDBAccessToken(token: $token, expires_at: $expires_at)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$IGDBAccessTokenImpl &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.expires_at, expires_at) ||
+                other.expires_at == expires_at));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, token, expires_at);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$IGDBAccessTokenImplCopyWith<_$IGDBAccessTokenImpl> get copyWith =>
+      __$$IGDBAccessTokenImplCopyWithImpl<_$IGDBAccessTokenImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$IGDBAccessTokenImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _IGDBAccessToken extends IGDBAccessToken {
+  const factory _IGDBAccessToken(
+      {@HiveField(0) final String? token,
+      @HiveField(1) final int expires_at}) = _$IGDBAccessTokenImpl;
+  const _IGDBAccessToken._() : super._();
+
+  factory _IGDBAccessToken.fromJson(Map<String, dynamic> json) =
+      _$IGDBAccessTokenImpl.fromJson;
+
+  @override
+  @HiveField(0)
+  String? get token;
+  @override
+  @HiveField(1)
+  int get expires_at;
+  @override
+  @JsonKey(ignore: true)
+  _$$IGDBAccessTokenImplCopyWith<_$IGDBAccessTokenImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

@@ -5,6 +5,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/models/igdb/igdb_game.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/shop.dart';
@@ -77,6 +78,7 @@ class SettingsRepository {
   final String PREF_WAITLIST_SORTING_DIRECTION =
       'observatory_waitlist_sorting_direction';
   final String PREF_STEAM_USERNAME = 'observatory_steam_username';
+  final String PREF_IGDB_ACCESS_TOKEN = 'observatory_igdb_access_token';
 
   final DealCategory defaultCategory = DealCategory.steam_top_sellers;
   final WaitlistSorting defaultWaitlistSorting = WaitlistSorting.discount_date;
@@ -93,6 +95,7 @@ class SettingsRepository {
     Hive.registerAdapter(DealSourceAdapter());
     Hive.registerAdapter(DealAdapter());
     Hive.registerAdapter(ObservatoryThemeAdapter());
+    Hive.registerAdapter(IGDBAccessTokenAdapter());
 
     await Hive.openBox(SETTINGS_BOX_NAME);
     await Hive.openBox<Deal>(SAVED_DEALS_BOX_NAME);
@@ -360,5 +363,20 @@ class SettingsRepository {
 
   Future<int> clearAllRecents() async {
     return recentSearchesBox.clear();
+  }
+
+  IGDBAccessToken? getIGDBAccessToken() {
+    return settingsBox.get(PREF_IGDB_ACCESS_TOKEN);
+  }
+
+  Future<void> setIGDBAccessToken(IGDBAccessToken? accessToken) async {
+    if (accessToken == null) {
+      return;
+    }
+
+    return settingsBox.put(
+      PREF_IGDB_ACCESS_TOKEN,
+      accessToken,
+    );
   }
 }
