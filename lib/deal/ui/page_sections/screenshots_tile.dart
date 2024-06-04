@@ -60,7 +60,7 @@ class SscreenshotsTile extends ConsumerWidget {
 
                 return PhotoViewGalleryPageOptions(
                   imageProvider: CachedNetworkImageProvider(
-                    screenshot.getURL() ?? '',
+                    screenshot.getURL(size: ScreenshotSize.fullHD) ?? '',
                   ),
                 );
               },

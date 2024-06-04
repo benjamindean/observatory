@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -20,6 +19,7 @@ import 'package:observatory/shared/models/steam_featured_item.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 final Map<String, String> dealFilters = {
   'trending': 'Trending',
@@ -486,7 +486,7 @@ class API {
 
   Future<IGDBAccessToken?> getNewIGDBToken() async {
     final tokenData =
-        await FirebaseFunctions.instance.httpsCallable('getIGDBToken').call();
+        await Supabase.instance.client.functions.invoke('get-igdb-token');
     final IGDBAccessToken token = IGDBAccessToken.fromJson(tokenData.data);
 
     await settingsReporsitory.setIGDBAccessToken(token);

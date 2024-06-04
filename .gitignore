@@ -248,7 +248,7 @@ firebase.json
 .firebaserc
 firestore.indexes.json
 firestore.rules
-functions/
+supabase/
 
 # Plugins (already resolved through pubspec.yaml)
 .flutter-plugins

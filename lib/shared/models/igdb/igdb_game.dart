@@ -54,7 +54,7 @@ class IGDBScreenshot with _$IGDBScreenshot {
   }) = _IGDBScreenshot;
 
   String? getURL({
-    ScreenshotSize size = ScreenshotSize.hd,
+    ScreenshotSize size = ScreenshotSize.med,
   }) {
     if (url == null) return null;
 

@@ -20,6 +20,7 @@ import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/ui/theme.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:observatory/tasks/constants.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:workmanager/workmanager.dart';
 
@@ -46,6 +47,13 @@ Future<void> initFirebase() async {
 
     return true;
   };
+}
+
+Future<void> initSupabase() async {
+  await Supabase.initialize(
+    url: GetIt.I<Secret>().supabaseUrl,
+    anonKey: GetIt.I<Secret>().supabaseAnonKey,
+  );
 }
 
 Future<void> initUniLinks() async {
@@ -112,6 +120,7 @@ void main() async {
 
   await initSettings();
   await initFirebase();
+  await initSupabase();
 
   FirebaseAnalytics.instance.logAppOpen();
 

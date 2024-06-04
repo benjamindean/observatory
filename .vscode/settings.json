@@ -1,4 +1,12 @@
 {
-    "cmake.sourceDirectory": "C:/Users/berma/Documents/Github/observatory/linux",
-    "dart.flutterSdkPath": "/opt/flutter"
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "cmake.sourceDirectory": "C:/Users/berma/Documents/Github/observatory/linux",
+  "dart.flutterSdkPath": "/opt/flutter",
+  "deno.enablePaths": [
+    "supabase/functions"
+  ],
+  "deno.lint": true,
+  "deno.unstable": true
 }
