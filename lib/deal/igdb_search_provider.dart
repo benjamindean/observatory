@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
@@ -32,7 +31,5 @@ final igdbSearchProvider =
     return null;
   }
 
-  return games.firstWhereOrNull(
-    (element) => cleanTitle(element.name) == cleanTitle(title),
-  );
+  return games.firstOrNull;
 });

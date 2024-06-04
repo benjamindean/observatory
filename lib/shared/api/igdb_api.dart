@@ -61,7 +61,7 @@ class IGDBAPI {
         url.toString(),
         data: [
           'search "$cleanTitle";',
-          'where game != null & name ~ "$cleanTitle";',
+          'where game != null & game.name ~ "$cleanTitle" | name ~ "$cleanTitle";',
           'fields',
           'game.name,',
           'game.slug,',
