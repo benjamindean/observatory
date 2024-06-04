@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deals/deals_provider.dart';
 import 'package:observatory/main.dart';
 import 'package:observatory/search/search_provider.dart';
+import 'package:observatory/shared/api/igdb_api.dart';
 import 'package:observatory/waitlist/waitlist_provider.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,6 +13,7 @@ import 'package:observatory/firebase_options.dart';
 import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
+import 'package:path_provider/path_provider.dart';
 
 import './mocks/deals_mocks.dart';
 import './mocks/waitlist_mocks.dart';
@@ -24,8 +26,11 @@ void main() async {
 
   await SettingsRepository.init();
 
+  final String cache = (await getApplicationDocumentsDirectory()).path;
+
   GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
-  GetIt.I.registerSingleton<API>(await API.create());
+  GetIt.I.registerSingleton<API>(API.create(cache));
+  GetIt.I.registerSingleton<IGDBAPI>(IGDBAPI.create(cache));
   GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
 
   await Firebase.initializeApp(

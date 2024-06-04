@@ -5,12 +5,12 @@ import 'package:observatory/deal/ui/page_sections/search_on_tile.dart';
 import 'package:observatory/shared/models/deal.dart';
 
 class LinksTile extends StatelessWidget {
+  final Deal deal;
+
   const LinksTile({
     super.key,
     required this.deal,
   });
-
-  final Deal deal;
 
   @override
   Widget build(BuildContext context) {

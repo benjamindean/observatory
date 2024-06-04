@@ -16,10 +16,12 @@ import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
+import 'package:observatory/shared/api/igdb_api.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/ui/theme.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:observatory/tasks/constants.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:workmanager/workmanager.dart';
@@ -27,8 +29,11 @@ import 'package:workmanager/workmanager.dart';
 Future<void> initSettings() async {
   await SettingsRepository.init();
 
+  final String cache = (await getApplicationDocumentsDirectory()).path;
+
   GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
-  GetIt.I.registerSingleton<API>(await API.create());
+  GetIt.I.registerSingleton<API>(API.create(cache));
+  GetIt.I.registerSingleton<IGDBAPI>(IGDBAPI.create(cache));
   GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
 }
 

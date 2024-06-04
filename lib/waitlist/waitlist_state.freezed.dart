@@ -102,11 +102,12 @@ class __$$WaitListStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$WaitListStateImpl implements _WaitListState {
+class _$WaitListStateImpl extends _WaitListState {
   const _$WaitListStateImpl(
       {required final List<String> ids, required final List<Deal> deals})
       : _ids = ids,
-        _deals = deals;
+        _deals = deals,
+        super._();
 
   final List<String> _ids;
   @override
@@ -151,10 +152,11 @@ class _$WaitListStateImpl implements _WaitListState {
       __$$WaitListStateImplCopyWithImpl<_$WaitListStateImpl>(this, _$identity);
 }
 
-abstract class _WaitListState implements WaitListState {
+abstract class _WaitListState extends WaitListState {
   const factory _WaitListState(
       {required final List<String> ids,
       required final List<Deal> deals}) = _$WaitListStateImpl;
+  const _WaitListState._() : super._();
 
   @override
   List<String> get ids;

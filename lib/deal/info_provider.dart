@@ -4,5 +4,5 @@ import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/info.dart';
 
 final infoProvider = FutureProvider.family<Info?, String>((ref, id) async {
-  return await GetIt.I<API>().info(id: id);
+  return GetIt.I<API>().info(id: id);
 });

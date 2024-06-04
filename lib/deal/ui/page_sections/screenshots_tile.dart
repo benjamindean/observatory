@@ -38,33 +38,31 @@ class SscreenshotsTile extends ConsumerWidget {
         builder: (context) {
           return PhotoViewGestureDetectorScope(
             axis: Axis.vertical,
-            child: PhotoViewGallery.builder(
-              pageController: PageController(initialPage: index),
-              gaplessPlayback: true,
-              backgroundDecoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.8),
-              ),
-              loadingBuilder: (context, event) => Container(
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.8),
+            child: Container(
+              color: Colors.black.withOpacity(0.7),
+              child: PhotoViewGallery.builder(
+                pageController: PageController(initialPage: index),
+                gaplessPlayback: true,
+                backgroundDecoration: const BoxDecoration(
+                  color: Colors.transparent,
                 ),
-                child: const Center(
+                loadingBuilder: (context, event) => const Center(
                   child: ObservatoryProgressIndicator(
                     size: 40,
                   ),
                 ),
-              ),
-              scrollPhysics: const BouncingScrollPhysics(),
-              builder: (context, index) {
-                final IGDBScreenshot screenshot = screenshots[index];
+                scrollPhysics: const BouncingScrollPhysics(),
+                builder: (context, index) {
+                  final IGDBScreenshot screenshot = screenshots[index];
 
-                return PhotoViewGalleryPageOptions(
-                  imageProvider: CachedNetworkImageProvider(
-                    screenshot.getURL(size: ScreenshotSize.fullHD) ?? '',
-                  ),
-                );
-              },
-              itemCount: screenshots.length,
+                  return PhotoViewGalleryPageOptions(
+                    imageProvider: CachedNetworkImageProvider(
+                      screenshot.getURL(size: ScreenshotSize.fullHD) ?? '',
+                    ),
+                  );
+                },
+                itemCount: screenshots.length,
+              ),
             ),
           );
         },
@@ -102,23 +100,29 @@ class SscreenshotsTile extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 8.0, 8.0, 8.0),
                   child: Container(
-                    color: context.colors.scheme.surface,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      color: context.colors.scheme.surface,
+                    ),
                     height: 120,
                     width: 200,
-                    child: CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      fadeInDuration: const Duration(milliseconds: 100),
-                      imageUrl: screenshot.getURL() ?? '',
-                      placeholder: (context, url) => const Opacity(
-                        opacity: 0.3,
-                        child: ObservatoryProgressIndicator(
-                          size: 30,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        fadeInDuration: const Duration(milliseconds: 100),
+                        imageUrl: screenshot.getURL() ?? '',
+                        placeholder: (context, url) => const Opacity(
+                          opacity: 0.3,
+                          child: ObservatoryProgressIndicator(
+                            size: 30,
+                          ),
                         ),
+                        errorWidget: (context, url, error) => const ImageError(
+                          isCompact: true,
+                        ),
+                        errorListener: (value) => true,
                       ),
-                      errorWidget: (context, url, error) => const ImageError(
-                        isCompact: true,
-                      ),
-                      errorListener: (value) => true,
                     ),
                   ),
                 ),

@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:observatory/shared/api/api.dart';
+import 'package:observatory/shared/api/igdb_api.dart';
 import 'package:observatory/shared/models/igdb/igdb_game.dart';
 
 String cleanTitle(String? title) {
@@ -19,7 +19,7 @@ String cleanTitle(String? title) {
 
 final igdbSearchProvider =
     FutureProvider.family<IGDBGame?, String>((ref, title) async {
-  final List<IGDBGame>? games = await GetIt.I<API>().searchIGDB(
+  final List<IGDBGame>? games = await GetIt.I<IGDBAPI>().searchIGDB(
     title: title,
   );
 

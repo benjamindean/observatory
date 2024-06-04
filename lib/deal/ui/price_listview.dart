@@ -19,18 +19,14 @@ class PriceListView extends ConsumerWidget {
     if (allPrices.isEmpty) {
       return SliverPadding(
         padding: const EdgeInsets.only(bottom: 16.0),
-        sliver: SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              ListTile(
-                title: Text(
-                  'No prices are available for this product at the selected stores.',
-                  style: TextStyle(
-                    color: context.colors.disabled,
-                  ),
-                ),
+        sliver: SliverToBoxAdapter(
+          child: ListTile(
+            title: Text(
+              'No prices are available for this product at the selected stores.',
+              style: TextStyle(
+                color: context.colors.disabled,
               ),
-            ],
+            ),
           ),
         ),
       );
