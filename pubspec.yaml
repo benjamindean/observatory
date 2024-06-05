@@ -32,20 +32,20 @@ dependencies:
   intl: ^0.19.0
   get_it: ^7.6.4
   font_awesome_flutter: ^10.5.0
-  firebase_crashlytics: ^4.0.0
-  firebase_core: ^3.0.0
+  firebase_crashlytics: ^3.5.5
+  firebase_core: ^2.31.0
   flutter_form_builder: ^9.1.1
   form_builder_validators: ^9.1.0
   flutter_slidable: ^3.1.0
   collection: ^1.18.0
   awesome_flutter_extensions: ^1.1.1
-  firebase_app_check: ^0.3.0
+  firebase_app_check: ^0.2.2+5
   in_app_purchase: ^3.1.13
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.1
   easy_refresh: ^3.4.0
-  firebase_analytics: ^11.0.0
+  firebase_analytics: ^10.10.5
   awesome_notifications: ^0.9.3+1
   workmanager:
     git:
@@ -53,7 +53,6 @@ dependencies:
         ref: b783000
   photo_view: ^0.15.0
   supabase_flutter: ^2.5.4
-  uuid: ^4.4.0
 
 dependency_overrides:
   intl: any
