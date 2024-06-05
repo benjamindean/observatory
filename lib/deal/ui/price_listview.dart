@@ -18,6 +18,7 @@ class PriceListView extends ConsumerWidget {
 
     if (allPrices.isEmpty) {
       return SliverPadding(
+        key: const Key('no-prices'),
         padding: const EdgeInsets.only(bottom: 16.0),
         sliver: SliverToBoxAdapter(
           child: ListTile(

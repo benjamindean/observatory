@@ -16,6 +16,7 @@ class DiscountedBadge extends ConsumerWidget {
     final int discountedCount = waitlist?.discountedDeals.length ?? 0;
 
     return Badge(
+      key: const Key('discounted-badge'),
       backgroundColor: context.colors.scheme.secondaryContainer,
       alignment: Alignment.center,
       isLabelVisible: discountedCount > 0,

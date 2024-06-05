@@ -23,6 +23,7 @@ class WaitlistButton extends ConsumerWidget {
     final bool isInWaitlist = waitlist.contains(deal.id);
 
     return Tooltip(
+      key: Key('waitlist-button-${deal.id}'),
       message: isInWaitlist ? 'Remove from Waitlist' : 'Add to Waitlist',
       child: IconButton(
         icon: Icon(

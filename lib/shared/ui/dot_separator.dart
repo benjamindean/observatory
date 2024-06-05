@@ -18,6 +18,7 @@ class DotSeparator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
+      key: const Key('dot-separator'),
       padding: const EdgeInsets.symmetric(horizontal: 6.0),
       child: Container(
         width: 4.2,

@@ -61,6 +61,7 @@ class PriceCut extends StatelessWidget {
     ).withSaturation((priceCutInt / 100).clamp(0.4, 1.0)).toColor();
 
     return Row(
+      key: Key('price-cut-$priceCutInt'),
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,

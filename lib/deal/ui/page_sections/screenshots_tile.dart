@@ -42,7 +42,7 @@ class ScreenshotsTile extends ConsumerWidget {
             onDismissed: (direction) {
               return context.pop();
             },
-            resizeDuration: const Duration(milliseconds: 10),
+            resizeDuration: const Duration(milliseconds: 1),
             direction: DismissDirection.vertical,
             child: PhotoViewGallery.builder(
               allowImplicitScrolling: true,
@@ -91,7 +91,7 @@ class ScreenshotsTile extends ConsumerWidget {
 
         return SizedBox(
           key: Key('screenshots-tile-${deal.id}'),
-          height: 320 / thumbDelimiter,
+          height: 360 / thumbDelimiter,
           child: ListView.builder(
             itemCount: data.screenshots.length,
             scrollDirection: Axis.horizontal,

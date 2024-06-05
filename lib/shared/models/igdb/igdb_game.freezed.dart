@@ -22,13 +22,16 @@ IGDBGame _$IGDBGameFromJson(Map<String, dynamic> json) {
 mixin _$IGDBGame {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  String? get slug => throw _privateConstructorUsedError;
   String? get summary => throw _privateConstructorUsedError;
   String? get storyline => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
+  int? get first_release_date => throw _privateConstructorUsedError;
   IGDBCover? get cover => throw _privateConstructorUsedError;
   List<IGDBScreenshot> get screenshots => throw _privateConstructorUsedError;
+  List<IGDBVideo> get videos => throw _privateConstructorUsedError;
   List<IGDBPlatform> get platforms => throw _privateConstructorUsedError;
+  List<IGDBTheme> get themes => throw _privateConstructorUsedError;
+  List<IGDBWebsite> get websites => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,13 +47,16 @@ abstract class $IGDBGameCopyWith<$Res> {
   $Res call(
       {int? id,
       String? name,
-      String? slug,
       String? summary,
       String? storyline,
       String? url,
+      int? first_release_date,
       IGDBCover? cover,
       List<IGDBScreenshot> screenshots,
-      List<IGDBPlatform> platforms});
+      List<IGDBVideo> videos,
+      List<IGDBPlatform> platforms,
+      List<IGDBTheme> themes,
+      List<IGDBWebsite> websites});
 
   $IGDBCoverCopyWith<$Res>? get cover;
 }
@@ -70,13 +76,16 @@ class _$IGDBGameCopyWithImpl<$Res, $Val extends IGDBGame>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? slug = freezed,
     Object? summary = freezed,
     Object? storyline = freezed,
     Object? url = freezed,
+    Object? first_release_date = freezed,
     Object? cover = freezed,
     Object? screenshots = null,
+    Object? videos = null,
     Object? platforms = null,
+    Object? themes = null,
+    Object? websites = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -86,10 +95,6 @@ class _$IGDBGameCopyWithImpl<$Res, $Val extends IGDBGame>
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      slug: freezed == slug
-          ? _value.slug
-          : slug // ignore: cast_nullable_to_non_nullable
               as String?,
       summary: freezed == summary
           ? _value.summary
@@ -103,6 +108,10 @@ class _$IGDBGameCopyWithImpl<$Res, $Val extends IGDBGame>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String?,
+      first_release_date: freezed == first_release_date
+          ? _value.first_release_date
+          : first_release_date // ignore: cast_nullable_to_non_nullable
+              as int?,
       cover: freezed == cover
           ? _value.cover
           : cover // ignore: cast_nullable_to_non_nullable
@@ -111,10 +120,22 @@ class _$IGDBGameCopyWithImpl<$Res, $Val extends IGDBGame>
           ? _value.screenshots
           : screenshots // ignore: cast_nullable_to_non_nullable
               as List<IGDBScreenshot>,
+      videos: null == videos
+          ? _value.videos
+          : videos // ignore: cast_nullable_to_non_nullable
+              as List<IGDBVideo>,
       platforms: null == platforms
           ? _value.platforms
           : platforms // ignore: cast_nullable_to_non_nullable
               as List<IGDBPlatform>,
+      themes: null == themes
+          ? _value.themes
+          : themes // ignore: cast_nullable_to_non_nullable
+              as List<IGDBTheme>,
+      websites: null == websites
+          ? _value.websites
+          : websites // ignore: cast_nullable_to_non_nullable
+              as List<IGDBWebsite>,
     ) as $Val);
   }
 
@@ -142,13 +163,16 @@ abstract class _$$IGDBGameImplCopyWith<$Res>
   $Res call(
       {int? id,
       String? name,
-      String? slug,
       String? summary,
       String? storyline,
       String? url,
+      int? first_release_date,
       IGDBCover? cover,
       List<IGDBScreenshot> screenshots,
-      List<IGDBPlatform> platforms});
+      List<IGDBVideo> videos,
+      List<IGDBPlatform> platforms,
+      List<IGDBTheme> themes,
+      List<IGDBWebsite> websites});
 
   @override
   $IGDBCoverCopyWith<$Res>? get cover;
@@ -167,13 +191,16 @@ class __$$IGDBGameImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? slug = freezed,
     Object? summary = freezed,
     Object? storyline = freezed,
     Object? url = freezed,
+    Object? first_release_date = freezed,
     Object? cover = freezed,
     Object? screenshots = null,
+    Object? videos = null,
     Object? platforms = null,
+    Object? themes = null,
+    Object? websites = null,
   }) {
     return _then(_$IGDBGameImpl(
       id: freezed == id
@@ -183,10 +210,6 @@ class __$$IGDBGameImplCopyWithImpl<$Res>
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      slug: freezed == slug
-          ? _value.slug
-          : slug // ignore: cast_nullable_to_non_nullable
               as String?,
       summary: freezed == summary
           ? _value.summary
@@ -200,6 +223,10 @@ class __$$IGDBGameImplCopyWithImpl<$Res>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String?,
+      first_release_date: freezed == first_release_date
+          ? _value.first_release_date
+          : first_release_date // ignore: cast_nullable_to_non_nullable
+              as int?,
       cover: freezed == cover
           ? _value.cover
           : cover // ignore: cast_nullable_to_non_nullable
@@ -208,10 +235,22 @@ class __$$IGDBGameImplCopyWithImpl<$Res>
           ? _value._screenshots
           : screenshots // ignore: cast_nullable_to_non_nullable
               as List<IGDBScreenshot>,
+      videos: null == videos
+          ? _value._videos
+          : videos // ignore: cast_nullable_to_non_nullable
+              as List<IGDBVideo>,
       platforms: null == platforms
           ? _value._platforms
           : platforms // ignore: cast_nullable_to_non_nullable
               as List<IGDBPlatform>,
+      themes: null == themes
+          ? _value._themes
+          : themes // ignore: cast_nullable_to_non_nullable
+              as List<IGDBTheme>,
+      websites: null == websites
+          ? _value._websites
+          : websites // ignore: cast_nullable_to_non_nullable
+              as List<IGDBWebsite>,
     ));
   }
 }
@@ -222,15 +261,21 @@ class _$IGDBGameImpl extends _IGDBGame {
   const _$IGDBGameImpl(
       {this.id,
       this.name,
-      this.slug,
       this.summary,
       this.storyline,
       this.url,
+      this.first_release_date,
       this.cover,
       final List<IGDBScreenshot> screenshots = const [],
-      final List<IGDBPlatform> platforms = const []})
+      final List<IGDBVideo> videos = const [],
+      final List<IGDBPlatform> platforms = const [],
+      final List<IGDBTheme> themes = const [],
+      final List<IGDBWebsite> websites = const []})
       : _screenshots = screenshots,
+        _videos = videos,
         _platforms = platforms,
+        _themes = themes,
+        _websites = websites,
         super._();
 
   factory _$IGDBGameImpl.fromJson(Map<String, dynamic> json) =>
@@ -241,13 +286,13 @@ class _$IGDBGameImpl extends _IGDBGame {
   @override
   final String? name;
   @override
-  final String? slug;
-  @override
   final String? summary;
   @override
   final String? storyline;
   @override
   final String? url;
+  @override
+  final int? first_release_date;
   @override
   final IGDBCover? cover;
   final List<IGDBScreenshot> _screenshots;
@@ -259,6 +304,15 @@ class _$IGDBGameImpl extends _IGDBGame {
     return EqualUnmodifiableListView(_screenshots);
   }
 
+  final List<IGDBVideo> _videos;
+  @override
+  @JsonKey()
+  List<IGDBVideo> get videos {
+    if (_videos is EqualUnmodifiableListView) return _videos;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_videos);
+  }
+
   final List<IGDBPlatform> _platforms;
   @override
   @JsonKey()
@@ -268,9 +322,27 @@ class _$IGDBGameImpl extends _IGDBGame {
     return EqualUnmodifiableListView(_platforms);
   }
 
+  final List<IGDBTheme> _themes;
+  @override
+  @JsonKey()
+  List<IGDBTheme> get themes {
+    if (_themes is EqualUnmodifiableListView) return _themes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_themes);
+  }
+
+  final List<IGDBWebsite> _websites;
+  @override
+  @JsonKey()
+  List<IGDBWebsite> get websites {
+    if (_websites is EqualUnmodifiableListView) return _websites;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_websites);
+  }
+
   @override
   String toString() {
-    return 'IGDBGame(id: $id, name: $name, slug: $slug, summary: $summary, storyline: $storyline, url: $url, cover: $cover, screenshots: $screenshots, platforms: $platforms)';
+    return 'IGDBGame(id: $id, name: $name, summary: $summary, storyline: $storyline, url: $url, first_release_date: $first_release_date, cover: $cover, screenshots: $screenshots, videos: $videos, platforms: $platforms, themes: $themes, websites: $websites)';
   }
 
   @override
@@ -280,16 +352,20 @@ class _$IGDBGameImpl extends _IGDBGame {
             other is _$IGDBGameImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.slug, slug) || other.slug == slug) &&
             (identical(other.summary, summary) || other.summary == summary) &&
             (identical(other.storyline, storyline) ||
                 other.storyline == storyline) &&
             (identical(other.url, url) || other.url == url) &&
+            (identical(other.first_release_date, first_release_date) ||
+                other.first_release_date == first_release_date) &&
             (identical(other.cover, cover) || other.cover == cover) &&
             const DeepCollectionEquality()
                 .equals(other._screenshots, _screenshots) &&
+            const DeepCollectionEquality().equals(other._videos, _videos) &&
             const DeepCollectionEquality()
-                .equals(other._platforms, _platforms));
+                .equals(other._platforms, _platforms) &&
+            const DeepCollectionEquality().equals(other._themes, _themes) &&
+            const DeepCollectionEquality().equals(other._websites, _websites));
   }
 
   @JsonKey(ignore: true)
@@ -298,13 +374,16 @@ class _$IGDBGameImpl extends _IGDBGame {
       runtimeType,
       id,
       name,
-      slug,
       summary,
       storyline,
       url,
+      first_release_date,
       cover,
       const DeepCollectionEquality().hash(_screenshots),
-      const DeepCollectionEquality().hash(_platforms));
+      const DeepCollectionEquality().hash(_videos),
+      const DeepCollectionEquality().hash(_platforms),
+      const DeepCollectionEquality().hash(_themes),
+      const DeepCollectionEquality().hash(_websites));
 
   @JsonKey(ignore: true)
   @override
@@ -324,13 +403,16 @@ abstract class _IGDBGame extends IGDBGame {
   const factory _IGDBGame(
       {final int? id,
       final String? name,
-      final String? slug,
       final String? summary,
       final String? storyline,
       final String? url,
+      final int? first_release_date,
       final IGDBCover? cover,
       final List<IGDBScreenshot> screenshots,
-      final List<IGDBPlatform> platforms}) = _$IGDBGameImpl;
+      final List<IGDBVideo> videos,
+      final List<IGDBPlatform> platforms,
+      final List<IGDBTheme> themes,
+      final List<IGDBWebsite> websites}) = _$IGDBGameImpl;
   const _IGDBGame._() : super._();
 
   factory _IGDBGame.fromJson(Map<String, dynamic> json) =
@@ -341,19 +423,25 @@ abstract class _IGDBGame extends IGDBGame {
   @override
   String? get name;
   @override
-  String? get slug;
-  @override
   String? get summary;
   @override
   String? get storyline;
   @override
   String? get url;
   @override
+  int? get first_release_date;
+  @override
   IGDBCover? get cover;
   @override
   List<IGDBScreenshot> get screenshots;
   @override
+  List<IGDBVideo> get videos;
+  @override
   List<IGDBPlatform> get platforms;
+  @override
+  List<IGDBTheme> get themes;
+  @override
+  List<IGDBWebsite> get websites;
   @override
   @JsonKey(ignore: true)
   _$$IGDBGameImplCopyWith<_$IGDBGameImpl> get copyWith =>
@@ -523,6 +611,7 @@ IGDBPlatform _$IGDBPlatformFromJson(Map<String, dynamic> json) {
 mixin _$IGDBPlatform {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
+  String? get abbreviation => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -536,7 +625,7 @@ abstract class $IGDBPlatformCopyWith<$Res> {
           IGDBPlatform value, $Res Function(IGDBPlatform) then) =
       _$IGDBPlatformCopyWithImpl<$Res, IGDBPlatform>;
   @useResult
-  $Res call({int? id, String? name});
+  $Res call({int? id, String? name, String? abbreviation});
 }
 
 /// @nodoc
@@ -554,6 +643,7 @@ class _$IGDBPlatformCopyWithImpl<$Res, $Val extends IGDBPlatform>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? abbreviation = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -563,6 +653,10 @@ class _$IGDBPlatformCopyWithImpl<$Res, $Val extends IGDBPlatform>
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      abbreviation: freezed == abbreviation
+          ? _value.abbreviation
+          : abbreviation // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -576,7 +670,7 @@ abstract class _$$IGDBPlatformImplCopyWith<$Res>
       __$$IGDBPlatformImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? id, String? name});
+  $Res call({int? id, String? name, String? abbreviation});
 }
 
 /// @nodoc
@@ -592,6 +686,7 @@ class __$$IGDBPlatformImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? abbreviation = freezed,
   }) {
     return _then(_$IGDBPlatformImpl(
       id: freezed == id
@@ -602,6 +697,10 @@ class __$$IGDBPlatformImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      abbreviation: freezed == abbreviation
+          ? _value.abbreviation
+          : abbreviation // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -609,7 +708,7 @@ class __$$IGDBPlatformImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$IGDBPlatformImpl extends _IGDBPlatform {
-  const _$IGDBPlatformImpl({this.id, this.name}) : super._();
+  const _$IGDBPlatformImpl({this.id, this.name, this.abbreviation}) : super._();
 
   factory _$IGDBPlatformImpl.fromJson(Map<String, dynamic> json) =>
       _$$IGDBPlatformImplFromJson(json);
@@ -618,10 +717,12 @@ class _$IGDBPlatformImpl extends _IGDBPlatform {
   final int? id;
   @override
   final String? name;
+  @override
+  final String? abbreviation;
 
   @override
   String toString() {
-    return 'IGDBPlatform(id: $id, name: $name)';
+    return 'IGDBPlatform(id: $id, name: $name, abbreviation: $abbreviation)';
   }
 
   @override
@@ -630,12 +731,14 @@ class _$IGDBPlatformImpl extends _IGDBPlatform {
         (other.runtimeType == runtimeType &&
             other is _$IGDBPlatformImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.abbreviation, abbreviation) ||
+                other.abbreviation == abbreviation));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name);
+  int get hashCode => Object.hash(runtimeType, id, name, abbreviation);
 
   @JsonKey(ignore: true)
   @override
@@ -652,8 +755,10 @@ class _$IGDBPlatformImpl extends _IGDBPlatform {
 }
 
 abstract class _IGDBPlatform extends IGDBPlatform {
-  const factory _IGDBPlatform({final int? id, final String? name}) =
-      _$IGDBPlatformImpl;
+  const factory _IGDBPlatform(
+      {final int? id,
+      final String? name,
+      final String? abbreviation}) = _$IGDBPlatformImpl;
   const _IGDBPlatform._() : super._();
 
   factory _IGDBPlatform.fromJson(Map<String, dynamic> json) =
@@ -663,6 +768,8 @@ abstract class _IGDBPlatform extends IGDBPlatform {
   int? get id;
   @override
   String? get name;
+  @override
+  String? get abbreviation;
   @override
   @JsonKey(ignore: true)
   _$$IGDBPlatformImplCopyWith<_$IGDBPlatformImpl> get copyWith =>
@@ -819,6 +926,485 @@ abstract class _IGDBCover extends IGDBCover {
   @override
   @JsonKey(ignore: true)
   _$$IGDBCoverImplCopyWith<_$IGDBCoverImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+IGDBTheme _$IGDBThemeFromJson(Map<String, dynamic> json) {
+  return _IGDBTheme.fromJson(json);
+}
+
+/// @nodoc
+mixin _$IGDBTheme {
+  int? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $IGDBThemeCopyWith<IGDBTheme> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $IGDBThemeCopyWith<$Res> {
+  factory $IGDBThemeCopyWith(IGDBTheme value, $Res Function(IGDBTheme) then) =
+      _$IGDBThemeCopyWithImpl<$Res, IGDBTheme>;
+  @useResult
+  $Res call({int? id, String? name});
+}
+
+/// @nodoc
+class _$IGDBThemeCopyWithImpl<$Res, $Val extends IGDBTheme>
+    implements $IGDBThemeCopyWith<$Res> {
+  _$IGDBThemeCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$IGDBThemeImplCopyWith<$Res>
+    implements $IGDBThemeCopyWith<$Res> {
+  factory _$$IGDBThemeImplCopyWith(
+          _$IGDBThemeImpl value, $Res Function(_$IGDBThemeImpl) then) =
+      __$$IGDBThemeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? id, String? name});
+}
+
+/// @nodoc
+class __$$IGDBThemeImplCopyWithImpl<$Res>
+    extends _$IGDBThemeCopyWithImpl<$Res, _$IGDBThemeImpl>
+    implements _$$IGDBThemeImplCopyWith<$Res> {
+  __$$IGDBThemeImplCopyWithImpl(
+      _$IGDBThemeImpl _value, $Res Function(_$IGDBThemeImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+  }) {
+    return _then(_$IGDBThemeImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$IGDBThemeImpl extends _IGDBTheme {
+  const _$IGDBThemeImpl({this.id, this.name}) : super._();
+
+  factory _$IGDBThemeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$IGDBThemeImplFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? name;
+
+  @override
+  String toString() {
+    return 'IGDBTheme(id: $id, name: $name)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$IGDBThemeImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$IGDBThemeImplCopyWith<_$IGDBThemeImpl> get copyWith =>
+      __$$IGDBThemeImplCopyWithImpl<_$IGDBThemeImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$IGDBThemeImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _IGDBTheme extends IGDBTheme {
+  const factory _IGDBTheme({final int? id, final String? name}) =
+      _$IGDBThemeImpl;
+  const _IGDBTheme._() : super._();
+
+  factory _IGDBTheme.fromJson(Map<String, dynamic> json) =
+      _$IGDBThemeImpl.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get name;
+  @override
+  @JsonKey(ignore: true)
+  _$$IGDBThemeImplCopyWith<_$IGDBThemeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+IGDBVideo _$IGDBVideoFromJson(Map<String, dynamic> json) {
+  return _IGDBVideo.fromJson(json);
+}
+
+/// @nodoc
+mixin _$IGDBVideo {
+  int? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get video_id => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $IGDBVideoCopyWith<IGDBVideo> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $IGDBVideoCopyWith<$Res> {
+  factory $IGDBVideoCopyWith(IGDBVideo value, $Res Function(IGDBVideo) then) =
+      _$IGDBVideoCopyWithImpl<$Res, IGDBVideo>;
+  @useResult
+  $Res call({int? id, String? name, String? video_id});
+}
+
+/// @nodoc
+class _$IGDBVideoCopyWithImpl<$Res, $Val extends IGDBVideo>
+    implements $IGDBVideoCopyWith<$Res> {
+  _$IGDBVideoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? video_id = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      video_id: freezed == video_id
+          ? _value.video_id
+          : video_id // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$IGDBVideoImplCopyWith<$Res>
+    implements $IGDBVideoCopyWith<$Res> {
+  factory _$$IGDBVideoImplCopyWith(
+          _$IGDBVideoImpl value, $Res Function(_$IGDBVideoImpl) then) =
+      __$$IGDBVideoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? id, String? name, String? video_id});
+}
+
+/// @nodoc
+class __$$IGDBVideoImplCopyWithImpl<$Res>
+    extends _$IGDBVideoCopyWithImpl<$Res, _$IGDBVideoImpl>
+    implements _$$IGDBVideoImplCopyWith<$Res> {
+  __$$IGDBVideoImplCopyWithImpl(
+      _$IGDBVideoImpl _value, $Res Function(_$IGDBVideoImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? video_id = freezed,
+  }) {
+    return _then(_$IGDBVideoImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      video_id: freezed == video_id
+          ? _value.video_id
+          : video_id // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$IGDBVideoImpl extends _IGDBVideo {
+  const _$IGDBVideoImpl({this.id, this.name, this.video_id}) : super._();
+
+  factory _$IGDBVideoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$IGDBVideoImplFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? name;
+  @override
+  final String? video_id;
+
+  @override
+  String toString() {
+    return 'IGDBVideo(id: $id, name: $name, video_id: $video_id)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$IGDBVideoImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.video_id, video_id) ||
+                other.video_id == video_id));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name, video_id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$IGDBVideoImplCopyWith<_$IGDBVideoImpl> get copyWith =>
+      __$$IGDBVideoImplCopyWithImpl<_$IGDBVideoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$IGDBVideoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _IGDBVideo extends IGDBVideo {
+  const factory _IGDBVideo(
+      {final int? id,
+      final String? name,
+      final String? video_id}) = _$IGDBVideoImpl;
+  const _IGDBVideo._() : super._();
+
+  factory _IGDBVideo.fromJson(Map<String, dynamic> json) =
+      _$IGDBVideoImpl.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get name;
+  @override
+  String? get video_id;
+  @override
+  @JsonKey(ignore: true)
+  _$$IGDBVideoImplCopyWith<_$IGDBVideoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+IGDBWebsite _$IGDBWebsiteFromJson(Map<String, dynamic> json) {
+  return _IGDBWebsite.fromJson(json);
+}
+
+/// @nodoc
+mixin _$IGDBWebsite {
+  int? get id => throw _privateConstructorUsedError;
+  String? get url => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $IGDBWebsiteCopyWith<IGDBWebsite> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $IGDBWebsiteCopyWith<$Res> {
+  factory $IGDBWebsiteCopyWith(
+          IGDBWebsite value, $Res Function(IGDBWebsite) then) =
+      _$IGDBWebsiteCopyWithImpl<$Res, IGDBWebsite>;
+  @useResult
+  $Res call({int? id, String? url});
+}
+
+/// @nodoc
+class _$IGDBWebsiteCopyWithImpl<$Res, $Val extends IGDBWebsite>
+    implements $IGDBWebsiteCopyWith<$Res> {
+  _$IGDBWebsiteCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? url = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$IGDBWebsiteImplCopyWith<$Res>
+    implements $IGDBWebsiteCopyWith<$Res> {
+  factory _$$IGDBWebsiteImplCopyWith(
+          _$IGDBWebsiteImpl value, $Res Function(_$IGDBWebsiteImpl) then) =
+      __$$IGDBWebsiteImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? id, String? url});
+}
+
+/// @nodoc
+class __$$IGDBWebsiteImplCopyWithImpl<$Res>
+    extends _$IGDBWebsiteCopyWithImpl<$Res, _$IGDBWebsiteImpl>
+    implements _$$IGDBWebsiteImplCopyWith<$Res> {
+  __$$IGDBWebsiteImplCopyWithImpl(
+      _$IGDBWebsiteImpl _value, $Res Function(_$IGDBWebsiteImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? url = freezed,
+  }) {
+    return _then(_$IGDBWebsiteImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$IGDBWebsiteImpl extends _IGDBWebsite {
+  const _$IGDBWebsiteImpl({this.id, this.url}) : super._();
+
+  factory _$IGDBWebsiteImpl.fromJson(Map<String, dynamic> json) =>
+      _$$IGDBWebsiteImplFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? url;
+
+  @override
+  String toString() {
+    return 'IGDBWebsite(id: $id, url: $url)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$IGDBWebsiteImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.url, url) || other.url == url));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, url);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$IGDBWebsiteImplCopyWith<_$IGDBWebsiteImpl> get copyWith =>
+      __$$IGDBWebsiteImplCopyWithImpl<_$IGDBWebsiteImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$IGDBWebsiteImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _IGDBWebsite extends IGDBWebsite {
+  const factory _IGDBWebsite({final int? id, final String? url}) =
+      _$IGDBWebsiteImpl;
+  const _IGDBWebsite._() : super._();
+
+  factory _IGDBWebsite.fromJson(Map<String, dynamic> json) =
+      _$IGDBWebsiteImpl.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get url;
+  @override
+  @JsonKey(ignore: true)
+  _$$IGDBWebsiteImplCopyWith<_$IGDBWebsiteImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

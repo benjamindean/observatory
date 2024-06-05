@@ -6,6 +6,7 @@ import 'package:observatory/deal/ui/deal_app_bar.dart';
 import 'package:observatory/deal/ui/deal_page_bottom_appbar.dart';
 import 'package:observatory/deal/ui/page_sections/links_tile.dart';
 import 'package:observatory/deal/ui/page_sections/lowest_price_tile.dart';
+import 'package:observatory/deal/ui/page_sections/release_date_tile.dart';
 import 'package:observatory/deal/ui/price_listview.dart';
 import 'package:observatory/deal/ui/page_sections/reviews_tile.dart';
 import 'package:observatory/deal/deal_provider.dart';
@@ -43,18 +44,19 @@ class DealPage extends ConsumerWidget {
         child: Scaffold(
           bottomNavigationBar: DealPageBottomAppBar(deal: dealState),
           body: CustomScrollView(
-            key: const Key('deal_scroll_view'),
+            key: const Key('deal-scroll-view'),
             slivers: [
               DealAppBar(deal: deal),
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    ReviewsTile(deal: deal),
+                    SummaryTile(deal: deal),
+                    ReleaseDateTile(deal: deal),
+                    ScreenshotsTile(deal: deal),
                     TagsTile(deal: deal),
+                    ReviewsTile(deal: deal),
                     LowestPriceTile(deal: deal),
                     BundlesTile(deal: deal),
-                    SummaryTile(deal: deal),
-                    ScreenshotsTile(deal: deal),
                     LinksTile(deal: deal),
                   ],
                 ),

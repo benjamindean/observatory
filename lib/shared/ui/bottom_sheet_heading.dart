@@ -12,6 +12,7 @@ class BottomSheetHeading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      key: Key('bottom-sheet-heading-$text'),
       visualDensity: VisualDensity.compact,
       tileColor: context.colors.scheme.surface,
       title: Text(

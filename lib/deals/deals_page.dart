@@ -32,7 +32,7 @@ class DealsPage extends ConsumerWidget {
         await ref.read(provider.notifier).reset();
       },
       child: CustomScrollView(
-        key: const Key('deals_scroll_view'),
+        key: const Key('deals-scroll-view'),
         controller: PrimaryScrollController.of(context),
         slivers: [
           const DealsAppBar(),

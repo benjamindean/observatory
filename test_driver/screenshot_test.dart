@@ -90,21 +90,21 @@ void main() async {
 
   test('Search Page', () async {
     await driver.tap(find.byValueKey('navigation_search'));
-    await driver.waitFor(find.byValueKey('search_scroll_view'));
+    await driver.waitFor(find.byValueKey('search-scroll-view'));
 
     await takeScreenshot('search_page');
   });
 
   test('Deal Page', () async {
     await driver.tap(find.byValueKey('navigation_waitlist'));
-    await driver.waitFor(find.byValueKey('waitlist_scroll_view'));
+    await driver.waitFor(find.byValueKey('waitlist-scroll-view'));
     await driver.tap(find.text('Lies Of P'));
-    await driver.waitFor(find.byValueKey('deal_scroll_view'));
+    await driver.waitFor(find.byValueKey('deal-scroll-view'));
 
     await takeScreenshot('deal_page_top');
 
     await driver.scroll(
-      find.byValueKey('deal_scroll_view'),
+      find.byValueKey('deal-scroll-view'),
       0,
       -1000,
       const Duration(milliseconds: 300),
@@ -132,7 +132,7 @@ void main() async {
 
     for (String scheme in testColorSchemes) {
       await toggleColorScheme(scheme);
-      await driver.waitFor(find.byValueKey('waitlist_scroll_view'));
+      await driver.waitFor(find.byValueKey('waitlist-scroll-view'));
 
       await takeScreenshot('waitlist_page_$scheme');
     }

@@ -51,10 +51,10 @@ _$IGDBGameImpl _$$IGDBGameImplFromJson(Map<String, dynamic> json) =>
     _$IGDBGameImpl(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
-      slug: json['slug'] as String?,
       summary: json['summary'] as String?,
       storyline: json['storyline'] as String?,
       url: json['url'] as String?,
+      first_release_date: (json['first_release_date'] as num?)?.toInt(),
       cover: json['cover'] == null
           ? null
           : IGDBCover.fromJson(json['cover'] as Map<String, dynamic>),
@@ -62,8 +62,20 @@ _$IGDBGameImpl _$$IGDBGameImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => IGDBScreenshot.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      videos: (json['videos'] as List<dynamic>?)
+              ?.map((e) => IGDBVideo.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       platforms: (json['platforms'] as List<dynamic>?)
               ?.map((e) => IGDBPlatform.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      themes: (json['themes'] as List<dynamic>?)
+              ?.map((e) => IGDBTheme.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      websites: (json['websites'] as List<dynamic>?)
+              ?.map((e) => IGDBWebsite.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
     );
@@ -72,13 +84,16 @@ Map<String, dynamic> _$$IGDBGameImplToJson(_$IGDBGameImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'slug': instance.slug,
       'summary': instance.summary,
       'storyline': instance.storyline,
       'url': instance.url,
+      'first_release_date': instance.first_release_date,
       'cover': instance.cover,
       'screenshots': instance.screenshots,
+      'videos': instance.videos,
       'platforms': instance.platforms,
+      'themes': instance.themes,
+      'websites': instance.websites,
     };
 
 _$IGDBScreenshotImpl _$$IGDBScreenshotImplFromJson(Map<String, dynamic> json) =>
@@ -98,12 +113,14 @@ _$IGDBPlatformImpl _$$IGDBPlatformImplFromJson(Map<String, dynamic> json) =>
     _$IGDBPlatformImpl(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
+      abbreviation: json['abbreviation'] as String?,
     );
 
 Map<String, dynamic> _$$IGDBPlatformImplToJson(_$IGDBPlatformImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'abbreviation': instance.abbreviation,
     };
 
 _$IGDBCoverImpl _$$IGDBCoverImplFromJson(Map<String, dynamic> json) =>
@@ -113,6 +130,44 @@ _$IGDBCoverImpl _$$IGDBCoverImplFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$$IGDBCoverImplToJson(_$IGDBCoverImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'url': instance.url,
+    };
+
+_$IGDBThemeImpl _$$IGDBThemeImplFromJson(Map<String, dynamic> json) =>
+    _$IGDBThemeImpl(
+      id: (json['id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+    );
+
+Map<String, dynamic> _$$IGDBThemeImplToJson(_$IGDBThemeImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+    };
+
+_$IGDBVideoImpl _$$IGDBVideoImplFromJson(Map<String, dynamic> json) =>
+    _$IGDBVideoImpl(
+      id: (json['id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      video_id: json['video_id'] as String?,
+    );
+
+Map<String, dynamic> _$$IGDBVideoImplToJson(_$IGDBVideoImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'video_id': instance.video_id,
+    };
+
+_$IGDBWebsiteImpl _$$IGDBWebsiteImplFromJson(Map<String, dynamic> json) =>
+    _$IGDBWebsiteImpl(
+      id: (json['id'] as num?)?.toInt(),
+      url: json['url'] as String?,
+    );
+
+Map<String, dynamic> _$$IGDBWebsiteImplToJson(_$IGDBWebsiteImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'url': instance.url,

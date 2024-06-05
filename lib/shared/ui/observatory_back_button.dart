@@ -9,6 +9,7 @@ class ObservatoryBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackButton(
+      key: const Key('observatory-back-button'),
       style: IconButton.styleFrom(
         backgroundColor: context.highElevatedCanvasColor,
       ),
