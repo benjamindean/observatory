@@ -39,13 +39,14 @@ class ScreenshotsTile extends ConsumerWidget {
         context: context,
         builder: (context) {
           return Scaffold(
+            extendBody: true,
             bottomNavigationBar: BottomAppBar(
               shadowColor: Colors.transparent,
               color: Colors.transparent,
               key: Key('deal-page-bottom-app-bar-${deal.id}'),
               elevation: 0,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Expanded(
