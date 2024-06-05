@@ -4,18 +4,6 @@ import 'package:logger/logger.dart';
 import 'package:observatory/shared/api/igdb_api.dart';
 import 'package:observatory/shared/models/igdb/igdb_game.dart';
 
-String cleanTitle(String? title) {
-  if (title == null) {
-    return '';
-  }
-
-  return title
-      .toLowerCase()
-      .trim()
-      .replaceAll(RegExp(r'[^\w\s]+'), '')
-      .replaceAll(' ', '');
-}
-
 final igdbSearchProvider =
     FutureProvider.family<IGDBGame?, String>((ref, title) async {
   final List<IGDBGame>? games = await GetIt.I<IGDBAPI>().searchIGDB(
@@ -23,8 +11,8 @@ final igdbSearchProvider =
   );
 
   Logger().d({
-    'igdb_names': games?.map((e) => cleanTitle(e.name)).join(','),
-    'title': cleanTitle(title),
+    'igdb_names': games?.map((e) => e.name).join(','),
+    'title': title,
   });
 
   if (games == null || games.isEmpty) {
