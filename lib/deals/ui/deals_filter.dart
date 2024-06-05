@@ -24,10 +24,11 @@ class DealsFilter extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final DealCategory dealsTab = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.dealsTab,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.dealsTab,
+          ),
+        ) ??
+        DealCategory.steam_top_sellers;
 
     return SafeArea(
       child: SingleChildScrollView(

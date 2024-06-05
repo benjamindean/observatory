@@ -32,6 +32,7 @@ class LowestPriceTile extends ConsumerWidget {
 
         if (lowestPrice == null) {
           return Text(
+            key: const Key('no-record'),
             'No record.',
             style: context.themes.text.labelLarge?.copyWith(
               color: context.colors.disabled,
@@ -45,6 +46,7 @@ class LowestPriceTile extends ConsumerWidget {
             .toString();
 
         return RichText(
+          key: Key('lowest-price-tile-${deal.id}'),
           text: TextSpan(
             style: context.themes.text.labelLarge?.copyWith(
               color: context.colors.scheme.onSurface,

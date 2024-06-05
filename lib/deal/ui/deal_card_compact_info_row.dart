@@ -19,6 +19,7 @@ class DealCardCompactInfoRow extends StatelessWidget {
     final Price? price = deal.prices?.firstOrNull;
 
     return Padding(
+      key: Key('deal-card-compact-info-row-${deal.id}'),
       padding: const EdgeInsets.all(14.0),
       child: Column(
         mainAxisSize: MainAxisSize.max,

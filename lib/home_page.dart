@@ -25,6 +25,7 @@ class HomePage extends ConsumerWidget {
     final AsyncValue<SettingsState> settings = ref.watch(asyncSettingsProvider);
 
     return Scaffold(
+      key: const Key('home-page'),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) async {
           child.goBranch(index);

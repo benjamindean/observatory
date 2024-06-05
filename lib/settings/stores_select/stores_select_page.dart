@@ -15,15 +15,17 @@ class StoreSelectPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Store> stores = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.stores,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.stores,
+          ),
+        ) ??
+        [];
     final List<int> selectedStores = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.selectedStores,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.selectedStores,
+          ),
+        ) ??
+        [];
 
     final listProvider = storeListProvider(selectedStores);
     final List<int> storeList = ref.watch(listProvider);

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -9,6 +11,7 @@ import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/models/igdb/igdb_game.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 class IGDBAPI {
   final Dio dio;
@@ -26,6 +29,12 @@ class IGDBAPI {
       policy: CachePolicy.noCache,
       maxStale: const Duration(days: 14),
       allowPostMethod: true,
+      keyBuilder: (request) {
+        return const Uuid().v5(
+          Uuid.NAMESPACE_URL,
+          request.uri.toString() + request.data.toString(),
+        );
+      },
     );
 
     final Dio dio = Dio(BaseOptions(responseType: ResponseType.plain))
@@ -43,8 +52,11 @@ class IGDBAPI {
     try {
       final IGDBAccessToken? token = await getIGDBToken();
       final Uri url = Uri.https('api.igdb.com', '/v4/search');
-      final String cleanTitle =
-          title.trim().replaceAll(RegExp(r'[^\w\s]+'), '');
+      final String cleanTitle = const AsciiDecoder().convert(
+        utf8.encode(
+          title.replaceAll(RegExp(r"[^A-Za-z0-9().,'&;?/:]+"), ' ').trim(),
+        ),
+      );
 
       final response = await dio.post(
         options: cacheOptions

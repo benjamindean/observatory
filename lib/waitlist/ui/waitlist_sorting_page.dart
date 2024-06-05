@@ -25,15 +25,17 @@ class WaitlistSortingPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final WaitlistSortingDirection waitlistSortingDirection = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.waitlistSortingDirection,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.waitlistSortingDirection,
+          ),
+        ) ??
+        WaitlistSortingDirection.asc;
     final WaitlistSorting waitlistSorting = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.waitlistSorting,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.waitlistSorting,
+          ),
+        ) ??
+        WaitlistSorting.date_added;
 
     return SafeArea(
       child: SingleChildScrollView(

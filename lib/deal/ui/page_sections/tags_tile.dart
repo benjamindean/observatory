@@ -30,6 +30,7 @@ class TagsTile extends ConsumerWidget {
 
         if (tags == null || tags.isEmpty) {
           return Text(
+            key: const Key('no-tags-available'),
             'No tags available.',
             style: context.themes.text.labelLarge?.copyWith(
               color: context.colors.disabled,
@@ -38,6 +39,7 @@ class TagsTile extends ConsumerWidget {
         }
 
         return Wrap(
+          key: Key('tags-tile-${deal.id}'),
           children: List<Widget>.generate(
             tags.length,
             (int idx) {

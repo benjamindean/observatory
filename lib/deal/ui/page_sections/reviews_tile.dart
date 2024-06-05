@@ -49,6 +49,7 @@ class ReviewsTile extends ConsumerWidget {
         if (review == null) {
           return Text(
             'No reviews available.',
+            key: const Key('no-reviews'),
             style: context.themes.text.labelLarge?.copyWith(
               color: context.colors.disabled,
             ),
@@ -56,6 +57,7 @@ class ReviewsTile extends ConsumerWidget {
         }
 
         return RichText(
+          key: Key('reviews-tile-${deal.id}'),
           text: TextSpan(
             style: context.themes.text.labelLarge?.copyWith(
               color: context.colors.scheme.onSurface,

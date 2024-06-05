@@ -29,6 +29,7 @@ class SummaryTile extends ConsumerWidget {
 
         if (summary == null || summary.isEmpty) {
           return Text(
+            key: const Key('no-summary'),
             'No summary available.',
             style: context.themes.text.labelLarge?.copyWith(
               color: context.colors.disabled,
@@ -38,6 +39,7 @@ class SummaryTile extends ConsumerWidget {
 
         return Text(
           summary,
+          key: Key('summary-tile-${deal.id}'),
           style: context.themes.text.labelLarge?.copyWith(
             color: context.colors.scheme.onSurface,
           ),

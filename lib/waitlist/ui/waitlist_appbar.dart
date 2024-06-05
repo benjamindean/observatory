@@ -19,15 +19,17 @@ class WaitlistAppBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final SearchState searchState = ref.watch(filterResultsProvider);
     final WaitlistSortingDirection waitlistSortingDirection = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.waitlistSortingDirection,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.waitlistSortingDirection,
+          ),
+        ) ??
+        WaitlistSortingDirection.asc;
     final WaitlistSorting waitlistSorting = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.waitlistSorting,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.waitlistSorting,
+          ),
+        ) ??
+        WaitlistSorting.date_added;
 
     return SliverAppBar(
       floating: true,

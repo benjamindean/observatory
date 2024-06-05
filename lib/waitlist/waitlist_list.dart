@@ -117,15 +117,17 @@ class WaitListList extends ConsumerWidget {
     final SearchState searchState = ref.watch(filterResultsProvider);
     final AsyncValue<WaitListState> waitlist = ref.watch(asyncWaitListProvider);
     final WaitlistSortingDirection sortingDirection = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.waitlistSortingDirection,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.waitlistSortingDirection,
+          ),
+        ) ??
+        WaitlistSortingDirection.asc;
     final WaitlistSorting sorting = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.waitlistSorting,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.waitlistSorting,
+          ),
+        ) ??
+        WaitlistSorting.date_added;
     final SteamImportState steamImportState = ref.watch(
       steamImportProvider,
     );

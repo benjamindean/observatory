@@ -2,25 +2,27 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:observatory/deal/igdb_search_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/igdb/igdb_game.dart';
 import 'package:observatory/shared/widgets/image_error.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-class SscreenshotsTile extends ConsumerWidget {
+class ScreenshotsTile extends ConsumerWidget {
   final Deal deal;
 
-  const SscreenshotsTile({
+  const ScreenshotsTile({
     super.key,
     required this.deal,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    const double thumbDelimiter = 2.5;
+
     final AsyncValue<IGDBGame?> igdbState = ref.watch(
       igdbSearchProvider(deal.titleParsed),
     );
@@ -30,39 +32,42 @@ class SscreenshotsTile extends ConsumerWidget {
       final int index,
       final List<IGDBScreenshot> screenshots,
     ) {
-      showModalBottomSheet(
+      showDialog(
+        barrierDismissible: false,
+        barrierColor: Colors.black.withOpacity(0.7),
         context: context,
-        backgroundColor: Colors.transparent,
-        shape: const ContinuousRectangleBorder(),
-        isScrollControlled: true,
         builder: (context) {
-          return PhotoViewGestureDetectorScope(
-            axis: Axis.vertical,
-            child: Container(
-              color: Colors.black.withOpacity(0.7),
-              child: PhotoViewGallery.builder(
-                pageController: PageController(initialPage: index),
-                gaplessPlayback: true,
-                backgroundDecoration: const BoxDecoration(
-                  color: Colors.transparent,
-                ),
-                loadingBuilder: (context, event) => const Center(
-                  child: ObservatoryProgressIndicator(
-                    size: 40,
-                  ),
-                ),
-                scrollPhysics: const BouncingScrollPhysics(),
-                builder: (context, index) {
-                  final IGDBScreenshot screenshot = screenshots[index];
-
-                  return PhotoViewGalleryPageOptions(
-                    imageProvider: CachedNetworkImageProvider(
-                      screenshot.getURL(size: ScreenshotSize.fullHD) ?? '',
-                    ),
-                  );
-                },
-                itemCount: screenshots.length,
+          return Dismissible(
+            key: Key('gallery-${deal.id}'),
+            onDismissed: (direction) {
+              return context.pop();
+            },
+            resizeDuration: const Duration(milliseconds: 10),
+            direction: DismissDirection.vertical,
+            child: PhotoViewGallery.builder(
+              allowImplicitScrolling: true,
+              pageController: PageController(initialPage: index),
+              gaplessPlayback: true,
+              backgroundDecoration: const BoxDecoration(
+                color: Colors.transparent,
               ),
+              loadingBuilder: (context, event) => const Center(
+                child: ObservatoryProgressIndicator(
+                  size: 40,
+                ),
+              ),
+              scrollPhysics: const BouncingScrollPhysics(),
+              builder: (context, index) {
+                final IGDBScreenshot screenshot = screenshots[index];
+
+                return PhotoViewGalleryPageOptions(
+                  tightMode: true,
+                  imageProvider: CachedNetworkImageProvider(
+                    screenshot.getURL(size: ScreenshotSize.fullHD) ?? '',
+                  ),
+                );
+              },
+              itemCount: screenshots.length,
             ),
           );
         },
@@ -76,6 +81,7 @@ class SscreenshotsTile extends ConsumerWidget {
       onData: (data) {
         if (data == null || data.screenshots.isEmpty) {
           return Text(
+            key: const Key('no-screenshots'),
             'No screenshots available.',
             style: context.themes.text.labelLarge?.copyWith(
               color: context.colors.disabled,
@@ -84,7 +90,8 @@ class SscreenshotsTile extends ConsumerWidget {
         }
 
         return SizedBox(
-          height: 120,
+          key: Key('screenshots-tile-${deal.id}'),
+          height: 320 / thumbDelimiter,
           child: ListView.builder(
             itemCount: data.screenshots.length,
             scrollDirection: Axis.horizontal,
@@ -104,8 +111,8 @@ class SscreenshotsTile extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(12.0),
                       color: context.colors.scheme.surface,
                     ),
-                    height: 120,
-                    width: 200,
+                    width: 569 / thumbDelimiter,
+                    height: 320 / thumbDelimiter,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12.0),
                       child: CachedNetworkImage(

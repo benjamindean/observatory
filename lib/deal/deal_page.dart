@@ -49,13 +49,13 @@ class DealPage extends ConsumerWidget {
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    SummaryTile(deal: deal),
                     ReviewsTile(deal: deal),
                     TagsTile(deal: deal),
                     LowestPriceTile(deal: deal),
                     BundlesTile(deal: deal),
+                    SummaryTile(deal: deal),
+                    ScreenshotsTile(deal: deal),
                     LinksTile(deal: deal),
-                    SscreenshotsTile(deal: deal),
                   ],
                 ),
               ),
@@ -65,10 +65,9 @@ class DealPage extends ConsumerWidget {
               PriceListView(
                 prices: dealState.prices,
               ),
-              if ((deal.prices ?? []).isNotEmpty)
-                const SliverToBoxAdapter(
-                  child: IsThereAnyDealInfo(),
-                ),
+              const SliverToBoxAdapter(
+                child: IsThereAnyDealInfo(),
+              ),
             ],
           ),
         ),

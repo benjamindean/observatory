@@ -16,6 +16,7 @@ class DealCardInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      key: Key('deal-card-info-row-${deal.id}'),
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(

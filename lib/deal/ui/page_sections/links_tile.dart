@@ -15,6 +15,7 @@ class LinksTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTileTheme(
+      key: Key('links-tile-${deal.id}'),
       dense: true,
       child: ExpansionTile(
         title: Padding(

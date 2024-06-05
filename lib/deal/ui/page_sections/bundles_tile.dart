@@ -26,6 +26,7 @@ class BundlesTile extends ConsumerWidget {
     final bool isEnabled = overviewState.value?.bundles?.isNotEmpty ?? false;
 
     return IgnorePointer(
+      key: Key('bundles-tile-${deal.id}'),
       ignoring: !isEnabled,
       child: ListTileTheme(
         child: ExpansionTile(

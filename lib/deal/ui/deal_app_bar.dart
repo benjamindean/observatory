@@ -22,12 +22,14 @@ class DealAppBar extends ConsumerWidget {
     final double appBarHeight = const SliverAppBar().toolbarHeight;
 
     final bool showHeaders = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.showHeaders,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.showHeaders,
+          ),
+        ) ??
+        false;
 
     return SliverAppBar(
+      key: Key('deal-app-bar-${deal.id}'),
       automaticallyImplyLeading: false,
       pinned: true,
       expandedHeight: showHeaders ? headerHeight + appBarHeight : appBarHeight,

@@ -18,6 +18,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return BottomAppBar(
+      key: Key('deal-page-bottom-app-bar-${deal.id}'),
       elevation: APPBAR_ELEVATION,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -24,6 +24,7 @@ class DealBottomSheet extends ConsumerWidget {
     final bool isInWaitlist = waitlist.contains(deal.id);
 
     return Column(
+      key: Key('deal-bottom-sheet-${deal.id}'),
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(

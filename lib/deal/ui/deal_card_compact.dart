@@ -37,7 +37,7 @@ class DealCardCompact extends ConsumerWidget {
     final bool isInWaitlist = waitlist.contains(deal.id);
 
     return Slidable(
-      key: ValueKey(deal.id),
+      key: Key(deal.id),
       endActionPane: ActionPane(
         extentRatio: 0.2,
         motion: const ScrollMotion(),

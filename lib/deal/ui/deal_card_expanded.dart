@@ -28,6 +28,7 @@ class DealCardExpanded extends ConsumerWidget {
     );
 
     return InkWell(
+      key: Key(deal.id),
       splashColor: context.colors.scheme.primaryContainer,
       splashFactory: InkSparkle.splashFactory,
       onTap: () => onCardTap(context),

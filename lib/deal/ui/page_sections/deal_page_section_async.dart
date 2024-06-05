@@ -22,6 +22,7 @@ class DealPageSectionAsync<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      key: Key('deal-page-section-$heading'),
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
