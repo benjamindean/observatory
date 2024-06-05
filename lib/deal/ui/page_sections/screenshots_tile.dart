@@ -9,6 +9,7 @@ import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/igdb/igdb_game.dart';
 import 'package:observatory/shared/widgets/image_error.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class ScreenshotsTile extends ConsumerWidget {
@@ -37,37 +38,69 @@ class ScreenshotsTile extends ConsumerWidget {
         barrierColor: Colors.black.withOpacity(0.7),
         context: context,
         builder: (context) {
-          return Dismissible(
-            key: Key('gallery-${deal.id}'),
-            onDismissed: (direction) {
-              return context.pop();
-            },
-            resizeDuration: const Duration(milliseconds: 1),
-            direction: DismissDirection.vertical,
-            child: PhotoViewGallery.builder(
-              allowImplicitScrolling: true,
-              pageController: PageController(initialPage: index),
-              gaplessPlayback: true,
-              backgroundDecoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-              loadingBuilder: (context, event) => const Center(
-                child: ObservatoryProgressIndicator(
-                  size: 40,
-                ),
-              ),
-              scrollPhysics: const BouncingScrollPhysics(),
-              builder: (context, index) {
-                final IGDBScreenshot screenshot = screenshots[index];
-
-                return PhotoViewGalleryPageOptions(
-                  tightMode: true,
-                  imageProvider: CachedNetworkImageProvider(
-                    screenshot.getURL(size: ScreenshotSize.fullHD) ?? '',
+          return Scaffold(
+            bottomNavigationBar: BottomAppBar(
+              shadowColor: Colors.transparent,
+              color: Colors.transparent,
+              key: Key('deal-page-bottom-app-bar-${deal.id}'),
+              elevation: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Expanded(
+                    flex: 50,
+                    child: BackButton(
+                      key: const Key('observatory-back-button-screenshot'),
+                      style: IconButton.styleFrom(
+                        backgroundColor: Colors.white10,
+                      ),
+                    ),
                   ),
-                );
+                  const Expanded(
+                    flex: 50,
+                    child: SizedBox.expand(),
+                  ),
+                ],
+              ),
+            ),
+            backgroundColor: Colors.transparent,
+            body: Dismissible(
+              key: Key('gallery-${deal.id}'),
+              onDismissed: (direction) {
+                return context.pop();
               },
-              itemCount: screenshots.length,
+              resizeDuration: const Duration(milliseconds: 1),
+              direction: DismissDirection.vertical,
+              child: PhotoViewGallery.builder(
+                allowImplicitScrolling: true,
+                pageController: PageController(initialPage: index),
+                gaplessPlayback: true,
+                backgroundDecoration: const BoxDecoration(
+                  color: Colors.transparent,
+                ),
+                loadingBuilder: (context, event) => const Center(
+                  child: ObservatoryProgressIndicator(
+                    size: 40,
+                  ),
+                ),
+                scrollPhysics: const BouncingScrollPhysics(),
+                builder: (context, index) {
+                  final IGDBScreenshot screenshot = screenshots[index];
+
+                  return PhotoViewGalleryPageOptions(
+                    tightMode: true,
+                    heroAttributes: PhotoViewHeroAttributes(
+                      tag: index,
+                      transitionOnUserGestures: true,
+                    ),
+                    imageProvider: CachedNetworkImageProvider(
+                      screenshot.getURL(size: ScreenshotSize.fullHD) ?? '',
+                    ),
+                  );
+                },
+                itemCount: screenshots.length,
+              ),
             ),
           );
         },
@@ -115,20 +148,24 @@ class ScreenshotsTile extends ConsumerWidget {
                     height: 320 / thumbDelimiter,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12.0),
-                      child: CachedNetworkImage(
-                        fit: BoxFit.cover,
-                        fadeInDuration: const Duration(milliseconds: 100),
-                        imageUrl: screenshot.getURL() ?? '',
-                        placeholder: (context, url) => const Opacity(
-                          opacity: 0.3,
-                          child: ObservatoryProgressIndicator(
-                            size: 30,
+                      child: Hero(
+                        tag: index,
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          fadeInDuration: const Duration(milliseconds: 100),
+                          imageUrl: screenshot.getURL() ?? '',
+                          placeholder: (context, url) => const Opacity(
+                            opacity: 0.3,
+                            child: ObservatoryProgressIndicator(
+                              size: 30,
+                            ),
                           ),
+                          errorWidget: (context, url, error) =>
+                              const ImageError(
+                            isCompact: true,
+                          ),
+                          errorListener: (value) => true,
                         ),
-                        errorWidget: (context, url, error) => const ImageError(
-                          isCompact: true,
-                        ),
-                        errorListener: (value) => true,
                       ),
                     ),
                   ),
