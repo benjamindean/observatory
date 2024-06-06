@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/shared/models/deal.dart';
 
+import '../../../shared/ui/observatory_shimmer.dart';
+
 class DealPageSectionAsync<T> extends StatelessWidget {
   final AsyncValue<T> state;
   final Deal deal;
@@ -21,69 +23,68 @@ class DealPageSectionAsync<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      key: Key('deal-page-section-$heading'),
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 4.0),
-          child: Text(
-            heading,
-            style: context.themes.text.labelLarge?.copyWith(
-              color: context.colors.hint,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        key: Key('deal-page-section-$heading'),
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
+            child: Text(
+              heading,
+              style: context.themes.text.labelLarge?.copyWith(
+                color: context.colors.hint,
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
-          child: AnimatedSwitcher(
-            layoutBuilder: (
-              Widget? currentChild,
-              List<Widget> previousChildren,
-            ) {
-              return Stack(
-                alignment: Alignment.centerLeft,
-                children: <Widget>[
-                  ...previousChildren,
-                  if (currentChild != null) currentChild,
-                ],
-              );
-            },
-            duration: const Duration(milliseconds: 200),
-            child: state.when(
-              data: onData,
-              loading: () => Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: LinearProgressIndicator(
-                  borderRadius: BorderRadius.circular(12.0),
-                  minHeight: 2,
-                  color: context.colors.scheme.onSurfaceVariant,
-                ),
-              ),
-              error: (error, stackTrace) {
-                Logger().e(
-                  'Failed to load $heading for ${deal.titleParsed}',
-                  error: error,
-                  stackTrace: stackTrace,
-                );
-
-                FirebaseCrashlytics.instance.recordError(
-                  error,
-                  stackTrace,
-                );
-
-                return Text(
-                  'Unknown',
-                  style: context.themes.text.labelLarge?.copyWith(
-                    color: context.colors.disabled,
-                  ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
+            child: AnimatedSwitcher(
+              layoutBuilder: (
+                Widget? currentChild,
+                List<Widget> previousChildren,
+              ) {
+                return Stack(
+                  alignment: Alignment.centerLeft,
+                  children: <Widget>[
+                    ...previousChildren,
+                    if (currentChild != null) currentChild,
+                  ],
                 );
               },
+              duration: const Duration(milliseconds: 200),
+              child: state.when(
+                data: onData,
+                loading: () => const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  child: ObservatoryShimmer(),
+                ),
+                error: (error, stackTrace) {
+                  Logger().e(
+                    'Failed to load $heading for ${deal.titleParsed}',
+                    error: error,
+                    stackTrace: stackTrace,
+                  );
+
+                  FirebaseCrashlytics.instance.recordError(
+                    error,
+                    stackTrace,
+                  );
+
+                  return Text(
+                    'Unknown',
+                    style: context.themes.text.labelLarge?.copyWith(
+                      color: context.colors.disabled,
+                    ),
+                  );
+                },
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

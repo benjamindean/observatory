@@ -27,8 +27,16 @@ class TagsTile extends ConsumerWidget {
       heading: 'Tags',
       onData: (info) {
         final List<String> itadTags = info.itad?.tags ?? [];
-        final List<String> igdbThemes =
-            info.igdb?.themes.map((e) => e.name).nonNulls.toList() ?? [];
+        final List<String> igdbThemes = info.igdb?.themes
+                .map(
+                  (e) => e.name
+                      ?.split(' ')
+                      .map((word) => word.capitalize())
+                      .join(' '),
+                )
+                .nonNulls
+                .toList() ??
+            [];
 
         final List<String> tags = Set<String>.from(
           List<String>.from(itadTags)..addAll(igdbThemes),

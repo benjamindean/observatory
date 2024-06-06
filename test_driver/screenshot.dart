@@ -14,6 +14,7 @@ import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import './mocks/deals_mocks.dart';
 import './mocks/waitlist_mocks.dart';
@@ -38,6 +39,11 @@ void main() async {
   );
 
   await FirebaseAppCheck.instance.activate();
+
+  await Supabase.initialize(
+    url: GetIt.I<Secret>().supabaseUrl,
+    anonKey: GetIt.I<Secret>().supabaseAnonKey,
+  );
 
   runApp(
     ProviderScope(

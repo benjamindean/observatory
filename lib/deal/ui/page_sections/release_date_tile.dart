@@ -2,10 +2,10 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:observatory/deal/igdb_search_provider.dart';
+import 'package:observatory/deal/combined_details_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
+import 'package:observatory/shared/models/combined_details.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/models/igdb/igdb_game.dart';
 
 class ReleaseDateTile extends ConsumerWidget {
   final Deal deal;
@@ -17,16 +17,16 @@ class ReleaseDateTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<IGDBGame?> igdbState = ref.watch(
-      igdbSearchProvider(deal.titleParsed),
+    final AsyncValue<CombinedDetails> infoState = ref.watch(
+      combinedDetailsProvider(deal),
     );
 
-    return DealPageSectionAsync<IGDBGame?>(
-      state: igdbState,
+    return DealPageSectionAsync<CombinedDetails>(
+      state: infoState,
       deal: deal,
       heading: 'Release Date',
       onData: (data) {
-        final int? date = data?.first_release_date;
+        final int? date = data.igdb?.first_release_date;
 
         if (date == null) {
           return Text(

@@ -3,8 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:observatory/deal/igdb_search_provider.dart';
+import 'package:observatory/deal/combined_details_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
+import 'package:observatory/shared/models/combined_details.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/igdb/igdb_game.dart';
 import 'package:observatory/shared/widgets/image_error.dart';
@@ -24,8 +25,8 @@ class ScreenshotsTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const double thumbDelimiter = 2.5;
 
-    final AsyncValue<IGDBGame?> igdbState = ref.watch(
-      igdbSearchProvider(deal.titleParsed),
+    final AsyncValue<CombinedDetails> infoState = ref.watch(
+      combinedDetailsProvider(deal),
     );
 
     void openGallery(
@@ -38,79 +39,23 @@ class ScreenshotsTile extends ConsumerWidget {
         barrierColor: Colors.black.withOpacity(0.7),
         context: context,
         builder: (context) {
-          return Scaffold(
-            extendBody: true,
-            bottomNavigationBar: BottomAppBar(
-              shadowColor: Colors.transparent,
-              color: Colors.transparent,
-              key: Key('deal-page-bottom-app-bar-${deal.id}'),
-              elevation: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Expanded(
-                    flex: 50,
-                    child: BackButton(
-                      key: const Key('observatory-back-button-screenshot'),
-                      style: IconButton.styleFrom(
-                        backgroundColor: Colors.white10,
-                      ),
-                    ),
-                  ),
-                  const Expanded(
-                    flex: 50,
-                    child: SizedBox.expand(),
-                  ),
-                ],
-              ),
-            ),
-            backgroundColor: Colors.transparent,
-            body: Dismissible(
-              key: Key('gallery-${deal.id}'),
-              onDismissed: (direction) {
-                return context.pop();
-              },
-              resizeDuration: const Duration(milliseconds: 1),
-              direction: DismissDirection.vertical,
-              child: PhotoViewGallery.builder(
-                allowImplicitScrolling: true,
-                pageController: PageController(initialPage: index),
-                gaplessPlayback: true,
-                backgroundDecoration: const BoxDecoration(
-                  color: Colors.transparent,
-                ),
-                loadingBuilder: (context, event) => const Center(
-                  child: ObservatoryProgressIndicator(
-                    size: 40,
-                  ),
-                ),
-                scrollPhysics: const BouncingScrollPhysics(),
-                builder: (context, index) {
-                  final IGDBScreenshot screenshot = screenshots[index];
-
-                  return PhotoViewGalleryPageOptions(
-                    tightMode: true,
-                    minScale: PhotoViewComputedScale.contained,
-                    imageProvider: CachedNetworkImageProvider(
-                      screenshot.getURL(size: ScreenshotSize.fullHD) ?? '',
-                    ),
-                  );
-                },
-                itemCount: screenshots.length,
-              ),
-            ),
+          return GalleryView(
+            deal: deal,
+            index: index,
+            screenshots: screenshots,
           );
         },
       );
     }
 
-    return DealPageSectionAsync<IGDBGame?>(
-      state: igdbState,
+    return DealPageSectionAsync<CombinedDetails>(
+      state: infoState,
       deal: deal,
       heading: 'Screenshots',
       onData: (data) {
-        if (data == null || data.screenshots.isEmpty) {
+        final List<IGDBScreenshot> screenshots = data.igdb?.screenshots ?? [];
+
+        if (screenshots.isEmpty) {
           return Text(
             key: const Key('no-screenshots'),
             'No screenshots available.',
@@ -124,16 +69,16 @@ class ScreenshotsTile extends ConsumerWidget {
           key: Key('screenshots-tile-${deal.id}'),
           height: 360 / thumbDelimiter,
           child: ListView.builder(
-            itemCount: data.screenshots.length,
+            itemCount: screenshots.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              final IGDBScreenshot screenshot = data.screenshots[index];
+              final IGDBScreenshot screenshot = screenshots[index];
 
               return GestureDetector(
                 onTap: () => openGallery(
                   context,
                   index,
-                  data.screenshots,
+                  screenshots,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 8.0, 8.0, 8.0),
@@ -148,8 +93,8 @@ class ScreenshotsTile extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(12.0),
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        fadeInDuration: const Duration(milliseconds: 100),
-                        fadeOutDuration: const Duration(milliseconds: 100),
+                        fadeInDuration: const Duration(milliseconds: 200),
+                        fadeOutDuration: const Duration(milliseconds: 200),
                         imageUrl: screenshot.getURL() ?? '',
                         placeholder: (context, url) => const ImageError(
                           isCompact: true,
@@ -167,6 +112,86 @@ class ScreenshotsTile extends ConsumerWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class GalleryView extends StatelessWidget {
+  final Deal deal;
+  final int index;
+  final List<IGDBScreenshot> screenshots;
+
+  const GalleryView({
+    super.key,
+    required this.deal,
+    required this.index,
+    required this.screenshots,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBody: true,
+      bottomNavigationBar: BottomAppBar(
+        shadowColor: Colors.transparent,
+        color: Colors.transparent,
+        key: Key('deal-page-bottom-app-bar-${deal.id}'),
+        elevation: 0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Expanded(
+              flex: 50,
+              child: BackButton(
+                key: const Key('observatory-back-button-screenshot'),
+                style: IconButton.styleFrom(
+                  backgroundColor: Colors.white10,
+                ),
+              ),
+            ),
+            const Expanded(
+              flex: 50,
+              child: SizedBox.expand(),
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: Colors.transparent,
+      body: Dismissible(
+        key: Key('gallery-${deal.id}'),
+        onDismissed: (direction) {
+          return context.pop();
+        },
+        resizeDuration: const Duration(milliseconds: 1),
+        direction: DismissDirection.vertical,
+        child: PhotoViewGallery.builder(
+          allowImplicitScrolling: true,
+          pageController: PageController(initialPage: index),
+          gaplessPlayback: true,
+          backgroundDecoration: const BoxDecoration(
+            color: Colors.transparent,
+          ),
+          loadingBuilder: (context, event) => const Center(
+            child: ObservatoryProgressIndicator(
+              size: 40,
+            ),
+          ),
+          scrollPhysics: const BouncingScrollPhysics(),
+          builder: (context, index) {
+            final IGDBScreenshot screenshot = screenshots[index];
+
+            return PhotoViewGalleryPageOptions(
+              tightMode: true,
+              minScale: PhotoViewComputedScale.contained,
+              imageProvider: CachedNetworkImageProvider(
+                screenshot.getURL(size: ScreenshotSize.fullHD) ?? '',
+              ),
+            );
+          },
+          itemCount: screenshots.length,
+        ),
+      ),
     );
   }
 }

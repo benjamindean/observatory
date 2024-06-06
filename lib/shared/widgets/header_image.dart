@@ -21,8 +21,8 @@ class HeaderImage extends StatelessWidget {
     try {
       return CachedNetworkImage(
         fit: BoxFit.cover,
-        fadeInDuration: const Duration(milliseconds: 100),
-        fadeOutDuration: const Duration(milliseconds: 100),
+        fadeInDuration: const Duration(milliseconds: 200),
+        fadeOutDuration: const Duration(milliseconds: 200),
         imageUrl: url ?? '',
         placeholder: (context, url) => ImageError(isCompact: isCompact),
         errorWidget: (context, url, error) => ImageError(isCompact: isCompact),

@@ -22,7 +22,7 @@ class SearchOnTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
-      key: Key('search-on-tile-${deal.id}'),
+      key: Key('search-on-tile-${deal.id}-$title'),
       onTap: () {
         launchUrl(
           link,
