@@ -37,7 +37,7 @@ class DealAppBar extends ConsumerWidget {
         expandedTitleScale: 1,
         titlePadding: EdgeInsets.zero,
         title: Container(
-          color: context.elevatedCanvasColor,
+          color: context.elevatedBottomAppBarColor,
           child: ListTile(
             title: Tooltip(
               message: deal.titleParsed,

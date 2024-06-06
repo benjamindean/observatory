@@ -91,10 +91,7 @@ class ScreenshotsTile extends ConsumerWidget {
 
                   return PhotoViewGalleryPageOptions(
                     tightMode: true,
-                    heroAttributes: PhotoViewHeroAttributes(
-                      tag: index,
-                      transitionOnUserGestures: true,
-                    ),
+                    minScale: PhotoViewComputedScale.contained,
                     imageProvider: CachedNetworkImageProvider(
                       screenshot.getURL(size: ScreenshotSize.fullHD) ?? '',
                     ),
@@ -149,24 +146,18 @@ class ScreenshotsTile extends ConsumerWidget {
                     height: 320 / thumbDelimiter,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12.0),
-                      child: Hero(
-                        tag: index,
-                        child: CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          fadeInDuration: const Duration(milliseconds: 100),
-                          imageUrl: screenshot.getURL() ?? '',
-                          placeholder: (context, url) => const Opacity(
-                            opacity: 0.3,
-                            child: ObservatoryProgressIndicator(
-                              size: 30,
-                            ),
-                          ),
-                          errorWidget: (context, url, error) =>
-                              const ImageError(
-                            isCompact: true,
-                          ),
-                          errorListener: (value) => true,
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        fadeInDuration: const Duration(milliseconds: 100),
+                        fadeOutDuration: const Duration(milliseconds: 100),
+                        imageUrl: screenshot.getURL() ?? '',
+                        placeholder: (context, url) => const ImageError(
+                          isCompact: true,
                         ),
+                        errorWidget: (context, url, error) => const ImageError(
+                          isCompact: true,
+                        ),
+                        errorListener: (value) => true,
                       ),
                     ),
                   ),

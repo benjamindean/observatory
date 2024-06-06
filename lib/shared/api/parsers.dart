@@ -97,13 +97,11 @@ class Parsers {
   }
 
   static List<IGDBGame>? igdbSearchResult(contents) {
-    final dynamic rawResponse = json.decode(contents.toString());
-
-    if (rawResponse == null || rawResponse.isEmpty) {
+    if (contents == null || contents.isEmpty) {
       return null;
     }
 
-    return List.from(rawResponse)
+    return List.from(contents)
         .map(
           (result) => result['game'] != null
               ? IGDBGame.fromJson(result['game'])

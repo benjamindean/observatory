@@ -1,10 +1,10 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/deal/info_provider.dart';
+import 'package:observatory/deal/combined_details_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
+import 'package:observatory/shared/models/combined_details.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/review.dart';
 import 'package:observatory/shared/ui/dot_separator.dart';
 
@@ -34,17 +34,17 @@ class ReviewsTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<Info?> infoState = ref.watch(
-      infoProvider(deal.id),
+    final AsyncValue<CombinedDetails> infoState = ref.watch(
+      combinedDetailsProvider(deal),
     );
 
-    return DealPageSectionAsync<Info?>(
+    return DealPageSectionAsync<CombinedDetails>(
       state: infoState,
       deal: deal,
       heading: 'Reviews',
       onData: (info) {
         final Review? review =
-            info?.reviews.where((e) => e.score != null).firstOrNull;
+            info.itad?.reviews.where((e) => e.score != null).firstOrNull;
 
         if (review == null) {
           return Text(

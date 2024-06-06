@@ -53,6 +53,7 @@ dependencies:
         ref: b783000
   photo_view: ^0.15.0
   supabase_flutter: ^2.5.4
+  uuid: ^4.4.0
 
 dependency_overrides:
   intl: any

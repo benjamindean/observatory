@@ -25,8 +25,13 @@ class IGDBAPI {
 
   static IGDBAPI create(String? directory) {
     final options = CacheOptions(
-      store: HiveCacheStore(directory),
-      policy: CachePolicy.noCache,
+      store: HiveCacheStore(
+        directory,
+        hiveBoxName: 'observatory_dio_cache',
+      ),
+      policy: CachePolicy.forceCache,
+      priority: CachePriority.high,
+      hitCacheOnErrorExcept: [401, 404],
       maxStale: const Duration(days: 14),
       allowPostMethod: true,
       keyBuilder: (request) {
@@ -37,8 +42,12 @@ class IGDBAPI {
       },
     );
 
-    final Dio dio = Dio(BaseOptions(responseType: ResponseType.plain))
-      ..interceptors.add(DioCacheInterceptor(options: options));
+    final Dio dio = Dio(
+      BaseOptions(
+        baseUrl: 'https://api.igdb.com',
+        responseType: ResponseType.json,
+      ),
+    )..interceptors.add(DioCacheInterceptor(options: options));
 
     return IGDBAPI(
       dio: dio,
@@ -51,7 +60,6 @@ class IGDBAPI {
   }) async {
     try {
       final IGDBAccessToken? token = await getIGDBToken();
-      final Uri url = Uri.https('api.igdb.com', '/v4/search');
       final String cleanTitle = const AsciiDecoder().convert(
         utf8.encode(
           title.replaceAll(RegExp(r"[^A-Za-z0-9().,'&;?/:]+"), ' ').trim(),
@@ -59,18 +67,13 @@ class IGDBAPI {
       );
 
       final response = await dio.post(
-        options: cacheOptions
-            .copyWith(
-              policy: CachePolicy.request,
-            )
-            .toOptions()
-            .copyWith(
+        options: cacheOptions.toOptions().copyWith(
           headers: {
             'Client-ID': GetIt.I<Secret>().igdbClientId,
             'Authorization': 'Bearer ${token?.token}',
           },
         ),
-        url.toString(),
+        '/v4/search',
         data: [
           'search "$cleanTitle";',
           'where game != null & game.name ~ "$cleanTitle" | name ~ "$cleanTitle";',
@@ -88,7 +91,7 @@ class IGDBAPI {
         ].join(' '),
       );
 
-      return Parsers.igdbSearchResult(response);
+      return Parsers.igdbSearchResult(response.data);
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch IGDB search result',
@@ -110,7 +113,8 @@ class IGDBAPI {
 
     if (cachedToken != null) {
       final double currentDate = DateTime.now().millisecondsSinceEpoch / 1000;
-      final bool isExpired = cachedToken.expires_at < currentDate;
+      final bool isExpired =
+          cachedToken.expires_at < currentDate + 60 * 60 * 24;
 
       if (isExpired) {
         return await getNewIGDBToken();

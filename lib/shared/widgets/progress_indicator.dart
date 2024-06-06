@@ -15,7 +15,7 @@ class ObservatoryProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpinKitDualRing(
-      key: const Key('progress_indicator'),
+      key: const Key('progress-indicator'),
       lineWidth: lineWidth,
       color: context.colors.scheme.primary,
       size: size,

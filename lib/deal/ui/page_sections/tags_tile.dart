@@ -1,11 +1,11 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/deal/info_provider.dart';
+import 'package:observatory/deal/combined_details_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
 import 'package:observatory/shared/context_extension.dart';
+import 'package:observatory/shared/models/combined_details.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/models/info.dart';
 
 class TagsTile extends ConsumerWidget {
   final Deal deal;
@@ -17,18 +17,24 @@ class TagsTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<Info?> infoState = ref.watch(
-      infoProvider(deal.id),
+    final AsyncValue<CombinedDetails> infoState = ref.watch(
+      combinedDetailsProvider(deal),
     );
 
-    return DealPageSectionAsync<Info?>(
+    return DealPageSectionAsync<CombinedDetails>(
       state: infoState,
       deal: deal,
       heading: 'Tags',
       onData: (info) {
-        final List<String>? tags = info?.tags;
+        final List<String> itadTags = info.itad?.tags ?? [];
+        final List<String> igdbThemes =
+            info.igdb?.themes.map((e) => e.name).nonNulls.toList() ?? [];
 
-        if (tags == null || tags.isEmpty) {
+        final List<String> tags = Set<String>.from(
+          List<String>.from(itadTags)..addAll(igdbThemes),
+        ).toList();
+
+        if (tags.isEmpty) {
           return Text(
             key: const Key('no-tags-available'),
             'No tags available.',
