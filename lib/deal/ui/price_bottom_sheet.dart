@@ -27,6 +27,7 @@ class PriceBottomSheet extends ConsumerWidget {
               padding: const EdgeInsets.all(8.0),
               child: PriceCard(
                 price: price,
+                hasBottomSheet: false,
               ),
             ),
             Column(

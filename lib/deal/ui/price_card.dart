@@ -10,9 +10,12 @@ import 'package:observatory/shared/ui/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PriceCard extends StatelessWidget {
+  final bool hasBottomSheet;
+
   const PriceCard({
     super.key,
     required this.price,
+    this.hasBottomSheet = true,
   });
 
   final Price price;
@@ -29,17 +32,19 @@ class PriceCard extends StatelessWidget {
           mode: LaunchMode.externalApplication,
         );
       },
-      onLongPress: () {
-        HapticFeedback.mediumImpact();
+      onLongPress: hasBottomSheet
+          ? () {
+              HapticFeedback.mediumImpact();
 
-        showModalBottomSheet(
-          context: context,
-          useSafeArea: true,
-          builder: (BuildContext context) {
-            return PriceBottomSheet(price: price);
-          },
-        );
-      },
+              showModalBottomSheet(
+                context: context,
+                useSafeArea: true,
+                builder: (BuildContext context) {
+                  return PriceBottomSheet(price: price);
+                },
+              );
+            }
+          : null,
       child: Card(
         surfaceTintColor: context.colors.scheme.surfaceTint,
         elevation: CARD_ELEVATION,

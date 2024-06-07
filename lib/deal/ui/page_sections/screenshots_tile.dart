@@ -35,6 +35,7 @@ class ScreenshotsTile extends ConsumerWidget {
       final List<IGDBScreenshot> screenshots,
     ) {
       showDialog(
+        useSafeArea: false,
         barrierDismissible: false,
         barrierColor: Colors.black.withOpacity(0.7),
         context: context,
@@ -132,6 +133,7 @@ class GalleryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      extendBodyBehindAppBar: true,
       bottomNavigationBar: BottomAppBar(
         shadowColor: Colors.transparent,
         color: Colors.transparent,

@@ -10,19 +10,19 @@ extension BuildContextEntension<T> on BuildContext {
       MediaQuery.of(this).size.width >= 650.0;
 
   Color get elevatedCanvasColor => ElevationOverlay.applySurfaceTint(
-        colors.scheme.surface,
+        colors.scheme.surfaceContainer,
         colors.scheme.surfaceTint,
         1,
       );
 
   Color get elevatedBottomAppBarColor => ElevationOverlay.applySurfaceTint(
-        colors.scheme.surface,
+        colors.scheme.surfaceContainer,
         colors.scheme.surfaceTint,
         APPBAR_ELEVATION,
       );
 
   Color get highElevatedCanvasColor => ElevationOverlay.applySurfaceTint(
-        colors.scheme.surface,
+        colors.scheme.surfaceContainer,
         colors.scheme.surfaceTint,
         10,
       );
