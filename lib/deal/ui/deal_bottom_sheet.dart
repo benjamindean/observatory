@@ -23,78 +23,80 @@ class DealBottomSheet extends ConsumerWidget {
     );
     final bool isInWaitlist = waitlist.contains(deal.id);
 
-    return Column(
-      key: Key('deal-bottom-sheet-${deal.id}'),
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ListTile(
-          tileColor: context.colors.scheme.surfaceContainer,
-          contentPadding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-          title: Text(
-            deal.titleParsed,
-            style: context.themes.text.titleMedium?.copyWith(
-              color: context.colors.scheme.onSurface,
+    return SafeArea(
+      child: Column(
+        key: Key('deal-bottom-sheet-${deal.id}'),
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            tileColor: context.colors.scheme.surfaceContainer,
+            contentPadding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+            title: Text(
+              deal.titleParsed,
+              style: context.themes.text.titleMedium?.copyWith(
+                color: context.colors.scheme.onSurface,
+              ),
             ),
           ),
-        ),
-        Column(
-          children: [
-            ListTile(
-              leading: Icon(
-                isInWaitlist ? Icons.favorite : Icons.favorite_border,
-                color: context.colors.primary,
-              ),
-              title: Text(
-                isInWaitlist ? 'Remove from Waitlist' : 'Add to Waitlist',
-              ),
-              onTap: () {
-                if (isInWaitlist) {
-                  return addDealToWaitlist(
+          Column(
+            children: [
+              ListTile(
+                leading: Icon(
+                  isInWaitlist ? Icons.favorite : Icons.favorite_border,
+                  color: context.colors.primary,
+                ),
+                title: Text(
+                  isInWaitlist ? 'Remove from Waitlist' : 'Add to Waitlist',
+                ),
+                onTap: () {
+                  if (isInWaitlist) {
+                    return addDealToWaitlist(
+                      context: context,
+                      ref: ref,
+                      deal: deal,
+                      showToast: false,
+                    );
+                  }
+
+                  return removeDealFromWaitlist(
                     context: context,
                     ref: ref,
                     deal: deal,
                     showToast: false,
                   );
-                }
-
-                return removeDealFromWaitlist(
-                  context: context,
-                  ref: ref,
-                  deal: deal,
-                  showToast: false,
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.open_in_browser,
-                color: context.colors.scheme.secondary,
+                },
               ),
-              title: const Text('Open in Browser'),
-              onTap: deal.prices?.firstOrNull != null
-                  ? () {
-                      openDealLink(deal);
-                      context.pop();
-                    }
-                  : null,
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.share,
-                color: context.colors.scheme.tertiary,
+              ListTile(
+                leading: Icon(
+                  Icons.open_in_browser,
+                  color: context.colors.scheme.secondary,
+                ),
+                title: const Text('Open in Browser'),
+                onTap: deal.prices?.firstOrNull != null
+                    ? () {
+                        openDealLink(deal);
+                        context.pop();
+                      }
+                    : null,
               ),
-              title: const Text('Share Link'),
-              onTap: deal.prices?.firstOrNull != null
-                  ? () {
-                      shareDeal(deal);
+              ListTile(
+                leading: Icon(
+                  Icons.share,
+                  color: context.colors.scheme.tertiary,
+                ),
+                title: const Text('Share Link'),
+                onTap: deal.prices?.firstOrNull != null
+                    ? () {
+                        shareDeal(deal);
 
-                      context.pop();
-                    }
-                  : null,
-            ),
-          ],
-        ),
-      ],
+                        context.pop();
+                      }
+                    : null,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
