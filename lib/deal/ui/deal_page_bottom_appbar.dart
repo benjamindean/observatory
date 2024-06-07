@@ -20,6 +20,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
     return BottomAppBar(
       key: Key('deal-page-bottom-app-bar-${deal.id}'),
       elevation: APPBAR_ELEVATION,
+      surfaceTintColor: context.colors.scheme.surfaceTint,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,

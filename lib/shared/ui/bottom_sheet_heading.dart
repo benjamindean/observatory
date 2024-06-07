@@ -14,11 +14,11 @@ class BottomSheetHeading extends StatelessWidget {
     return ListTile(
       key: Key('bottom-sheet-heading-$text'),
       visualDensity: VisualDensity.compact,
-      tileColor: context.colors.scheme.surface,
+      tileColor: context.colors.scheme.surfaceContainer,
       title: Text(
         text,
         style: context.textStyles.labelLarge.copyWith(
-          color: context.colors.hint,
+          color: context.colors.scheme.onSurfaceVariant,
         ),
       ),
     );

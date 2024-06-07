@@ -39,6 +39,7 @@ class DealCardExpanded extends ConsumerWidget {
         showModalBottomSheet(
           context: context,
           useSafeArea: true,
+          useRootNavigator: true,
           builder: (BuildContext context) {
             return Consumer(
               builder: (context, ref, _) {

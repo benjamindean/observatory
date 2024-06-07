@@ -28,11 +28,13 @@ class DealBottomSheet extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
-          tileColor: context.colors.scheme.surface,
+          tileColor: context.colors.scheme.surfaceContainer,
           contentPadding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
           title: Text(
             deal.titleParsed,
-            style: context.themes.text.titleMedium,
+            style: context.themes.text.titleMedium?.copyWith(
+              color: context.colors.scheme.onSurface,
+            ),
           ),
         ),
         Column(
