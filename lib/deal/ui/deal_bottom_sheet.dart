@@ -24,90 +24,95 @@ class DealBottomSheet extends ConsumerWidget {
     final bool isInWaitlist = waitlist.contains(deal.id);
 
     return Container(
-      color: context.colors.scheme.surfaceContainer,
+      color: context.colors.scheme.surface,
       child: SafeArea(
-        child: Column(
-          key: Key('deal-bottom-sheet-${deal.id}'),
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                deal.titleParsed,
-                style: context.themes.text.titleMedium?.copyWith(
-                  color: context.colors.scheme.onSurface,
+        child: Container(
+          color: context.colors.scheme.surfaceContainer,
+          child: Column(
+            key: Key('deal-bottom-sheet-${deal.id}'),
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  deal.titleParsed,
+                  style: context.themes.text.titleMedium?.copyWith(
+                    color: context.colors.scheme.onSurface,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: context.colors.scheme.surface,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
+              Container(
+                decoration: BoxDecoration(
+                  color: context.colors.scheme.surface,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      isInWaitlist ? Icons.favorite : Icons.favorite_border,
-                      color: context.colors.primary,
-                    ),
-                    title: Text(
-                      isInWaitlist ? 'Remove from Waitlist' : 'Add to Waitlist',
-                    ),
-                    onTap: () {
-                      if (isInWaitlist) {
-                        return addDealToWaitlist(
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(
+                        isInWaitlist ? Icons.favorite : Icons.favorite_border,
+                        color: context.colors.primary,
+                      ),
+                      title: Text(
+                        isInWaitlist
+                            ? 'Remove from Waitlist'
+                            : 'Add to Waitlist',
+                      ),
+                      onTap: () {
+                        if (isInWaitlist) {
+                          return addDealToWaitlist(
+                            context: context,
+                            ref: ref,
+                            deal: deal,
+                            showToast: false,
+                          );
+                        }
+
+                        return removeDealFromWaitlist(
                           context: context,
                           ref: ref,
                           deal: deal,
                           showToast: false,
                         );
-                      }
-
-                      return removeDealFromWaitlist(
-                        context: context,
-                        ref: ref,
-                        deal: deal,
-                        showToast: false,
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.open_in_browser,
-                      color: context.colors.scheme.secondary,
+                      },
                     ),
-                    title: const Text('Open in Browser'),
-                    onTap: deal.prices?.firstOrNull != null
-                        ? () {
-                            openDealLink(deal);
-                            context.pop();
-                          }
-                        : null,
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.share,
-                      color: context.colors.scheme.tertiary,
+                    ListTile(
+                      leading: Icon(
+                        Icons.open_in_browser,
+                        color: context.colors.scheme.secondary,
+                      ),
+                      title: const Text('Open in Browser'),
+                      onTap: deal.prices?.firstOrNull != null
+                          ? () {
+                              openDealLink(deal);
+                              context.pop();
+                            }
+                          : null,
                     ),
-                    title: const Text('Share Link'),
-                    onTap: deal.prices?.firstOrNull != null
-                        ? () {
-                            shareDeal(deal);
+                    ListTile(
+                      leading: Icon(
+                        Icons.share,
+                        color: context.colors.scheme.tertiary,
+                      ),
+                      title: const Text('Share Link'),
+                      onTap: deal.prices?.firstOrNull != null
+                          ? () {
+                              shareDeal(deal);
 
-                            context.pop();
-                          }
-                        : null,
-                  ),
-                ],
+                              context.pop();
+                            }
+                          : null,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

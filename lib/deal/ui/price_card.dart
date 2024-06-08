@@ -46,6 +46,7 @@ class PriceCard extends StatelessWidget {
             }
           : null,
       child: Card(
+        color: context.colors.scheme.surface,
         surfaceTintColor: context.colors.scheme.surfaceTint,
         elevation: CARD_ELEVATION,
         child: Column(

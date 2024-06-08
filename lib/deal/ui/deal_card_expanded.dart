@@ -50,6 +50,7 @@ class DealCardExpanded extends ConsumerWidget {
         );
       },
       child: Card(
+        color: context.colors.scheme.surface,
         surfaceTintColor: context.colors.scheme.surfaceTint,
         elevation: CARD_ELEVATION,
         child: Column(

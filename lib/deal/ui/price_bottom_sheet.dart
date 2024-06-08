@@ -18,59 +18,62 @@ class PriceBottomSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      color: context.colors.scheme.surfaceContainer,
+      color: context.colors.scheme.surface,
       child: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: PriceCard(
-                price: price,
-                hasBottomSheet: false,
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: context.colors.scheme.surface,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
+        child: Container(
+          color: context.colors.scheme.surfaceContainer,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: PriceCard(
+                  price: price,
+                  hasBottomSheet: false,
                 ),
               ),
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      Icons.open_in_browser,
-                      color: context.colors.scheme.secondary,
-                    ),
-                    title: const Text('Open in Browser'),
-                    onTap: () {
-                      launchUrl(
-                        Uri.parse(price.url),
-                        mode: LaunchMode.externalApplication,
-                      );
-                    },
+              Container(
+                decoration: BoxDecoration(
+                  color: context.colors.scheme.surface,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
                   ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.share,
-                      color: context.colors.scheme.tertiary,
+                ),
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(
+                        Icons.open_in_browser,
+                        color: context.colors.scheme.secondary,
+                      ),
+                      title: const Text('Open in Browser'),
+                      onTap: () {
+                        launchUrl(
+                          Uri.parse(price.url),
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
                     ),
-                    title: const Text('Share Link'),
-                    onTap: () {
-                      Share.share(
-                        price.url.toString(),
-                      );
+                    ListTile(
+                      leading: Icon(
+                        Icons.share,
+                        color: context.colors.scheme.tertiary,
+                      ),
+                      title: const Text('Share Link'),
+                      onTap: () {
+                        Share.share(
+                          price.url.toString(),
+                        );
 
-                      context.pop();
-                    },
-                  )
-                ],
+                        context.pop();
+                      },
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

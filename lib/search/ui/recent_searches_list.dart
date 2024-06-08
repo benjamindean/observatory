@@ -79,6 +79,7 @@ class RecentSearchesList extends ConsumerWidget {
               }
 
               return Card(
+                color: context.colors.scheme.surface,
                 surfaceTintColor: context.colors.scheme.surfaceTint,
                 elevation: CARD_ELEVATION,
                 child: InkWell(
