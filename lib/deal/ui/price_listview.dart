@@ -18,9 +18,9 @@ class PriceListView extends ConsumerWidget {
 
     if (allPrices.isEmpty) {
       return SliverPadding(
-        key: const Key('no-prices'),
-        padding: const EdgeInsets.only(bottom: 16.0),
+        padding: const EdgeInsets.only(bottom: 8.0),
         sliver: SliverToBoxAdapter(
+          key: const Key('no-prices'),
           child: ListTile(
             title: Text(
               'No prices are available for this product at the selected stores.',

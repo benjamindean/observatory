@@ -10,19 +10,17 @@ class IsThereAnyDealInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return Padding(
       key: const Key('is_there_any_deal_info'),
-      dense: true,
-      subtitle: const Text(''),
-      title: RichText(
+      padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
+      child: RichText(
         text: TextSpan(
           style: context.themes.text.labelMedium?.copyWith(
             color: context.colors.disabled,
           ),
           children: [
             const TextSpan(
-              text:
-                  'Information about current deals and prices is provided by ',
+              text: 'Information about current prices is provided by ',
             ),
             TextSpan(
               text: 'isThereAnyDeal.com',
@@ -35,6 +33,20 @@ class IsThereAnyDealInfo extends StatelessWidget {
                   );
                 },
             ),
+            const TextSpan(
+              text: '. All the other informations is provided by ',
+            ),
+            TextSpan(
+              text: 'IGDB.',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  launchUrl(
+                    Uri.parse('https://igdb.com/'),
+                    mode: LaunchMode.externalApplication,
+                  );
+                },
+            )
           ],
         ),
       ),

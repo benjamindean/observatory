@@ -25,9 +25,9 @@ class SummaryTile extends ConsumerWidget {
       deal: deal,
       heading: 'Summary',
       onData: (data) {
-        final String? summary = data.igdb?.summary;
+        final String summary = data.igdb?.summary ?? '';
 
-        if (summary == null || summary.isEmpty) {
+        if (summary.isEmpty) {
           return Text(
             key: const Key('no-summary'),
             'No summary available.',

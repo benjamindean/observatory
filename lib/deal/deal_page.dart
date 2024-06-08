@@ -7,6 +7,7 @@ import 'package:observatory/deal/ui/deal_page_bottom_appbar.dart';
 import 'package:observatory/deal/ui/page_sections/links_tile.dart';
 import 'package:observatory/deal/ui/page_sections/lowest_price_tile.dart';
 import 'package:observatory/deal/ui/page_sections/release_date_tile.dart';
+import 'package:observatory/deal/ui/page_sections/supported_platforms_tile.dart';
 import 'package:observatory/deal/ui/price_listview.dart';
 import 'package:observatory/deal/ui/page_sections/reviews_tile.dart';
 import 'package:observatory/deal/deal_provider.dart';
@@ -50,10 +51,12 @@ class DealPage extends ConsumerWidget {
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
+                    const SizedBox(height: 8),
                     SummaryTile(deal: deal),
                     ReleaseDateTile(deal: deal),
-                    ScreenshotsTile(deal: deal),
                     TagsTile(deal: deal),
+                    SupportedPlatformsTile(deal: deal),
+                    ScreenshotsTile(deal: deal),
                     ReviewsTile(deal: deal),
                     LowestPriceTile(deal: deal),
                     BundlesTile(deal: deal),

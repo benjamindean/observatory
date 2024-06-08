@@ -87,7 +87,7 @@ class RecentSearchesList extends ConsumerWidget {
                   child: ListTile(
                     contentPadding: const EdgeInsets.fromLTRB(16.0, 0, 0, 0),
                     trailing: IconButton(
-                      icon: const Icon(Icons.remove_circle_rounded),
+                      icon: const Icon(Icons.cancel),
                       onPressed: () async {
                         await ref
                             .read(asynRecentsProvider.notifier)

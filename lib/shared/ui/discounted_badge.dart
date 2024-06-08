@@ -21,19 +21,12 @@ class DiscountedBadge extends ConsumerWidget {
       alignment: Alignment.center,
       isLabelVisible: discountedCount > 0,
       offset: const Offset(20.0, -8.0),
-      label: discountedCount > 1000
-          ? Text(
-              '1000+',
-              style: context.textStyles.labelSmall.copyWith(
-                color: context.colors.scheme.onSecondaryContainer,
-              ),
-            )
-          : Text(
-              discountedCount.toString(),
-              style: context.textStyles.labelSmall.copyWith(
-                color: context.colors.scheme.onSecondaryContainer,
-              ),
-            ),
+      label: Text(
+        discountedCount > 1000 ? '1000+' : discountedCount.toString(),
+        style: context.textStyles.labelSmall.copyWith(
+          color: context.colors.scheme.onSecondaryContainer,
+        ),
+      ),
       child: const Icon(Icons.favorite),
     );
   }
