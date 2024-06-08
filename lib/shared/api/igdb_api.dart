@@ -78,6 +78,7 @@ class IGDBAPI {
           'search "$cleanTitle";',
           'where game != null & game.name ~ "$cleanTitle" | name ~ "$cleanTitle";',
           'fields',
+          'game.id,',
           'game.name,',
           'game.summary,',
           'game.first_release_date,',

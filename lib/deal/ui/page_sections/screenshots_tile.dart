@@ -146,6 +146,7 @@ class GalleryView extends StatelessWidget {
             Expanded(
               flex: 50,
               child: BackButton(
+                color: Colors.white30,
                 key: const Key('observatory-back-button-screenshot'),
                 style: IconButton.styleFrom(
                   backgroundColor: Colors.white10,

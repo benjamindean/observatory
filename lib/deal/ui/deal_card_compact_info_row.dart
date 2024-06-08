@@ -1,5 +1,6 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:observatory/deal/ui/current_price.dart';
 import 'package:observatory/deal/ui/price_cut.dart';
 import 'package:observatory/shared/models/deal.dart';
@@ -31,7 +32,9 @@ class DealCardCompactInfoRow extends StatelessWidget {
             maxLines: 2,
             style: context.themes.text.titleSmall?.copyWith(
               color: context.colors.scheme.onSurface,
-              fontWeight: FontWeight.bold,
+              fontFamily: GoogleFonts.openSans(
+                fontWeight: FontWeight.w600,
+              ).fontFamily,
             ),
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.start,

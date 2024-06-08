@@ -30,6 +30,7 @@ class HomePage extends ConsumerWidget {
       key: const Key('home-page'),
       bottomNavigationBar: NavigationBar(
         elevation: APPBAR_ELEVATION,
+        backgroundColor: context.colors.scheme.surfaceContainer,
         surfaceTintColor: context.colors.scheme.surfaceTint,
         onDestinationSelected: (int index) async {
           child.goBranch(index);

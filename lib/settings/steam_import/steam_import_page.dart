@@ -7,6 +7,7 @@ import 'package:observatory/settings/steam_import/ui/steam_import_filter.dart';
 import 'package:observatory/settings/steam_import/ui/steam_import_form.dart';
 import 'package:observatory/settings/steam_import/ui/unfinished_import_dialog.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/observatory_back_button.dart';
 import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
@@ -21,6 +22,8 @@ class SteamImportPage extends ConsumerWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
+        elevation: APPBAR_ELEVATION,
+        surfaceTintColor: context.colors.scheme.surfaceTint,
         child: Column(
           children: [
             Row(

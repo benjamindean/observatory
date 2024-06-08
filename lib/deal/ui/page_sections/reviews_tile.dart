@@ -6,6 +6,7 @@ import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
 import 'package:observatory/shared/models/combined_details.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/review.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/dot_separator.dart';
 
 class ReviewsTile extends ConsumerWidget {
@@ -60,25 +61,33 @@ class ReviewsTile extends ConsumerWidget {
           );
         }
 
-        return RichText(
-          key: Key('reviews-tile-${deal.id}'),
-          text: TextSpan(
-            style: context.themes.text.labelLarge?.copyWith(
-              color: context.colors.scheme.onSurface,
-            ),
-            children: [
-              TextSpan(
-                text: '${review.score.toString()}%',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: getReviewColor(context, review),
+        return Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: Chip(
+            surfaceTintColor: context.colors.scheme.surfaceTint,
+            elevation: CARD_ELEVATION,
+            label: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  '${review.score.toString()}%',
+                  style: context.textStyles.labelLarge.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: getReviewColor(context, review),
+                  ),
                 ),
-              ),
-              DotSeparator.textSpan(context),
-              TextSpan(
-                text: review.source,
-              ),
-            ],
+                const DotSeparator(),
+                Text(
+                  review.source.toString(),
+                  style: context.textStyles.labelLarge.copyWith(
+                    color: context.colors.scheme.onSurface,
+                  ),
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.all(6.0),
+            visualDensity: VisualDensity.compact,
+            side: BorderSide.none,
           ),
         );
       },

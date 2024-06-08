@@ -23,79 +23,92 @@ class DealBottomSheet extends ConsumerWidget {
     );
     final bool isInWaitlist = waitlist.contains(deal.id);
 
-    return SafeArea(
-      child: Column(
-        key: Key('deal-bottom-sheet-${deal.id}'),
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            tileColor: context.colors.scheme.surfaceContainer,
-            contentPadding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-            title: Text(
-              deal.titleParsed,
-              style: context.themes.text.titleMedium?.copyWith(
-                color: context.colors.scheme.onSurface,
+    return Container(
+      color: context.colors.scheme.surfaceContainer,
+      child: SafeArea(
+        child: Column(
+          key: Key('deal-bottom-sheet-${deal.id}'),
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                deal.titleParsed,
+                style: context.themes.text.titleMedium?.copyWith(
+                  color: context.colors.scheme.onSurface,
+                ),
               ),
             ),
-          ),
-          Column(
-            children: [
-              ListTile(
-                leading: Icon(
-                  isInWaitlist ? Icons.favorite : Icons.favorite_border,
-                  color: context.colors.primary,
+            Container(
+              decoration: BoxDecoration(
+                color: context.colors.scheme.surface,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
                 ),
-                title: Text(
-                  isInWaitlist ? 'Remove from Waitlist' : 'Add to Waitlist',
-                ),
-                onTap: () {
-                  if (isInWaitlist) {
-                    return addDealToWaitlist(
-                      context: context,
-                      ref: ref,
-                      deal: deal,
-                      showToast: false,
-                    );
-                  }
-
-                  return removeDealFromWaitlist(
-                    context: context,
-                    ref: ref,
-                    deal: deal,
-                    showToast: false,
-                  );
-                },
               ),
-              ListTile(
-                leading: Icon(
-                  Icons.open_in_browser,
-                  color: context.colors.scheme.secondary,
-                ),
-                title: const Text('Open in Browser'),
-                onTap: deal.prices?.firstOrNull != null
-                    ? () {
-                        openDealLink(deal);
-                        context.pop();
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(
+                      isInWaitlist ? Icons.favorite : Icons.favorite_border,
+                      color: context.colors.primary,
+                    ),
+                    title: Text(
+                      isInWaitlist ? 'Remove from Waitlist' : 'Add to Waitlist',
+                    ),
+                    onTap: () {
+                      if (isInWaitlist) {
+                        return addDealToWaitlist(
+                          context: context,
+                          ref: ref,
+                          deal: deal,
+                          showToast: false,
+                        );
                       }
-                    : null,
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.share,
-                  color: context.colors.scheme.tertiary,
-                ),
-                title: const Text('Share Link'),
-                onTap: deal.prices?.firstOrNull != null
-                    ? () {
-                        shareDeal(deal);
 
-                        context.pop();
-                      }
-                    : null,
+                      return removeDealFromWaitlist(
+                        context: context,
+                        ref: ref,
+                        deal: deal,
+                        showToast: false,
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.open_in_browser,
+                      color: context.colors.scheme.secondary,
+                    ),
+                    title: const Text('Open in Browser'),
+                    onTap: deal.prices?.firstOrNull != null
+                        ? () {
+                            openDealLink(deal);
+                            context.pop();
+                          }
+                        : null,
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.share,
+                      color: context.colors.scheme.tertiary,
+                    ),
+                    title: const Text('Share Link'),
+                    onTap: deal.prices?.firstOrNull != null
+                        ? () {
+                            shareDeal(deal);
+
+                            context.pop();
+                          }
+                        : null,
+                  ),
+                ],
               ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
