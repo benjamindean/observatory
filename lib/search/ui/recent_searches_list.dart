@@ -1,11 +1,10 @@
-import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/search/search_provider.dart';
-import 'package:observatory/shared/ui/constants.dart';
+import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
@@ -78,10 +77,7 @@ class RecentSearchesList extends ConsumerWidget {
                 );
               }
 
-              return Card(
-                color: context.colors.scheme.surface,
-                surfaceTintColor: context.colors.scheme.surfaceTint,
-                elevation: CARD_ELEVATION,
+              return ObservatoryCard(
                 child: InkWell(
                   onTap: () async {
                     await ref

@@ -10,7 +10,7 @@ import 'package:observatory/deal/ui/deal_card_compact_info_row.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/ui/constants.dart';
+import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:observatory/shared/widgets/header_image.dart';
 import 'package:observatory/waitlist/waitlist_provider.dart';
 
@@ -86,10 +86,7 @@ class DealCardCompact extends ConsumerWidget {
             },
           );
         },
-        child: Card(
-          color: context.colors.scheme.surface,
-          surfaceTintColor: context.colors.scheme.surfaceTint,
-          elevation: CARD_ELEVATION,
+        child: ObservatoryCard(
           child: SizedBox(
             height: showHeaders ? (IMAGE_HEIGHT / 3.4) : 80,
             child: Row(
