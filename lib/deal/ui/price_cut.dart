@@ -1,5 +1,4 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -56,12 +55,9 @@ class PriceCut extends StatelessWidget {
       );
     }
 
-    final Color highlightColor = HSLColor.fromColor(
-      context.colors.scheme.primary.darken(),
-    ).withSaturation((priceCutInt / 100).clamp(0.4, 1.0)).toColor();
+    final Color highlightColor = context.colors.scheme.primary;
 
     return Row(
-      key: Key('price-cut-$priceCutInt'),
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,

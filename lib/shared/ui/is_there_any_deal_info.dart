@@ -34,7 +34,7 @@ class IsThereAnyDealInfo extends StatelessWidget {
                 },
             ),
             const TextSpan(
-              text: '. All the other informations is provided by ',
+              text: '. All the other information is provided by ',
             ),
             TextSpan(
               text: 'IGDB.',

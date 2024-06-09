@@ -4,7 +4,8 @@
             "name": "Flutter",
             "program": "lib/main.dart",
             "request": "launch",
-            "deviceId": ""
+            "deviceId": "",
+            // "flutterMode": "profile"
         }
     ]
 }

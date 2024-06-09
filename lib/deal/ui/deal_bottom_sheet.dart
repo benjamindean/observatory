@@ -29,7 +29,6 @@ class DealBottomSheet extends ConsumerWidget {
         child: Container(
           color: context.colors.scheme.surfaceContainer,
           child: Column(
-            key: Key('deal-bottom-sheet-${deal.id}'),
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

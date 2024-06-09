@@ -36,59 +36,57 @@ class DealCardCompact extends ConsumerWidget {
     );
     final bool isInWaitlist = waitlist.contains(deal.id);
 
-    return Slidable(
-      key: Key(deal.id),
-      endActionPane: ActionPane(
-        extentRatio: 0.2,
-        motion: const ScrollMotion(),
-        children: [
-          SlidableAction(
-            borderRadius: BorderRadius.circular(12),
-            onPressed: (_) {
-              if (isInWaitlist) {
-                return addDealToWaitlist(
+    return SizedBox(
+      height: showHeaders ? (IMAGE_HEIGHT / 3.4) : 80,
+      child: Slidable(
+        endActionPane: ActionPane(
+          extentRatio: 0.2,
+          motion: const ScrollMotion(),
+          children: [
+            SlidableAction(
+              onPressed: (_) {
+                if (isInWaitlist) {
+                  return addDealToWaitlist(
+                    context: context,
+                    ref: ref,
+                    deal: deal,
+                  );
+                }
+
+                return removeDealFromWaitlist(
                   context: context,
                   ref: ref,
                   deal: deal,
                 );
-              }
+              },
+              backgroundColor: Colors.transparent,
+              foregroundColor: context.colors.scheme.primary,
+              icon: isInWaitlist ? Icons.favorite : Icons.favorite_outline,
+            ),
+          ],
+        ),
+        child: InkWell(
+          splashColor: context.colors.scheme.primaryContainer,
+          splashFactory: InkSparkle.splashFactory,
+          borderRadius: BorderRadius.circular(16),
+          onTap: () => onCardTap(context),
+          onLongPress: () {
+            HapticFeedback.mediumImpact();
 
-              return removeDealFromWaitlist(
-                context: context,
-                ref: ref,
-                deal: deal,
-              );
-            },
-            backgroundColor: Colors.transparent,
-            foregroundColor: context.colors.scheme.primary,
-            icon: isInWaitlist ? Icons.favorite : Icons.favorite_outline,
-          ),
-        ],
-      ),
-      child: InkWell(
-        splashColor: context.colors.scheme.primaryContainer,
-        splashFactory: InkSparkle.splashFactory,
-        borderRadius: BorderRadius.circular(16),
-        onTap: () => onCardTap(context),
-        onLongPress: () {
-          HapticFeedback.mediumImpact();
-
-          showModalBottomSheet(
-            context: context,
-            useRootNavigator: true,
-            useSafeArea: true,
-            builder: (BuildContext context) {
-              return Consumer(
-                builder: (context, ref, _) {
-                  return DealBottomSheet(deal: deal);
-                },
-              );
-            },
-          );
-        },
-        child: ObservatoryCard(
-          child: SizedBox(
-            height: showHeaders ? (IMAGE_HEIGHT / 3.4) : 80,
+            showModalBottomSheet(
+              context: context,
+              useRootNavigator: true,
+              useSafeArea: true,
+              builder: (BuildContext context) {
+                return Consumer(
+                  builder: (context, ref, _) {
+                    return DealBottomSheet(deal: deal);
+                  },
+                );
+              },
+            );
+          },
+          child: ObservatoryCard(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,

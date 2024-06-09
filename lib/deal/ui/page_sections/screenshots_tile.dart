@@ -37,7 +37,7 @@ class ScreenshotsTile extends ConsumerWidget {
       showDialog(
         useSafeArea: false,
         barrierDismissible: false,
-        barrierColor: Colors.black.withOpacity(0.7),
+        barrierColor: Colors.black54,
         context: context,
         builder: (context) {
           return GalleryView(
@@ -67,7 +67,6 @@ class ScreenshotsTile extends ConsumerWidget {
         }
 
         return SizedBox(
-          key: Key('screenshots-tile-${deal.id}'),
           height: 360 / thumbDelimiter,
           child: ListView.builder(
             itemCount: screenshots.length,
@@ -137,7 +136,6 @@ class GalleryView extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         shadowColor: Colors.transparent,
         color: Colors.transparent,
-        key: Key('deal-page-bottom-app-bar-${deal.id}'),
         elevation: 0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

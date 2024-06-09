@@ -29,7 +29,6 @@ class DealAppBar extends ConsumerWidget {
         false;
 
     return SliverAppBar(
-      key: Key('deal-app-bar-${deal.id}'),
       automaticallyImplyLeading: false,
       pinned: true,
       expandedHeight: showHeaders ? headerHeight + appBarHeight : appBarHeight,

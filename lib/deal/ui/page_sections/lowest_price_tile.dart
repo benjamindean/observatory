@@ -46,7 +46,6 @@ class LowestPriceTile extends ConsumerWidget {
             .toString();
 
         return RichText(
-          key: Key('lowest-price-tile-${deal.id}'),
           text: TextSpan(
             style: context.themes.text.labelLarge?.copyWith(
               color: context.colors.scheme.onSurface,

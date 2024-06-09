@@ -46,7 +46,6 @@ class DealsFilter extends ConsumerWidget {
                 final bool isSelected = DealCategory.values[index] == dealsTab;
 
                 return ListTile(
-                  key: ValueKey('deals_filter_${category.name}'),
                   selectedTileColor: context.colors.scheme.secondaryContainer,
                   selectedColor: context.colors.scheme.onSecondaryContainer,
                   selected: isSelected,

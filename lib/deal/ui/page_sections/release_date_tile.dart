@@ -43,7 +43,6 @@ class ReleaseDateTile extends ConsumerWidget {
               .format(
                   DateTime.fromMillisecondsSinceEpoch(date * 1000).toLocal())
               .toString(),
-          key: Key('release-date-tile-${deal.id}'),
           style: context.themes.text.labelLarge?.copyWith(
             color: context.colors.scheme.onSurface,
           ),

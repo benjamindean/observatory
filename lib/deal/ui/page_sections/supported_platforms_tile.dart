@@ -40,7 +40,6 @@ class SupportedPlatformsTile extends ConsumerWidget {
         }
 
         return Wrap(
-          key: Key('platforms-tile-${deal.id}'),
           children: List<Widget>.generate(
             platforms.length,
             (int idx) {

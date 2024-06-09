@@ -53,7 +53,6 @@ class TagsTile extends ConsumerWidget {
         }
 
         return Wrap(
-          key: Key('tags-tile-${deal.id}'),
           children: List<Widget>.generate(
             tags.length,
             (int idx) {

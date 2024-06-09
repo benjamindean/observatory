@@ -55,7 +55,6 @@ class BundlesList extends StatelessWidget {
                       final Bundle bundle = bundles[index];
 
                       return ListTile(
-                        key: ValueKey('bundle-${bundle.title}'),
                         onTap: () async {
                           launchUrl(
                             Uri.parse(bundle.url),

@@ -3,7 +3,6 @@ import 'package:collection/collection.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/search/search_provider.dart';
@@ -15,6 +14,7 @@ import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
+import 'package:observatory/waitlist/ui/empty_waitlist.dart';
 import 'package:observatory/waitlist/waitlist_provider.dart';
 import 'package:observatory/waitlist/waitlist_state.dart';
 
@@ -193,54 +193,7 @@ class WaitListList extends ConsumerWidget {
       },
       data: (data) {
         if (data.deals.isEmpty) {
-          return SliverFillRemaining(
-            hasScrollBody: false,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const ErrorMessage(
-                    message:
-                        'Your waitlist is empty. You can add games from the Deals or Search tabs.',
-                    icon: Icons.heart_broken,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Wrap(
-                      spacing: 1.0,
-                      runSpacing: 1.0,
-                      alignment: WrapAlignment.center,
-                      runAlignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () {
-                            context.go('/deals');
-                          },
-                          icon: const Icon(Icons.percent_rounded),
-                          label: const Text('Deals'),
-                        ),
-                        TextButton.icon(
-                          onPressed: () {
-                            context.push('/steam-import');
-                          },
-                          icon: const Icon(Icons.download),
-                          label: const Text('Import from Steam'),
-                        ),
-                        TextButton.icon(
-                          onPressed: () {
-                            context.go('/search');
-                          },
-                          icon: const Icon(Icons.search),
-                          label: const Text('Search'),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
+          return const EmptyWaitlist();
         }
 
         if (searchState.isOpen && searchState.query != null) {
