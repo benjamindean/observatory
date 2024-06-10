@@ -38,8 +38,8 @@ enum DealCategory {
 
 final Map<DealCategory, Map<String, String>> dealCategoryLabels = {
   DealCategory.all: {
-    'title': 'All Deals',
-    'subtitle': 'All available deals.',
+    'title': 'Trending',
+    'subtitle': 'Currently trending deals.',
   },
   DealCategory.steam_top_sellers: {
     'title': 'Steam Store',

@@ -5,7 +5,7 @@ import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/deal.dart';
 
-const int itemsPerPage = 20;
+const int itemsPerPage = 30;
 
 class AsyncDealsNotifier
     extends AutoDisposeFamilyAsyncNotifier<DealsState, DealCategory> {
@@ -43,7 +43,7 @@ class AsyncDealsNotifier
         return state.requireValue.copyWith(
           deals: deals,
           hasReachedMax: results.isEmpty,
-          pageNumber: offset,
+          pageNumber: state.requireValue.pageNumber + 1,
         );
       },
     );

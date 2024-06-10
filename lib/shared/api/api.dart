@@ -191,6 +191,7 @@ class API {
       'offset': offset.toString(),
       'country': country,
       'shops': stores.join(','),
+      'sort': '-trending',
     });
 
     final response = await dio.get(url.toString());

@@ -5,7 +5,8 @@
             "program": "lib/main.dart",
             "request": "launch",
             "deviceId": "",
-            // "flutterMode": "profile"
+            "type": "dart",
+            "flutterMode": "debug",
         }
     ]
 }
