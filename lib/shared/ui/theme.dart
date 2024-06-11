@@ -64,6 +64,7 @@ ThemeData darkTheme({
         navigationRailBackgroundSchemeColor: SchemeColor.surface,
       ),
       keyColors: const FlexKeyColors(
+        useSecondary: true,
         useTertiary: true,
         keepSecondaryContainer: true,
       ),
@@ -133,8 +134,10 @@ ThemeData lightTheme({
         navigationRailBackgroundSchemeColor: SchemeColor.surface,
       ),
       keyColors: const FlexKeyColors(
+        useSecondary: true,
         useTertiary: true,
         keepPrimary: true,
+        keepSecondaryContainer: true,
       ),
       tones: FlexTones.jolly(Brightness.light),
       visualDensity: FlexColorScheme.comfortablePlatformDensity,

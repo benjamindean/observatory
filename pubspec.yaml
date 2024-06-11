@@ -55,6 +55,7 @@ dependencies:
   supabase_flutter: ^2.5.4
   uuid: ^4.4.0
   shimmer: ^3.0.0
+  lzstring: ^2.0.0+2
 
 dependency_overrides:
   intl: any

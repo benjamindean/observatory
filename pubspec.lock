@@ -940,6 +940,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  lzstring:
+    dependency: "direct main"
+    description:
+      name: lzstring
+      sha256: "3aa966276ef903485732ac1306598556451ff31a342378510f110304bcf2be27"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0+2"
   matcher:
     dependency: transitive
     description:

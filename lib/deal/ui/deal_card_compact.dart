@@ -14,6 +14,8 @@ import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:observatory/shared/widgets/header_image.dart';
 import 'package:observatory/waitlist/waitlist_provider.dart';
 
+const double delimiter = 3.4;
+
 class DealCardCompact extends ConsumerWidget {
   final Deal deal;
 
@@ -37,7 +39,8 @@ class DealCardCompact extends ConsumerWidget {
     final bool isInWaitlist = waitlist.contains(deal.id);
 
     return SizedBox(
-      height: showHeaders ? (IMAGE_HEIGHT / 3.4) : 80,
+      height: showHeaders ? (IMAGE_HEIGHT / delimiter) + 8 : 80,
+      width: double.infinity,
       child: Slidable(
         endActionPane: ActionPane(
           extentRatio: 0.2,
@@ -98,8 +101,8 @@ class DealCardCompact extends ConsumerWidget {
                     }
 
                     return SizedBox(
-                      width: IMAGE_WIDTH / 3.4,
-                      height: double.infinity,
+                      width: IMAGE_WIDTH / delimiter,
+                      height: IMAGE_HEIGHT / delimiter,
                       child: HeaderImage(
                         url: deal.headerImageURL,
                         isCompact: true,
