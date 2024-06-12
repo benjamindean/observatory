@@ -181,10 +181,13 @@ class WaitListList extends ConsumerWidget {
           child: Center(
             child: ErrorMessage(
               message: 'Failed to fetch waitlist',
-              helper: TextButton(
-                child: const Text('Refresh'),
+              helper: TextButton.icon(
+                icon: const Icon(Icons.refresh),
+                label: const Text('Refresh'),
                 onPressed: () async {
-                  return ref.watch(asyncWaitListProvider.notifier).reset();
+                  return ref
+                      .watch(asyncWaitListProvider.notifier)
+                      .reset(withLoading: true);
                 },
               ),
             ),

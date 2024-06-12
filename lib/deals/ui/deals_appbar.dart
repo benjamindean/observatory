@@ -1,7 +1,11 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:observatory/deals/deals_provider.dart';
+import 'package:observatory/deals/itad_filters_provider.dart';
 import 'package:observatory/deals/ui/deals_filter.dart';
+import 'package:observatory/deals/ui/deals_info_app_bar.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/widgets/settings_button.dart';
@@ -18,53 +22,80 @@ class DealsAppBar extends ConsumerWidget {
         (value) => value.value?.dealsTab ?? DealCategory.steam_top_sellers,
       ),
     );
+    final int filterCount = ref
+        .watch(
+          itadFiltersProvider,
+        )
+        .toJson()
+        .values
+        .whereNotNull()
+        .length;
 
     return SliverAppBar(
+      surfaceTintColor: context.colors.scheme.surfaceTint,
       floating: true,
-      flexibleSpace: Stack(
-        children: <Widget>[
-          Positioned.fill(
-            child: GestureDetector(
-              child: Container(
-                margin: EdgeInsets.zero,
-                padding: EdgeInsets.zero,
-                color: Colors.transparent,
-                child: const Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Text(''),
+      flexibleSpace: AppBar(
+        title: GestureDetector(
+          onTap: () {
+            PrimaryScrollController.of(context).animateTo(
+              0,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeIn,
+            );
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    dealCategoryLabels[dealsTab]?['title'] ?? 'Unknown',
+                    style: context.textStyles.labelLarge.copyWith(
+                      color: context.colors.scheme.onSurfaceVariant,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+                  ),
+                  if (filterCount > 0)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4.0),
+                      child: Icon(
+                        Icons.filter_list_rounded,
+                        size: 16,
+                        color: context.colors.scheme.onSurfaceVariant,
+                      ),
+                    ),
+                ],
               ),
-              onTap: () {
-                PrimaryScrollController.of(context).animateTo(
-                  0,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeIn,
-                );
-              },
-            ),
-          )
-        ],
-      ),
-      actions: [
-        FilledButton.icon(
-          style: FilledButton.styleFrom(
-            side: BorderSide.none,
-          ),
-          onPressed: () => showDealsFilter(context),
-          icon: const Icon(Icons.filter_list),
-          label: Text(
-            dealCategoryLabels[dealsTab]?['title'] ?? 'Unknown',
-            style: context.textStyles.labelLarge.copyWith(
-              color: context.colors.scheme.onPrimary,
-            ),
+              DealsInfoAppBar(
+                provider: asyncDealsProvider(dealsTab),
+              ),
+            ],
           ),
         ),
-        const SettingsButton(),
-      ],
+        actions: [
+          FilledButton.icon(
+            style: FilledButton.styleFrom(
+              side: BorderSide.none,
+              visualDensity: VisualDensity.compact,
+            ),
+            onPressed: () => showDealsFilter(context),
+            icon: const Icon(
+              Icons.filter_list,
+              size: 16,
+            ),
+            label: Text(
+              'Filter',
+              style: context.textStyles.labelLarge.copyWith(
+                color: context.colors.scheme.onPrimary,
+              ),
+            ),
+          ),
+          const SettingsButton(),
+        ],
+      ),
     );
   }
 }

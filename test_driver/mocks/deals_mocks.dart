@@ -332,7 +332,7 @@ class AsyncDealsNotifierMock
   }
 
   @override
-  Future<void> reset() async {
+  Future<void> reset({bool withLoading = false}) async {
     state = state;
   }
 }

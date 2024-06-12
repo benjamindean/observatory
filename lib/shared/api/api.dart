@@ -12,6 +12,7 @@ import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/api/utils.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/info.dart';
+import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/steam_featured_item.dart';
@@ -185,6 +186,7 @@ class API {
   }) async {
     final String country = settingsReporsitory.getCountry();
     final List<int> stores = settingsReporsitory.getSelectedStores();
+    final ITADFilters filters = settingsReporsitory.getITADFilters();
 
     final Uri url = Uri.https(BASE_URL, '/deals/v2', {
       'key': API_KEY,
@@ -193,7 +195,7 @@ class API {
       'country': country,
       'shops': stores.join(','),
       'sort': '-trending',
-      'filter': LZString.compressToBase64Sync(json.encode({'bundled': true})),
+      'filter': LZString.compressToBase64Sync(json.encode(filters.toJson())),
     });
 
     final response = await dio.get(url.toString());

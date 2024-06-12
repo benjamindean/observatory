@@ -5,7 +5,6 @@ import 'package:observatory/deals/deals_list.dart';
 import 'package:observatory/deals/deals_provider.dart';
 import 'package:observatory/deals/deals_state.dart';
 import 'package:observatory/deals/ui/deals_appbar.dart';
-import 'package:observatory/deals/ui/deals_info_app_bar.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/pull_to_refresh.dart';
@@ -37,9 +36,6 @@ class DealsPage extends ConsumerWidget {
         slivers: [
           const DealsAppBar(),
           const HeaderLocator.sliver(),
-          DealsInfoAppBar(
-            provider: provider,
-          ),
           DealsList(
             provider: provider,
           ),

@@ -14,55 +14,45 @@ class SearchAppBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final SearchState searchState = ref.watch(searchResultsProvider);
 
+    if (searchState.isOpen) {
+      return SliverAppBar(
+        pinned: searchState.deals?.isEmpty ?? true ? true : false,
+        floating: true,
+        titleSpacing: 0.0,
+        title: SearchInput(
+          searchType: SearchType.search,
+          onChanged: (String value) {
+            ref.read(searchResultsProvider.notifier).setQuery(value);
+          },
+          onSubmitted: (String value) {
+            if (value.trim().isNotEmpty) {
+              ref.read(searchResultsProvider.notifier).performSearch(value);
+              ref.read(asynRecentsProvider.notifier).addRecent(value);
+            }
+          },
+        ),
+      );
+    }
+
     return SliverAppBar(
       pinned: searchState.deals?.isEmpty ?? true ? true : false,
       floating: true,
-      titleSpacing: 0.0,
-      title: Builder(
-        builder: (context) {
-          if (searchState.isOpen) {
-            return SearchInput(
-              searchType: SearchType.search,
-              onChanged: (String value) {
-                ref.read(searchResultsProvider.notifier).setQuery(value);
-              },
-              onSubmitted: (String value) {
-                if (value.trim().isNotEmpty) {
-                  ref.read(searchResultsProvider.notifier).performSearch(value);
-                  ref.read(asynRecentsProvider.notifier).addRecent(value);
-                }
-              },
-            );
-          }
-
-          return const SizedBox.shrink();
-        },
-      ),
       actions: <Widget>[
-        Builder(
-          builder: (context) {
-            if (searchState.isOpen) {
-              return const SizedBox.shrink();
-            }
-
-            return FilledButton.icon(
-              onPressed: () {
-                ref.read(searchResultsProvider.notifier).setIsOpen();
-              },
-              icon: const Icon(Icons.search),
-              label: const Text('Search'),
-            );
+        FilledButton.icon(
+          style: FilledButton.styleFrom(
+            side: BorderSide.none,
+            visualDensity: VisualDensity.compact,
+          ),
+          onPressed: () {
+            ref.read(searchResultsProvider.notifier).setIsOpen();
           },
+          icon: const Icon(
+            Icons.search,
+            size: 16.0,
+          ),
+          label: const Text('Search'),
         ),
-        Builder(
-          builder: (context) {
-            if (searchState.isOpen) {
-              return const SizedBox.shrink();
-            }
-
-            return const SettingsButton();
-          },
-        )
+        const SettingsButton(),
       ],
     );
   }

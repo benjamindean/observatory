@@ -51,10 +51,11 @@ class DealsList extends ConsumerWidget {
             child: ErrorMessage(
               message:
                   'Failed to fetch deals. IsThereAnyDeal API might be down at the moment.',
-              helper: TextButton(
-                child: const Text('Refresh'),
+              helper: TextButton.icon(
+                icon: const Icon(Icons.refresh),
+                label: const Text('Refresh'),
                 onPressed: () async {
-                  await dealsNotifier.reset();
+                  await dealsNotifier.reset(withLoading: true);
                 },
               ),
             ),

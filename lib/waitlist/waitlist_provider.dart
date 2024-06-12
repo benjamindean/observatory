@@ -23,7 +23,11 @@ class AsyncWaitListNotifier extends AsyncNotifier<WaitListState> {
     return _fetchWaitList();
   }
 
-  Future<void> reset() async {
+  Future<void> reset({bool withLoading = false}) async {
+    if (withLoading) {
+      state = const AsyncValue.loading();
+    }
+
     state = await AsyncValue.guard(() => _fetchWaitList());
   }
 

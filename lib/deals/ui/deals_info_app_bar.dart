@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deals/deals_provider.dart';
 import 'package:observatory/deals/deals_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/shared/ui/dot_separator.dart';
-import 'package:observatory/shared/ui/info_app_bar.dart';
 
 class DealsInfoAppBar extends ConsumerWidget {
   final AutoDisposeFamilyAsyncNotifierProvider<AsyncDealsNotifier, DealsState,
@@ -18,60 +16,69 @@ class DealsInfoAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return InfoAppBar(
-      child: ref.watch(provider).when(
-            data: (state) {
-              final int discounted = state.deals
-                  .where((element) => element.bestPrice.cut > 0)
-                  .length;
+    return ref.watch(provider).when(
+          data: (state) {
+            final int discounted = state.deals
+                .where((element) => element.bestPrice.cut > 0)
+                .length;
 
-              return Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text.rich(
-                      style: context.themes.text.labelLarge?.copyWith(
-                        color: context.colors.hint,
-                      ),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text.rich(
+                  style: context.themes.text.labelMedium?.copyWith(
+                    color: context.colors.hint,
+                  ),
+                  TextSpan(
+                    children: [
                       TextSpan(
-                        children: [
-                          TextSpan(
-                            text: state.deals.length.toString(),
-                            style: context.themes.text.labelLarge?.copyWith(
-                              color: context.colors.hint,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const TextSpan(text: ' games'),
-                        ],
+                        text: discounted.toString(),
+                        style: context.themes.text.labelMedium?.copyWith(
+                          color: context.colors.hint,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const DotSeparator(),
-                    Text.rich(
-                      style: context.themes.text.labelLarge?.copyWith(
-                        color: context.colors.hint,
-                      ),
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: discounted.toString(),
-                            style: context.themes.text.labelLarge?.copyWith(
-                              color: context.colors.hint,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const TextSpan(text: ' discounted'),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              );
-            },
-            loading: () => const SizedBox.shrink(),
-            error: (error, stackTrace) => const SizedBox.shrink(),
+                Text(
+                  ' of ',
+                  style: context.themes.text.labelMedium?.copyWith(
+                    color: context.colors.hint,
+                  ),
+                ),
+                Text.rich(
+                  style: context.themes.text.labelMedium?.copyWith(
+                    color: context.colors.hint,
+                  ),
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: state.deals.length.toString(),
+                        style: context.themes.text.labelMedium?.copyWith(
+                          color: context.colors.hint,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const TextSpan(text: ' discounted'),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+          loading: () => Text(
+            'Loading...',
+            style: context.themes.text.labelMedium?.copyWith(
+              color: context.colors.hint,
+            ),
           ),
-    );
+          error: (error, stackTrace) => Text(
+            'No discounted games',
+            style: context.themes.text.labelMedium?.copyWith(
+              color: context.colors.hint,
+            ),
+          ),
+        );
   }
 }

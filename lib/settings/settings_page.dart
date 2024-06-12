@@ -50,8 +50,9 @@ class SettingsPage extends ConsumerWidget {
 
             return ErrorMessage(
               message: 'Failed to load settings',
-              helper: TextButton(
-                child: const Text('Refresh'),
+              helper: TextButton.icon(
+                icon: const Icon(Icons.refresh),
+                label: const Text('Refresh'),
                 onPressed: () {
                   ref.read(asyncSettingsProvider.notifier).build();
                 },

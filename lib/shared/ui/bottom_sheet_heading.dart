@@ -3,15 +3,18 @@ import 'package:flutter/material.dart';
 
 class BottomSheetHeading extends StatelessWidget {
   final String text;
+  final Widget? trailing;
 
   const BottomSheetHeading({
     super.key,
     required this.text,
+    this.trailing,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
       key: Key('bottom-sheet-heading-$text'),
       visualDensity: VisualDensity.compact,
       tileColor: context.colors.scheme.surfaceContainer,
@@ -21,6 +24,7 @@ class BottomSheetHeading extends StatelessWidget {
           color: context.colors.scheme.onSurfaceVariant,
         ),
       ),
+      trailing: trailing,
     );
   }
 }

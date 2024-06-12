@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/igdb/igdb_game.dart';
+import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/shop.dart';
@@ -79,6 +80,7 @@ class SettingsRepository {
       'observatory_waitlist_sorting_direction';
   final String PREF_STEAM_USERNAME = 'observatory_steam_username';
   final String PREF_IGDB_ACCESS_TOKEN = 'observatory_igdb_access_token';
+  final String PREF_ITAD_FILTERS = 'observatory_itad_filters';
 
   final DealCategory defaultCategory = DealCategory.steam_top_sellers;
   final WaitlistSorting defaultWaitlistSorting = WaitlistSorting.discount_date;
@@ -96,6 +98,8 @@ class SettingsRepository {
     Hive.registerAdapter(DealAdapter());
     Hive.registerAdapter(ObservatoryThemeAdapter());
     Hive.registerAdapter(IGDBAccessTokenAdapter());
+    Hive.registerAdapter(MinMaxAdapter());
+    Hive.registerAdapter(ITADFiltersAdapter());
 
     await Hive.openBox(SETTINGS_BOX_NAME);
     await Hive.openBox<Deal>(SAVED_DEALS_BOX_NAME);
@@ -377,6 +381,24 @@ class SettingsRepository {
     return settingsBox.put(
       PREF_IGDB_ACCESS_TOKEN,
       accessToken,
+    );
+  }
+
+  ITADFilters getITADFilters() {
+    return settingsBox.get(
+      PREF_ITAD_FILTERS,
+      defaultValue: const ITADFilters(),
+    );
+  }
+
+  Future<void> setITADFilters(ITADFilters? filters) async {
+    if (filters == null) {
+      return;
+    }
+
+    return settingsBox.put(
+      PREF_ITAD_FILTERS,
+      filters,
     );
   }
 }

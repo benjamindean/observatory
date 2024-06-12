@@ -271,7 +271,7 @@ class AsyncWaitListNotifierMock extends AsyncNotifier<WaitListState>
   }
 
   @override
-  Future<void> reset() async {
+  Future<void> reset({bool withLoading = false}) async {
     state = await AsyncValue.guard(() => _fetchWaitList());
   }
 

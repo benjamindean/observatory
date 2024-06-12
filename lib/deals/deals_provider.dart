@@ -53,7 +53,10 @@ class AsyncDealsNotifier
     final API api = GetIt.I<API>();
 
     if (arg == DealCategory.all) {
-      return api.fetchDeals(limit: itemsPerPage, offset: offset);
+      return api.fetchDeals(
+        limit: itemsPerPage,
+        offset: offset,
+      );
     }
 
     if (arg == DealCategory.steam_top_sellers) {
@@ -71,7 +74,11 @@ class AsyncDealsNotifier
     );
   }
 
-  Future<void> reset() async {
+  Future<void> reset({bool withLoading = false}) async {
+    if (withLoading) {
+      state = const AsyncValue.loading();
+    }
+
     state = await AsyncValue.guard(() async {
       return _initDeals();
     });
