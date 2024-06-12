@@ -37,6 +37,7 @@ class PullToRefresh extends StatelessWidget {
         safeArea: false,
         builder: (context, state) {
           return Container(
+            padding: const EdgeInsets.only(top: 8.0),
             color: context.colors.scaffoldBackground,
             height: state.offset,
             child: AnimatedSwitcher(
