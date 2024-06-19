@@ -88,12 +88,12 @@ Map<String, dynamic> _$$IGDBGameImplToJson(_$IGDBGameImpl instance) =>
       'storyline': instance.storyline,
       'url': instance.url,
       'first_release_date': instance.first_release_date,
-      'cover': instance.cover,
-      'screenshots': instance.screenshots,
-      'videos': instance.videos,
-      'platforms': instance.platforms,
-      'themes': instance.themes,
-      'websites': instance.websites,
+      'cover': instance.cover?.toJson(),
+      'screenshots': instance.screenshots.map((e) => e.toJson()).toList(),
+      'videos': instance.videos.map((e) => e.toJson()).toList(),
+      'platforms': instance.platforms.map((e) => e.toJson()).toList(),
+      'themes': instance.themes.map((e) => e.toJson()).toList(),
+      'websites': instance.websites.map((e) => e.toJson()).toList(),
     };
 
 _$IGDBScreenshotImpl _$$IGDBScreenshotImplFromJson(Map<String, dynamic> json) =>

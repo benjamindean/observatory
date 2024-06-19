@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/shared/models/deal.dart';
-
-import '../../../shared/ui/observatory_shimmer.dart';
+import 'package:observatory/shared/ui/observatory_shimmer.dart';
 
 class DealPageSectionAsync<T> extends StatelessWidget {
   final AsyncValue<T> state;
@@ -56,10 +55,12 @@ class DealPageSectionAsync<T> extends StatelessWidget {
               duration: const Duration(milliseconds: 200),
               child: state.when(
                 data: onData,
-                loading: () => const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: ObservatoryShimmer(),
-                ),
+                loading: () {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: ObservatoryShimmer(),
+                  );
+                },
                 error: (error, stackTrace) {
                   Logger().e(
                     'Failed to load $heading for ${deal.titleParsed}',

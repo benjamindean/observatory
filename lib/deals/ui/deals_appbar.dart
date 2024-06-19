@@ -1,5 +1,4 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deals/deals_provider.dart';
@@ -8,6 +7,8 @@ import 'package:observatory/deals/ui/deals_filter.dart';
 import 'package:observatory/deals/ui/deals_info_app_bar.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/ui/dot_separator.dart';
+import 'package:observatory/shared/ui/ory_small_button.dart';
 import 'package:observatory/shared/widgets/settings_button.dart';
 
 class DealsAppBar extends ConsumerWidget {
@@ -22,14 +23,7 @@ class DealsAppBar extends ConsumerWidget {
         (value) => value.value?.dealsTab ?? DealCategory.steam_top_sellers,
       ),
     );
-    final int filterCount = ref
-        .watch(
-          itadFiltersProvider,
-        )
-        .toJson()
-        .values
-        .whereNotNull()
-        .length;
+    final int filterCount = ref.watch(itadFiltersProvider).filterCount;
 
     return SliverAppBar(
       surfaceTintColor: context.colors.scheme.surfaceTint,
@@ -58,13 +52,26 @@ class DealsAppBar extends ConsumerWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  if (filterCount > 0)
+                  if (filterCount > 0 && dealsTab == DealCategory.all)
                     Padding(
-                      padding: const EdgeInsets.only(left: 4.0),
-                      child: Icon(
-                        Icons.filter_list_rounded,
-                        size: 16,
-                        color: context.colors.scheme.onSurfaceVariant,
+                      padding: const EdgeInsets.only(left: 2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const DotSeparator(),
+                          Text(
+                            filterCount.toString(),
+                            style: context.textStyles.labelLarge.copyWith(
+                              color: context.colors.scheme.onSurfaceVariant,
+                            ),
+                          ),
+                          Icon(
+                            Icons.filter_list_rounded,
+                            size: 16,
+                            color: context.colors.scheme.onSurfaceVariant,
+                          ),
+                        ],
                       ),
                     ),
                 ],
@@ -76,23 +83,22 @@ class DealsAppBar extends ConsumerWidget {
           ),
         ),
         actions: [
-          FilledButton.icon(
-            style: FilledButton.styleFrom(
-              side: BorderSide.none,
-              visualDensity: VisualDensity.compact,
-            ),
+          OrySmallButton(
             onPressed: () => showDealsFilter(context),
-            icon: const Icon(
-              Icons.filter_list,
-              size: 16,
-            ),
-            label: Text(
-              'Filter',
-              style: context.textStyles.labelLarge.copyWith(
-                color: context.colors.scheme.onPrimary,
+            icon: Icons.type_specimen_rounded,
+            label: 'Type',
+          ),
+          if (dealsTab == DealCategory.all)
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: OrySmallButton(
+                onPressed: () => showITADFilters(context),
+                icon: Icons.filter_list,
+                textColor: context.colors.scheme.onSecondary,
+                buttonColor: context.colors.scheme.secondary,
+                label: 'Filter',
               ),
             ),
-          ),
           const SettingsButton(),
         ],
       ),

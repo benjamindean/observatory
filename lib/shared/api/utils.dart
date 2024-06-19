@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:observatory/shared/api/constans.dart';
 
 List<List<String>> splitIDs(List<String> ids) {
@@ -13,4 +15,12 @@ List<List<String>> splitIDs(List<String> ids) {
   }
 
   return listsOfIDs;
+}
+
+String decodeTitle(String title) {
+  return const AsciiDecoder().convert(
+    utf8.encode(
+      title.replaceAll(RegExp(r"[^A-Za-z0-9().,'&;?/:]+"), ' ').trim(),
+    ),
+  );
 }

@@ -6,6 +6,7 @@ import 'package:observatory/search/search_state.dart';
 import 'package:observatory/search/ui/search_input.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/ui/ory_small_button.dart';
 import 'package:observatory/shared/widgets/settings_button.dart';
 import 'package:observatory/waitlist/ui/waitlist_info_app_bar.dart';
 import 'package:observatory/waitlist/ui/waitlist_sorting_page.dart';
@@ -93,22 +94,10 @@ class WaitlistAppBar extends ConsumerWidget {
           ),
         ),
         actions: [
-          FilledButton.icon(
-            style: FilledButton.styleFrom(
-              side: BorderSide.none,
-              visualDensity: VisualDensity.compact,
-            ),
+          OrySmallButton(
             onPressed: () => showWaitlistSorting(context),
-            icon: const Icon(
-              Icons.sort,
-              size: 16.0,
-            ),
-            label: Text(
-              'Sort',
-              style: context.textStyles.labelLarge.copyWith(
-                color: context.colors.scheme.onPrimary,
-              ),
-            ),
+            icon: Icons.sort,
+            label: 'Sort',
           ),
           Padding(
             padding: const EdgeInsets.only(left: 12.0),

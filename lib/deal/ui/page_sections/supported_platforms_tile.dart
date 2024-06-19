@@ -1,9 +1,8 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/deal/combined_details_provider.dart';
+import 'package:observatory/deal/igdb_search_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
-import 'package:observatory/shared/models/combined_details.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/igdb/igdb_game.dart';
 import 'package:observatory/shared/ui/constants.dart';
@@ -18,16 +17,16 @@ class SupportedPlatformsTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<CombinedDetails> infoState = ref.watch(
-      combinedDetailsProvider(deal),
+    final AsyncValue<IGDBGame?> infoState = ref.watch(
+      igdbSearchProvider(deal),
     );
 
-    return DealPageSectionAsync<CombinedDetails>(
+    return DealPageSectionAsync<IGDBGame?>(
       state: infoState,
       deal: deal,
       heading: 'Platforms',
       onData: (data) {
-        final List<IGDBPlatform> platforms = data.igdb?.platforms ?? [];
+        final List<IGDBPlatform> platforms = data?.platforms ?? [];
 
         if (platforms.isEmpty) {
           return Text(

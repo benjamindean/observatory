@@ -37,6 +37,7 @@ mixin _$Deal {
   DealSource get source => throw _privateConstructorUsedError;
   @HiveField(5)
   List<Price>? get prices => throw _privateConstructorUsedError;
+  IGDBGame? get igdbGame => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -59,10 +60,12 @@ abstract class $DealCopyWith<$Res> {
       bool isLoading,
       @HiveField(3) int added,
       @HiveField(4) DealSource source,
-      @HiveField(5) List<Price>? prices});
+      @HiveField(5) List<Price>? prices,
+      IGDBGame? igdbGame});
 
   $InfoCopyWith<$Res>? get info;
   $OverviewCopyWith<$Res>? get overview;
+  $IGDBGameCopyWith<$Res>? get igdbGame;
 }
 
 /// @nodoc
@@ -89,6 +92,7 @@ class _$DealCopyWithImpl<$Res, $Val extends Deal>
     Object? added = null,
     Object? source = null,
     Object? prices = freezed,
+    Object? igdbGame = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -135,6 +139,10 @@ class _$DealCopyWithImpl<$Res, $Val extends Deal>
           ? _value.prices
           : prices // ignore: cast_nullable_to_non_nullable
               as List<Price>?,
+      igdbGame: freezed == igdbGame
+          ? _value.igdbGame
+          : igdbGame // ignore: cast_nullable_to_non_nullable
+              as IGDBGame?,
     ) as $Val);
   }
 
@@ -161,6 +169,18 @@ class _$DealCopyWithImpl<$Res, $Val extends Deal>
       return _then(_value.copyWith(overview: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $IGDBGameCopyWith<$Res>? get igdbGame {
+    if (_value.igdbGame == null) {
+      return null;
+    }
+
+    return $IGDBGameCopyWith<$Res>(_value.igdbGame!, (value) {
+      return _then(_value.copyWith(igdbGame: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -181,12 +201,15 @@ abstract class _$$DealImplCopyWith<$Res> implements $DealCopyWith<$Res> {
       bool isLoading,
       @HiveField(3) int added,
       @HiveField(4) DealSource source,
-      @HiveField(5) List<Price>? prices});
+      @HiveField(5) List<Price>? prices,
+      IGDBGame? igdbGame});
 
   @override
   $InfoCopyWith<$Res>? get info;
   @override
   $OverviewCopyWith<$Res>? get overview;
+  @override
+  $IGDBGameCopyWith<$Res>? get igdbGame;
 }
 
 /// @nodoc
@@ -210,6 +233,7 @@ class __$$DealImplCopyWithImpl<$Res>
     Object? added = null,
     Object? source = null,
     Object? prices = freezed,
+    Object? igdbGame = freezed,
   }) {
     return _then(_$DealImpl(
       id: null == id
@@ -256,6 +280,10 @@ class __$$DealImplCopyWithImpl<$Res>
           ? _value._prices
           : prices // ignore: cast_nullable_to_non_nullable
               as List<Price>?,
+      igdbGame: freezed == igdbGame
+          ? _value.igdbGame
+          : igdbGame // ignore: cast_nullable_to_non_nullable
+              as IGDBGame?,
     ));
   }
 }
@@ -274,7 +302,8 @@ class _$DealImpl extends _Deal {
       this.isLoading = false,
       @HiveField(3) this.added = 0,
       @HiveField(4) this.source = DealSource.itad,
-      @HiveField(5) final List<Price>? prices})
+      @HiveField(5) final List<Price>? prices,
+      this.igdbGame})
       : _prices = prices,
         super._();
 
@@ -324,8 +353,11 @@ class _$DealImpl extends _Deal {
   }
 
   @override
+  final IGDBGame? igdbGame;
+
+  @override
   String toString() {
-    return 'Deal(id: $id, slug: $slug, type: $type, title: $title, steamId: $steamId, info: $info, overview: $overview, isLoading: $isLoading, added: $added, source: $source, prices: $prices)';
+    return 'Deal(id: $id, slug: $slug, type: $type, title: $title, steamId: $steamId, info: $info, overview: $overview, isLoading: $isLoading, added: $added, source: $source, prices: $prices, igdbGame: $igdbGame)';
   }
 
   @override
@@ -345,7 +377,9 @@ class _$DealImpl extends _Deal {
                 other.isLoading == isLoading) &&
             (identical(other.added, added) || other.added == added) &&
             (identical(other.source, source) || other.source == source) &&
-            const DeepCollectionEquality().equals(other._prices, _prices));
+            const DeepCollectionEquality().equals(other._prices, _prices) &&
+            (identical(other.igdbGame, igdbGame) ||
+                other.igdbGame == igdbGame));
   }
 
   @JsonKey(ignore: true)
@@ -362,7 +396,8 @@ class _$DealImpl extends _Deal {
       isLoading,
       added,
       source,
-      const DeepCollectionEquality().hash(_prices));
+      const DeepCollectionEquality().hash(_prices),
+      igdbGame);
 
   @JsonKey(ignore: true)
   @override
@@ -390,7 +425,8 @@ abstract class _Deal extends Deal {
       final bool isLoading,
       @HiveField(3) final int added,
       @HiveField(4) final DealSource source,
-      @HiveField(5) final List<Price>? prices}) = _$DealImpl;
+      @HiveField(5) final List<Price>? prices,
+      final IGDBGame? igdbGame}) = _$DealImpl;
   const _Deal._() : super._();
 
   factory _Deal.fromJson(Map<String, dynamic> json) = _$DealImpl.fromJson;
@@ -423,6 +459,8 @@ abstract class _Deal extends Deal {
   @override
   @HiveField(5)
   List<Price>? get prices;
+  @override
+  IGDBGame? get igdbGame;
   @override
   @JsonKey(ignore: true)
   _$$DealImplCopyWith<_$DealImpl> get copyWith =>

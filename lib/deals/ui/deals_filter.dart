@@ -7,7 +7,9 @@ import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
+import 'package:observatory/shared/steam_tags_listdart.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
+import 'package:observatory/shared/ui/ory_small_button.dart';
 
 void showDealsFilter(BuildContext context) {
   showModalBottomSheet(
@@ -17,6 +19,18 @@ void showDealsFilter(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return const DealsFilter();
+    },
+  );
+}
+
+void showITADFilters(BuildContext context) {
+  showModalBottomSheet(
+    useRootNavigator: true,
+    useSafeArea: true,
+    isScrollControlled: true,
+    context: context,
+    builder: (context) {
+      return const ITADFiltersPage();
     },
   );
 }
@@ -38,6 +52,7 @@ class DealsFilter extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             const BottomSheetHeading(text: 'Deals Type'),
             ListView.builder(
@@ -76,31 +91,18 @@ class DealsFilter extends ConsumerWidget {
                           : context.colors.scheme.onSurface,
                     ),
                   ),
-                  trailing: category == DealCategory.all && isSelected
-                      ? GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                              barrierColor: Colors.transparent,
-                              context: context,
-                              builder: (context) {
-                                return const ITADFiltersPage();
-                              },
-                            );
-                          },
-                          child: Chip(
-                            side: BorderSide.none,
-                            avatar: Icon(
-                              Icons.keyboard_arrow_up_rounded,
-                              color: context.colors.scheme.onSecondary,
-                            ),
-                            label: Text(
-                              'More Filters',
-                              style: context.textStyles.labelMedium.copyWith(
-                                color: context.colors.scheme.onSecondary,
-                              ),
-                            ),
-                            backgroundColor: context.colors.scheme.secondary,
-                          ),
+                  trailing: category == DealCategory.all
+                      ? OrySmallButton(
+                          icon: Icons.keyboard_arrow_up_rounded,
+                          label: 'More Filters',
+                          buttonColor: context.colors.scheme.tertiary,
+                          textColor: context.colors.scheme.onTertiary,
+                          onPressed: isSelected
+                              ? () {
+                                  context.pop();
+                                  showITADFilters(context);
+                                }
+                              : null,
                         )
                       : null,
                 );
@@ -136,43 +138,19 @@ class ITADFiltersPage extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FilledButton.icon(
-                    style: ButtonStyle(
-                      padding: WidgetStateProperty.all(
-                        const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
-                      ),
-                      visualDensity: VisualDensity.compact,
-                      backgroundColor: WidgetStateProperty.all(
-                        context.colors.scheme.tertiary,
-                      ),
-                    ),
+                  OrySmallButton(
                     onPressed: () {
                       ref.watch(itadFiltersProvider.notifier).reset();
                     },
-                    icon: Icon(
-                      Icons.restore_rounded,
-                      color: context.colors.scheme.onTertiary,
-                    ),
-                    label: Text(
-                      'Reset',
-                      style: context.textStyles.labelMedium.copyWith(
-                        color: context.colors.scheme.onTertiary,
-                      ),
-                    ),
+                    icon: Icons.restore_rounded,
+                    label: 'Reset',
+                    buttonColor: context.colors.scheme.secondary,
+                    textColor: context.colors.scheme.onSecondary,
                   ),
                   const SizedBox(
                     width: 6.0,
                   ),
-                  FilledButton.icon(
-                    style: ButtonStyle(
-                      padding: WidgetStateProperty.all(
-                        const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
-                      ),
-                      visualDensity: VisualDensity.compact,
-                      backgroundColor: WidgetStateProperty.all(
-                        context.colors.scheme.primary,
-                      ),
-                    ),
+                  OrySmallButton(
                     onPressed: () {
                       ref.watch(itadFiltersProvider.notifier).save();
                       ref
@@ -180,18 +158,9 @@ class ITADFiltersPage extends ConsumerWidget {
                           .reset(withLoading: true);
 
                       context.pop();
-                      context.pop();
                     },
-                    icon: Icon(
-                      Icons.check,
-                      color: context.colors.scheme.onPrimary,
-                    ),
-                    label: Text(
-                      'Apply',
-                      style: context.textStyles.labelMedium.copyWith(
-                        color: context.colors.scheme.onPrimary,
-                      ),
-                    ),
+                    icon: Icons.check,
+                    label: 'Apply',
                   ),
                 ],
               ),
@@ -266,7 +235,41 @@ class ITADFiltersPage extends ConsumerWidget {
                 },
               ),
             ),
+            ListTile(
+              title: Text(
+                'Tags',
+                style: context.textStyles.titleMedium.copyWith(
+                  color: context.colors.scheme.onSurface,
+                ),
+              ),
+              subtitle: const Text('Select tags to filter by'),
+              trailing: TextButton(
+                child: const Text('Select'),
+                onPressed: () {
+                  showAdaptiveDialog(
+                    context: context,
+                    builder: (context) {
+                      return Scaffold(
+                        body: Autocomplete<String>(
+                          optionsBuilder: (TextEditingValue textEditingValue) {
+                            if (textEditingValue.text.trim().isEmpty) {
+                              return const Iterable<String>.empty();
+                            }
+
+                            return steamTags.where((String option) {
+                              return option.toString().contains(
+                                  textEditingValue.text.toLowerCase());
+                            });
+                          },
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
             SwitchListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
               title: Text(
                 'Bundled Only',
                 style: context.textStyles.titleMedium.copyWith(

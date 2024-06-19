@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:html_unescape/html_unescape.dart';
+import 'package:observatory/shared/models/igdb/igdb_game.dart';
 import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';
@@ -34,6 +35,7 @@ class Deal with _$Deal {
     @HiveField(3) @Default(0) int added,
     @HiveField(4) @Default(DealSource.itad) DealSource source,
     @HiveField(5) List<Price>? prices,
+    IGDBGame? igdbGame,
   }) = _Deal;
 
   factory Deal.fromJson(Map<String, Object?> json) => _$DealFromJson(json);

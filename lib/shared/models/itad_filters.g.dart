@@ -57,19 +57,22 @@ class ITADFiltersAdapter extends TypeAdapter<ITADFilters> {
       price: fields[0] as MinMax?,
       cut: fields[1] as MinMax?,
       bundled: fields[2] as bool?,
+      tags: (fields[3] as List?)?.cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, ITADFilters obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.price)
       ..writeByte(1)
       ..write(obj.cut)
       ..writeByte(2)
-      ..write(obj.bundled);
+      ..write(obj.bundled)
+      ..writeByte(3)
+      ..write(obj.tags);
   }
 
   @override
@@ -107,6 +110,7 @@ _$ITADFiltersImpl _$$ITADFiltersImplFromJson(Map<String, dynamic> json) =>
           ? null
           : MinMax.fromJson(json['cut'] as Map<String, dynamic>),
       bundled: json['bundled'] as bool?,
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$$ITADFiltersImplToJson(_$ITADFiltersImpl instance) =>
@@ -114,4 +118,5 @@ Map<String, dynamic> _$$ITADFiltersImplToJson(_$ITADFiltersImpl instance) =>
       'price': instance.price?.toJson(),
       'cut': instance.cut?.toJson(),
       'bundled': instance.bundled,
+      'tags': instance.tags,
     };

@@ -28,6 +28,7 @@ enum Foo {
 class IGDBGame with _$IGDBGame {
   const IGDBGame._();
 
+  @JsonSerializable(explicitToJson: true)
   const factory IGDBGame({
     int? id,
     String? name,

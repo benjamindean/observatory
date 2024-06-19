@@ -26,7 +26,12 @@ class ITADFilters with _$ITADFilters {
     @HiveField(0) MinMax? price,
     @HiveField(1) MinMax? cut,
     @HiveField(2) bool? bundled,
+    @HiveField(3) List<String>? tags,
   }) = _ITADFilters;
+
+  int get filterCount {
+    return toJson().values.where((element) => element != null).length;
+  }
 
   factory ITADFilters.fromJson(Map<String, Object?> json) =>
       _$ITADFiltersFromJson(json);

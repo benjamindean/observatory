@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -8,6 +6,7 @@ import 'package:logger/logger.dart';
 import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/parsers.dart';
+import 'package:observatory/shared/api/utils.dart';
 import 'package:observatory/shared/models/igdb/igdb_game.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -55,42 +54,115 @@ class IGDBAPI {
     );
   }
 
+  Future<IGDBGame?> searchSupabase({
+    required String title,
+    required String id,
+  }) async {
+    try {
+      final FunctionResponse response =
+          await Supabase.instance.client.functions.invoke(
+        'game-info',
+        method: HttpMethod.get,
+        queryParameters: {
+          'id': id,
+          'title': title,
+        },
+      );
+
+      return response.data != null
+          ? IGDBGame.fromJson(response.data['igdb_info'])
+          : null;
+    } catch (error) {
+      Logger().e(
+        'Failed to fetch supabase search result',
+        error: error,
+      );
+
+      return null;
+    }
+  }
+
+  Future<Map<String, IGDBGame?>?> searchSupabaseList({
+    required List<String> ids,
+  }) async {
+    try {
+      final FunctionResponse response =
+          await Supabase.instance.client.functions.invoke(
+        'game-info',
+        method: HttpMethod.post,
+        body: {
+          'ids': ids,
+        },
+      );
+
+      return {
+        for (var v in List.from(response.data))
+          v['itad_id']: IGDBGame.fromJson(
+            v['igdb_info'],
+          ),
+      };
+    } catch (error, stackTrace) {
+      Logger().e(
+        'Failed to fetch supabase list search result',
+        error: error,
+      );
+
+      FirebaseCrashlytics.instance.recordError(
+        error,
+        stackTrace,
+      );
+
+      return null;
+    }
+  }
+
   Future<List<IGDBGame>?> searchIGDB({
     required String title,
   }) async {
     try {
       final IGDBAccessToken? token = await getIGDBToken();
-      final String cleanTitle = const AsciiDecoder().convert(
-        utf8.encode(
-          title.replaceAll(RegExp(r"[^A-Za-z0-9().,'&;?/:]+"), ' ').trim(),
-        ),
-      );
+      final String cleanTitle = decodeTitle(title);
 
       final response = await dio.post(
-        options: cacheOptions.toOptions().copyWith(
-          headers: {
-            'Client-ID': GetIt.I<Secret>().igdbClientId,
-            'Authorization': 'Bearer ${token?.token}',
-          },
-        ),
-        '/v4/search',
-        data: [
-          'search "$cleanTitle";',
-          'where game != null & game.name ~ "$cleanTitle" | name ~ "$cleanTitle";',
-          'fields',
-          'game.id,',
-          'game.name,',
-          'game.summary,',
-          'game.first_release_date,',
-          'game.themes.*,',
-          'game.storyline,',
-          'game.url,',
-          'game.screenshots.*,',
-          'game.websites.*,',
-          'game.videos.*,',
-          'game.platforms.*;',
-        ].join(' '),
-      );
+          options: cacheOptions.toOptions().copyWith(
+            headers: {
+              'Client-ID': GetIt.I<Secret>().igdbClientId,
+              'Authorization': 'Bearer ${token?.token}',
+            },
+          ),
+          '/v4/search',
+          data: [
+            'search "$cleanTitle";',
+            'where game.name ~ "$cleanTitle" | name ~ "$cleanTitle";',
+            'fields',
+            'game.genres.id,',
+            'game.genres.name,',
+            'game.genres.slug,',
+            'game.involved_companies.company.id,',
+            'game.involved_companies.company.name,',
+            'game.involved_companies.company.s ug,',
+            'game.name,',
+            'game.first_release_date,',
+            'game.summary,',
+            'game.themes.id,',
+            'game.themes.name,',
+            'game.themes.slug,',
+            'game.url,',
+            'game.screenshots.id,',
+            'game.screenshots.width,',
+            'game.screenshots.height,',
+            'game.screenshots.image_id,',
+            'game.screenshots.url,',
+            'game.websites.id,',
+            'game.websites.url,',
+            'game.videos.id,',
+            'game.videos.name,',
+            'game.videos.video_id,',
+            'game.similar_games.id,',
+            'game.platforms.id,',
+            'game.platforms.name,',
+            'game.platforms.abbreviation;',
+          ].join(' '));
 
       return Parsers.igdbSearchResult(response.data);
     } catch (error, stackTrace) {

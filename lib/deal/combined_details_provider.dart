@@ -13,18 +13,20 @@ final combinedDetailsProvider = FutureProvider.family<CombinedDetails, Deal>(
     final String title = deal.titleParsed;
 
     final Info? info = await GetIt.I<API>().info(id: deal.id);
-    final List<IGDBGame>? games = await GetIt.I<IGDBAPI>().searchIGDB(
-      title: title,
-    );
+    final IGDBGame? igdbGame = deal.igdbGame ??
+        await GetIt.I<IGDBAPI>().searchSupabase(
+          id: deal.id,
+          title: title,
+        );
 
     Logger().d({
-      'igdb_names': games?.map((e) => e.name).join(','),
+      'igdb_data': igdbGame,
       'title': title,
     });
 
     return CombinedDetails(
       itad: info,
-      igdb: games?.firstOrNull,
+      igdb: igdbGame,
     );
   },
 );

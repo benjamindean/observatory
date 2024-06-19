@@ -256,7 +256,8 @@ class __$$IGDBGameImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$IGDBGameImpl extends _IGDBGame {
   const _$IGDBGameImpl(
       {this.id,

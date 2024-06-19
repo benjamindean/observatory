@@ -3,9 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:observatory/deal/combined_details_provider.dart';
+import 'package:observatory/deal/igdb_search_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
-import 'package:observatory/shared/models/combined_details.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/igdb/igdb_game.dart';
 import 'package:observatory/shared/widgets/image_error.dart';
@@ -25,8 +24,8 @@ class ScreenshotsTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const double thumbDelimiter = 2.5;
 
-    final AsyncValue<CombinedDetails> infoState = ref.watch(
-      combinedDetailsProvider(deal),
+    final AsyncValue<IGDBGame?> infoState = ref.watch(
+      igdbSearchProvider(deal),
     );
 
     void openGallery(
@@ -49,12 +48,12 @@ class ScreenshotsTile extends ConsumerWidget {
       );
     }
 
-    return DealPageSectionAsync<CombinedDetails>(
+    return DealPageSectionAsync<IGDBGame?>(
       state: infoState,
       deal: deal,
       heading: 'Screenshots',
       onData: (data) {
-        final List<IGDBScreenshot> screenshots = data.igdb?.screenshots ?? [];
+        final List<IGDBScreenshot> screenshots = data?.screenshots ?? [];
 
         if (screenshots.isEmpty) {
           return Text(

@@ -1,10 +1,10 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/deal/combined_details_provider.dart';
+import 'package:observatory/deal/info_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
-import 'package:observatory/shared/models/combined_details.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/ui/constants.dart';
 
 class TagsTile extends ConsumerWidget {
@@ -17,30 +17,16 @@ class TagsTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<CombinedDetails> infoState = ref.watch(
-      combinedDetailsProvider(deal),
+    final AsyncValue<Info?> infoState = ref.watch(
+      infoProvider(deal.id),
     );
 
-    return DealPageSectionAsync<CombinedDetails>(
+    return DealPageSectionAsync<Info?>(
       state: infoState,
       deal: deal,
       heading: 'Tags',
       onData: (info) {
-        final List<String> itadTags = info.itad?.tags ?? [];
-        final List<String> igdbThemes = info.igdb?.themes
-                .map(
-                  (e) => e.name
-                      ?.split(' ')
-                      .map((word) => word.capitalize())
-                      .join(' '),
-                )
-                .nonNulls
-                .toList() ??
-            [];
-
-        final List<String> tags = Set<String>.from(
-          List<String>.from(itadTags)..addAll(igdbThemes),
-        ).toList();
+        final List<String> tags = info?.tags ?? [];
 
         if (tags.isEmpty) {
           return Text(

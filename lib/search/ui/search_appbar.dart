@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/search/search_provider.dart';
 import 'package:observatory/search/search_state.dart';
 import 'package:observatory/search/ui/search_input.dart';
+import 'package:observatory/shared/ui/ory_small_button.dart';
 import 'package:observatory/shared/widgets/settings_button.dart';
 
 class SearchAppBar extends ConsumerWidget {
@@ -38,19 +39,12 @@ class SearchAppBar extends ConsumerWidget {
       pinned: searchState.deals?.isEmpty ?? true ? true : false,
       floating: true,
       actions: <Widget>[
-        FilledButton.icon(
-          style: FilledButton.styleFrom(
-            side: BorderSide.none,
-            visualDensity: VisualDensity.compact,
-          ),
+        OrySmallButton(
           onPressed: () {
             ref.read(searchResultsProvider.notifier).setIsOpen();
           },
-          icon: const Icon(
-            Icons.search,
-            size: 16.0,
-          ),
-          label: const Text('Search'),
+          icon: Icons.search,
+          label: 'Search',
         ),
         const SettingsButton(),
       ],
