@@ -1,4 +1,3 @@
-import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:collection/collection.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +11,8 @@ import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
 import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
-import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:observatory/waitlist/ui/empty_waitlist.dart';
 import 'package:observatory/waitlist/waitlist_provider.dart';
 import 'package:observatory/waitlist/waitlist_state.dart';
@@ -133,36 +132,12 @@ class WaitListList extends ConsumerWidget {
     );
 
     if (steamImportState.isImporting || steamImportState.isLoading) {
-      return SliverFillRemaining(
-        hasScrollBody: false,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const ObservatoryProgressIndicator(),
-              Padding(
-                padding: const EdgeInsets.only(top: 32.0),
-                child: Text(
-                  'Importing Steam wishlist...',
-                  style: context.textStyles.titleMedium.copyWith(
-                    color: context.colors.scheme.onSurfaceVariant,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
+      return const OryFullScreenSpinner();
     }
 
     return waitlist.when(
       loading: () {
-        return const SliverFillRemaining(
-          hasScrollBody: false,
-          child: Center(
-            child: ObservatoryProgressIndicator(),
-          ),
-        );
+        return const OryFullScreenSpinner();
       },
       error: (error, stackTrace) {
         Logger().e(

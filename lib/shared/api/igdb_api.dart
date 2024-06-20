@@ -70,7 +70,7 @@ class IGDBAPI {
       );
 
       return response.data != null
-          ? IGDBGame.fromJson(response.data['igdb_info'])
+          ? IGDBGame.fromJson(response.data['data'])
           : null;
     } catch (error) {
       Logger().e(
@@ -97,8 +97,8 @@ class IGDBAPI {
 
       return {
         for (var v in List.from(response.data))
-          v['itad_id']: IGDBGame.fromJson(
-            v['igdb_info'],
+          v['id']: IGDBGame.fromJson(
+            v['data'],
           ),
       };
     } catch (error, stackTrace) {

@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/deals/deals_provider.dart';
 import 'package:observatory/deals/itad_filters_provider.dart';
+import 'package:observatory/deals/ui/tags_list_page.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
-import 'package:observatory/shared/steam_tags_listdart.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:observatory/shared/ui/ory_small_button.dart';
 
@@ -242,28 +242,27 @@ class ITADFiltersPage extends ConsumerWidget {
                   color: context.colors.scheme.onSurface,
                 ),
               ),
-              subtitle: const Text('Select tags to filter by'),
-              trailing: TextButton(
-                child: const Text('Select'),
+              subtitle: Text(
+                filters.tags == null
+                    ? 'No tags selected'
+                    : filters.tags!.join(', '),
+                style: context.textStyles.bodySmall.copyWith(
+                  color: context.colors.scheme.onSurface,
+                  fontWeight: filters.tags == null
+                      ? FontWeight.normal
+                      : FontWeight.bold,
+                ),
+              ),
+              trailing: OutlinedButton.icon(
+                icon: const Icon(Icons.tag_rounded),
+                label: const Text('Select'),
                 onPressed: () {
-                  showAdaptiveDialog(
-                    context: context,
-                    builder: (context) {
-                      return Scaffold(
-                        body: Autocomplete<String>(
-                          optionsBuilder: (TextEditingValue textEditingValue) {
-                            if (textEditingValue.text.trim().isEmpty) {
-                              return const Iterable<String>.empty();
-                            }
-
-                            return steamTags.where((String option) {
-                              return option.toString().contains(
-                                  textEditingValue.text.toLowerCase());
-                            });
-                          },
-                        ),
-                      );
-                    },
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const TagsListPage();
+                      },
+                    ),
                   );
                 },
               ),

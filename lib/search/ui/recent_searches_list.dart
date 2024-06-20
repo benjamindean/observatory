@@ -6,8 +6,8 @@ import 'package:logger/logger.dart';
 import 'package:observatory/search/search_provider.dart';
 import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
+import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
-import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class RecentSearchesList extends ConsumerWidget {
   const RecentSearchesList({
@@ -127,12 +127,7 @@ class RecentSearchesList extends ConsumerWidget {
         );
       },
       loading: () {
-        return const SliverFillRemaining(
-          hasScrollBody: false,
-          child: Center(
-            child: ObservatoryProgressIndicator(),
-          ),
-        );
+        return const OryFullScreenSpinner();
       },
     );
   }

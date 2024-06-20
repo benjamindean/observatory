@@ -6,9 +6,9 @@ import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/deals/deals_provider.dart';
 import 'package:observatory/deals/deals_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/load_more.dart';
-import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class DealsList extends ConsumerWidget {
   final AutoDisposeFamilyAsyncNotifierProvider<AsyncDealsNotifier, DealsState,
@@ -26,12 +26,7 @@ class DealsList extends ConsumerWidget {
 
     return deals.when(
       loading: () {
-        return const SliverFillRemaining(
-          hasScrollBody: false,
-          child: Center(
-            child: ObservatoryProgressIndicator(),
-          ),
-        );
+        return const OryFullScreenSpinner();
       },
       error: (error, stackTrace) {
         Logger().e(

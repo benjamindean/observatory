@@ -4,8 +4,8 @@ import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/search/search_provider.dart';
 import 'package:observatory/search/search_state.dart';
 import 'package:observatory/search/ui/recent_searches_list.dart';
+import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
-import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class SearchList extends ConsumerWidget {
   const SearchList({super.key});
@@ -19,12 +19,7 @@ class SearchList extends ConsumerWidget {
     return Builder(
       builder: (BuildContext context) {
         if (searchState.isLoading) {
-          return const SliverFillRemaining(
-            hasScrollBody: false,
-            child: Center(
-              child: ObservatoryProgressIndicator(),
-            ),
-          );
+          return const OryFullScreenSpinner();
         }
 
         if (searchState.deals == null) {
