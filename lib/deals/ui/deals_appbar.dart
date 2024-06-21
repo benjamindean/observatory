@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deals/deals_provider.dart';
 import 'package:observatory/deals/ui/deals_filter.dart';
 import 'package:observatory/deals/ui/deals_info_app_bar.dart';
+import 'package:observatory/deals/ui/itad_filters_page.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/ory_small_button.dart';

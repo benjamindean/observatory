@@ -23,9 +23,17 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFilters> {
     return GetIt.I<SettingsRepository>().setITADFilters(state);
   }
 
-  bool isUpdated() {
-    return state.filterCount ==
-        GetIt.I<SettingsRepository>().getITADFilters().filterCount;
+  void addTags(List<String> tags) {
+    state = state.copyWith(
+      tags:
+          Set<String>.from(List.from(state.tags ?? [])..addAll(tags)).toList(),
+    );
+  }
+
+  void removeTag(String tag) {
+    state = state.copyWith(
+      tags: List.from(state.tags ?? [])..remove(tag),
+    );
   }
 }
 

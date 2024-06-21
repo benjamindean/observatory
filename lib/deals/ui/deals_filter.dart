@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:observatory/deals/deals_provider.dart';
-import 'package:observatory/deals/itad_filters_provider.dart';
-import 'package:observatory/deals/ui/tags_list_page.dart';
+import 'package:observatory/deals/ui/itad_filters_page.dart';
 import 'package:observatory/settings/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:observatory/shared/ui/ory_small_button.dart';
 
@@ -19,18 +16,6 @@ void showDealsFilter(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return const DealsFilter();
-    },
-  );
-}
-
-void showITADFilters(BuildContext context) {
-  showModalBottomSheet(
-    useRootNavigator: true,
-    useSafeArea: true,
-    isScrollControlled: true,
-    context: context,
-    builder: (context) {
-      return const ITADFiltersPage();
     },
   );
 }
@@ -108,188 +93,6 @@ class DealsFilter extends ConsumerWidget {
                 );
               },
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ITADFiltersPage extends ConsumerWidget {
-  const ITADFiltersPage({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final ITADFilters filters = ref.watch(
-      itadFiltersProvider,
-    );
-
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            BottomSheetHeading(
-              text: 'Filters',
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  OrySmallButton(
-                    onPressed: () {
-                      ref.watch(itadFiltersProvider.notifier).reset();
-                    },
-                    icon: Icons.restore_rounded,
-                    label: 'Reset',
-                    buttonColor: context.colors.scheme.secondary,
-                    textColor: context.colors.scheme.onSecondary,
-                  ),
-                  const SizedBox(
-                    width: 6.0,
-                  ),
-                  OrySmallButton(
-                    onPressed: () {
-                      ref.watch(itadFiltersProvider.notifier).save();
-                      ref
-                          .watch(asyncDealsProvider(DealCategory.all).notifier)
-                          .reset(withLoading: true);
-
-                      context.pop();
-                    },
-                    icon: Icons.check,
-                    label: 'Apply',
-                  ),
-                ],
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'Max Price',
-                style: context.textStyles.titleMedium.copyWith(
-                  color: context.colors.scheme.onSurface,
-                ),
-              ),
-              trailing: Text(
-                '${filters.price?.max ?? 200}',
-                style: context.textStyles.titleMedium.copyWith(
-                  color: context.colors.scheme.onSurface,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: Slider(
-                value: filters.price?.max?.toDouble() ?? 200,
-                label: filters.price?.max.toString() ?? '200',
-                min: 0,
-                max: 200,
-                divisions: 20,
-                onChanged: (value) {
-                  ref.watch(itadFiltersProvider.notifier).update(
-                        filters.copyWith(
-                          price: MinMax(
-                            min: 0,
-                            max: value.toInt(),
-                          ),
-                        ),
-                      );
-                },
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'Min Price Cut',
-                style: context.textStyles.titleMedium.copyWith(
-                  color: context.colors.scheme.onSurface,
-                ),
-              ),
-              trailing: Text(
-                '${filters.cut?.min ?? 0}%',
-                style: context.textStyles.titleMedium.copyWith(
-                  color: context.colors.scheme.onSurface,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: Slider(
-                label: '${filters.cut?.min.toString() ?? '0'}%',
-                value: filters.cut?.min?.toDouble() ?? 0,
-                min: 0,
-                max: 100,
-                divisions: 20,
-                onChanged: (value) {
-                  ref.watch(itadFiltersProvider.notifier).update(
-                        filters.copyWith(
-                          cut: MinMax(
-                            min: value.toInt(),
-                            max: 100,
-                          ),
-                        ),
-                      );
-                },
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'Tags',
-                style: context.textStyles.titleMedium.copyWith(
-                  color: context.colors.scheme.onSurface,
-                ),
-              ),
-              subtitle: Text(
-                filters.tags == null
-                    ? 'No tags selected'
-                    : filters.tags!.join(', '),
-                style: context.textStyles.bodySmall.copyWith(
-                  color: context.colors.scheme.onSurface,
-                  fontWeight: filters.tags == null
-                      ? FontWeight.normal
-                      : FontWeight.bold,
-                ),
-              ),
-              trailing: OutlinedButton.icon(
-                icon: const Icon(Icons.tag_rounded),
-                label: const Text('Select'),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const TagsListPage();
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
-            SwitchListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-              title: Text(
-                'Bundled Only',
-                style: context.textStyles.titleMedium.copyWith(
-                  color: context.colors.scheme.onSurface,
-                ),
-              ),
-              subtitle: Text(
-                'Only show games that are currently bundled',
-                style: context.textStyles.bodySmall.copyWith(
-                  color: context.colors.scheme.onSurface,
-                ),
-              ),
-              value: filters.bundled ?? false,
-              onChanged: (value) {
-                ref.watch(itadFiltersProvider.notifier).update(
-                      filters.copyWith(
-                        bundled: value,
-                      ),
-                    );
-              },
-            )
           ],
         ),
       ),
