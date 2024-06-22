@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-IGDBGame _$IGDBGameFromJson(Map<String, dynamic> json) {
-  return _IGDBGame.fromJson(json);
+GameDetails _$GameDetailsFromJson(Map<String, dynamic> json) {
+  return _GameDetails.fromJson(json);
 }
 
 /// @nodoc
-mixin _$IGDBGame {
+mixin _$GameDetails {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get summary => throw _privateConstructorUsedError;
@@ -35,14 +35,15 @@ mixin _$IGDBGame {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $IGDBGameCopyWith<IGDBGame> get copyWith =>
+  $GameDetailsCopyWith<GameDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $IGDBGameCopyWith<$Res> {
-  factory $IGDBGameCopyWith(IGDBGame value, $Res Function(IGDBGame) then) =
-      _$IGDBGameCopyWithImpl<$Res, IGDBGame>;
+abstract class $GameDetailsCopyWith<$Res> {
+  factory $GameDetailsCopyWith(
+          GameDetails value, $Res Function(GameDetails) then) =
+      _$GameDetailsCopyWithImpl<$Res, GameDetails>;
   @useResult
   $Res call(
       {int? id,
@@ -62,9 +63,9 @@ abstract class $IGDBGameCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$IGDBGameCopyWithImpl<$Res, $Val extends IGDBGame>
-    implements $IGDBGameCopyWith<$Res> {
-  _$IGDBGameCopyWithImpl(this._value, this._then);
+class _$GameDetailsCopyWithImpl<$Res, $Val extends GameDetails>
+    implements $GameDetailsCopyWith<$Res> {
+  _$GameDetailsCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -153,11 +154,11 @@ class _$IGDBGameCopyWithImpl<$Res, $Val extends IGDBGame>
 }
 
 /// @nodoc
-abstract class _$$IGDBGameImplCopyWith<$Res>
-    implements $IGDBGameCopyWith<$Res> {
-  factory _$$IGDBGameImplCopyWith(
-          _$IGDBGameImpl value, $Res Function(_$IGDBGameImpl) then) =
-      __$$IGDBGameImplCopyWithImpl<$Res>;
+abstract class _$$GameDetailsImplCopyWith<$Res>
+    implements $GameDetailsCopyWith<$Res> {
+  factory _$$GameDetailsImplCopyWith(
+          _$GameDetailsImpl value, $Res Function(_$GameDetailsImpl) then) =
+      __$$GameDetailsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -179,11 +180,11 @@ abstract class _$$IGDBGameImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$IGDBGameImplCopyWithImpl<$Res>
-    extends _$IGDBGameCopyWithImpl<$Res, _$IGDBGameImpl>
-    implements _$$IGDBGameImplCopyWith<$Res> {
-  __$$IGDBGameImplCopyWithImpl(
-      _$IGDBGameImpl _value, $Res Function(_$IGDBGameImpl) _then)
+class __$$GameDetailsImplCopyWithImpl<$Res>
+    extends _$GameDetailsCopyWithImpl<$Res, _$GameDetailsImpl>
+    implements _$$GameDetailsImplCopyWith<$Res> {
+  __$$GameDetailsImplCopyWithImpl(
+      _$GameDetailsImpl _value, $Res Function(_$GameDetailsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -202,7 +203,7 @@ class __$$IGDBGameImplCopyWithImpl<$Res>
     Object? themes = null,
     Object? websites = null,
   }) {
-    return _then(_$IGDBGameImpl(
+    return _then(_$GameDetailsImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -258,8 +259,8 @@ class __$$IGDBGameImplCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$IGDBGameImpl extends _IGDBGame {
-  const _$IGDBGameImpl(
+class _$GameDetailsImpl extends _GameDetails {
+  const _$GameDetailsImpl(
       {this.id,
       this.name,
       this.summary,
@@ -279,8 +280,8 @@ class _$IGDBGameImpl extends _IGDBGame {
         _websites = websites,
         super._();
 
-  factory _$IGDBGameImpl.fromJson(Map<String, dynamic> json) =>
-      _$$IGDBGameImplFromJson(json);
+  factory _$GameDetailsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GameDetailsImplFromJson(json);
 
   @override
   final int? id;
@@ -343,14 +344,14 @@ class _$IGDBGameImpl extends _IGDBGame {
 
   @override
   String toString() {
-    return 'IGDBGame(id: $id, name: $name, summary: $summary, storyline: $storyline, url: $url, first_release_date: $first_release_date, cover: $cover, screenshots: $screenshots, videos: $videos, platforms: $platforms, themes: $themes, websites: $websites)';
+    return 'GameDetails(id: $id, name: $name, summary: $summary, storyline: $storyline, url: $url, first_release_date: $first_release_date, cover: $cover, screenshots: $screenshots, videos: $videos, platforms: $platforms, themes: $themes, websites: $websites)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IGDBGameImpl &&
+            other is _$GameDetailsImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.summary, summary) || other.summary == summary) &&
@@ -389,19 +390,19 @@ class _$IGDBGameImpl extends _IGDBGame {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$IGDBGameImplCopyWith<_$IGDBGameImpl> get copyWith =>
-      __$$IGDBGameImplCopyWithImpl<_$IGDBGameImpl>(this, _$identity);
+  _$$GameDetailsImplCopyWith<_$GameDetailsImpl> get copyWith =>
+      __$$GameDetailsImplCopyWithImpl<_$GameDetailsImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$IGDBGameImplToJson(
+    return _$$GameDetailsImplToJson(
       this,
     );
   }
 }
 
-abstract class _IGDBGame extends IGDBGame {
-  const factory _IGDBGame(
+abstract class _GameDetails extends GameDetails {
+  const factory _GameDetails(
       {final int? id,
       final String? name,
       final String? summary,
@@ -413,11 +414,11 @@ abstract class _IGDBGame extends IGDBGame {
       final List<IGDBVideo> videos,
       final List<IGDBPlatform> platforms,
       final List<IGDBTheme> themes,
-      final List<IGDBWebsite> websites}) = _$IGDBGameImpl;
-  const _IGDBGame._() : super._();
+      final List<IGDBWebsite> websites}) = _$GameDetailsImpl;
+  const _GameDetails._() : super._();
 
-  factory _IGDBGame.fromJson(Map<String, dynamic> json) =
-      _$IGDBGameImpl.fromJson;
+  factory _GameDetails.fromJson(Map<String, dynamic> json) =
+      _$GameDetailsImpl.fromJson;
 
   @override
   int? get id;
@@ -445,7 +446,7 @@ abstract class _IGDBGame extends IGDBGame {
   List<IGDBWebsite> get websites;
   @override
   @JsonKey(ignore: true)
-  _$$IGDBGameImplCopyWith<_$IGDBGameImpl> get copyWith =>
+  _$$GameDetailsImplCopyWith<_$GameDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

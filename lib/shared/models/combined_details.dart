@@ -8,7 +8,7 @@ part 'combined_details.freezed.dart';
 @freezed
 class CombinedDetails with _$CombinedDetails {
   const factory CombinedDetails({
-    IGDBGame? igdb,
+    GameDetails? igdb,
     Info? itad,
   }) = _CombinedDetails;
 }

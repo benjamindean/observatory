@@ -25,11 +25,11 @@ enum Foo {
 }
 
 @freezed
-class IGDBGame with _$IGDBGame {
-  const IGDBGame._();
+class GameDetails with _$GameDetails {
+  const GameDetails._();
 
   @JsonSerializable(explicitToJson: true)
-  const factory IGDBGame({
+  const factory GameDetails({
     int? id,
     String? name,
     String? summary,
@@ -42,10 +42,10 @@ class IGDBGame with _$IGDBGame {
     @Default([]) List<IGDBPlatform> platforms,
     @Default([]) List<IGDBTheme> themes,
     @Default([]) List<IGDBWebsite> websites,
-  }) = _IGDBGame;
+  }) = _GameDetails;
 
-  factory IGDBGame.fromJson(Map<String, Object?> json) =>
-      _$IGDBGameFromJson(json);
+  factory GameDetails.fromJson(Map<String, Object?> json) =>
+      _$GameDetailsFromJson(json);
 }
 
 @freezed

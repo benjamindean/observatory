@@ -1,10 +1,13 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:observatory/deals/deals_provider.dart';
 import 'package:observatory/deals/itad_filters_provider.dart';
 import 'package:observatory/deals/ui/tags_list_page.dart';
+import 'package:observatory/settings/currency_setter.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
@@ -78,76 +81,7 @@ class ITADFiltersPage extends ConsumerWidget {
                 ),
               ),
               ListTile(
-                title: Text(
-                  'Price',
-                  style: context.textStyles.titleMedium.copyWith(
-                    color: context.colors.scheme.onSurface,
-                  ),
-                ),
-                trailing: Text(
-                  '< ${filters.price?.max ?? 200}',
-                  style: context.textStyles.titleMedium.copyWith(
-                    color: context.colors.scheme.onSurface,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Slider(
-                  value: filters.price?.max?.toDouble() ?? 200,
-                  label: filters.price?.max.toString() ?? '200',
-                  min: 0,
-                  max: 200,
-                  divisions: 20,
-                  onChanged: (value) {
-                    ref.watch(itadFiltersProvider.notifier).update(
-                          filters.copyWith(
-                            price: MinMax(
-                              min: 0,
-                              max: value.toInt(),
-                            ),
-                          ),
-                        );
-                  },
-                ),
-              ),
-              ListTile(
-                title: Text(
-                  'Discount',
-                  style: context.textStyles.titleMedium.copyWith(
-                    color: context.colors.scheme.onSurface,
-                  ),
-                ),
-                trailing: Text(
-                  ' ${filters.cut?.min ?? 0}%',
-                  style: context.textStyles.titleMedium.copyWith(
-                    color: context.colors.scheme.onSurface,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Slider(
-                  label: '${filters.cut?.min.toString() ?? '0'}%',
-                  value: filters.cut?.min?.toDouble() ?? 0,
-                  min: 0,
-                  max: 100,
-                  divisions: 20,
-                  onChanged: (value) {
-                    ref.watch(itadFiltersProvider.notifier).update(
-                          filters.copyWith(
-                            cut: MinMax(
-                              min: value.toInt(),
-                              max: 100,
-                            ),
-                          ),
-                        );
-                  },
-                ),
-              ),
-              ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
                 title: Text(
                   'Tags',
                   style: context.textStyles.titleMedium.copyWith(
@@ -199,6 +133,105 @@ class ITADFiltersPage extends ConsumerWidget {
                           },
                         ).toList() ??
                         []),
+              ),
+              ListTile(
+                title: Text(
+                  'Price',
+                  style: context.textStyles.titleMedium.copyWith(
+                    color: context.colors.scheme.onSurface,
+                  ),
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 1.0),
+                      child: Icon(
+                        Icons.keyboard_arrow_left_rounded,
+                        size: 24,
+                      ),
+                    ),
+                    Text(
+                      NumberFormat.simpleCurrency(
+                        name: GetIt.I<Currency>().name,
+                        decimalDigits: 0,
+                      ).format(filters.price?.max ?? 200),
+                      style: context.textStyles.titleMedium.copyWith(
+                        color: context.colors.scheme.onSurface,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: Slider(
+                  value: filters.price?.max?.toDouble() ?? 200,
+                  label: filters.price?.max.toString() ?? '200',
+                  min: 0,
+                  max: 200,
+                  divisions: 20,
+                  onChanged: (value) {
+                    ref.watch(itadFiltersProvider.notifier).update(
+                          filters.copyWith(
+                            price: MinMax(
+                              min: 0,
+                              max: value.toInt(),
+                            ),
+                          ),
+                        );
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  'Discount',
+                  style: context.textStyles.titleMedium.copyWith(
+                    color: context.colors.scheme.onSurface,
+                  ),
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      '${filters.cut?.min ?? 0}',
+                      style: context.textStyles.titleMedium.copyWith(
+                        color: context.colors.scheme.onSurface,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 1.0),
+                      child: Icon(
+                        Icons.percent,
+                        size: 20,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: Slider(
+                  label: '${filters.cut?.min.toString() ?? '0'}%',
+                  value: filters.cut?.min?.toDouble() ?? 0,
+                  min: 0,
+                  max: 100,
+                  divisions: 20,
+                  onChanged: (value) {
+                    ref.watch(itadFiltersProvider.notifier).update(
+                          filters.copyWith(
+                            cut: MinMax(
+                              min: value.toInt(),
+                              max: 100,
+                            ),
+                          ),
+                        );
+                  },
+                ),
               ),
               SwitchListTile(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),

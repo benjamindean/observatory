@@ -37,7 +37,7 @@ mixin _$Deal {
   DealSource get source => throw _privateConstructorUsedError;
   @HiveField(5)
   List<Price>? get prices => throw _privateConstructorUsedError;
-  IGDBGame? get igdbGame => throw _privateConstructorUsedError;
+  GameDetails? get igdbGame => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -61,11 +61,11 @@ abstract class $DealCopyWith<$Res> {
       @HiveField(3) int added,
       @HiveField(4) DealSource source,
       @HiveField(5) List<Price>? prices,
-      IGDBGame? igdbGame});
+      GameDetails? igdbGame});
 
   $InfoCopyWith<$Res>? get info;
   $OverviewCopyWith<$Res>? get overview;
-  $IGDBGameCopyWith<$Res>? get igdbGame;
+  $GameDetailsCopyWith<$Res>? get igdbGame;
 }
 
 /// @nodoc
@@ -142,7 +142,7 @@ class _$DealCopyWithImpl<$Res, $Val extends Deal>
       igdbGame: freezed == igdbGame
           ? _value.igdbGame
           : igdbGame // ignore: cast_nullable_to_non_nullable
-              as IGDBGame?,
+              as GameDetails?,
     ) as $Val);
   }
 
@@ -172,12 +172,12 @@ class _$DealCopyWithImpl<$Res, $Val extends Deal>
 
   @override
   @pragma('vm:prefer-inline')
-  $IGDBGameCopyWith<$Res>? get igdbGame {
+  $GameDetailsCopyWith<$Res>? get igdbGame {
     if (_value.igdbGame == null) {
       return null;
     }
 
-    return $IGDBGameCopyWith<$Res>(_value.igdbGame!, (value) {
+    return $GameDetailsCopyWith<$Res>(_value.igdbGame!, (value) {
       return _then(_value.copyWith(igdbGame: value) as $Val);
     });
   }
@@ -202,14 +202,14 @@ abstract class _$$DealImplCopyWith<$Res> implements $DealCopyWith<$Res> {
       @HiveField(3) int added,
       @HiveField(4) DealSource source,
       @HiveField(5) List<Price>? prices,
-      IGDBGame? igdbGame});
+      GameDetails? igdbGame});
 
   @override
   $InfoCopyWith<$Res>? get info;
   @override
   $OverviewCopyWith<$Res>? get overview;
   @override
-  $IGDBGameCopyWith<$Res>? get igdbGame;
+  $GameDetailsCopyWith<$Res>? get igdbGame;
 }
 
 /// @nodoc
@@ -283,7 +283,7 @@ class __$$DealImplCopyWithImpl<$Res>
       igdbGame: freezed == igdbGame
           ? _value.igdbGame
           : igdbGame // ignore: cast_nullable_to_non_nullable
-              as IGDBGame?,
+              as GameDetails?,
     ));
   }
 }
@@ -353,7 +353,7 @@ class _$DealImpl extends _Deal {
   }
 
   @override
-  final IGDBGame? igdbGame;
+  final GameDetails? igdbGame;
 
   @override
   String toString() {
@@ -426,7 +426,7 @@ abstract class _Deal extends Deal {
       @HiveField(3) final int added,
       @HiveField(4) final DealSource source,
       @HiveField(5) final List<Price>? prices,
-      final IGDBGame? igdbGame}) = _$DealImpl;
+      final GameDetails? igdbGame}) = _$DealImpl;
   const _Deal._() : super._();
 
   factory _Deal.fromJson(Map<String, dynamic> json) = _$DealImpl.fromJson;
@@ -460,7 +460,7 @@ abstract class _Deal extends Deal {
   @HiveField(5)
   List<Price>? get prices;
   @override
-  IGDBGame? get igdbGame;
+  GameDetails? get igdbGame;
   @override
   @JsonKey(ignore: true)
   _$$DealImplCopyWith<_$DealImpl> get copyWith =>

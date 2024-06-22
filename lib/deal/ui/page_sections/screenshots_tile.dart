@@ -24,8 +24,8 @@ class ScreenshotsTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const double thumbDelimiter = 2.5;
 
-    final AsyncValue<IGDBGame?> infoState = ref.watch(
-      igdbSearchProvider(deal),
+    final AsyncValue<GameDetails?> infoState = ref.watch(
+      gameDetailsProvider(deal),
     );
 
     void openGallery(
@@ -36,7 +36,7 @@ class ScreenshotsTile extends ConsumerWidget {
       showDialog(
         useSafeArea: false,
         barrierDismissible: false,
-        barrierColor: Colors.black54,
+        barrierColor: Colors.black87,
         context: context,
         builder: (context) {
           return GalleryView(
@@ -48,7 +48,7 @@ class ScreenshotsTile extends ConsumerWidget {
       );
     }
 
-    return DealPageSectionAsync<IGDBGame?>(
+    return DealPageSectionAsync<GameDetails?>(
       state: infoState,
       deal: deal,
       heading: 'Screenshots',

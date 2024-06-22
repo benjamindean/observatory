@@ -6,6 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:lzstring/lzstring.dart';
+import 'package:observatory/settings/currency_setter.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/api/parsers.dart';
@@ -349,10 +350,14 @@ class API {
 
     final List<String> ids = deals.map((e) => e.id).toList();
     final Map<String, List<Price>?> listOfPrices = await prices(ids: ids);
-    // final Map<String, IGDBGame?>? igdbList =
+    // final Map<String, GameDetails?>? igdbList =
     //     await GetIt.I<IGDBAPI>().searchSupabaseList(
     //   ids: ids,
     // );
+
+    setCurrency(
+      listOfPrices.entries.first.value?.first.price.currency ?? 'USD',
+    );
 
     return deals.map(
       (deal) {

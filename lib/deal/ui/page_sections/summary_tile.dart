@@ -16,11 +16,11 @@ class SummaryTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<IGDBGame?> infoState = ref.watch(
-      igdbSearchProvider(deal),
+    final AsyncValue<GameDetails?> infoState = ref.watch(
+      gameDetailsProvider(deal),
     );
 
-    return DealPageSectionAsync<IGDBGame?>(
+    return DealPageSectionAsync<GameDetails?>(
       state: infoState,
       deal: deal,
       heading: 'Summary',

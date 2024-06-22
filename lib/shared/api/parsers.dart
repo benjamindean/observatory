@@ -96,7 +96,7 @@ class Parsers {
         .toList();
   }
 
-  static List<IGDBGame>? igdbSearchResult(contents) {
+  static List<GameDetails>? igdbSearchResult(contents) {
     if (contents == null || contents.isEmpty) {
       return null;
     }
@@ -104,8 +104,8 @@ class Parsers {
     return List.from(contents)
         .map(
           (result) => result['game'] != null
-              ? IGDBGame.fromJson(result['game'])
-              : const IGDBGame(id: -1),
+              ? GameDetails.fromJson(result['game'])
+              : const GameDetails(id: -1),
         )
         .where((element) => element.id != -1)
         .toList();

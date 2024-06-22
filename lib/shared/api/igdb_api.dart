@@ -54,69 +54,7 @@ class IGDBAPI {
     );
   }
 
-  Future<IGDBGame?> searchSupabase({
-    required String title,
-    required String id,
-  }) async {
-    try {
-      final FunctionResponse response =
-          await Supabase.instance.client.functions.invoke(
-        'game-info',
-        method: HttpMethod.get,
-        queryParameters: {
-          'id': id,
-          'title': title,
-        },
-      );
-
-      return response.data != null
-          ? IGDBGame.fromJson(response.data['data'])
-          : null;
-    } catch (error) {
-      Logger().e(
-        'Failed to fetch supabase search result',
-        error: error,
-      );
-
-      return null;
-    }
-  }
-
-  Future<Map<String, IGDBGame?>?> searchSupabaseList({
-    required List<String> ids,
-  }) async {
-    try {
-      final FunctionResponse response =
-          await Supabase.instance.client.functions.invoke(
-        'game-info',
-        method: HttpMethod.post,
-        body: {
-          'ids': ids,
-        },
-      );
-
-      return {
-        for (var v in List.from(response.data))
-          v['id']: IGDBGame.fromJson(
-            v['data'],
-          ),
-      };
-    } catch (error, stackTrace) {
-      Logger().e(
-        'Failed to fetch supabase list search result',
-        error: error,
-      );
-
-      FirebaseCrashlytics.instance.recordError(
-        error,
-        stackTrace,
-      );
-
-      return null;
-    }
-  }
-
-  Future<List<IGDBGame>?> searchIGDB({
+  Future<List<GameDetails>?> searchIGDB({
     required String title,
   }) async {
     try {

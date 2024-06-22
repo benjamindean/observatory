@@ -119,7 +119,7 @@ _$DealImpl _$$DealImplFromJson(Map<String, dynamic> json) => _$DealImpl(
           .toList(),
       igdbGame: json['igdbGame'] == null
           ? null
-          : IGDBGame.fromJson(json['igdbGame'] as Map<String, dynamic>),
+          : GameDetails.fromJson(json['igdbGame'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$DealImplToJson(_$DealImpl instance) =>

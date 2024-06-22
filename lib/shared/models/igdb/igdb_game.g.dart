@@ -47,8 +47,8 @@ class IGDBAccessTokenAdapter extends TypeAdapter<IGDBAccessToken> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$IGDBGameImpl _$$IGDBGameImplFromJson(Map<String, dynamic> json) =>
-    _$IGDBGameImpl(
+_$GameDetailsImpl _$$GameDetailsImplFromJson(Map<String, dynamic> json) =>
+    _$GameDetailsImpl(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       summary: json['summary'] as String?,
@@ -80,7 +80,7 @@ _$IGDBGameImpl _$$IGDBGameImplFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$IGDBGameImplToJson(_$IGDBGameImpl instance) =>
+Map<String, dynamic> _$$GameDetailsImplToJson(_$GameDetailsImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

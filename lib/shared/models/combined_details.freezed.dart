@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CombinedDetails {
-  IGDBGame? get igdb => throw _privateConstructorUsedError;
+  GameDetails? get igdb => throw _privateConstructorUsedError;
   Info? get itad => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,9 +30,9 @@ abstract class $CombinedDetailsCopyWith<$Res> {
           CombinedDetails value, $Res Function(CombinedDetails) then) =
       _$CombinedDetailsCopyWithImpl<$Res, CombinedDetails>;
   @useResult
-  $Res call({IGDBGame? igdb, Info? itad});
+  $Res call({GameDetails? igdb, Info? itad});
 
-  $IGDBGameCopyWith<$Res>? get igdb;
+  $GameDetailsCopyWith<$Res>? get igdb;
   $InfoCopyWith<$Res>? get itad;
 }
 
@@ -56,7 +56,7 @@ class _$CombinedDetailsCopyWithImpl<$Res, $Val extends CombinedDetails>
       igdb: freezed == igdb
           ? _value.igdb
           : igdb // ignore: cast_nullable_to_non_nullable
-              as IGDBGame?,
+              as GameDetails?,
       itad: freezed == itad
           ? _value.itad
           : itad // ignore: cast_nullable_to_non_nullable
@@ -66,12 +66,12 @@ class _$CombinedDetailsCopyWithImpl<$Res, $Val extends CombinedDetails>
 
   @override
   @pragma('vm:prefer-inline')
-  $IGDBGameCopyWith<$Res>? get igdb {
+  $GameDetailsCopyWith<$Res>? get igdb {
     if (_value.igdb == null) {
       return null;
     }
 
-    return $IGDBGameCopyWith<$Res>(_value.igdb!, (value) {
+    return $GameDetailsCopyWith<$Res>(_value.igdb!, (value) {
       return _then(_value.copyWith(igdb: value) as $Val);
     });
   }
@@ -97,10 +97,10 @@ abstract class _$$CombinedDetailsImplCopyWith<$Res>
       __$$CombinedDetailsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({IGDBGame? igdb, Info? itad});
+  $Res call({GameDetails? igdb, Info? itad});
 
   @override
-  $IGDBGameCopyWith<$Res>? get igdb;
+  $GameDetailsCopyWith<$Res>? get igdb;
   @override
   $InfoCopyWith<$Res>? get itad;
 }
@@ -123,7 +123,7 @@ class __$$CombinedDetailsImplCopyWithImpl<$Res>
       igdb: freezed == igdb
           ? _value.igdb
           : igdb // ignore: cast_nullable_to_non_nullable
-              as IGDBGame?,
+              as GameDetails?,
       itad: freezed == itad
           ? _value.itad
           : itad // ignore: cast_nullable_to_non_nullable
@@ -140,7 +140,7 @@ class _$CombinedDetailsImpl
   const _$CombinedDetailsImpl({this.igdb, this.itad});
 
   @override
-  final IGDBGame? igdb;
+  final GameDetails? igdb;
   @override
   final Info? itad;
 
@@ -179,11 +179,11 @@ class _$CombinedDetailsImpl
 }
 
 abstract class _CombinedDetails implements CombinedDetails {
-  const factory _CombinedDetails({final IGDBGame? igdb, final Info? itad}) =
+  const factory _CombinedDetails({final GameDetails? igdb, final Info? itad}) =
       _$CombinedDetailsImpl;
 
   @override
-  IGDBGame? get igdb;
+  GameDetails? get igdb;
   @override
   Info? get itad;
   @override
