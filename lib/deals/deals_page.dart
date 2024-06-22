@@ -2,10 +2,10 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deals/deals_list.dart';
-import 'package:observatory/deals/deals_provider.dart';
-import 'package:observatory/deals/deals_state.dart';
+import 'package:observatory/deals/providers/deals_provider.dart';
+import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/deals/ui/deals_appbar.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/pull_to_refresh.dart';
 

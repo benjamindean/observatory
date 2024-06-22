@@ -6,7 +6,7 @@ import 'package:observatory/shared/ui/pull_to_refresh.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:observatory/waitlist/ui/waitlist_appbar.dart';
 import 'package:observatory/waitlist/waitlist_list.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class WaitListPage extends ConsumerWidget {
   const WaitListPage({super.key});

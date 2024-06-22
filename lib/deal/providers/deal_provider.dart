@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:observatory/deal/combined_details_provider.dart';
-import 'package:observatory/deal/overview_provider.dart';
+import 'package:observatory/deal/providers/overview_provider.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/price.dart';
@@ -13,7 +12,6 @@ class DealNotifier extends AutoDisposeFamilyNotifier<Deal, Deal> {
   Future<void> refresh() async {
     state = state.copyWith(isLoading: true);
 
-    ref.invalidate(combinedDetailsProvider(state));
     ref.invalidate(overviewProvider(state.id));
 
     final Map<String, List<Price>?> response = await GetIt.I<API>().prices(
@@ -27,5 +25,7 @@ class DealNotifier extends AutoDisposeFamilyNotifier<Deal, Deal> {
   }
 }
 
-final dealProvider = NotifierProvider.family
-    .autoDispose<DealNotifier, Deal, Deal>(DealNotifier.new);
+final dealProvider =
+    NotifierProvider.family.autoDispose<DealNotifier, Deal, Deal>(
+  DealNotifier.new,
+);

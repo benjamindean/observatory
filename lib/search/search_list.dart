@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
-import 'package:observatory/search/search_provider.dart';
-import 'package:observatory/search/search_state.dart';
+import 'package:observatory/search/providers/search_provider.dart';
+import 'package:observatory/search/state/search_state.dart';
 import 'package:observatory/search/ui/recent_searches_list.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';

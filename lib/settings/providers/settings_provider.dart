@@ -1,17 +1,15 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:observatory/deals/deals_provider.dart';
+import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/settings/settings_state.dart';
+import 'package:observatory/settings/state/settings_state.dart';
 
 import 'package:observatory/shared/api/api.dart';
-import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
   final SettingsRepository repository = GetIt.I<SettingsRepository>();
@@ -188,89 +186,9 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
       },
     );
   }
-
-  // Future<void> restoreFromFirebase() async {
-  //   try {
-  //     final Map<String, dynamic>? settings =
-  //         await FirebaseSync.getSettingsFromFirebase();
-
-  //     if (settings == null) {
-  //       return;
-  //     }
-
-  //     if (settings.containsKey('region')) {
-  //       await repository.setRegion(settings['region']);
-  //     }
-
-  //     if (settings.containsKey('country')) {
-  //       await repository.setCountry(settings['country']);
-  //     }
-
-  //     if (settings.containsKey('show_headers')) {
-  //       await repository.setShowHeaders(settings['show_headers']);
-  //     }
-
-  //     if (settings.containsKey('deal_card_type')) {
-  //       await repository.setDealCardType(
-  //         DealCardType.values.asMap()[settings['deal_card_type']] ??
-  //             DealCardType.expanded,
-  //       );
-  //     }
-
-  //     if (settings.containsKey('selected_stores')) {
-  //       await repository.setSelectedStores(
-  //         List<int>.from(
-  //           settings['selected_stores'],
-  //         ),
-  //       );
-  //     }
-  //   } catch (error, stackTrace) {
-  //     Logger().e(
-  //       'Failed to restore settings from Firebase',
-  //       error: error,
-  //       stackTrace: stackTrace,
-  //     );
-
-  //     return;
-  //   }
-
-  //   ref.invalidateSelf();
-  // }
 }
 
 final asyncSettingsProvider =
     AsyncNotifierProvider<AsyncSettingsNotifier, SettingsState>(() {
   return AsyncSettingsNotifier();
 });
-
-final themesProvider = NotifierProvider<ThemesProvider, ObservatoryTheme>(() {
-  return ThemesProvider();
-});
-
-class ThemesProvider extends Notifier<ObservatoryTheme> {
-  @override
-  ObservatoryTheme build() {
-    return GetIt.I<SettingsRepository>().getTheme();
-  }
-
-  Future<void> setThemeMode(String mode) async {
-    final ObservatoryTheme theme = state.copyWith(mode: mode);
-    await GetIt.I<SettingsRepository>().setTheme(theme);
-
-    state = theme;
-  }
-
-  Future<void> setScheme(FlexScheme scheme) async {
-    final ObservatoryTheme theme = state.copyWith(scheme: scheme.name);
-    await GetIt.I<SettingsRepository>().setTheme(theme);
-
-    state = theme;
-  }
-
-  Future<void> setTrueBlack(bool isTrueBlack) async {
-    final ObservatoryTheme theme = state.copyWith(isTrueBlack: isTrueBlack);
-    await GetIt.I<SettingsRepository>().setTheme(theme);
-
-    state = theme;
-  }
-}

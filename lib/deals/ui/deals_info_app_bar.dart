@@ -1,8 +1,8 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/deals/deals_provider.dart';
-import 'package:observatory/deals/deals_state.dart';
+import 'package:observatory/deals/providers/deals_provider.dart';
+import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
 
 class DealsInfoAppBar extends ConsumerWidget {

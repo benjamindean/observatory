@@ -1,9 +1,9 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/search/search_provider.dart';
-import 'package:observatory/search/search_state.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
+import 'package:observatory/search/providers/search_provider.dart';
+import 'package:observatory/search/state/search_state.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class WaitlistInfoAppBar extends ConsumerWidget {
   const WaitlistInfoAppBar({

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/router.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/stores_select/stores_list_provider.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:observatory/shared/ui/constants.dart';

@@ -1,11 +1,11 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/deals/deals_provider.dart';
+import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/ui/deals_filter.dart';
 import 'package:observatory/deals/ui/deals_info_app_bar.dart';
-import 'package:observatory/deals/ui/itad_filters_page.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/itad_filters/itad_filters_page.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/ory_small_button.dart';
 import 'package:observatory/shared/widgets/settings_button.dart';

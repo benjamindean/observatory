@@ -1,8 +1,8 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
-import 'package:observatory/waitlist/waitlist_state.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
+import 'package:observatory/waitlist/state/waitlist_state.dart';
 
 class DiscountedBadge extends ConsumerWidget {
   const DiscountedBadge({

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 
 class ThemeTrueBlackListTile extends ConsumerWidget {

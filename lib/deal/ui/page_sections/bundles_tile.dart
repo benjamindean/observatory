@@ -2,8 +2,8 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:observatory/deal/overview_provider.dart';
-import 'package:observatory/deal/ui/page_sections/bundles_list.dart';
+import 'package:observatory/deal/providers/overview_provider.dart';
+import 'package:observatory/deal/ui/page_sections/bundles_bottom_sheet.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/overview.dart';
@@ -25,7 +25,9 @@ class BundlesTile extends ConsumerWidget {
     final List<Bundle>? bundles = overviewState.value?.bundles;
 
     return InkWell(
-      onTap: isEnabled ? () => showBundlesList(context, bundles ?? []) : null,
+      onTap: isEnabled
+          ? () => showBundlesBottomSheet(context, bundles ?? [])
+          : null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

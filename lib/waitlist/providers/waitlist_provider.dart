@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/waitlist/waitlist_state.dart';
+import 'package:observatory/waitlist/state/waitlist_state.dart';
 
 class AsyncWaitListNotifier extends AsyncNotifier<WaitListState> {
   final SettingsRepository settingsRepository = GetIt.I<SettingsRepository>();

@@ -12,39 +12,15 @@ final gameDetailsProvider =
   }
 
   final String cleanTitle = decodeTitle(deal.titleParsed);
-  final GameDetails? igdbGame = await SupabaseAPI.searchSupabase(
+  final GameDetails? gameDetails = await SupabaseAPI.searchSupabase(
     id: deal.id,
     title: cleanTitle,
   );
 
   Logger().d({
-    'igdb_data': igdbGame,
+    'igdb_data': gameDetails,
     'title': cleanTitle,
   });
 
-  return igdbGame;
+  return gameDetails;
 });
-
-
-// @riverpod
-// FutureOr<GameDetails?> igdbSearch(
-//   IgdbSearchRef ref,
-//   Deal deal,
-// ) {
-//   if (deal.igdbGame != null) {
-//     return deal.igdbGame;
-//   }
-
-//   final String cleanTitle = decodeTitle(deal.titleParsed);
-//   final Future<GameDetails?> igdbGame = GetIt.I<IGDBAPI>().searchSupabase(
-//     id: deal.id,
-//     title: cleanTitle,
-//   );
-
-//   Logger().d({
-//     'igdb_data': igdbGame,
-//     'title': cleanTitle,
-//   });
-
-//   return igdbGame.then((value) => value);
-// }

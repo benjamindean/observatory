@@ -10,7 +10,7 @@ import 'package:observatory/deal/ui/page_sections/release_date_tile.dart';
 import 'package:observatory/deal/ui/page_sections/supported_platforms_tile.dart';
 import 'package:observatory/deal/ui/price_listview.dart';
 import 'package:observatory/deal/ui/page_sections/reviews_tile.dart';
-import 'package:observatory/deal/deal_provider.dart';
+import 'package:observatory/deal/providers/deal_provider.dart';
 import 'package:observatory/deal/ui/page_sections/screenshots_tile.dart';
 import 'package:observatory/deal/ui/page_sections/summary_tile.dart';
 import 'package:observatory/deal/ui/page_sections/tags_tile.dart';

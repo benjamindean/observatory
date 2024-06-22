@@ -7,12 +7,12 @@ import 'package:go_router/go_router.dart';
 import 'package:observatory/deal/deal_functions.dart';
 import 'package:observatory/deal/ui/deal_bottom_sheet.dart';
 import 'package:observatory/deal/ui/deal_card_compact_info_row.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:observatory/shared/widgets/header_image.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 const double delimiter = 3.4;
 

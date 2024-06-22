@@ -2,7 +2,7 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:observatory/deals/itad_filters_provider.dart';
+import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/steam_tags_list.dart';
 

@@ -6,7 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:lzstring/lzstring.dart';
-import 'package:observatory/settings/currency_setter.dart';
+import 'package:observatory/shared/helpers/currency_setter.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/api/parsers.dart';
@@ -19,21 +19,6 @@ import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/steam_featured_item.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
-
-final Map<String, String> dealFilters = {
-  'trending': 'Trending',
-  'time': 'Newest',
-  'cut': 'Highest Price Cut',
-  'price': 'Lowest Price',
-  'expiry': 'Expiring Soon',
-  'release-date': 'Release Date',
-  'rank': 'Most Popular',
-  'steam-players': 'Steam Players Count',
-  'steam-reviews': 'Steam Reviews',
-  'opencritic': 'OpenCritic Score',
-  'metacritic': 'Metacritic Score',
-  'metacritic-users': 'Metacritic User Score',
-};
 
 class API {
   final Dio dio;
@@ -182,7 +167,7 @@ class API {
   }
 
   Future<List<Deal>> fetchDeals({
-    final int limit = 20,
+    final int limit = 40,
     final int offset = 0,
   }) async {
     final String country = settingsReporsitory.getCountry();
@@ -195,6 +180,8 @@ class API {
       'offset': offset.toString(),
       'country': country,
       'shops': stores.join(','),
+      'nondeals': 'true',
+      'mature': 'true',
       'sort': '-trending',
       'filter': LZString.compressToBase64Sync(json.encode(filters.toJson())),
     });

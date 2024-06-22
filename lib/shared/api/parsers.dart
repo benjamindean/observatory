@@ -23,25 +23,26 @@ class Parsers {
   }
 
   static Map<String, List<Price>> prices(contents) {
-    final Map<String, List<Price>> mapOfPrices = {};
-    final List<dynamic> rawList = json.decode(contents.toString());
+    final List<dynamic> rawList = json
+        .decode(contents.toString())
+        .where(
+          (prices) =>
+              prices != null &&
+              prices['deals'] != null &&
+              prices['deals'].length > 0,
+        )
+        .toList();
 
-    for (final deal in rawList) {
-      if (deal['deals'] != null && deal['deals'].length > 0) {
-        deal['deals'].forEach((price) {
-          mapOfPrices.putIfAbsent(deal['id'], () => []);
-          mapOfPrices[deal['id']]?.add(
-            Price.fromJson(price).copyWith(
-              timestampMs: DateTime.tryParse(
-                price['timestamp'],
-              )?.millisecondsSinceEpoch,
-            ),
+    return {
+      for (final deal in rawList)
+        deal['id']: deal['deals'].map<Price>((price) {
+          return Price.fromJson(price).copyWith(
+            timestampMs: DateTime.tryParse(
+              price['timestamp'],
+            )?.millisecondsSinceEpoch,
           );
-        });
-      }
-    }
-
-    return mapOfPrices;
+        }).toList(),
+    };
   }
 
   static List<Store> stores(contents) {

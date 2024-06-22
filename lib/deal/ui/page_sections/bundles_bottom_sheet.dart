@@ -4,24 +4,24 @@ import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-void showBundlesList(BuildContext context, List<Bundle> bundles) {
+void showBundlesBottomSheet(BuildContext context, List<Bundle> bundles) {
   showModalBottomSheet(
     useRootNavigator: true,
     useSafeArea: true,
     isScrollControlled: true,
     context: context,
     builder: (BuildContext context) {
-      return BundlesList(
+      return BundlesBottomSheet(
         bundles: bundles,
       );
     },
   );
 }
 
-class BundlesList extends StatelessWidget {
+class BundlesBottomSheet extends StatelessWidget {
   final List<Bundle> bundles;
 
-  const BundlesList({
+  const BundlesBottomSheet({
     super.key,
     required this.bundles,
   });

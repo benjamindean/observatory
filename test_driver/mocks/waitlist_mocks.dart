@@ -7,8 +7,8 @@ import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/shop.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
-import 'package:observatory/waitlist/waitlist_state.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
+import 'package:observatory/waitlist/state/waitlist_state.dart';
 
 final List<Deal> waitlist = [
   const Deal(

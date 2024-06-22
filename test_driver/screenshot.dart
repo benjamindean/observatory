@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/deals/deals_provider.dart';
+import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/main.dart';
-import 'package:observatory/search/search_provider.dart';
+import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/shared/api/igdb_api.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';

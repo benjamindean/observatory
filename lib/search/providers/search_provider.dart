@@ -2,7 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:observatory/search/search_state.dart';
+import 'package:observatory/search/state/search_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/deal.dart';

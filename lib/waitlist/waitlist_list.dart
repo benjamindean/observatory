@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
-import 'package:observatory/search/search_provider.dart';
-import 'package:observatory/search/search_state.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/search/providers/search_provider.dart';
+import 'package:observatory/search/state/search_state.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
 import 'package:observatory/settings/steam_import/steam_import_state.dart';
@@ -14,8 +14,8 @@ import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/waitlist/ui/empty_waitlist.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
-import 'package:observatory/waitlist/waitlist_state.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
+import 'package:observatory/waitlist/state/waitlist_state.dart';
 
 class WaitListList extends ConsumerWidget {
   const WaitListList({super.key});

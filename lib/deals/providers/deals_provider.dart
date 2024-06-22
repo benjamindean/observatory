@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:observatory/deals/deals_state.dart';
+import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/deal.dart';
 
-const int itemsPerPage = 30;
+const int itemsPerPage = 40;
 
 class AsyncDealsNotifier
     extends AutoDisposeFamilyAsyncNotifier<DealsState, DealCategory> {

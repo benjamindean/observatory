@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:observatory/deals/ui/itad_filters_page.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/itad_filters/itad_filters_page.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';

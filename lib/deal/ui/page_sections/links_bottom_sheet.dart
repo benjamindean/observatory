@@ -5,24 +5,24 @@ import 'package:observatory/deal/ui/page_sections/search_on_tile.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 
-void showLinksList(BuildContext context, Deal deal) {
+void showLinksBottomSheet(BuildContext context, Deal deal) {
   showModalBottomSheet(
     useRootNavigator: true,
     useSafeArea: true,
     isScrollControlled: true,
     context: context,
     builder: (BuildContext context) {
-      return LinksList(
+      return LinksBottomSheet(
         deal: deal,
       );
     },
   );
 }
 
-class LinksList extends StatelessWidget {
+class LinksBottomSheet extends StatelessWidget {
   final Deal deal;
 
-  const LinksList({
+  const LinksBottomSheet({
     super.key,
     required this.deal,
   });

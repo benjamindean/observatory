@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/deal/deal_functions.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class DealBottomSheet extends ConsumerWidget {
   const DealBottomSheet({

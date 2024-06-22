@@ -13,7 +13,7 @@ import 'package:observatory/firebase_options.dart';
 import 'package:observatory/notifications/constants.dart';
 import 'package:observatory/router.dart';
 import 'package:observatory/secret_loader.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/api/igdb_api.dart';
