@@ -22,12 +22,8 @@ class DealCardInfoRow extends StatelessWidget {
       children: [
         Expanded(
           flex: 25,
-          child: Column(
-            children: [
-              PriceCut(
-                priceCut: deal.prices?.firstOrNull?.cut ?? -1,
-              )
-            ],
+          child: PriceCut(
+            priceCut: deal.prices?.firstOrNull?.cut ?? -1,
           ),
         ),
         Expanded(
@@ -36,19 +32,18 @@ class DealCardInfoRow extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   deal.titleParsed,
                   maxLines: 2,
-                  style: context.themes.text.titleSmall?.copyWith(
+                  style: context.themes.text.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: context.colors.scheme.onSurface,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 4.0),
                 PriceNew(prices: deal.prices),
               ],
             ),
@@ -56,12 +51,8 @@ class DealCardInfoRow extends StatelessWidget {
         ),
         Expanded(
           flex: 20,
-          child: Column(
-            children: [
-              WaitlistButton(deal: deal),
-            ],
-          ),
-        )
+          child: WaitlistButton(deal: deal),
+        ),
       ],
     );
   }

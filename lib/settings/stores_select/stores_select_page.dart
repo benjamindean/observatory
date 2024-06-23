@@ -31,8 +31,8 @@ class StoreSelectPage extends ConsumerWidget {
     final listProvider = storeListProvider(selectedStores);
     final List<int> storeList = ref.watch(listProvider);
 
-    final bool hasChanged = (List.from(storeList)..sort()).join() !=
-        (List.from(selectedStores)..sort()).join();
+    final bool hasChanged = (List.of(storeList)..sort()).join() !=
+        (List.of(selectedStores)..sort()).join();
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(

@@ -1,13 +1,12 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/itad_filters/tags_list_page.dart';
-import 'package:observatory/shared/helpers/currency_setter.dart';
+import 'package:observatory/itad_filters/ui/max_price_label.dart';
+import 'package:observatory/itad_filters/ui/min_cut_label.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
@@ -35,7 +34,6 @@ class ITADFiltersPage extends ConsumerWidget {
     final ITADFilters filters = ref.watch(
       itadFiltersProvider,
     );
-    final String currency = GetIt.I<Currency>().name;
 
     return SafeArea(
       child: Padding(
@@ -142,28 +140,8 @@ class ITADFiltersPage extends ConsumerWidget {
                     color: context.colors.scheme.onSurface,
                   ),
                 ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 1.0),
-                      child: Icon(
-                        Icons.keyboard_arrow_left_rounded,
-                        size: 24,
-                      ),
-                    ),
-                    Text(
-                      NumberFormat.simpleCurrency(
-                        name: currency,
-                        decimalDigits: 0,
-                      ).format(filters.price?.max ?? filters.priceBounds.max),
-                      style: context.textStyles.titleMedium.copyWith(
-                        color: context.colors.scheme.onSurface,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                trailing: MaxPriceLabel(
+                  maxPrice: filters.price?.max,
                 ),
               ),
               Padding(
@@ -188,25 +166,8 @@ class ITADFiltersPage extends ConsumerWidget {
                     color: context.colors.scheme.onSurface,
                   ),
                 ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      '${filters.cut?.min ?? filters.cutBounds.min}',
-                      style: context.textStyles.titleMedium.copyWith(
-                        color: context.colors.scheme.onSurface,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 1.0),
-                      child: Icon(
-                        Icons.percent,
-                        size: 20,
-                      ),
-                    ),
-                  ],
+                trailing: MinCutLabel(
+                  minCut: filters.cut?.min,
                 ),
               ),
               Padding(

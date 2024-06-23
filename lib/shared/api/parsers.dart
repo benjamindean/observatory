@@ -102,7 +102,7 @@ class Parsers {
       return null;
     }
 
-    return List.from(contents)
+    return List.of(contents)
         .map(
           (result) => result['game'] != null
               ? GameDetails.fromJson(result['game'])

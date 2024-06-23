@@ -46,7 +46,7 @@ class SupabaseAPI {
       );
 
       return {
-        for (var v in List.from(response.data))
+        for (var v in List.of(response.data))
           v['id']: GameDetails.fromJson(
             v['data'],
           ),

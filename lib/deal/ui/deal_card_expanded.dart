@@ -7,6 +7,7 @@ import 'package:observatory/deal/ui/deal_bottom_sheet.dart';
 import 'package:observatory/deal/ui/deal_card_info_row.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:observatory/shared/widgets/header_image.dart';
 
@@ -49,6 +50,7 @@ class DealCardExpanded extends ConsumerWidget {
       },
       child: ObservatoryCard(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Builder(
@@ -64,7 +66,10 @@ class DealCardExpanded extends ConsumerWidget {
                 );
               },
             ),
-            Center(child: DealCardInfoRow(deal: deal)),
+            SizedBox(
+              height: BASE_CARD_HEIGHT,
+              child: DealCardInfoRow(deal: deal),
+            ),
           ],
         ),
       ),

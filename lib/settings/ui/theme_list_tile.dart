@@ -19,7 +19,7 @@ class ThemeListTile extends ConsumerWidget {
           (FlexScheme scheme) => scheme.name == selectedScheme,
         ) ??
         FlexScheme.mandyRed;
-    final List<FlexScheme> schemes = List.from(FlexScheme.values)
+    final List<FlexScheme> schemes = List.of(FlexScheme.values)
       ..insert(0, selectedFlexScheme);
 
     return Column(

@@ -119,8 +119,8 @@ class AsyncRecentsNotifier extends AsyncNotifier<List<String>> {
       () async {
         await GetIt.I<SettingsRepository>().saveToRecents(query.trim());
 
-        return Set<String>.from(
-          List.from(state.value ?? [])..add(query.trim()),
+        return Set<String>.of(
+          List.of(state.value ?? [])..add(query.trim()),
         ).toList();
       },
     );

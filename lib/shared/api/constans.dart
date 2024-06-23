@@ -17,6 +17,8 @@ const String REDIRECT_URL = 'https://observatory-bc08e.web.app/';
 const API_LIMIT = 100;
 const MAX_STEAM_WISHLIST_PAGES = 7;
 
+const DEALS_COUNT = 50;
+
 const Map<String, String> DEAL_FILTERS = {
   'trending': 'Trending',
   'time': 'Newest',

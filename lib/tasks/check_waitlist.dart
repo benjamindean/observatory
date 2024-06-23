@@ -15,7 +15,7 @@ Future<List<Deal>> getNewDiscountedDeals() async {
   final List<Deal> waitlist = await GetIt.I<API>().fetchWaitlist();
   final List<Deal> pastWaitlist = settingsRepository.getWaitlistPast();
 
-  final List<Deal> updatedDeals = List.from(waitlist)
+  final List<Deal> updatedDeals = List.of(waitlist)
     ..retainWhere((deal) {
       final Deal? pastDeal = pastWaitlist.singleWhereOrNull(
         (pastDeal) => pastDeal.id == deal.id,
@@ -40,7 +40,7 @@ Future<List<Deal>> getNewDiscountedDeals() async {
       },
     );
 
-  await settingsRepository.setWaitlistPast(List.from(waitlist));
+  await settingsRepository.setWaitlistPast(List.of(waitlist));
 
   Logger().d({
     'waitlist': waitlist.length,

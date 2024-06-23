@@ -63,14 +63,13 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFilters> {
 
   void addTags(List<String> tags) {
     state = state.copyWith(
-      tags:
-          Set<String>.from(List.from(state.tags ?? [])..addAll(tags)).toList(),
+      tags: Set<String>.of(List.of(state.tags ?? [])..addAll(tags)).toList(),
     );
   }
 
   void removeTag(String tag) {
     state = state.copyWith(
-      tags: List.from(state.tags ?? [])..remove(tag),
+      tags: List.of(state.tags ?? [])..remove(tag),
     );
   }
 }

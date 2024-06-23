@@ -38,8 +38,7 @@ class DealsList extends ConsumerWidget {
     final double? screenWidth = cardType == DealCardType.compact
         ? null
         : MediaQuery.of(context).size.width;
-    final double height =
-        cardHeight(showHeaders, DealCardType.compact, screenWidth);
+    final double height = cardHeight(showHeaders, cardType, screenWidth);
 
     return deals.when(
       loading: () {
@@ -110,9 +109,12 @@ class DealsList extends ConsumerWidget {
                 );
               }
 
-              return DealCard(
-                deal: data.deals[index],
-                cardType: cardType,
+              return SizedBox(
+                height: height,
+                child: DealCard(
+                  deal: data.deals[index],
+                  cardType: cardType,
+                ),
               );
             },
           ),

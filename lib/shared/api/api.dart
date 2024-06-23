@@ -163,7 +163,7 @@ class API {
   }
 
   Future<List<Deal>> fetchDeals({
-    final int limit = 40,
+    final int limit = DEALS_COUNT,
     final int offset = 0,
   }) async {
     final String country = settingsReporsitory.getCountry();
@@ -300,7 +300,7 @@ class API {
   }
 
   Future<List<Deal>> fetchDealsCategory({
-    final int limit = 20,
+    final int limit = DEALS_COUNT,
     final int offset = 0,
     final DealCategory category = DealCategory.all,
   }) async {

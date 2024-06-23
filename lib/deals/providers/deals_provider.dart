@@ -3,9 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
+import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
-
-const int itemsPerPage = 40;
 
 class AsyncDealsNotifier
     extends AutoDisposeFamilyAsyncNotifier<DealsState, DealCategory> {
@@ -34,10 +33,10 @@ class AsyncDealsNotifier
 
     state = await AsyncValue.guard(
       () async {
-        final int offset = state.requireValue.pageNumber * itemsPerPage;
+        final int offset = state.requireValue.pageNumber * DEALS_COUNT;
         final List<Deal> results = await fetchDeals(offset: offset);
-        final List<Deal> deals = Set<Deal>.from(
-          List.from(state.value?.deals ?? [])..addAll(results),
+        final List<Deal> deals = Set<Deal>.of(
+          List.of(state.value?.deals ?? [])..addAll(results),
         ).toList();
 
         return state.requireValue.copyWith(
@@ -54,7 +53,7 @@ class AsyncDealsNotifier
 
     if (arg == DealCategory.all) {
       return api.fetchDeals(
-        limit: itemsPerPage,
+        limit: DEALS_COUNT,
         offset: offset,
       );
     }
@@ -68,7 +67,7 @@ class AsyncDealsNotifier
     }
 
     return api.fetchDealsCategory(
-      limit: itemsPerPage,
+      limit: DEALS_COUNT,
       offset: offset,
       category: arg,
     );
