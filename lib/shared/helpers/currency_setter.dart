@@ -8,6 +8,8 @@ class Currency {
 
 String setCurrency(String? currency) {
   if (currency == null) {
+    GetIt.I.registerSingleton(const Currency('USD'));
+
     return 'USD';
   }
 

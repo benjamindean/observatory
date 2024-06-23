@@ -5,7 +5,9 @@ import 'package:logger/logger.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/load_more.dart';
@@ -23,6 +25,21 @@ class DealsList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<DealsState> deals = ref.watch(provider);
     final AsyncDealsNotifier dealsNotifier = ref.watch(provider.notifier);
+    final bool showHeaders = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.value?.showHeaders ?? false,
+      ),
+    );
+    final DealCardType cardType = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
+      ),
+    );
+    final double? screenWidth = cardType == DealCardType.compact
+        ? null
+        : MediaQuery.of(context).size.width;
+    final double height =
+        cardHeight(showHeaders, DealCardType.compact, screenWidth);
 
     return deals.when(
       loading: () {
@@ -78,7 +95,8 @@ class DealsList extends ConsumerWidget {
 
         return SliverPadding(
           padding: const EdgeInsets.all(6.0),
-          sliver: SliverList.builder(
+          sliver: SliverFixedExtentList.builder(
+            itemExtent: height,
             itemCount:
                 data.hasReachedMax ? data.deals.length : data.deals.length + 1,
             itemBuilder: (context, index) {
@@ -94,6 +112,7 @@ class DealsList extends ConsumerWidget {
 
               return DealCard(
                 deal: data.deals[index],
+                cardType: cardType,
               );
             },
           ),

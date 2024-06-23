@@ -17,8 +17,8 @@ class MinMaxAdapter extends TypeAdapter<MinMax> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MinMax(
-      min: fields[0] as int?,
-      max: fields[1] as int?,
+      min: fields[0] as int,
+      max: fields[1] as int,
     );
   }
 
@@ -91,8 +91,8 @@ class ITADFiltersAdapter extends TypeAdapter<ITADFilters> {
 // **************************************************************************
 
 _$MinMaxImpl _$$MinMaxImplFromJson(Map<String, dynamic> json) => _$MinMaxImpl(
-      min: (json['min'] as num?)?.toInt(),
-      max: (json['max'] as num?)?.toInt(),
+      min: (json['min'] as num?)?.toInt() ?? 0,
+      max: (json['max'] as num?)?.toInt() ?? 100,
     );
 
 Map<String, dynamic> _$$MinMaxImplToJson(_$MinMaxImpl instance) =>

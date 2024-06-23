@@ -11,6 +11,7 @@ import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
 import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/waitlist/ui/empty_waitlist.dart';
@@ -130,6 +131,21 @@ class WaitListList extends ConsumerWidget {
     final SteamImportState steamImportState = ref.watch(
       steamImportProvider,
     );
+    final bool showHeaders = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.showHeaders ?? false,
+      ),
+    );
+    final DealCardType cardType = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
+      ),
+    );
+    final double? screenWidth = cardType == DealCardType.compact
+        ? null
+        : MediaQuery.of(context).size.width;
+    final double height =
+        cardHeight(showHeaders, DealCardType.compact, screenWidth);
 
     if (steamImportState.isImporting || steamImportState.isLoading) {
       return const OryFullScreenSpinner();
@@ -197,10 +213,12 @@ class WaitListList extends ConsumerWidget {
 
           return SliverPadding(
             padding: const EdgeInsets.all(6.0),
-            sliver: SliverList.builder(
+            sliver: SliverFixedExtentList.builder(
+              itemExtent: height,
               itemBuilder: (context, index) {
                 return DealCard(
                   deal: foundGames[index],
+                  cardType: cardType,
                 );
               },
               itemCount: foundGames.length,
@@ -216,10 +234,12 @@ class WaitListList extends ConsumerWidget {
 
         return SliverPadding(
           padding: const EdgeInsets.all(6.0),
-          sliver: SliverList.builder(
+          sliver: SliverFixedExtentList.builder(
+            itemExtent: height,
             itemBuilder: (context, index) {
               return DealCard(
                 deal: sortedWaitlist[index],
+                cardType: cardType,
               );
             },
             itemCount: sortedWaitlist.length,

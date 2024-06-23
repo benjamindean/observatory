@@ -35,6 +35,7 @@ class ITADFiltersPage extends ConsumerWidget {
     final ITADFilters filters = ref.watch(
       itadFiltersProvider,
     );
+    final String currency = GetIt.I<Currency>().name;
 
     return SafeArea(
       child: Padding(
@@ -154,9 +155,9 @@ class ITADFiltersPage extends ConsumerWidget {
                     ),
                     Text(
                       NumberFormat.simpleCurrency(
-                        name: GetIt.I<Currency>().name,
+                        name: currency,
                         decimalDigits: 0,
-                      ).format(filters.price?.max ?? 200),
+                      ).format(filters.price?.max ?? filters.priceBounds.max),
                       style: context.textStyles.titleMedium.copyWith(
                         color: context.colors.scheme.onSurface,
                         fontWeight: FontWeight.bold,
@@ -168,20 +169,15 @@ class ITADFiltersPage extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: Slider(
-                  value: filters.price?.max?.toDouble() ?? 200,
-                  label: filters.price?.max.toString() ?? '200',
-                  min: 0,
-                  max: 200,
+                  value: filters.price?.max.toDouble() ??
+                      filters.priceBounds.max.toDouble(),
+                  label: filters.price?.max.toString() ??
+                      filters.priceBounds.max.toString(),
+                  min: filters.priceBounds.min.toDouble(),
+                  max: filters.priceBounds.max.toDouble(),
                   divisions: 20,
                   onChanged: (value) {
-                    ref.watch(itadFiltersProvider.notifier).update(
-                          filters.copyWith(
-                            price: MinMax(
-                              min: 0,
-                              max: value.toInt(),
-                            ),
-                          ),
-                        );
+                    ref.watch(itadFiltersProvider.notifier).setMaxPrice(value);
                   },
                 ),
               ),
@@ -197,7 +193,7 @@ class ITADFiltersPage extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      '${filters.cut?.min ?? 0}',
+                      '${filters.cut?.min ?? filters.cutBounds.min}',
                       style: context.textStyles.titleMedium.copyWith(
                         color: context.colors.scheme.onSurface,
                         fontWeight: FontWeight.bold,
@@ -216,20 +212,16 @@ class ITADFiltersPage extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: Slider(
-                  label: '${filters.cut?.min.toString() ?? '0'}%',
-                  value: filters.cut?.min?.toDouble() ?? 0,
-                  min: 0,
-                  max: 100,
+                  label:
+                      '${filters.cut?.min.toString() ?? filters.cutBounds.min.toString()}%',
+                  value: filters.cut?.min.toDouble() ?? 0,
+                  min: filters.cutBounds.min.toDouble(),
+                  max: filters.cutBounds.max.toDouble(),
                   divisions: 20,
                   onChanged: (value) {
-                    ref.watch(itadFiltersProvider.notifier).update(
-                          filters.copyWith(
-                            cut: MinMax(
-                              min: value.toInt(),
-                              max: 100,
-                            ),
-                          ),
-                        );
+                    ref
+                        .watch(itadFiltersProvider.notifier)
+                        .setMinDiscount(value);
                   },
                 ),
               ),
@@ -249,11 +241,7 @@ class ITADFiltersPage extends ConsumerWidget {
                 ),
                 value: filters.bundled ?? false,
                 onChanged: (value) {
-                  ref.watch(itadFiltersProvider.notifier).update(
-                        filters.copyWith(
-                          bundled: value,
-                        ),
-                      );
+                  ref.watch(itadFiltersProvider.notifier).setBundled(value);
                 },
               )
             ],

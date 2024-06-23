@@ -18,7 +18,7 @@ class LoadMoreState extends State<LoadMore> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Align(
       alignment: Alignment.center,
       child: Center(
         child: Padding(

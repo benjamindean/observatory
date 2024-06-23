@@ -16,7 +16,9 @@ class DealCardInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
           flex: 25,
@@ -30,19 +32,26 @@ class DealCardInfoRow extends StatelessWidget {
         ),
         Expanded(
           flex: 56,
-          child: ListTile(
-            contentPadding: EdgeInsets.zero,
-            minVerticalPadding: 16.0,
-            title: Text(
-              deal.titleParsed,
-              maxLines: 2,
-              style: context.themes.text.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: context.colors.scheme.onSurface,
-              ),
-              overflow: TextOverflow.ellipsis,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  deal.titleParsed,
+                  maxLines: 2,
+                  style: context.themes.text.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.colors.scheme.onSurface,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4.0),
+                PriceNew(prices: deal.prices),
+              ],
             ),
-            subtitle: PriceNew(prices: deal.prices),
           ),
         ),
         Expanded(

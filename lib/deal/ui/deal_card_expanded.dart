@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:observatory/deal/ui/deal_bottom_sheet.dart';
 import 'package:observatory/deal/ui/deal_card_info_row.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
-import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:observatory/shared/widgets/header_image.dart';
@@ -50,6 +49,7 @@ class DealCardExpanded extends ConsumerWidget {
       },
       child: ObservatoryCard(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Builder(
               builder: (context) {
@@ -57,15 +57,14 @@ class DealCardExpanded extends ConsumerWidget {
                   return const SizedBox.shrink();
                 }
 
-                return AspectRatio(
-                  aspectRatio: IMAGE_WIDTH / IMAGE_HEIGHT,
+                return Expanded(
                   child: HeaderImage(
                     url: deal.headerImageURL,
                   ),
                 );
               },
             ),
-            DealCardInfoRow(deal: deal),
+            Center(child: DealCardInfoRow(deal: deal)),
           ],
         ),
       ),

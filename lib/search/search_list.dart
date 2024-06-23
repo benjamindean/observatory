@@ -4,6 +4,9 @@ import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/search/state/search_state.dart';
 import 'package:observatory/search/ui/recent_searches_list.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
+import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 
@@ -15,6 +18,21 @@ class SearchList extends ConsumerWidget {
     final SearchState searchState = ref.watch(searchProvider(
       SearchType.search,
     ));
+    final DealCardType cardType = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.value?.dealCardType ?? DealCardType.compact,
+      ),
+    );
+    final bool showHeaders = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.showHeaders ?? false,
+      ),
+    );
+    final double? screenWidth = cardType == DealCardType.compact
+        ? null
+        : MediaQuery.of(context).size.width;
+    final double height =
+        cardHeight(showHeaders, DealCardType.compact, screenWidth);
 
     return Builder(
       builder: (BuildContext context) {
@@ -41,11 +59,13 @@ class SearchList extends ConsumerWidget {
         return SliverPadding(
           key: const Key('search-scroll-view'),
           padding: const EdgeInsets.all(6.0),
-          sliver: SliverList.builder(
+          sliver: SliverFixedExtentList.builder(
+            itemExtent: height,
             itemCount: searchState.deals?.length ?? 0,
             itemBuilder: (context, index) {
               return DealCard(
                 deal: searchState.deals![index],
+                cardType: cardType,
               );
             },
           ),

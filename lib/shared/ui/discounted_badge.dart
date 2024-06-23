@@ -17,14 +17,15 @@ class DiscountedBadge extends ConsumerWidget {
 
     return Badge(
       key: const Key('discounted-badge'),
-      backgroundColor: context.colors.scheme.tertiaryContainer,
+      backgroundColor: context.colors.scheme.secondary,
       alignment: Alignment.center,
       isLabelVisible: discountedCount > 0,
       offset: const Offset(20.0, -8.0),
       label: Text(
         discountedCount > 1000 ? '1000+' : discountedCount.toString(),
         style: context.textStyles.labelSmall.copyWith(
-          color: context.colors.scheme.onTertiaryContainer,
+          color: context.colors.scheme.onSecondary,
+          fontWeight: FontWeight.bold,
         ),
       ),
       child: const Icon(Icons.favorite),

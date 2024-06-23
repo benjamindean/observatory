@@ -39,7 +39,7 @@ class DealPage extends ConsumerWidget {
 
     final Deal dealState = ref.watch(dealProvider(deal));
 
-    return Container(
+    return ColoredBox(
       color: context.elevatedBottomAppBarColor,
       child: SafeArea(
         child: Scaffold(
@@ -49,6 +49,7 @@ class DealPage extends ConsumerWidget {
             slivers: [
               DealAppBar(deal: deal),
               SliverList(
+                key: Key('deal-${deal.id}-sliver-list'),
                 delegate: SliverChildListDelegate(
                   [
                     const SizedBox(height: 8),

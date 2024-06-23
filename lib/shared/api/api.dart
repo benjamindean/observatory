@@ -37,11 +37,9 @@ class API {
       maxStale: const Duration(days: 14),
     );
 
-    final Dio dio = Dio(BaseOptions(responseType: ResponseType.plain))
-      ..interceptors.add(DioCacheInterceptor(options: options));
-
     return API(
-      dio: dio,
+      dio: Dio(BaseOptions(responseType: ResponseType.plain))
+        ..interceptors.add(DioCacheInterceptor(options: options)),
       cacheOptions: options,
     );
   }
@@ -55,9 +53,7 @@ class API {
         'id': id,
       });
 
-      final response = await dio.get(url.toString());
-
-      return Parsers.info(response);
+      return Parsers.info(await dio.get(url.toString()));
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch info',

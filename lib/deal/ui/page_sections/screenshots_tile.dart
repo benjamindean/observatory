@@ -7,6 +7,7 @@ import 'package:observatory/deal/providers/game_details_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/igdb/igdb_game.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/widgets/image_error.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:photo_view/photo_view.dart';
@@ -66,8 +67,9 @@ class ScreenshotsTile extends ConsumerWidget {
         }
 
         return SizedBox(
-          height: 360 / thumbDelimiter,
+          height: SCREENSHOT_HEIGHT / thumbDelimiter,
           child: ListView.builder(
+            itemExtent: SCREENSHOT_WIDTH / thumbDelimiter,
             itemCount: screenshots.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
@@ -81,13 +83,11 @@ class ScreenshotsTile extends ConsumerWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 8.0, 8.0, 8.0),
-                  child: Container(
+                  child: DecoratedBox(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
                       color: context.colors.scheme.surface,
                     ),
-                    width: 569 / thumbDelimiter,
-                    height: 320 / thumbDelimiter,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12.0),
                       child: CachedNetworkImage(

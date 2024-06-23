@@ -35,15 +35,13 @@ class PriceListView extends ConsumerWidget {
 
     return SliverPadding(
       padding: const EdgeInsets.all(6.0),
-      sliver: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            return PriceCard(
-              price: allPrices[index],
-            );
-          },
-          childCount: allPrices.length,
-        ),
+      sliver: SliverList.builder(
+        itemBuilder: (context, index) {
+          return PriceCard(
+            price: allPrices[index],
+          );
+        },
+        itemCount: allPrices.length,
       ),
     );
   }

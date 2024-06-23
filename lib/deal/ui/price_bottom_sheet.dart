@@ -17,10 +17,10 @@ class PriceBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
+    return ColoredBox(
       color: context.colors.scheme.surface,
       child: SafeArea(
-        child: Container(
+        child: ColoredBox(
           color: context.colors.scheme.surfaceContainer,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -32,7 +32,7 @@ class PriceBottomSheet extends ConsumerWidget {
                   hasBottomSheet: false,
                 ),
               ),
-              Container(
+              DecoratedBox(
                 decoration: BoxDecoration(
                   color: context.colors.scheme.surface,
                   borderRadius: const BorderRadius.only(

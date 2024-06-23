@@ -9,8 +9,46 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFilters> {
     return GetIt.I<SettingsRepository>().getITADFilters();
   }
 
-  void update(ITADFilters filters) {
-    state = filters;
+  void setMaxPrice(double maxPrice) {
+    if (maxPrice == state.priceBounds.max) {
+      state = state.copyWith(price: null);
+
+      return;
+    }
+
+    state = state.copyWith(
+      price: MinMax(
+        min: state.priceBounds.min,
+        max: maxPrice.toInt(),
+      ),
+    );
+  }
+
+  void setMinDiscount(double minDiscount) {
+    if (minDiscount == state.cutBounds.min) {
+      state = state.copyWith(cut: null);
+
+      return;
+    }
+
+    state = state.copyWith(
+      cut: MinMax(
+        min: minDiscount.toInt(),
+        max: state.cutBounds.max,
+      ),
+    );
+  }
+
+  void setBundled(bool isBundled) {
+    if (isBundled == false) {
+      state = state.copyWith(bundled: null);
+
+      return;
+    }
+
+    state = state.copyWith(
+      bundled: isBundled,
+    );
   }
 
   Future<void> save() {

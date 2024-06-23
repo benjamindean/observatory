@@ -35,7 +35,7 @@ class DealAppBar extends ConsumerWidget {
       flexibleSpace: FlexibleSpaceBar(
         expandedTitleScale: 1,
         titlePadding: EdgeInsets.zero,
-        title: Container(
+        title: ColoredBox(
           color: context.elevatedBottomAppBarColor,
           child: ListTile(
             title: Tooltip(

@@ -21,9 +21,9 @@ MinMax _$MinMaxFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MinMax {
   @HiveField(0)
-  int? get min => throw _privateConstructorUsedError;
+  int get min => throw _privateConstructorUsedError;
   @HiveField(1)
-  int? get max => throw _privateConstructorUsedError;
+  int get max => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $MinMaxCopyWith<$Res> {
   factory $MinMaxCopyWith(MinMax value, $Res Function(MinMax) then) =
       _$MinMaxCopyWithImpl<$Res, MinMax>;
   @useResult
-  $Res call({@HiveField(0) int? min, @HiveField(1) int? max});
+  $Res call({@HiveField(0) int min, @HiveField(1) int max});
 }
 
 /// @nodoc
@@ -51,18 +51,18 @@ class _$MinMaxCopyWithImpl<$Res, $Val extends MinMax>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? min = freezed,
-    Object? max = freezed,
+    Object? min = null,
+    Object? max = null,
   }) {
     return _then(_value.copyWith(
-      min: freezed == min
+      min: null == min
           ? _value.min
           : min // ignore: cast_nullable_to_non_nullable
-              as int?,
-      max: freezed == max
+              as int,
+      max: null == max
           ? _value.max
           : max // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ) as $Val);
   }
 }
@@ -74,7 +74,7 @@ abstract class _$$MinMaxImplCopyWith<$Res> implements $MinMaxCopyWith<$Res> {
       __$$MinMaxImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@HiveField(0) int? min, @HiveField(1) int? max});
+  $Res call({@HiveField(0) int min, @HiveField(1) int max});
 }
 
 /// @nodoc
@@ -88,18 +88,18 @@ class __$$MinMaxImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? min = freezed,
-    Object? max = freezed,
+    Object? min = null,
+    Object? max = null,
   }) {
     return _then(_$MinMaxImpl(
-      min: freezed == min
+      min: null == min
           ? _value.min
           : min // ignore: cast_nullable_to_non_nullable
-              as int?,
-      max: freezed == max
+              as int,
+      max: null == max
           ? _value.max
           : max // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -107,17 +107,20 @@ class __$$MinMaxImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$MinMaxImpl with DiagnosticableTreeMixin implements _MinMax {
-  const _$MinMaxImpl({@HiveField(0) this.min, @HiveField(1) this.max});
+  const _$MinMaxImpl(
+      {@HiveField(0) this.min = 0, @HiveField(1) this.max = 100});
 
   factory _$MinMaxImpl.fromJson(Map<String, dynamic> json) =>
       _$$MinMaxImplFromJson(json);
 
   @override
+  @JsonKey()
   @HiveField(0)
-  final int? min;
+  final int min;
   @override
+  @JsonKey()
   @HiveField(1)
-  final int? max;
+  final int max;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -162,17 +165,17 @@ class _$MinMaxImpl with DiagnosticableTreeMixin implements _MinMax {
 
 abstract class _MinMax implements MinMax {
   const factory _MinMax(
-      {@HiveField(0) final int? min,
-      @HiveField(1) final int? max}) = _$MinMaxImpl;
+      {@HiveField(0) final int min,
+      @HiveField(1) final int max}) = _$MinMaxImpl;
 
   factory _MinMax.fromJson(Map<String, dynamic> json) = _$MinMaxImpl.fromJson;
 
   @override
   @HiveField(0)
-  int? get min;
+  int get min;
   @override
   @HiveField(1)
-  int? get max;
+  int get max;
   @override
   @JsonKey(ignore: true)
   _$$MinMaxImplCopyWith<_$MinMaxImpl> get copyWith =>

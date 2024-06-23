@@ -41,6 +41,7 @@ class ThemeListTile extends ConsumerWidget {
           child: SizedBox(
             height: 70,
             child: ListView.builder(
+              itemExtent: 74,
               key: const ValueKey('color_scheme_list'),
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,

@@ -15,7 +15,7 @@ class VoucherListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: context.highElevatedCanvasColor,
       child: ListTile(
         onTap: () async {

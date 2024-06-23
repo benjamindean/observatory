@@ -65,7 +65,7 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: context.colors.scheme.surfaceContainer,
+                  color: context.colors.scheme.surface,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),

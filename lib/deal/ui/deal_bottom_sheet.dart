@@ -23,10 +23,10 @@ class DealBottomSheet extends ConsumerWidget {
     );
     final bool isInWaitlist = waitlist.contains(deal.id);
 
-    return Container(
+    return ColoredBox(
       color: context.colors.scheme.surface,
       child: SafeArea(
-        child: Container(
+        child: ColoredBox(
           color: context.colors.scheme.surfaceContainer,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -42,7 +42,7 @@ class DealBottomSheet extends ConsumerWidget {
                   ),
                 ),
               ),
-              Container(
+              DecoratedBox(
                 decoration: BoxDecoration(
                   color: context.colors.scheme.surface,
                   borderRadius: const BorderRadius.only(
