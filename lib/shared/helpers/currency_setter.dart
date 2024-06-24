@@ -7,6 +7,10 @@ class Currency {
 }
 
 String setCurrency(String? currency) {
+  if (currency == 'Unknown') {
+    return 'USD';
+  }
+
   if (currency == null) {
     GetIt.I.registerSingleton(const Currency('USD'));
 

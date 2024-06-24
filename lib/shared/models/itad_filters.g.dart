@@ -58,13 +58,15 @@ class ITADFiltersAdapter extends TypeAdapter<ITADFilters> {
       cut: fields[1] as MinMax?,
       bundled: fields[2] as bool?,
       tags: (fields[3] as List?)?.cast<String>(),
+      mature: fields[4] as bool?,
+      nondeals: fields[5] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ITADFilters obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.price)
       ..writeByte(1)
@@ -72,7 +74,11 @@ class ITADFiltersAdapter extends TypeAdapter<ITADFilters> {
       ..writeByte(2)
       ..write(obj.bundled)
       ..writeByte(3)
-      ..write(obj.tags);
+      ..write(obj.tags)
+      ..writeByte(4)
+      ..write(obj.mature)
+      ..writeByte(5)
+      ..write(obj.nondeals);
   }
 
   @override
@@ -111,6 +117,8 @@ _$ITADFiltersImpl _$$ITADFiltersImplFromJson(Map<String, dynamic> json) =>
           : MinMax.fromJson(json['cut'] as Map<String, dynamic>),
       bundled: json['bundled'] as bool?,
       tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      mature: json['mature'] as bool? ?? false,
+      nondeals: json['nondeals'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$ITADFiltersImplToJson(_$ITADFiltersImpl instance) =>
@@ -119,6 +127,8 @@ Map<String, dynamic> _$$ITADFiltersImplToJson(_$ITADFiltersImpl instance) =>
       'cut': instance.cut?.toJson(),
       'bundled': instance.bundled,
       'tags': instance.tags,
+      'mature': instance.mature,
+      'nondeals': instance.nondeals,
     };
 
 _$ITADFiltersConfigImpl _$$ITADFiltersConfigImplFromJson(

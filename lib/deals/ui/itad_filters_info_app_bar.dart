@@ -1,11 +1,8 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/shared/helpers/currency_setter.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/ui/dot_separator.dart';
 
@@ -45,26 +42,19 @@ class ITADFiltersInfoAppBar extends ConsumerWidget {
           ),
           TextSpan(
             children: [
-              const TextSpan(
-                text: 'Price: ',
-              ),
               TextSpan(
                 text: filters.price != null
-                    ? NumberFormat.simpleCurrency(
-                        name: GetIt.I<Currency>().name,
-                        decimalDigits: 0,
-                      ).format(filters.price?.max)
-                    : 'Any',
+                    ? '${filters.price?.max}'
+                    : 'Any Price',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               DotSeparator.textSpan(context),
-              const TextSpan(text: 'Discount: '),
               TextSpan(
                 text: filters.cut != null
                     ? '${filters.cut?.min.toString()}%'
-                    : 'Any',
+                    : 'Any Discount',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),

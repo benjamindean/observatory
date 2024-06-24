@@ -5,7 +5,6 @@ import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_stor
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:lzstring/lzstring.dart';
 import 'package:observatory/shared/helpers/currency_setter.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/constans.dart';
@@ -176,10 +175,10 @@ class API {
       'offset': offset.toString(),
       'country': country,
       'shops': stores.join(','),
-      'nondeals': 'true',
-      'mature': 'true',
+      'nondeals': filters.nondeals.toString(),
+      'mature': filters.mature.toString(),
       'sort': '-trending',
-      'filter': LZString.compressToBase64Sync(json.encode(filters.toJson())),
+      'filter': filters.filtersString,
     });
 
     final response = await dio.get(url.toString());

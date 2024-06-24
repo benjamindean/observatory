@@ -66,6 +66,18 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
     );
   }
 
+  void setNSFW(bool isMature) {
+    state = state.copyWith(
+      cached: state.cached.copyWith(mature: isMature),
+    );
+  }
+
+  void setNonDeals(bool isNonDeals) {
+    state = state.copyWith(
+      cached: state.cached.copyWith(nondeals: isNonDeals),
+    );
+  }
+
   Future<void> save() async {
     await GetIt.I<SettingsRepository>().setITADFilters(state.cached);
 

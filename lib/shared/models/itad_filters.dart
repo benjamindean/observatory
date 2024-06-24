@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:lzstring/lzstring.dart';
 
 part 'itad_filters.freezed.dart';
 part 'itad_filters.g.dart';
@@ -32,10 +35,25 @@ class ITADFilters with _$ITADFilters {
     @HiveField(1) MinMax? cut,
     @HiveField(2) bool? bundled,
     @HiveField(3) List<String>? tags,
+    @HiveField(4) @Default(false) bool? mature,
+    @HiveField(5) @Default(true) bool? nondeals,
   }) = _ITADFilters;
 
   factory ITADFilters.fromJson(Map<String, Object?> json) =>
       _$ITADFiltersFromJson(json);
+
+  get filtersString {
+    return LZString.compressToBase64Sync(
+      json.encode(
+        {
+          'bundled': bundled,
+          'cut': cut,
+          'price': price,
+          'tags': tags,
+        },
+      ),
+    );
+  }
 }
 
 @freezed

@@ -109,12 +109,9 @@ class DealsList extends ConsumerWidget {
                 );
               }
 
-              return SizedBox(
-                height: height,
-                child: DealCard(
-                  deal: data.deals[index],
-                  cardType: cardType,
-                ),
+              return DealCard(
+                deal: data.deals[index],
+                cardType: cardType,
               );
             },
           ),
