@@ -23,7 +23,7 @@ class DealCard extends ConsumerWidget {
       case DealCardType.expanded:
         return DealCardExpanded(deal: deal);
       default:
-        return DealCardExpanded(deal: deal);
+        return DealCardCompact(deal: deal);
     }
   }
 }

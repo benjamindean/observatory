@@ -25,7 +25,7 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
   @override
   Widget build(BuildContext context) {
     final ITADFilters filters = ref.watch(
-      itadFiltersProvider,
+      itadFiltersProvider.select((value) => value.cached),
     );
     final List<String> tags = filters.tags ?? [];
 

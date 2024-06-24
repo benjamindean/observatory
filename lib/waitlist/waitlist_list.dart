@@ -144,8 +144,7 @@ class WaitListList extends ConsumerWidget {
     final double? screenWidth = cardType == DealCardType.compact
         ? null
         : MediaQuery.of(context).size.width;
-    final double height =
-        cardHeight(showHeaders, DealCardType.compact, screenWidth);
+    final double height = cardHeight(showHeaders, cardType, screenWidth);
 
     if (steamImportState.isImporting || steamImportState.isLoading) {
       return const OryFullScreenSpinner();

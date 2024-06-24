@@ -32,7 +32,7 @@ class ITADFiltersPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ITADFilters filters = ref.watch(
-      itadFiltersProvider,
+      itadFiltersProvider.select((value) => value.cached),
     );
 
     return SafeArea(
@@ -148,11 +148,11 @@ class ITADFiltersPage extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: Slider(
                   value: filters.price?.max.toDouble() ??
-                      filters.priceBounds.max.toDouble(),
+                      FilterBounds.price.max.toDouble(),
                   label: filters.price?.max.toString() ??
-                      filters.priceBounds.max.toString(),
-                  min: filters.priceBounds.min.toDouble(),
-                  max: filters.priceBounds.max.toDouble(),
+                      FilterBounds.price.max.toString(),
+                  min: FilterBounds.price.min.toDouble(),
+                  max: FilterBounds.price.max.toDouble(),
                   divisions: 20,
                   onChanged: (value) {
                     ref.watch(itadFiltersProvider.notifier).setMaxPrice(value);
@@ -174,10 +174,10 @@ class ITADFiltersPage extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: Slider(
                   label:
-                      '${filters.cut?.min.toString() ?? filters.cutBounds.min.toString()}%',
+                      '${filters.cut?.min.toString() ?? FilterBounds.cut.min.toString()}%',
                   value: filters.cut?.min.toDouble() ?? 0,
-                  min: filters.cutBounds.min.toDouble(),
-                  max: filters.cutBounds.max.toDouble(),
+                  min: FilterBounds.cut.min.toDouble(),
+                  max: FilterBounds.cut.max.toDouble(),
                   divisions: 20,
                   onChanged: (value) {
                     ref
@@ -204,7 +204,7 @@ class ITADFiltersPage extends ConsumerWidget {
                 onChanged: (value) {
                   ref.watch(itadFiltersProvider.notifier).setBundled(value);
                 },
-              )
+              ),
             ],
           ),
         ),

@@ -35,27 +35,9 @@ class DealsAppBar extends ConsumerWidget {
               curve: Curves.easeIn,
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    dealCategoryLabels[dealsTab]?['title'] ?? 'Unknown',
-                    style: context.textStyles.labelLarge.copyWith(
-                      color: context.colors.scheme.onSurfaceVariant,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              DealsInfoAppBar(
-                provider: asyncDealsProvider(dealsTab),
-              ),
-            ],
+          child: DealsInfoAppBar(
+            provider: asyncDealsProvider(dealsTab),
+            dealsTab: dealsTab,
           ),
         ),
         actions: [

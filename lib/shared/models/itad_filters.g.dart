@@ -120,3 +120,17 @@ Map<String, dynamic> _$$ITADFiltersImplToJson(_$ITADFiltersImpl instance) =>
       'bundled': instance.bundled,
       'tags': instance.tags,
     };
+
+_$ITADFiltersConfigImpl _$$ITADFiltersConfigImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ITADFiltersConfigImpl(
+      cached: ITADFilters.fromJson(json['cached'] as Map<String, dynamic>),
+      current: ITADFilters.fromJson(json['current'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$ITADFiltersConfigImplToJson(
+        _$ITADFiltersConfigImpl instance) =>
+    <String, dynamic>{
+      'cached': instance.cached,
+      'current': instance.current,
+    };

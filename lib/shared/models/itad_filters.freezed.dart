@@ -448,3 +448,194 @@ abstract class _ITADFilters extends ITADFilters {
   _$$ITADFiltersImplCopyWith<_$ITADFiltersImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+ITADFiltersConfig _$ITADFiltersConfigFromJson(Map<String, dynamic> json) {
+  return _ITADFiltersConfig.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ITADFiltersConfig {
+  ITADFilters get cached => throw _privateConstructorUsedError;
+  ITADFilters get current => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ITADFiltersConfigCopyWith<ITADFiltersConfig> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ITADFiltersConfigCopyWith<$Res> {
+  factory $ITADFiltersConfigCopyWith(
+          ITADFiltersConfig value, $Res Function(ITADFiltersConfig) then) =
+      _$ITADFiltersConfigCopyWithImpl<$Res, ITADFiltersConfig>;
+  @useResult
+  $Res call({ITADFilters cached, ITADFilters current});
+
+  $ITADFiltersCopyWith<$Res> get cached;
+  $ITADFiltersCopyWith<$Res> get current;
+}
+
+/// @nodoc
+class _$ITADFiltersConfigCopyWithImpl<$Res, $Val extends ITADFiltersConfig>
+    implements $ITADFiltersConfigCopyWith<$Res> {
+  _$ITADFiltersConfigCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cached = null,
+    Object? current = null,
+  }) {
+    return _then(_value.copyWith(
+      cached: null == cached
+          ? _value.cached
+          : cached // ignore: cast_nullable_to_non_nullable
+              as ITADFilters,
+      current: null == current
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as ITADFilters,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ITADFiltersCopyWith<$Res> get cached {
+    return $ITADFiltersCopyWith<$Res>(_value.cached, (value) {
+      return _then(_value.copyWith(cached: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ITADFiltersCopyWith<$Res> get current {
+    return $ITADFiltersCopyWith<$Res>(_value.current, (value) {
+      return _then(_value.copyWith(current: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$ITADFiltersConfigImplCopyWith<$Res>
+    implements $ITADFiltersConfigCopyWith<$Res> {
+  factory _$$ITADFiltersConfigImplCopyWith(_$ITADFiltersConfigImpl value,
+          $Res Function(_$ITADFiltersConfigImpl) then) =
+      __$$ITADFiltersConfigImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({ITADFilters cached, ITADFilters current});
+
+  @override
+  $ITADFiltersCopyWith<$Res> get cached;
+  @override
+  $ITADFiltersCopyWith<$Res> get current;
+}
+
+/// @nodoc
+class __$$ITADFiltersConfigImplCopyWithImpl<$Res>
+    extends _$ITADFiltersConfigCopyWithImpl<$Res, _$ITADFiltersConfigImpl>
+    implements _$$ITADFiltersConfigImplCopyWith<$Res> {
+  __$$ITADFiltersConfigImplCopyWithImpl(_$ITADFiltersConfigImpl _value,
+      $Res Function(_$ITADFiltersConfigImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cached = null,
+    Object? current = null,
+  }) {
+    return _then(_$ITADFiltersConfigImpl(
+      cached: null == cached
+          ? _value.cached
+          : cached // ignore: cast_nullable_to_non_nullable
+              as ITADFilters,
+      current: null == current
+          ? _value.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as ITADFilters,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ITADFiltersConfigImpl extends _ITADFiltersConfig
+    with DiagnosticableTreeMixin {
+  const _$ITADFiltersConfigImpl({required this.cached, required this.current})
+      : super._();
+
+  factory _$ITADFiltersConfigImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ITADFiltersConfigImplFromJson(json);
+
+  @override
+  final ITADFilters cached;
+  @override
+  final ITADFilters current;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ITADFiltersConfig(cached: $cached, current: $current)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ITADFiltersConfig'))
+      ..add(DiagnosticsProperty('cached', cached))
+      ..add(DiagnosticsProperty('current', current));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ITADFiltersConfigImpl &&
+            (identical(other.cached, cached) || other.cached == cached) &&
+            (identical(other.current, current) || other.current == current));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, cached, current);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ITADFiltersConfigImplCopyWith<_$ITADFiltersConfigImpl> get copyWith =>
+      __$$ITADFiltersConfigImplCopyWithImpl<_$ITADFiltersConfigImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ITADFiltersConfigImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ITADFiltersConfig extends ITADFiltersConfig {
+  const factory _ITADFiltersConfig(
+      {required final ITADFilters cached,
+      required final ITADFilters current}) = _$ITADFiltersConfigImpl;
+  const _ITADFiltersConfig._() : super._();
+
+  factory _ITADFiltersConfig.fromJson(Map<String, dynamic> json) =
+      _$ITADFiltersConfigImpl.fromJson;
+
+  @override
+  ITADFilters get cached;
+  @override
+  ITADFilters get current;
+  @override
+  @JsonKey(ignore: true)
+  _$$ITADFiltersConfigImplCopyWith<_$ITADFiltersConfigImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

@@ -3,78 +3,104 @@ import 'package:get_it/get_it.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 
-class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFilters> {
+class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
   @override
-  ITADFilters build() {
-    return GetIt.I<SettingsRepository>().getITADFilters();
+  ITADFiltersConfig build() {
+    final ITADFilters filters = GetIt.I<SettingsRepository>().getITADFilters();
+
+    return ITADFiltersConfig(
+      cached: filters,
+      current: filters,
+    );
   }
 
   void setMaxPrice(double maxPrice) {
-    if (maxPrice == state.priceBounds.max) {
-      state = state.copyWith(price: null);
+    if (maxPrice == FilterBounds.price.max) {
+      state = state.copyWith(
+        cached: state.cached.copyWith(price: null),
+      );
 
       return;
     }
 
     state = state.copyWith(
-      price: MinMax(
-        min: state.priceBounds.min,
-        max: maxPrice.toInt(),
+      cached: state.cached.copyWith(
+        price: MinMax(
+          min: FilterBounds.price.min,
+          max: maxPrice.toInt(),
+        ),
       ),
     );
   }
 
   void setMinDiscount(double minDiscount) {
-    if (minDiscount == state.cutBounds.min) {
-      state = state.copyWith(cut: null);
+    if (minDiscount == FilterBounds.cut.min) {
+      state = state.copyWith(
+        cached: state.cached.copyWith(cut: null),
+      );
 
       return;
     }
 
     state = state.copyWith(
-      cut: MinMax(
-        min: minDiscount.toInt(),
-        max: state.cutBounds.max,
+      cached: state.cached.copyWith(
+        cut: MinMax(
+          min: minDiscount.toInt(),
+          max: FilterBounds.cut.max,
+        ),
       ),
     );
   }
 
   void setBundled(bool isBundled) {
     if (isBundled == false) {
-      state = state.copyWith(bundled: null);
+      state = state.copyWith(
+        cached: state.cached.copyWith(bundled: null),
+      );
 
       return;
     }
 
     state = state.copyWith(
-      bundled: isBundled,
+      cached: state.cached.copyWith(bundled: isBundled),
     );
   }
 
-  Future<void> save() {
-    return GetIt.I<SettingsRepository>().setITADFilters(state);
+  Future<void> save() async {
+    await GetIt.I<SettingsRepository>().setITADFilters(state.cached);
+
+    state = ITADFiltersConfig(
+      cached: state.cached,
+      current: state.cached,
+    );
   }
 
-  Future<void> reset() {
-    state = const ITADFilters();
-
-    return GetIt.I<SettingsRepository>().setITADFilters(state);
+  void reset() {
+    state = ITADFiltersConfig(
+      cached: const ITADFilters(),
+      current: state.current,
+    );
   }
 
   void addTags(List<String> tags) {
     state = state.copyWith(
-      tags: Set<String>.of(List.of(state.tags ?? [])..addAll(tags)).toList(),
+      cached: state.cached.copyWith(
+        tags: Set<String>.of(List.of(state.cached.tags ?? [])..addAll(tags))
+            .toList(),
+      ),
     );
   }
 
   void removeTag(String tag) {
     state = state.copyWith(
-      tags: List.of(state.tags ?? [])..remove(tag),
+      cached: state.cached.copyWith(
+        tags: List.of(state.cached.tags ?? [])..remove(tag),
+      ),
     );
   }
 }
 
 final itadFiltersProvider =
-    NotifierProvider.autoDispose<ITADFiltersNotifier, ITADFilters>(
+    NotifierProvider.autoDispose<ITADFiltersNotifier, ITADFiltersConfig>(
   ITADFiltersNotifier.new,
 );

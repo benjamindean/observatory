@@ -62,7 +62,7 @@ class SettingsPage extends ConsumerWidget {
           data: (data) {
             final int totalStores = settings.value?.stores.length ?? 0;
             final int selectedCount =
-                settings.value?.selectedStores.length ?? 0;
+                settings.valueOrNull?.selectedStores.length ?? 0;
 
             return SingleChildScrollView(
               child: Column(
@@ -165,9 +165,7 @@ class SettingsPage extends ConsumerWidget {
                   ),
                   const ListHeading(title: 'Appearance'),
                   const DealCardTypeSettingsTile(),
-                  HeaderImagesSettingsTile(
-                    isEnabled: settings.value?.showHeaders ?? true,
-                  ),
+                  const HeaderImagesSettingsTile(),
                   const ThemeModeListTile(),
                   const ThemeListTile(),
                   const ThemeTrueBlackListTile(),
@@ -183,9 +181,7 @@ class SettingsPage extends ConsumerWidget {
                       },
                     ),
                   ),
-                  WaitlistAlertsSettingsTile(
-                    isEnabled: settings.value?.waitlistNotifications ?? false,
-                  ),
+                  const WaitlistAlertsSettingsTile(),
                   const ListHeading(title: 'Internal'),
                   SwitchListTile(
                     value: settings.value?.crashlyticsEnabled ?? false,

@@ -35,8 +35,6 @@ class DealsFilter extends ConsumerWidget {
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             const BottomSheetHeading(text: 'Deals Type'),

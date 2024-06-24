@@ -34,14 +34,19 @@ class ITADFilters with _$ITADFilters {
     @HiveField(3) List<String>? tags,
   }) = _ITADFilters;
 
-  int get filterCount {
-    return toJson().values.where((element) => element != null).length;
-  }
-
-  MinMax get cutBounds => FilterBounds.cut;
-
-  MinMax get priceBounds => FilterBounds.price;
-
   factory ITADFilters.fromJson(Map<String, Object?> json) =>
       _$ITADFiltersFromJson(json);
+}
+
+@freezed
+class ITADFiltersConfig with _$ITADFiltersConfig {
+  const ITADFiltersConfig._();
+
+  const factory ITADFiltersConfig({
+    required ITADFilters cached,
+    required ITADFilters current,
+  }) = _ITADFiltersConfig;
+
+  factory ITADFiltersConfig.fromJson(Map<String, Object?> json) =>
+      _$ITADFiltersConfigFromJson(json);
 }

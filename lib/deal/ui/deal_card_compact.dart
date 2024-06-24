@@ -26,7 +26,7 @@ class DealCardCompact extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bool showHeaders = ref.watch(
       asyncSettingsProvider.select(
-        (value) => value.value?.showHeaders ?? false,
+        (value) => value.valueOrNull?.showHeaders ?? false,
       ),
     );
     final List<String> waitlist = ref.watch(

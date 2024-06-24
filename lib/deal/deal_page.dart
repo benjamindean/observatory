@@ -48,22 +48,20 @@ class DealPage extends ConsumerWidget {
             key: const Key('deal-scroll-view'),
             slivers: [
               DealAppBar(deal: deal),
-              SliverList(
+              SliverList.list(
                 key: Key('deal-${deal.id}-sliver-list'),
-                delegate: SliverChildListDelegate(
-                  [
-                    const SizedBox(height: 8),
-                    SummaryTile(deal: deal),
-                    ReleaseDateTile(deal: deal),
-                    TagsTile(deal: deal),
-                    SupportedPlatformsTile(deal: deal),
-                    ScreenshotsTile(deal: deal),
-                    ReviewsTile(deal: deal),
-                    LowestPriceTile(deal: deal),
-                    BundlesTile(deal: deal),
-                    LinksTile(deal: deal),
-                  ],
-                ),
+                children: [
+                  const SizedBox(height: 8),
+                  SummaryTile(deal: deal),
+                  ReleaseDateTile(deal: deal),
+                  TagsTile(deal: deal),
+                  SupportedPlatformsTile(deal: deal),
+                  ScreenshotsTile(deal: deal),
+                  ReviewsTile(deal: deal),
+                  LowestPriceTile(deal: deal),
+                  BundlesTile(deal: deal),
+                  LinksTile(deal: deal),
+                ],
               ),
               const SliverToBoxAdapter(
                 child: ListHeading(title: 'Prices'),
