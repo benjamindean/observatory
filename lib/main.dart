@@ -129,15 +129,21 @@ void main() async {
 
   FirebaseAnalytics.instance.logAppOpen();
 
-  AwesomeNotifications().initialize(
+  await AwesomeNotifications().initialize(
     null,
     NOTIFICATION_CHANNELS,
     channelGroups: NOTIFICATION_GROUPS,
   );
 
-  Workmanager().initialize(
+  await Workmanager().initialize(
     callbackDispatcher,
   );
+
+  // Re-enable check waitlist task if notifications are enabled
+  if (await GetIt.I<SettingsRepository>().getWaitlistNotifications()) {
+    await disableCheckWaitlistTask();
+    await enableCheckWaitlistTask();
+  }
 
   runApp(
     const ProviderScope(

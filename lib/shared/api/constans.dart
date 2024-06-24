@@ -18,6 +18,7 @@ const API_LIMIT = 100;
 const MAX_STEAM_WISHLIST_PAGES = 7;
 
 const DEALS_COUNT = 50;
+const int RECENTS_LIMIT = 10;
 
 const Map<String, String> DEAL_FILTERS = {
   'trending': 'Trending',

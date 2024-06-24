@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
-import 'package:observatory/itad_filters/tags_list_page.dart';
 import 'package:observatory/itad_filters/ui/max_price_label.dart';
 import 'package:observatory/itad_filters/ui/min_cut_label.dart';
 import 'package:observatory/settings/settings_repository.dart';
@@ -87,13 +86,7 @@ class ITADFiltersPage extends ConsumerWidget {
                 icon: const Icon(Icons.add_rounded),
                 label: const Text('Add'),
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const TagsListPage();
-                      },
-                    ),
-                  );
+                  context.push('/tags-select');
                 },
               ),
             ),

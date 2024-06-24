@@ -4,6 +4,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/igdb/igdb_game.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
@@ -65,9 +66,7 @@ class SettingsRepository {
     RECENT_SEARCHES_BOX_NAME,
   );
 
-  final int RECENTS_LIMIT = 10;
-
-  final String PREF_DEFAULT_COUNTRY = 'observatory_default_country';
+  final String PREF_COUNTRY = 'observatory_default_country';
   final String PREF_SHOW_HEADERS = 'observatory_show_headers';
   final String PREF_SELECTED_STORES = 'observatory_selected_stores';
   final String PREF_DEALS_TAB = 'observatory_deals_tab_name';
@@ -110,14 +109,14 @@ class SettingsRepository {
 
   String getCountry() {
     return settingsBox.get(
-      PREF_DEFAULT_COUNTRY,
+      PREF_COUNTRY,
       defaultValue: 'US',
     );
   }
 
   Future<void> setCountry(String countryCode) async {
     return settingsBox.put(
-      PREF_DEFAULT_COUNTRY,
+      PREF_COUNTRY,
       countryCode,
     );
   }
