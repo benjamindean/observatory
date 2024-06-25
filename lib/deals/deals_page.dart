@@ -5,7 +5,7 @@ import 'package:observatory/deals/deals_list.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/deals/ui/deals_appbar.dart';
-import 'package:observatory/deals/ui/itad_filters_info_app_bar.dart';
+import 'package:observatory/deals/ui/itad_filters_info_bar.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/pull_to_refresh.dart';
