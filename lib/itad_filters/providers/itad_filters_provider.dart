@@ -94,6 +94,13 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
     );
   }
 
+  void revert() {
+    state = ITADFiltersConfig(
+      cached: state.current,
+      current: state.current,
+    );
+  }
+
   void addTags(List<String> tags) {
     state = state.copyWith(
       cached: state.cached.copyWith(

@@ -25,6 +25,7 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
     return SettingsState(
       selectedCountry: repository.getCountry(),
+      currency: repository.getCurrency(),
       showHeaders: repository.getShowHeaders(),
       stores: stores,
       dealsTab: repository.getDealsTab(),
@@ -78,6 +79,22 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
         return state.requireValue.copyWith(
           showHeaders: showHeaders,
+        );
+      },
+    );
+  }
+
+  Future<void> setCurrency(String currency) async {
+    if (state.requireValue.currency == currency) {
+      return;
+    }
+
+    state = await AsyncValue.guard(
+      () async {
+        await repository.setCurrency(currency);
+
+        return state.requireValue.copyWith(
+          currency: currency,
         );
       },
     );

@@ -23,6 +23,7 @@ mixin _$SettingsState {
   bool get showHeaders => throw _privateConstructorUsedError;
   bool get waitlistNotifications => throw _privateConstructorUsedError;
   String get selectedCountry => throw _privateConstructorUsedError;
+  String get currency => throw _privateConstructorUsedError;
   List<int> get selectedStores => throw _privateConstructorUsedError;
   List<Store> get stores => throw _privateConstructorUsedError;
   DealCategory get dealsTab => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $SettingsStateCopyWith<$Res> {
       {bool showHeaders,
       bool waitlistNotifications,
       String selectedCountry,
+      String currency,
       List<int> selectedStores,
       List<Store> stores,
       DealCategory dealsTab,
@@ -73,6 +75,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? showHeaders = null,
     Object? waitlistNotifications = null,
     Object? selectedCountry = null,
+    Object? currency = null,
     Object? selectedStores = null,
     Object? stores = null,
     Object? dealsTab = null,
@@ -93,6 +96,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
       selectedCountry: null == selectedCountry
           ? _value.selectedCountry
           : selectedCountry // ignore: cast_nullable_to_non_nullable
+              as String,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
               as String,
       selectedStores: null == selectedStores
           ? _value.selectedStores
@@ -138,6 +145,7 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       {bool showHeaders,
       bool waitlistNotifications,
       String selectedCountry,
+      String currency,
       List<int> selectedStores,
       List<Store> stores,
       DealCategory dealsTab,
@@ -161,6 +169,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? showHeaders = null,
     Object? waitlistNotifications = null,
     Object? selectedCountry = null,
+    Object? currency = null,
     Object? selectedStores = null,
     Object? stores = null,
     Object? dealsTab = null,
@@ -181,6 +190,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
       selectedCountry: null == selectedCountry
           ? _value.selectedCountry
           : selectedCountry // ignore: cast_nullable_to_non_nullable
+              as String,
+      currency: null == currency
+          ? _value.currency
+          : currency // ignore: cast_nullable_to_non_nullable
               as String,
       selectedStores: null == selectedStores
           ? _value._selectedStores
@@ -221,9 +234,10 @@ class _$SettingsStateImpl implements _SettingsState {
       {required this.showHeaders,
       required this.waitlistNotifications,
       required this.selectedCountry,
+      this.currency = 'USD',
       required final List<int> selectedStores,
       required final List<Store> stores,
-      required this.dealsTab,
+      this.dealsTab = DealCategory.all,
       required this.dealCardType,
       required this.waitlistSorting,
       required this.waitlistSortingDirection,
@@ -240,6 +254,9 @@ class _$SettingsStateImpl implements _SettingsState {
   final bool waitlistNotifications;
   @override
   final String selectedCountry;
+  @override
+  @JsonKey()
+  final String currency;
   final List<int> _selectedStores;
   @override
   List<int> get selectedStores {
@@ -257,6 +274,7 @@ class _$SettingsStateImpl implements _SettingsState {
   }
 
   @override
+  @JsonKey()
   final DealCategory dealsTab;
   @override
   final DealCardType dealCardType;
@@ -269,7 +287,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, selectedCountry: $selectedCountry, selectedStores: $selectedStores, stores: $stores, dealsTab: $dealsTab, dealCardType: $dealCardType, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, crashlyticsEnabled: $crashlyticsEnabled)';
+    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, selectedCountry: $selectedCountry, currency: $currency, selectedStores: $selectedStores, stores: $stores, dealsTab: $dealsTab, dealCardType: $dealCardType, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, crashlyticsEnabled: $crashlyticsEnabled)';
   }
 
   @override
@@ -283,6 +301,8 @@ class _$SettingsStateImpl implements _SettingsState {
                 other.waitlistNotifications == waitlistNotifications) &&
             (identical(other.selectedCountry, selectedCountry) ||
                 other.selectedCountry == selectedCountry) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
             const DeepCollectionEquality()
                 .equals(other._selectedStores, _selectedStores) &&
             const DeepCollectionEquality().equals(other._stores, _stores) &&
@@ -306,6 +326,7 @@ class _$SettingsStateImpl implements _SettingsState {
       showHeaders,
       waitlistNotifications,
       selectedCountry,
+      currency,
       const DeepCollectionEquality().hash(_selectedStores),
       const DeepCollectionEquality().hash(_stores),
       dealsTab,
@@ -333,9 +354,10 @@ abstract class _SettingsState implements SettingsState {
       {required final bool showHeaders,
       required final bool waitlistNotifications,
       required final String selectedCountry,
+      final String currency,
       required final List<int> selectedStores,
       required final List<Store> stores,
-      required final DealCategory dealsTab,
+      final DealCategory dealsTab,
       required final DealCardType dealCardType,
       required final WaitlistSorting waitlistSorting,
       required final WaitlistSortingDirection waitlistSortingDirection,
@@ -350,6 +372,8 @@ abstract class _SettingsState implements SettingsState {
   bool get waitlistNotifications;
   @override
   String get selectedCountry;
+  @override
+  String get currency;
   @override
   List<int> get selectedStores;
   @override

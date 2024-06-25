@@ -5,7 +5,6 @@ import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_stor
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:observatory/shared/helpers/currency_setter.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/api/parsers.dart';
@@ -336,10 +335,6 @@ class API {
     //     await GetIt.I<IGDBAPI>().searchSupabaseList(
     //   ids: ids,
     // );
-
-    setCurrency(
-      listOfPrices.entries.first.value?.first.price.currency ?? 'USD',
-    );
 
     return deals.map(
       (deal) {

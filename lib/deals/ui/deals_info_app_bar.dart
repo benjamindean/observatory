@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
-import 'package:observatory/deals/ui/itad_filters_info_app_bar.dart';
 import 'package:observatory/settings/settings_repository.dart';
 
 class DealsInfoAppBar extends ConsumerWidget {
@@ -19,10 +18,6 @@ class DealsInfoAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (dealsTab == DealCategory.all) {
-      return const ITADFiltersInfoAppBar();
-    }
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

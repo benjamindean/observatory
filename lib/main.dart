@@ -81,7 +81,7 @@ void callbackDispatcher() {
         await initSettings();
         await initFirebase();
 
-        return checkWaitlistTask();
+        return await checkWaitlistTask();
       }
 
       return false;

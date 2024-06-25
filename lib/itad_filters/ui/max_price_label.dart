@@ -1,15 +1,15 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:observatory/shared/helpers/currency_setter.dart';
 
 class MaxPriceLabel extends StatelessWidget {
   final int? maxPrice;
+  final String currency;
 
   const MaxPriceLabel({
     super.key,
     this.maxPrice,
+    this.currency = 'USD',
   });
 
   @override
@@ -23,8 +23,6 @@ class MaxPriceLabel extends StatelessWidget {
         ),
       );
     }
-
-    final String currency = GetIt.I<Currency>().name;
 
     return Row(
       mainAxisSize: MainAxisSize.min,

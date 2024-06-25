@@ -21,7 +21,7 @@ const DEALS_COUNT = 50;
 const int RECENTS_LIMIT = 10;
 
 const Map<String, String> DEAL_FILTERS = {
-  'trending': 'Trending',
+  'trending': 'All Games',
   'time': 'Newest',
   'cut': 'Highest Price Cut',
   'price': 'Lowest Price',

@@ -40,8 +40,8 @@ enum DealCategory {
 
 final Map<DealCategory, Map<String, String>> dealCategoryLabels = {
   DealCategory.all: {
-    'title': 'Trending',
-    'subtitle': 'Currently trending deals.',
+    'title': 'All Games',
+    'subtitle': 'All currently trending deals.',
   },
   DealCategory.steam_top_sellers: {
     'title': 'Steam Store',
@@ -67,6 +67,7 @@ class SettingsRepository {
   );
 
   final String PREF_COUNTRY = 'observatory_default_country';
+  final String PREF_CURRENCY = 'observatory_default_currency';
   final String PREF_SHOW_HEADERS = 'observatory_show_headers';
   final String PREF_SELECTED_STORES = 'observatory_selected_stores';
   final String PREF_DEALS_TAB = 'observatory_deals_tab_name';
@@ -118,6 +119,20 @@ class SettingsRepository {
     return settingsBox.put(
       PREF_COUNTRY,
       countryCode,
+    );
+  }
+
+  String getCurrency() {
+    return settingsBox.get(
+      PREF_CURRENCY,
+      defaultValue: 'USD',
+    );
+  }
+
+  Future<void> setCurrency(String currency) async {
+    return settingsBox.put(
+      PREF_CURRENCY,
+      currency,
     );
   }
 

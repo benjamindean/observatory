@@ -6,6 +6,7 @@ import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/itad_filters/ui/max_price_label.dart';
 import 'package:observatory/itad_filters/ui/min_cut_label.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
@@ -30,9 +31,18 @@ class ITADFiltersPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final ITADFilters currentFilters = ref.read(
+      itadFiltersProvider.select((value) => value.current),
+    );
     final ITADFilters filters = ref.watch(
       itadFiltersProvider.select((value) => value.cached),
     );
+    final String currency = ref.read(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.currency ?? 'USD',
+      ),
+    );
+    final bool isUpdated = filters != currentFilters;
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -47,11 +57,13 @@ class ITADFiltersPage extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   OrySmallButton(
-                    onPressed: () {
-                      ref.watch(itadFiltersProvider.notifier).reset();
-                    },
+                    onPressed: isUpdated
+                        ? () {
+                            ref.watch(itadFiltersProvider.notifier).revert();
+                          }
+                        : null,
                     icon: Icons.restore_rounded,
-                    label: 'Reset',
+                    label: 'Restore',
                     buttonColor: context.colors.scheme.secondary,
                     textColor: context.colors.scheme.onSecondary,
                   ),
@@ -59,14 +71,17 @@ class ITADFiltersPage extends ConsumerWidget {
                     width: 6.0,
                   ),
                   OrySmallButton(
-                    onPressed: () {
-                      ref.watch(itadFiltersProvider.notifier).save();
-                      ref
-                          .watch(asyncDealsProvider(DealCategory.all).notifier)
-                          .reset(withLoading: true);
+                    onPressed: isUpdated
+                        ? () {
+                            ref.watch(itadFiltersProvider.notifier).save();
+                            ref
+                                .watch(asyncDealsProvider(DealCategory.all)
+                                    .notifier)
+                                .reset(withLoading: true);
 
-                      context.pop();
-                    },
+                            context.pop();
+                          }
+                        : null,
                     icon: Icons.check,
                     label: 'Apply',
                   ),
@@ -128,6 +143,7 @@ class ITADFiltersPage extends ConsumerWidget {
               ),
               trailing: MaxPriceLabel(
                 maxPrice: filters.price?.max,
+                currency: currency,
               ),
             ),
             Padding(

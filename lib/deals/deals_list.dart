@@ -79,8 +79,9 @@ class DealsList extends ConsumerWidget {
             hasScrollBody: false,
             child: Center(
               child: ErrorMessage(
-                message: 'No deals for now',
-                icon: Icons.info,
+                message:
+                    'No deals matching the current filters found in the selected category',
+                icon: Icons.sentiment_dissatisfied,
                 helper: TextButton(
                   child: const Text('Refresh'),
                   onPressed: () async {
@@ -91,6 +92,17 @@ class DealsList extends ConsumerWidget {
             ),
           );
         }
+
+        ref.read(asyncSettingsProvider.notifier).setCurrency(
+              data.deals
+                  .firstWhere(
+                    (deal) => (deal.prices ?? []).isNotEmpty,
+                  )
+                  .prices!
+                  .first
+                  .price
+                  .currency,
+            );
 
         return SliverPadding(
           padding: const EdgeInsets.all(6.0),
