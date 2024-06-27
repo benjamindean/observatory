@@ -64,8 +64,8 @@ class ITADFiltersPage extends ConsumerWidget {
                         : null,
                     icon: Icons.restore_rounded,
                     label: 'Restore',
-                    buttonColor: context.colors.scheme.secondary,
-                    textColor: context.colors.scheme.onSecondary,
+                    buttonColor: context.colors.scheme.tertiary,
+                    textColor: context.colors.scheme.onTertiary,
                   ),
                   const SizedBox(
                     width: 6.0,
@@ -219,7 +219,7 @@ class ITADFiltersPage extends ConsumerWidget {
                   color: context.colors.scheme.onSurface,
                 ),
               ),
-              value: filters.mature ?? false,
+              value: filters.mature,
               onChanged: (value) {
                 ref.watch(itadFiltersProvider.notifier).setNSFW(value);
               },
@@ -238,7 +238,7 @@ class ITADFiltersPage extends ConsumerWidget {
                   color: context.colors.scheme.onSurface,
                 ),
               ),
-              value: filters.nondeals ?? false,
+              value: filters.nondeals,
               onChanged: (value) {
                 ref.watch(itadFiltersProvider.notifier).setNonDeals(value);
               },

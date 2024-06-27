@@ -2,6 +2,7 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/itad_filters/itad_filters_page.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
@@ -45,14 +46,27 @@ class ITADFiltersInfoBar extends ConsumerWidget {
           ),
           child: ListTile(
             dense: true,
+            contentPadding: const EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
             leading: Icon(
               Icons.filter_list_sharp,
               color: context.colors.scheme.onSurfaceVariant,
             ),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.highlight_remove_outlined,
+                color: context.colors.scheme.onSurfaceVariant,
+              ),
+              onPressed: filters != const ITADFilters()
+                  ? () {
+                      ref.watch(itadFiltersProvider.notifier).reset();
+                      ref
+                          .watch(asyncDealsProvider(DealCategory.all).notifier)
+                          .reset(withLoading: true);
+                    }
+                  : null,
+            ),
             title: Text(
-              tags.isNotEmpty
-                  ? tags.join(', ')
-                  : dealCategoryLabels[DealCategory.all]?['title'] ?? 'Unknown',
+              tags.isNotEmpty ? tags.join(', ') : 'All Tags',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.textStyles.labelLarge.copyWith(
@@ -99,9 +113,7 @@ class ITADFiltersInfoBar extends ConsumerWidget {
                     text: 'NSFW: ',
                   ),
                   TextSpan(
-                    text: (filters.mature != null && filters.mature == true)
-                        ? 'On'
-                        : 'Off',
+                    text: (filters.mature) ? 'On' : 'Off',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),

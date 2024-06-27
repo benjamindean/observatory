@@ -58,8 +58,8 @@ class ITADFiltersAdapter extends TypeAdapter<ITADFilters> {
       cut: fields[1] as MinMax?,
       bundled: fields[2] as bool?,
       tags: (fields[3] as List?)?.cast<String>(),
-      mature: fields[4] as bool?,
-      nondeals: fields[5] as bool?,
+      mature: fields[4] as bool,
+      nondeals: fields[5] as bool,
     );
   }
 

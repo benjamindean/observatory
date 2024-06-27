@@ -88,9 +88,9 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
   }
 
   void reset() {
-    state = ITADFiltersConfig(
-      cached: const ITADFilters(),
-      current: state.current,
+    state = const ITADFiltersConfig(
+      cached: ITADFilters(),
+      current: ITADFilters(),
     );
   }
 

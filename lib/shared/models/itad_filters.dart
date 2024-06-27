@@ -35,8 +35,8 @@ class ITADFilters with _$ITADFilters {
     @HiveField(1) MinMax? cut,
     @HiveField(2) bool? bundled,
     @HiveField(3) List<String>? tags,
-    @HiveField(4) @Default(false) bool? mature,
-    @HiveField(5) @Default(true) bool? nondeals,
+    @HiveField(4) @Default(false) bool mature,
+    @HiveField(5) @Default(true) bool nondeals,
   }) = _ITADFilters;
 
   factory ITADFilters.fromJson(Map<String, Object?> json) =>

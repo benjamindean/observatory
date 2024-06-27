@@ -43,18 +43,28 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
               child: ListView.builder(
                 itemCount: filteredTags.length,
                 itemBuilder: (context, index) {
+                  final bool isSelected = tags.contains(filteredTags[index]);
+
                   return ListTile(
                     selectedTileColor: context.colors.scheme.secondaryContainer,
                     selectedColor: context.colors.scheme.onSecondaryContainer,
                     trailing: index == 0
                         ? const Icon(Icons.keyboard_return_rounded)
                         : null,
-                    selected: tags.contains(filteredTags[index]),
+                    selected: isSelected,
                     title: Text(filteredTags[index]),
-                    onTap: () {
-                      return ref
-                          .watch(itadFiltersProvider.notifier)
-                          .addTags([filteredTags[index]]);
+                    onTap: () async {
+                      if (isSelected) {
+                        ref
+                            .watch(itadFiltersProvider.notifier)
+                            .removeTag(filteredTags[index]);
+                      } else {
+                        ref
+                            .watch(itadFiltersProvider.notifier)
+                            .addTags([filteredTags[index]]);
+                      }
+
+                      autocompleteController.clear();
                     },
                   );
                 },

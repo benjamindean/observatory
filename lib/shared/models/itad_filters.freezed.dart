@@ -197,9 +197,9 @@ mixin _$ITADFilters {
   @HiveField(3)
   List<String>? get tags => throw _privateConstructorUsedError;
   @HiveField(4)
-  bool? get mature => throw _privateConstructorUsedError;
+  bool get mature => throw _privateConstructorUsedError;
   @HiveField(5)
-  bool? get nondeals => throw _privateConstructorUsedError;
+  bool get nondeals => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -218,8 +218,8 @@ abstract class $ITADFiltersCopyWith<$Res> {
       @HiveField(1) MinMax? cut,
       @HiveField(2) bool? bundled,
       @HiveField(3) List<String>? tags,
-      @HiveField(4) bool? mature,
-      @HiveField(5) bool? nondeals});
+      @HiveField(4) bool mature,
+      @HiveField(5) bool nondeals});
 
   $MinMaxCopyWith<$Res>? get price;
   $MinMaxCopyWith<$Res>? get cut;
@@ -242,8 +242,8 @@ class _$ITADFiltersCopyWithImpl<$Res, $Val extends ITADFilters>
     Object? cut = freezed,
     Object? bundled = freezed,
     Object? tags = freezed,
-    Object? mature = freezed,
-    Object? nondeals = freezed,
+    Object? mature = null,
+    Object? nondeals = null,
   }) {
     return _then(_value.copyWith(
       price: freezed == price
@@ -262,14 +262,14 @@ class _$ITADFiltersCopyWithImpl<$Res, $Val extends ITADFilters>
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      mature: freezed == mature
+      mature: null == mature
           ? _value.mature
           : mature // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      nondeals: freezed == nondeals
+              as bool,
+      nondeals: null == nondeals
           ? _value.nondeals
           : nondeals // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
     ) as $Val);
   }
 
@@ -311,8 +311,8 @@ abstract class _$$ITADFiltersImplCopyWith<$Res>
       @HiveField(1) MinMax? cut,
       @HiveField(2) bool? bundled,
       @HiveField(3) List<String>? tags,
-      @HiveField(4) bool? mature,
-      @HiveField(5) bool? nondeals});
+      @HiveField(4) bool mature,
+      @HiveField(5) bool nondeals});
 
   @override
   $MinMaxCopyWith<$Res>? get price;
@@ -335,8 +335,8 @@ class __$$ITADFiltersImplCopyWithImpl<$Res>
     Object? cut = freezed,
     Object? bundled = freezed,
     Object? tags = freezed,
-    Object? mature = freezed,
-    Object? nondeals = freezed,
+    Object? mature = null,
+    Object? nondeals = null,
   }) {
     return _then(_$ITADFiltersImpl(
       price: freezed == price
@@ -355,14 +355,14 @@ class __$$ITADFiltersImplCopyWithImpl<$Res>
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      mature: freezed == mature
+      mature: null == mature
           ? _value.mature
           : mature // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      nondeals: freezed == nondeals
+              as bool,
+      nondeals: null == nondeals
           ? _value.nondeals
           : nondeals // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
     ));
   }
 }
@@ -407,11 +407,11 @@ class _$ITADFiltersImpl extends _ITADFilters with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   @HiveField(4)
-  final bool? mature;
+  final bool mature;
   @override
   @JsonKey()
   @HiveField(5)
-  final bool? nondeals;
+  final bool nondeals;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -470,8 +470,8 @@ abstract class _ITADFilters extends ITADFilters {
       @HiveField(1) final MinMax? cut,
       @HiveField(2) final bool? bundled,
       @HiveField(3) final List<String>? tags,
-      @HiveField(4) final bool? mature,
-      @HiveField(5) final bool? nondeals}) = _$ITADFiltersImpl;
+      @HiveField(4) final bool mature,
+      @HiveField(5) final bool nondeals}) = _$ITADFiltersImpl;
   const _ITADFilters._() : super._();
 
   factory _ITADFilters.fromJson(Map<String, dynamic> json) =
@@ -491,10 +491,10 @@ abstract class _ITADFilters extends ITADFilters {
   List<String>? get tags;
   @override
   @HiveField(4)
-  bool? get mature;
+  bool get mature;
   @override
   @HiveField(5)
-  bool? get nondeals;
+  bool get nondeals;
   @override
   @JsonKey(ignore: true)
   _$$ITADFiltersImplCopyWith<_$ITADFiltersImpl> get copyWith =>
