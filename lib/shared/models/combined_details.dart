@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:observatory/shared/models/igdb/igdb_game.dart';
+import 'package:observatory/shared/models/game/game.dart';
 import 'package:observatory/shared/models/info.dart';
 
 part 'combined_details.freezed.dart';

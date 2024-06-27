@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:observatory/deal/providers/game_details_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/models/igdb/igdb_game.dart';
+import 'package:observatory/shared/models/game/game.dart';
 import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/widgets/image_error.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
@@ -32,7 +32,7 @@ class ScreenshotsTile extends ConsumerWidget {
     void openGallery(
       BuildContext context,
       final int index,
-      final List<IGDBScreenshot> screenshots,
+      final List<GameScreenshot> screenshots,
     ) {
       showDialog(
         useSafeArea: false,
@@ -54,7 +54,7 @@ class ScreenshotsTile extends ConsumerWidget {
       deal: deal,
       heading: 'Screenshots',
       onData: (data) {
-        final List<IGDBScreenshot> screenshots = data?.screenshots ?? [];
+        final List<GameScreenshot> screenshots = data?.screenshots ?? [];
 
         if (screenshots.isEmpty) {
           return Text(
@@ -73,7 +73,7 @@ class ScreenshotsTile extends ConsumerWidget {
             itemCount: screenshots.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              final IGDBScreenshot screenshot = screenshots[index];
+              final GameScreenshot screenshot = screenshots[index];
 
               return GestureDetector(
                 onTap: () => openGallery(
@@ -118,7 +118,7 @@ class ScreenshotsTile extends ConsumerWidget {
 class GalleryView extends StatelessWidget {
   final Deal deal;
   final int index;
-  final List<IGDBScreenshot> screenshots;
+  final List<GameScreenshot> screenshots;
 
   const GalleryView({
     super.key,
@@ -179,13 +179,13 @@ class GalleryView extends StatelessWidget {
           ),
           scrollPhysics: const BouncingScrollPhysics(),
           builder: (context, index) {
-            final IGDBScreenshot screenshot = screenshots[index];
+            final GameScreenshot screenshot = screenshots[index];
 
             return PhotoViewGalleryPageOptions(
               tightMode: true,
               minScale: PhotoViewComputedScale.contained,
               imageProvider: CachedNetworkImageProvider(
-                screenshot.getURL(size: ScreenshotSize.fullHD) ?? '',
+                screenshot.getURL(size: ScreenshotSize.full) ?? '',
               ),
             );
           },

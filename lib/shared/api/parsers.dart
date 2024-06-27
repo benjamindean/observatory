@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:observatory/shared/models/chart_entry.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/models/igdb/igdb_game.dart';
+import 'package:observatory/shared/models/game/game.dart';
 import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';

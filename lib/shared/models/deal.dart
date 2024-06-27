@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:html_unescape/html_unescape.dart';
-import 'package:observatory/shared/models/igdb/igdb_game.dart';
+import 'package:observatory/shared/models/game/game.dart';
 import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'igdb_game.dart';
+part of 'game.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
@@ -59,23 +59,23 @@ _$GameDetailsImpl _$$GameDetailsImplFromJson(Map<String, dynamic> json) =>
           ? null
           : IGDBCover.fromJson(json['cover'] as Map<String, dynamic>),
       screenshots: (json['screenshots'] as List<dynamic>?)
-              ?.map((e) => IGDBScreenshot.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => GameScreenshot.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       videos: (json['videos'] as List<dynamic>?)
-              ?.map((e) => IGDBVideo.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => GameVideo.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       platforms: (json['platforms'] as List<dynamic>?)
-              ?.map((e) => IGDBPlatform.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => GamePlatform.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       themes: (json['themes'] as List<dynamic>?)
-              ?.map((e) => IGDBTheme.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => GameTheme.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       websites: (json['websites'] as List<dynamic>?)
-              ?.map((e) => IGDBWebsite.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => GameWebsite.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
     );
@@ -96,27 +96,27 @@ Map<String, dynamic> _$$GameDetailsImplToJson(_$GameDetailsImpl instance) =>
       'websites': instance.websites.map((e) => e.toJson()).toList(),
     };
 
-_$IGDBScreenshotImpl _$$IGDBScreenshotImplFromJson(Map<String, dynamic> json) =>
-    _$IGDBScreenshotImpl(
+_$GameScreenshotImpl _$$GameScreenshotImplFromJson(Map<String, dynamic> json) =>
+    _$GameScreenshotImpl(
       id: (json['id'] as num?)?.toInt(),
       url: json['url'] as String?,
     );
 
-Map<String, dynamic> _$$IGDBScreenshotImplToJson(
-        _$IGDBScreenshotImpl instance) =>
+Map<String, dynamic> _$$GameScreenshotImplToJson(
+        _$GameScreenshotImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'url': instance.url,
     };
 
-_$IGDBPlatformImpl _$$IGDBPlatformImplFromJson(Map<String, dynamic> json) =>
-    _$IGDBPlatformImpl(
+_$GamePlatformImpl _$$GamePlatformImplFromJson(Map<String, dynamic> json) =>
+    _$GamePlatformImpl(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       abbreviation: json['abbreviation'] as String?,
     );
 
-Map<String, dynamic> _$$IGDBPlatformImplToJson(_$IGDBPlatformImpl instance) =>
+Map<String, dynamic> _$$GamePlatformImplToJson(_$GamePlatformImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -135,39 +135,39 @@ Map<String, dynamic> _$$IGDBCoverImplToJson(_$IGDBCoverImpl instance) =>
       'url': instance.url,
     };
 
-_$IGDBThemeImpl _$$IGDBThemeImplFromJson(Map<String, dynamic> json) =>
-    _$IGDBThemeImpl(
+_$GameThemeImpl _$$GameThemeImplFromJson(Map<String, dynamic> json) =>
+    _$GameThemeImpl(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$$IGDBThemeImplToJson(_$IGDBThemeImpl instance) =>
+Map<String, dynamic> _$$GameThemeImplToJson(_$GameThemeImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
     };
 
-_$IGDBVideoImpl _$$IGDBVideoImplFromJson(Map<String, dynamic> json) =>
-    _$IGDBVideoImpl(
+_$GameVideoImpl _$$GameVideoImplFromJson(Map<String, dynamic> json) =>
+    _$GameVideoImpl(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       video_id: json['video_id'] as String?,
     );
 
-Map<String, dynamic> _$$IGDBVideoImplToJson(_$IGDBVideoImpl instance) =>
+Map<String, dynamic> _$$GameVideoImplToJson(_$GameVideoImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'video_id': instance.video_id,
     };
 
-_$IGDBWebsiteImpl _$$IGDBWebsiteImplFromJson(Map<String, dynamic> json) =>
-    _$IGDBWebsiteImpl(
+_$GameWebsiteImpl _$$GameWebsiteImplFromJson(Map<String, dynamic> json) =>
+    _$GameWebsiteImpl(
       id: (json['id'] as num?)?.toInt(),
       url: json['url'] as String?,
     );
 
-Map<String, dynamic> _$$IGDBWebsiteImplToJson(_$IGDBWebsiteImpl instance) =>
+Map<String, dynamic> _$$GameWebsiteImplToJson(_$GameWebsiteImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'url': instance.url,

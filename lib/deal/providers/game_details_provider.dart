@@ -3,7 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:observatory/shared/api/supabase_api.dart';
 import 'package:observatory/shared/api/utils.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/models/igdb/igdb_game.dart';
+import 'package:observatory/shared/models/game/game.dart';
 
 final gameDetailsProvider =
     FutureProvider.family<GameDetails?, Deal>((ref, deal) async {

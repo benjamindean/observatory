@@ -5,7 +5,7 @@ import 'package:observatory/deal/providers/game_details_provider.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/combined_details.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/models/igdb/igdb_game.dart';
+import 'package:observatory/shared/models/game/game.dart';
 import 'package:observatory/shared/models/info.dart';
 
 final combinedDetailsProvider = FutureProvider.family<CombinedDetails, Deal>(

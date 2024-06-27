@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deal/providers/game_details_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/models/igdb/igdb_game.dart';
+import 'package:observatory/shared/models/game/game.dart';
 import 'package:observatory/shared/ui/constants.dart';
 
 class SupportedPlatformsTile extends ConsumerWidget {
@@ -26,7 +26,7 @@ class SupportedPlatformsTile extends ConsumerWidget {
       deal: deal,
       heading: 'Platforms',
       onData: (data) {
-        final List<IGDBPlatform> platforms = data?.platforms ?? [];
+        final List<GamePlatform> platforms = data?.platforms ?? [];
 
         if (platforms.isEmpty) {
           return Text(

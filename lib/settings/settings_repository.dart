@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/models/igdb/igdb_game.dart';
+import 'package:observatory/shared/models/game/game.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/models/price.dart';

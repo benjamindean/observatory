@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'igdb_game.dart';
+part of 'game.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -27,11 +27,11 @@ mixin _$GameDetails {
   String? get url => throw _privateConstructorUsedError;
   int? get first_release_date => throw _privateConstructorUsedError;
   IGDBCover? get cover => throw _privateConstructorUsedError;
-  List<IGDBScreenshot> get screenshots => throw _privateConstructorUsedError;
-  List<IGDBVideo> get videos => throw _privateConstructorUsedError;
-  List<IGDBPlatform> get platforms => throw _privateConstructorUsedError;
-  List<IGDBTheme> get themes => throw _privateConstructorUsedError;
-  List<IGDBWebsite> get websites => throw _privateConstructorUsedError;
+  List<GameScreenshot> get screenshots => throw _privateConstructorUsedError;
+  List<GameVideo> get videos => throw _privateConstructorUsedError;
+  List<GamePlatform> get platforms => throw _privateConstructorUsedError;
+  List<GameTheme> get themes => throw _privateConstructorUsedError;
+  List<GameWebsite> get websites => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,11 +53,11 @@ abstract class $GameDetailsCopyWith<$Res> {
       String? url,
       int? first_release_date,
       IGDBCover? cover,
-      List<IGDBScreenshot> screenshots,
-      List<IGDBVideo> videos,
-      List<IGDBPlatform> platforms,
-      List<IGDBTheme> themes,
-      List<IGDBWebsite> websites});
+      List<GameScreenshot> screenshots,
+      List<GameVideo> videos,
+      List<GamePlatform> platforms,
+      List<GameTheme> themes,
+      List<GameWebsite> websites});
 
   $IGDBCoverCopyWith<$Res>? get cover;
 }
@@ -120,23 +120,23 @@ class _$GameDetailsCopyWithImpl<$Res, $Val extends GameDetails>
       screenshots: null == screenshots
           ? _value.screenshots
           : screenshots // ignore: cast_nullable_to_non_nullable
-              as List<IGDBScreenshot>,
+              as List<GameScreenshot>,
       videos: null == videos
           ? _value.videos
           : videos // ignore: cast_nullable_to_non_nullable
-              as List<IGDBVideo>,
+              as List<GameVideo>,
       platforms: null == platforms
           ? _value.platforms
           : platforms // ignore: cast_nullable_to_non_nullable
-              as List<IGDBPlatform>,
+              as List<GamePlatform>,
       themes: null == themes
           ? _value.themes
           : themes // ignore: cast_nullable_to_non_nullable
-              as List<IGDBTheme>,
+              as List<GameTheme>,
       websites: null == websites
           ? _value.websites
           : websites // ignore: cast_nullable_to_non_nullable
-              as List<IGDBWebsite>,
+              as List<GameWebsite>,
     ) as $Val);
   }
 
@@ -169,11 +169,11 @@ abstract class _$$GameDetailsImplCopyWith<$Res>
       String? url,
       int? first_release_date,
       IGDBCover? cover,
-      List<IGDBScreenshot> screenshots,
-      List<IGDBVideo> videos,
-      List<IGDBPlatform> platforms,
-      List<IGDBTheme> themes,
-      List<IGDBWebsite> websites});
+      List<GameScreenshot> screenshots,
+      List<GameVideo> videos,
+      List<GamePlatform> platforms,
+      List<GameTheme> themes,
+      List<GameWebsite> websites});
 
   @override
   $IGDBCoverCopyWith<$Res>? get cover;
@@ -235,23 +235,23 @@ class __$$GameDetailsImplCopyWithImpl<$Res>
       screenshots: null == screenshots
           ? _value._screenshots
           : screenshots // ignore: cast_nullable_to_non_nullable
-              as List<IGDBScreenshot>,
+              as List<GameScreenshot>,
       videos: null == videos
           ? _value._videos
           : videos // ignore: cast_nullable_to_non_nullable
-              as List<IGDBVideo>,
+              as List<GameVideo>,
       platforms: null == platforms
           ? _value._platforms
           : platforms // ignore: cast_nullable_to_non_nullable
-              as List<IGDBPlatform>,
+              as List<GamePlatform>,
       themes: null == themes
           ? _value._themes
           : themes // ignore: cast_nullable_to_non_nullable
-              as List<IGDBTheme>,
+              as List<GameTheme>,
       websites: null == websites
           ? _value._websites
           : websites // ignore: cast_nullable_to_non_nullable
-              as List<IGDBWebsite>,
+              as List<GameWebsite>,
     ));
   }
 }
@@ -268,11 +268,11 @@ class _$GameDetailsImpl extends _GameDetails {
       this.url,
       this.first_release_date,
       this.cover,
-      final List<IGDBScreenshot> screenshots = const [],
-      final List<IGDBVideo> videos = const [],
-      final List<IGDBPlatform> platforms = const [],
-      final List<IGDBTheme> themes = const [],
-      final List<IGDBWebsite> websites = const []})
+      final List<GameScreenshot> screenshots = const [],
+      final List<GameVideo> videos = const [],
+      final List<GamePlatform> platforms = const [],
+      final List<GameTheme> themes = const [],
+      final List<GameWebsite> websites = const []})
       : _screenshots = screenshots,
         _videos = videos,
         _platforms = platforms,
@@ -297,46 +297,46 @@ class _$GameDetailsImpl extends _GameDetails {
   final int? first_release_date;
   @override
   final IGDBCover? cover;
-  final List<IGDBScreenshot> _screenshots;
+  final List<GameScreenshot> _screenshots;
   @override
   @JsonKey()
-  List<IGDBScreenshot> get screenshots {
+  List<GameScreenshot> get screenshots {
     if (_screenshots is EqualUnmodifiableListView) return _screenshots;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_screenshots);
   }
 
-  final List<IGDBVideo> _videos;
+  final List<GameVideo> _videos;
   @override
   @JsonKey()
-  List<IGDBVideo> get videos {
+  List<GameVideo> get videos {
     if (_videos is EqualUnmodifiableListView) return _videos;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_videos);
   }
 
-  final List<IGDBPlatform> _platforms;
+  final List<GamePlatform> _platforms;
   @override
   @JsonKey()
-  List<IGDBPlatform> get platforms {
+  List<GamePlatform> get platforms {
     if (_platforms is EqualUnmodifiableListView) return _platforms;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_platforms);
   }
 
-  final List<IGDBTheme> _themes;
+  final List<GameTheme> _themes;
   @override
   @JsonKey()
-  List<IGDBTheme> get themes {
+  List<GameTheme> get themes {
     if (_themes is EqualUnmodifiableListView) return _themes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_themes);
   }
 
-  final List<IGDBWebsite> _websites;
+  final List<GameWebsite> _websites;
   @override
   @JsonKey()
-  List<IGDBWebsite> get websites {
+  List<GameWebsite> get websites {
     if (_websites is EqualUnmodifiableListView) return _websites;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_websites);
@@ -410,11 +410,11 @@ abstract class _GameDetails extends GameDetails {
       final String? url,
       final int? first_release_date,
       final IGDBCover? cover,
-      final List<IGDBScreenshot> screenshots,
-      final List<IGDBVideo> videos,
-      final List<IGDBPlatform> platforms,
-      final List<IGDBTheme> themes,
-      final List<IGDBWebsite> websites}) = _$GameDetailsImpl;
+      final List<GameScreenshot> screenshots,
+      final List<GameVideo> videos,
+      final List<GamePlatform> platforms,
+      final List<GameTheme> themes,
+      final List<GameWebsite> websites}) = _$GameDetailsImpl;
   const _GameDetails._() : super._();
 
   factory _GameDetails.fromJson(Map<String, dynamic> json) =
@@ -435,49 +435,49 @@ abstract class _GameDetails extends GameDetails {
   @override
   IGDBCover? get cover;
   @override
-  List<IGDBScreenshot> get screenshots;
+  List<GameScreenshot> get screenshots;
   @override
-  List<IGDBVideo> get videos;
+  List<GameVideo> get videos;
   @override
-  List<IGDBPlatform> get platforms;
+  List<GamePlatform> get platforms;
   @override
-  List<IGDBTheme> get themes;
+  List<GameTheme> get themes;
   @override
-  List<IGDBWebsite> get websites;
+  List<GameWebsite> get websites;
   @override
   @JsonKey(ignore: true)
   _$$GameDetailsImplCopyWith<_$GameDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-IGDBScreenshot _$IGDBScreenshotFromJson(Map<String, dynamic> json) {
-  return _IGDBScreenshot.fromJson(json);
+GameScreenshot _$GameScreenshotFromJson(Map<String, dynamic> json) {
+  return _GameScreenshot.fromJson(json);
 }
 
 /// @nodoc
-mixin _$IGDBScreenshot {
+mixin _$GameScreenshot {
   int? get id => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $IGDBScreenshotCopyWith<IGDBScreenshot> get copyWith =>
+  $GameScreenshotCopyWith<GameScreenshot> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $IGDBScreenshotCopyWith<$Res> {
-  factory $IGDBScreenshotCopyWith(
-          IGDBScreenshot value, $Res Function(IGDBScreenshot) then) =
-      _$IGDBScreenshotCopyWithImpl<$Res, IGDBScreenshot>;
+abstract class $GameScreenshotCopyWith<$Res> {
+  factory $GameScreenshotCopyWith(
+          GameScreenshot value, $Res Function(GameScreenshot) then) =
+      _$GameScreenshotCopyWithImpl<$Res, GameScreenshot>;
   @useResult
   $Res call({int? id, String? url});
 }
 
 /// @nodoc
-class _$IGDBScreenshotCopyWithImpl<$Res, $Val extends IGDBScreenshot>
-    implements $IGDBScreenshotCopyWith<$Res> {
-  _$IGDBScreenshotCopyWithImpl(this._value, this._then);
+class _$GameScreenshotCopyWithImpl<$Res, $Val extends GameScreenshot>
+    implements $GameScreenshotCopyWith<$Res> {
+  _$GameScreenshotCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -504,22 +504,22 @@ class _$IGDBScreenshotCopyWithImpl<$Res, $Val extends IGDBScreenshot>
 }
 
 /// @nodoc
-abstract class _$$IGDBScreenshotImplCopyWith<$Res>
-    implements $IGDBScreenshotCopyWith<$Res> {
-  factory _$$IGDBScreenshotImplCopyWith(_$IGDBScreenshotImpl value,
-          $Res Function(_$IGDBScreenshotImpl) then) =
-      __$$IGDBScreenshotImplCopyWithImpl<$Res>;
+abstract class _$$GameScreenshotImplCopyWith<$Res>
+    implements $GameScreenshotCopyWith<$Res> {
+  factory _$$GameScreenshotImplCopyWith(_$GameScreenshotImpl value,
+          $Res Function(_$GameScreenshotImpl) then) =
+      __$$GameScreenshotImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String? url});
 }
 
 /// @nodoc
-class __$$IGDBScreenshotImplCopyWithImpl<$Res>
-    extends _$IGDBScreenshotCopyWithImpl<$Res, _$IGDBScreenshotImpl>
-    implements _$$IGDBScreenshotImplCopyWith<$Res> {
-  __$$IGDBScreenshotImplCopyWithImpl(
-      _$IGDBScreenshotImpl _value, $Res Function(_$IGDBScreenshotImpl) _then)
+class __$$GameScreenshotImplCopyWithImpl<$Res>
+    extends _$GameScreenshotCopyWithImpl<$Res, _$GameScreenshotImpl>
+    implements _$$GameScreenshotImplCopyWith<$Res> {
+  __$$GameScreenshotImplCopyWithImpl(
+      _$GameScreenshotImpl _value, $Res Function(_$GameScreenshotImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -528,7 +528,7 @@ class __$$IGDBScreenshotImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? url = freezed,
   }) {
-    return _then(_$IGDBScreenshotImpl(
+    return _then(_$GameScreenshotImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -543,11 +543,11 @@ class __$$IGDBScreenshotImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$IGDBScreenshotImpl extends _IGDBScreenshot {
-  const _$IGDBScreenshotImpl({this.id, this.url}) : super._();
+class _$GameScreenshotImpl extends _GameScreenshot {
+  const _$GameScreenshotImpl({this.id, this.url}) : super._();
 
-  factory _$IGDBScreenshotImpl.fromJson(Map<String, dynamic> json) =>
-      _$$IGDBScreenshotImplFromJson(json);
+  factory _$GameScreenshotImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GameScreenshotImplFromJson(json);
 
   @override
   final int? id;
@@ -556,14 +556,14 @@ class _$IGDBScreenshotImpl extends _IGDBScreenshot {
 
   @override
   String toString() {
-    return 'IGDBScreenshot(id: $id, url: $url)';
+    return 'GameScreenshot(id: $id, url: $url)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IGDBScreenshotImpl &&
+            other is _$GameScreenshotImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.url, url) || other.url == url));
   }
@@ -575,25 +575,25 @@ class _$IGDBScreenshotImpl extends _IGDBScreenshot {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$IGDBScreenshotImplCopyWith<_$IGDBScreenshotImpl> get copyWith =>
-      __$$IGDBScreenshotImplCopyWithImpl<_$IGDBScreenshotImpl>(
+  _$$GameScreenshotImplCopyWith<_$GameScreenshotImpl> get copyWith =>
+      __$$GameScreenshotImplCopyWithImpl<_$GameScreenshotImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$IGDBScreenshotImplToJson(
+    return _$$GameScreenshotImplToJson(
       this,
     );
   }
 }
 
-abstract class _IGDBScreenshot extends IGDBScreenshot {
-  const factory _IGDBScreenshot({final int? id, final String? url}) =
-      _$IGDBScreenshotImpl;
-  const _IGDBScreenshot._() : super._();
+abstract class _GameScreenshot extends GameScreenshot {
+  const factory _GameScreenshot({final int? id, final String? url}) =
+      _$GameScreenshotImpl;
+  const _GameScreenshot._() : super._();
 
-  factory _IGDBScreenshot.fromJson(Map<String, dynamic> json) =
-      _$IGDBScreenshotImpl.fromJson;
+  factory _GameScreenshot.fromJson(Map<String, dynamic> json) =
+      _$GameScreenshotImpl.fromJson;
 
   @override
   int? get id;
@@ -601,39 +601,39 @@ abstract class _IGDBScreenshot extends IGDBScreenshot {
   String? get url;
   @override
   @JsonKey(ignore: true)
-  _$$IGDBScreenshotImplCopyWith<_$IGDBScreenshotImpl> get copyWith =>
+  _$$GameScreenshotImplCopyWith<_$GameScreenshotImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-IGDBPlatform _$IGDBPlatformFromJson(Map<String, dynamic> json) {
-  return _IGDBPlatform.fromJson(json);
+GamePlatform _$GamePlatformFromJson(Map<String, dynamic> json) {
+  return _GamePlatform.fromJson(json);
 }
 
 /// @nodoc
-mixin _$IGDBPlatform {
+mixin _$GamePlatform {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get abbreviation => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $IGDBPlatformCopyWith<IGDBPlatform> get copyWith =>
+  $GamePlatformCopyWith<GamePlatform> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $IGDBPlatformCopyWith<$Res> {
-  factory $IGDBPlatformCopyWith(
-          IGDBPlatform value, $Res Function(IGDBPlatform) then) =
-      _$IGDBPlatformCopyWithImpl<$Res, IGDBPlatform>;
+abstract class $GamePlatformCopyWith<$Res> {
+  factory $GamePlatformCopyWith(
+          GamePlatform value, $Res Function(GamePlatform) then) =
+      _$GamePlatformCopyWithImpl<$Res, GamePlatform>;
   @useResult
   $Res call({int? id, String? name, String? abbreviation});
 }
 
 /// @nodoc
-class _$IGDBPlatformCopyWithImpl<$Res, $Val extends IGDBPlatform>
-    implements $IGDBPlatformCopyWith<$Res> {
-  _$IGDBPlatformCopyWithImpl(this._value, this._then);
+class _$GamePlatformCopyWithImpl<$Res, $Val extends GamePlatform>
+    implements $GamePlatformCopyWith<$Res> {
+  _$GamePlatformCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -665,22 +665,22 @@ class _$IGDBPlatformCopyWithImpl<$Res, $Val extends IGDBPlatform>
 }
 
 /// @nodoc
-abstract class _$$IGDBPlatformImplCopyWith<$Res>
-    implements $IGDBPlatformCopyWith<$Res> {
-  factory _$$IGDBPlatformImplCopyWith(
-          _$IGDBPlatformImpl value, $Res Function(_$IGDBPlatformImpl) then) =
-      __$$IGDBPlatformImplCopyWithImpl<$Res>;
+abstract class _$$GamePlatformImplCopyWith<$Res>
+    implements $GamePlatformCopyWith<$Res> {
+  factory _$$GamePlatformImplCopyWith(
+          _$GamePlatformImpl value, $Res Function(_$GamePlatformImpl) then) =
+      __$$GamePlatformImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String? name, String? abbreviation});
 }
 
 /// @nodoc
-class __$$IGDBPlatformImplCopyWithImpl<$Res>
-    extends _$IGDBPlatformCopyWithImpl<$Res, _$IGDBPlatformImpl>
-    implements _$$IGDBPlatformImplCopyWith<$Res> {
-  __$$IGDBPlatformImplCopyWithImpl(
-      _$IGDBPlatformImpl _value, $Res Function(_$IGDBPlatformImpl) _then)
+class __$$GamePlatformImplCopyWithImpl<$Res>
+    extends _$GamePlatformCopyWithImpl<$Res, _$GamePlatformImpl>
+    implements _$$GamePlatformImplCopyWith<$Res> {
+  __$$GamePlatformImplCopyWithImpl(
+      _$GamePlatformImpl _value, $Res Function(_$GamePlatformImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -690,7 +690,7 @@ class __$$IGDBPlatformImplCopyWithImpl<$Res>
     Object? name = freezed,
     Object? abbreviation = freezed,
   }) {
-    return _then(_$IGDBPlatformImpl(
+    return _then(_$GamePlatformImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -709,11 +709,11 @@ class __$$IGDBPlatformImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$IGDBPlatformImpl extends _IGDBPlatform {
-  const _$IGDBPlatformImpl({this.id, this.name, this.abbreviation}) : super._();
+class _$GamePlatformImpl extends _GamePlatform {
+  const _$GamePlatformImpl({this.id, this.name, this.abbreviation}) : super._();
 
-  factory _$IGDBPlatformImpl.fromJson(Map<String, dynamic> json) =>
-      _$$IGDBPlatformImplFromJson(json);
+  factory _$GamePlatformImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GamePlatformImplFromJson(json);
 
   @override
   final int? id;
@@ -724,14 +724,14 @@ class _$IGDBPlatformImpl extends _IGDBPlatform {
 
   @override
   String toString() {
-    return 'IGDBPlatform(id: $id, name: $name, abbreviation: $abbreviation)';
+    return 'GamePlatform(id: $id, name: $name, abbreviation: $abbreviation)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IGDBPlatformImpl &&
+            other is _$GamePlatformImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.abbreviation, abbreviation) ||
@@ -745,26 +745,26 @@ class _$IGDBPlatformImpl extends _IGDBPlatform {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$IGDBPlatformImplCopyWith<_$IGDBPlatformImpl> get copyWith =>
-      __$$IGDBPlatformImplCopyWithImpl<_$IGDBPlatformImpl>(this, _$identity);
+  _$$GamePlatformImplCopyWith<_$GamePlatformImpl> get copyWith =>
+      __$$GamePlatformImplCopyWithImpl<_$GamePlatformImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$IGDBPlatformImplToJson(
+    return _$$GamePlatformImplToJson(
       this,
     );
   }
 }
 
-abstract class _IGDBPlatform extends IGDBPlatform {
-  const factory _IGDBPlatform(
+abstract class _GamePlatform extends GamePlatform {
+  const factory _GamePlatform(
       {final int? id,
       final String? name,
-      final String? abbreviation}) = _$IGDBPlatformImpl;
-  const _IGDBPlatform._() : super._();
+      final String? abbreviation}) = _$GamePlatformImpl;
+  const _GamePlatform._() : super._();
 
-  factory _IGDBPlatform.fromJson(Map<String, dynamic> json) =
-      _$IGDBPlatformImpl.fromJson;
+  factory _GamePlatform.fromJson(Map<String, dynamic> json) =
+      _$GamePlatformImpl.fromJson;
 
   @override
   int? get id;
@@ -774,7 +774,7 @@ abstract class _IGDBPlatform extends IGDBPlatform {
   String? get abbreviation;
   @override
   @JsonKey(ignore: true)
-  _$$IGDBPlatformImplCopyWith<_$IGDBPlatformImpl> get copyWith =>
+  _$$GamePlatformImplCopyWith<_$GamePlatformImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -931,33 +931,33 @@ abstract class _IGDBCover extends IGDBCover {
       throw _privateConstructorUsedError;
 }
 
-IGDBTheme _$IGDBThemeFromJson(Map<String, dynamic> json) {
-  return _IGDBTheme.fromJson(json);
+GameTheme _$GameThemeFromJson(Map<String, dynamic> json) {
+  return _GameTheme.fromJson(json);
 }
 
 /// @nodoc
-mixin _$IGDBTheme {
+mixin _$GameTheme {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $IGDBThemeCopyWith<IGDBTheme> get copyWith =>
+  $GameThemeCopyWith<GameTheme> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $IGDBThemeCopyWith<$Res> {
-  factory $IGDBThemeCopyWith(IGDBTheme value, $Res Function(IGDBTheme) then) =
-      _$IGDBThemeCopyWithImpl<$Res, IGDBTheme>;
+abstract class $GameThemeCopyWith<$Res> {
+  factory $GameThemeCopyWith(GameTheme value, $Res Function(GameTheme) then) =
+      _$GameThemeCopyWithImpl<$Res, GameTheme>;
   @useResult
   $Res call({int? id, String? name});
 }
 
 /// @nodoc
-class _$IGDBThemeCopyWithImpl<$Res, $Val extends IGDBTheme>
-    implements $IGDBThemeCopyWith<$Res> {
-  _$IGDBThemeCopyWithImpl(this._value, this._then);
+class _$GameThemeCopyWithImpl<$Res, $Val extends GameTheme>
+    implements $GameThemeCopyWith<$Res> {
+  _$GameThemeCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -984,22 +984,22 @@ class _$IGDBThemeCopyWithImpl<$Res, $Val extends IGDBTheme>
 }
 
 /// @nodoc
-abstract class _$$IGDBThemeImplCopyWith<$Res>
-    implements $IGDBThemeCopyWith<$Res> {
-  factory _$$IGDBThemeImplCopyWith(
-          _$IGDBThemeImpl value, $Res Function(_$IGDBThemeImpl) then) =
-      __$$IGDBThemeImplCopyWithImpl<$Res>;
+abstract class _$$GameThemeImplCopyWith<$Res>
+    implements $GameThemeCopyWith<$Res> {
+  factory _$$GameThemeImplCopyWith(
+          _$GameThemeImpl value, $Res Function(_$GameThemeImpl) then) =
+      __$$GameThemeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String? name});
 }
 
 /// @nodoc
-class __$$IGDBThemeImplCopyWithImpl<$Res>
-    extends _$IGDBThemeCopyWithImpl<$Res, _$IGDBThemeImpl>
-    implements _$$IGDBThemeImplCopyWith<$Res> {
-  __$$IGDBThemeImplCopyWithImpl(
-      _$IGDBThemeImpl _value, $Res Function(_$IGDBThemeImpl) _then)
+class __$$GameThemeImplCopyWithImpl<$Res>
+    extends _$GameThemeCopyWithImpl<$Res, _$GameThemeImpl>
+    implements _$$GameThemeImplCopyWith<$Res> {
+  __$$GameThemeImplCopyWithImpl(
+      _$GameThemeImpl _value, $Res Function(_$GameThemeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1008,7 +1008,7 @@ class __$$IGDBThemeImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
   }) {
-    return _then(_$IGDBThemeImpl(
+    return _then(_$GameThemeImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1023,11 +1023,11 @@ class __$$IGDBThemeImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$IGDBThemeImpl extends _IGDBTheme {
-  const _$IGDBThemeImpl({this.id, this.name}) : super._();
+class _$GameThemeImpl extends _GameTheme {
+  const _$GameThemeImpl({this.id, this.name}) : super._();
 
-  factory _$IGDBThemeImpl.fromJson(Map<String, dynamic> json) =>
-      _$$IGDBThemeImplFromJson(json);
+  factory _$GameThemeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GameThemeImplFromJson(json);
 
   @override
   final int? id;
@@ -1036,14 +1036,14 @@ class _$IGDBThemeImpl extends _IGDBTheme {
 
   @override
   String toString() {
-    return 'IGDBTheme(id: $id, name: $name)';
+    return 'GameTheme(id: $id, name: $name)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IGDBThemeImpl &&
+            other is _$GameThemeImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name));
   }
@@ -1055,24 +1055,24 @@ class _$IGDBThemeImpl extends _IGDBTheme {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$IGDBThemeImplCopyWith<_$IGDBThemeImpl> get copyWith =>
-      __$$IGDBThemeImplCopyWithImpl<_$IGDBThemeImpl>(this, _$identity);
+  _$$GameThemeImplCopyWith<_$GameThemeImpl> get copyWith =>
+      __$$GameThemeImplCopyWithImpl<_$GameThemeImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$IGDBThemeImplToJson(
+    return _$$GameThemeImplToJson(
       this,
     );
   }
 }
 
-abstract class _IGDBTheme extends IGDBTheme {
-  const factory _IGDBTheme({final int? id, final String? name}) =
-      _$IGDBThemeImpl;
-  const _IGDBTheme._() : super._();
+abstract class _GameTheme extends GameTheme {
+  const factory _GameTheme({final int? id, final String? name}) =
+      _$GameThemeImpl;
+  const _GameTheme._() : super._();
 
-  factory _IGDBTheme.fromJson(Map<String, dynamic> json) =
-      _$IGDBThemeImpl.fromJson;
+  factory _GameTheme.fromJson(Map<String, dynamic> json) =
+      _$GameThemeImpl.fromJson;
 
   @override
   int? get id;
@@ -1080,38 +1080,38 @@ abstract class _IGDBTheme extends IGDBTheme {
   String? get name;
   @override
   @JsonKey(ignore: true)
-  _$$IGDBThemeImplCopyWith<_$IGDBThemeImpl> get copyWith =>
+  _$$GameThemeImplCopyWith<_$GameThemeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-IGDBVideo _$IGDBVideoFromJson(Map<String, dynamic> json) {
-  return _IGDBVideo.fromJson(json);
+GameVideo _$GameVideoFromJson(Map<String, dynamic> json) {
+  return _GameVideo.fromJson(json);
 }
 
 /// @nodoc
-mixin _$IGDBVideo {
+mixin _$GameVideo {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get video_id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $IGDBVideoCopyWith<IGDBVideo> get copyWith =>
+  $GameVideoCopyWith<GameVideo> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $IGDBVideoCopyWith<$Res> {
-  factory $IGDBVideoCopyWith(IGDBVideo value, $Res Function(IGDBVideo) then) =
-      _$IGDBVideoCopyWithImpl<$Res, IGDBVideo>;
+abstract class $GameVideoCopyWith<$Res> {
+  factory $GameVideoCopyWith(GameVideo value, $Res Function(GameVideo) then) =
+      _$GameVideoCopyWithImpl<$Res, GameVideo>;
   @useResult
   $Res call({int? id, String? name, String? video_id});
 }
 
 /// @nodoc
-class _$IGDBVideoCopyWithImpl<$Res, $Val extends IGDBVideo>
-    implements $IGDBVideoCopyWith<$Res> {
-  _$IGDBVideoCopyWithImpl(this._value, this._then);
+class _$GameVideoCopyWithImpl<$Res, $Val extends GameVideo>
+    implements $GameVideoCopyWith<$Res> {
+  _$GameVideoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -1143,22 +1143,22 @@ class _$IGDBVideoCopyWithImpl<$Res, $Val extends IGDBVideo>
 }
 
 /// @nodoc
-abstract class _$$IGDBVideoImplCopyWith<$Res>
-    implements $IGDBVideoCopyWith<$Res> {
-  factory _$$IGDBVideoImplCopyWith(
-          _$IGDBVideoImpl value, $Res Function(_$IGDBVideoImpl) then) =
-      __$$IGDBVideoImplCopyWithImpl<$Res>;
+abstract class _$$GameVideoImplCopyWith<$Res>
+    implements $GameVideoCopyWith<$Res> {
+  factory _$$GameVideoImplCopyWith(
+          _$GameVideoImpl value, $Res Function(_$GameVideoImpl) then) =
+      __$$GameVideoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String? name, String? video_id});
 }
 
 /// @nodoc
-class __$$IGDBVideoImplCopyWithImpl<$Res>
-    extends _$IGDBVideoCopyWithImpl<$Res, _$IGDBVideoImpl>
-    implements _$$IGDBVideoImplCopyWith<$Res> {
-  __$$IGDBVideoImplCopyWithImpl(
-      _$IGDBVideoImpl _value, $Res Function(_$IGDBVideoImpl) _then)
+class __$$GameVideoImplCopyWithImpl<$Res>
+    extends _$GameVideoCopyWithImpl<$Res, _$GameVideoImpl>
+    implements _$$GameVideoImplCopyWith<$Res> {
+  __$$GameVideoImplCopyWithImpl(
+      _$GameVideoImpl _value, $Res Function(_$GameVideoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1168,7 +1168,7 @@ class __$$IGDBVideoImplCopyWithImpl<$Res>
     Object? name = freezed,
     Object? video_id = freezed,
   }) {
-    return _then(_$IGDBVideoImpl(
+    return _then(_$GameVideoImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1187,11 +1187,11 @@ class __$$IGDBVideoImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$IGDBVideoImpl extends _IGDBVideo {
-  const _$IGDBVideoImpl({this.id, this.name, this.video_id}) : super._();
+class _$GameVideoImpl extends _GameVideo {
+  const _$GameVideoImpl({this.id, this.name, this.video_id}) : super._();
 
-  factory _$IGDBVideoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$IGDBVideoImplFromJson(json);
+  factory _$GameVideoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GameVideoImplFromJson(json);
 
   @override
   final int? id;
@@ -1202,14 +1202,14 @@ class _$IGDBVideoImpl extends _IGDBVideo {
 
   @override
   String toString() {
-    return 'IGDBVideo(id: $id, name: $name, video_id: $video_id)';
+    return 'GameVideo(id: $id, name: $name, video_id: $video_id)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IGDBVideoImpl &&
+            other is _$GameVideoImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.video_id, video_id) ||
@@ -1223,26 +1223,26 @@ class _$IGDBVideoImpl extends _IGDBVideo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$IGDBVideoImplCopyWith<_$IGDBVideoImpl> get copyWith =>
-      __$$IGDBVideoImplCopyWithImpl<_$IGDBVideoImpl>(this, _$identity);
+  _$$GameVideoImplCopyWith<_$GameVideoImpl> get copyWith =>
+      __$$GameVideoImplCopyWithImpl<_$GameVideoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$IGDBVideoImplToJson(
+    return _$$GameVideoImplToJson(
       this,
     );
   }
 }
 
-abstract class _IGDBVideo extends IGDBVideo {
-  const factory _IGDBVideo(
+abstract class _GameVideo extends GameVideo {
+  const factory _GameVideo(
       {final int? id,
       final String? name,
-      final String? video_id}) = _$IGDBVideoImpl;
-  const _IGDBVideo._() : super._();
+      final String? video_id}) = _$GameVideoImpl;
+  const _GameVideo._() : super._();
 
-  factory _IGDBVideo.fromJson(Map<String, dynamic> json) =
-      _$IGDBVideoImpl.fromJson;
+  factory _GameVideo.fromJson(Map<String, dynamic> json) =
+      _$GameVideoImpl.fromJson;
 
   @override
   int? get id;
@@ -1252,38 +1252,38 @@ abstract class _IGDBVideo extends IGDBVideo {
   String? get video_id;
   @override
   @JsonKey(ignore: true)
-  _$$IGDBVideoImplCopyWith<_$IGDBVideoImpl> get copyWith =>
+  _$$GameVideoImplCopyWith<_$GameVideoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-IGDBWebsite _$IGDBWebsiteFromJson(Map<String, dynamic> json) {
-  return _IGDBWebsite.fromJson(json);
+GameWebsite _$GameWebsiteFromJson(Map<String, dynamic> json) {
+  return _GameWebsite.fromJson(json);
 }
 
 /// @nodoc
-mixin _$IGDBWebsite {
+mixin _$GameWebsite {
   int? get id => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $IGDBWebsiteCopyWith<IGDBWebsite> get copyWith =>
+  $GameWebsiteCopyWith<GameWebsite> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $IGDBWebsiteCopyWith<$Res> {
-  factory $IGDBWebsiteCopyWith(
-          IGDBWebsite value, $Res Function(IGDBWebsite) then) =
-      _$IGDBWebsiteCopyWithImpl<$Res, IGDBWebsite>;
+abstract class $GameWebsiteCopyWith<$Res> {
+  factory $GameWebsiteCopyWith(
+          GameWebsite value, $Res Function(GameWebsite) then) =
+      _$GameWebsiteCopyWithImpl<$Res, GameWebsite>;
   @useResult
   $Res call({int? id, String? url});
 }
 
 /// @nodoc
-class _$IGDBWebsiteCopyWithImpl<$Res, $Val extends IGDBWebsite>
-    implements $IGDBWebsiteCopyWith<$Res> {
-  _$IGDBWebsiteCopyWithImpl(this._value, this._then);
+class _$GameWebsiteCopyWithImpl<$Res, $Val extends GameWebsite>
+    implements $GameWebsiteCopyWith<$Res> {
+  _$GameWebsiteCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -1310,22 +1310,22 @@ class _$IGDBWebsiteCopyWithImpl<$Res, $Val extends IGDBWebsite>
 }
 
 /// @nodoc
-abstract class _$$IGDBWebsiteImplCopyWith<$Res>
-    implements $IGDBWebsiteCopyWith<$Res> {
-  factory _$$IGDBWebsiteImplCopyWith(
-          _$IGDBWebsiteImpl value, $Res Function(_$IGDBWebsiteImpl) then) =
-      __$$IGDBWebsiteImplCopyWithImpl<$Res>;
+abstract class _$$GameWebsiteImplCopyWith<$Res>
+    implements $GameWebsiteCopyWith<$Res> {
+  factory _$$GameWebsiteImplCopyWith(
+          _$GameWebsiteImpl value, $Res Function(_$GameWebsiteImpl) then) =
+      __$$GameWebsiteImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int? id, String? url});
 }
 
 /// @nodoc
-class __$$IGDBWebsiteImplCopyWithImpl<$Res>
-    extends _$IGDBWebsiteCopyWithImpl<$Res, _$IGDBWebsiteImpl>
-    implements _$$IGDBWebsiteImplCopyWith<$Res> {
-  __$$IGDBWebsiteImplCopyWithImpl(
-      _$IGDBWebsiteImpl _value, $Res Function(_$IGDBWebsiteImpl) _then)
+class __$$GameWebsiteImplCopyWithImpl<$Res>
+    extends _$GameWebsiteCopyWithImpl<$Res, _$GameWebsiteImpl>
+    implements _$$GameWebsiteImplCopyWith<$Res> {
+  __$$GameWebsiteImplCopyWithImpl(
+      _$GameWebsiteImpl _value, $Res Function(_$GameWebsiteImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1334,7 +1334,7 @@ class __$$IGDBWebsiteImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? url = freezed,
   }) {
-    return _then(_$IGDBWebsiteImpl(
+    return _then(_$GameWebsiteImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1349,11 +1349,11 @@ class __$$IGDBWebsiteImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$IGDBWebsiteImpl extends _IGDBWebsite {
-  const _$IGDBWebsiteImpl({this.id, this.url}) : super._();
+class _$GameWebsiteImpl extends _GameWebsite {
+  const _$GameWebsiteImpl({this.id, this.url}) : super._();
 
-  factory _$IGDBWebsiteImpl.fromJson(Map<String, dynamic> json) =>
-      _$$IGDBWebsiteImplFromJson(json);
+  factory _$GameWebsiteImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GameWebsiteImplFromJson(json);
 
   @override
   final int? id;
@@ -1362,14 +1362,14 @@ class _$IGDBWebsiteImpl extends _IGDBWebsite {
 
   @override
   String toString() {
-    return 'IGDBWebsite(id: $id, url: $url)';
+    return 'GameWebsite(id: $id, url: $url)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IGDBWebsiteImpl &&
+            other is _$GameWebsiteImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.url, url) || other.url == url));
   }
@@ -1381,24 +1381,24 @@ class _$IGDBWebsiteImpl extends _IGDBWebsite {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$IGDBWebsiteImplCopyWith<_$IGDBWebsiteImpl> get copyWith =>
-      __$$IGDBWebsiteImplCopyWithImpl<_$IGDBWebsiteImpl>(this, _$identity);
+  _$$GameWebsiteImplCopyWith<_$GameWebsiteImpl> get copyWith =>
+      __$$GameWebsiteImplCopyWithImpl<_$GameWebsiteImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$IGDBWebsiteImplToJson(
+    return _$$GameWebsiteImplToJson(
       this,
     );
   }
 }
 
-abstract class _IGDBWebsite extends IGDBWebsite {
-  const factory _IGDBWebsite({final int? id, final String? url}) =
-      _$IGDBWebsiteImpl;
-  const _IGDBWebsite._() : super._();
+abstract class _GameWebsite extends GameWebsite {
+  const factory _GameWebsite({final int? id, final String? url}) =
+      _$GameWebsiteImpl;
+  const _GameWebsite._() : super._();
 
-  factory _IGDBWebsite.fromJson(Map<String, dynamic> json) =
-      _$IGDBWebsiteImpl.fromJson;
+  factory _GameWebsite.fromJson(Map<String, dynamic> json) =
+      _$GameWebsiteImpl.fromJson;
 
   @override
   int? get id;
@@ -1406,7 +1406,7 @@ abstract class _IGDBWebsite extends IGDBWebsite {
   String? get url;
   @override
   @JsonKey(ignore: true)
-  _$$IGDBWebsiteImplCopyWith<_$IGDBWebsiteImpl> get copyWith =>
+  _$$GameWebsiteImplCopyWith<_$GameWebsiteImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

@@ -7,7 +7,7 @@ import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/api/utils.dart';
-import 'package:observatory/shared/models/igdb/igdb_game.dart';
+import 'package:observatory/shared/models/game/game.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';

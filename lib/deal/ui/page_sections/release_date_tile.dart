@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:observatory/deal/providers/game_details_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/models/igdb/igdb_game.dart';
+import 'package:observatory/shared/models/game/game.dart';
 
 class ReleaseDateTile extends ConsumerWidget {
   final Deal deal;
