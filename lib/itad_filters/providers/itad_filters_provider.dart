@@ -87,10 +87,14 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
     );
   }
 
-  void reset() {
+  Future<void> reset() async {
+    const ITADFilters filters = ITADFilters();
+
+    await GetIt.I<SettingsRepository>().setITADFilters(filters);
+
     state = const ITADFiltersConfig(
-      cached: ITADFilters(),
-      current: ITADFilters(),
+      cached: filters,
+      current: filters,
     );
   }
 

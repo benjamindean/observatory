@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/search/state/search_state.dart';
@@ -47,11 +48,9 @@ class SearchList extends ConsumerWidget {
         if (searchState.deals != null && searchState.deals?.isEmpty == true) {
           return const SliverFillRemaining(
             hasScrollBody: false,
-            child: Center(
-              child: ErrorMessage(
-                message: 'No results found for your query.',
-                icon: Icons.sentiment_neutral_rounded,
-              ),
+            child: ErrorMessage(
+              message: 'No results found for your query.',
+              icon: FontAwesomeIcons.solidFaceSadTear,
             ),
           );
         }

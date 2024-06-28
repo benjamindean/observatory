@@ -44,14 +44,14 @@ class DealCardCompact extends ConsumerWidget {
           SlidableAction(
             onPressed: (_) {
               if (isInWaitlist) {
-                return addDealToWaitlist(
+                return DealFunctions.addDealToWaitlist(
                   context: context,
                   ref: ref,
                   deal: deal,
                 );
               }
 
-              return removeDealFromWaitlist(
+              return DealFunctions.removeDealFromWaitlist(
                 context: context,
                 ref: ref,
                 deal: deal,

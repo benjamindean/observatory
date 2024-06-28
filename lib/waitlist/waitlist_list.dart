@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/search/providers/search_provider.dart';
@@ -170,7 +171,8 @@ class WaitListList extends ConsumerWidget {
           hasScrollBody: false,
           child: Center(
             child: ErrorMessage(
-              message: 'Failed to fetch waitlist',
+              icon: FontAwesomeIcons.solidFaceDizzy,
+              message: 'Failed to fetch waitlist.',
               helper: TextButton.icon(
                 icon: const Icon(Icons.refresh),
                 label: const Text('Refresh'),
@@ -201,11 +203,9 @@ class WaitListList extends ConsumerWidget {
           if (foundGames.isEmpty) {
             return const SliverFillRemaining(
               hasScrollBody: false,
-              child: Center(
-                child: ErrorMessage(
-                  message: 'No games found',
-                  icon: Icons.sentiment_dissatisfied_rounded,
-                ),
+              child: ErrorMessage(
+                message: 'No games found for your query.',
+                icon: FontAwesomeIcons.solidFaceSadTear,
               ),
             );
           }

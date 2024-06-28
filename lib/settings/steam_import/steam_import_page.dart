@@ -175,7 +175,7 @@ class SteamImportPage extends ConsumerWidget {
                   if ((steamImportState.deals ?? []).isEmpty &&
                       !steamImportState.isLoading) {
                     return ErrorMessage(
-                      message: 'Nothing found',
+                      message: 'No games found in your Steam wishlist.',
                       helper: TextButton(
                         onPressed: () {
                           ref.read(steamImportProvider.notifier).reset();

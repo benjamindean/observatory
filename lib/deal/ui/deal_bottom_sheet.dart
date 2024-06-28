@@ -64,7 +64,7 @@ class DealBottomSheet extends ConsumerWidget {
                       ),
                       onTap: () {
                         if (isInWaitlist) {
-                          return addDealToWaitlist(
+                          return DealFunctions.addDealToWaitlist(
                             context: context,
                             ref: ref,
                             deal: deal,
@@ -72,7 +72,7 @@ class DealBottomSheet extends ConsumerWidget {
                           );
                         }
 
-                        return removeDealFromWaitlist(
+                        return DealFunctions.removeDealFromWaitlist(
                           context: context,
                           ref: ref,
                           deal: deal,
@@ -88,7 +88,7 @@ class DealBottomSheet extends ConsumerWidget {
                       title: const Text('Open in Browser'),
                       onTap: deal.prices?.firstOrNull != null
                           ? () {
-                              openDealLink(deal);
+                              DealFunctions.openDealLink(deal);
                               context.pop();
                             }
                           : null,
@@ -101,7 +101,7 @@ class DealBottomSheet extends ConsumerWidget {
                       title: const Text('Share Link'),
                       onTap: deal.prices?.firstOrNull != null
                           ? () {
-                              shareDeal(deal);
+                              DealFunctions.shareDeal(deal);
 
                               context.pop();
                             }

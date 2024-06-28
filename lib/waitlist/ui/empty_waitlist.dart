@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 
@@ -17,7 +18,7 @@ class EmptyWaitlist extends StatelessWidget {
           children: [
             const ErrorMessage(
               message:
-                  'Your waitlist is empty. You can add games from the Deals or Search tabs.',
+                  'Your waitlist is empty. You can import your wishlist from Steam or add games from the Deals or Search tabs.',
               icon: Icons.heart_broken,
             ),
             Padding(
@@ -40,7 +41,7 @@ class EmptyWaitlist extends StatelessWidget {
                     onPressed: () {
                       context.push('/steam-import');
                     },
-                    icon: const Icon(Icons.download),
+                    icon: const Icon(FontAwesomeIcons.steam),
                     label: const Text('Import from Steam'),
                   ),
                   TextButton.icon(

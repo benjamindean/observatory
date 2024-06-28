@@ -55,7 +55,7 @@ class LinksBottomSheet extends StatelessWidget {
                           final Uri? uri =
                               Uri.tryParse(deal.steamPrice?.url ?? '');
 
-                          if (uri != null) {
+                          if (uri != null && uri.toString().isNotEmpty) {
                             return SearchOnTile(
                               deal: deal,
                               title: 'Open on Steam',

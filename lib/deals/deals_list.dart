@@ -1,6 +1,7 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
@@ -60,8 +61,9 @@ class DealsList extends ConsumerWidget {
           hasScrollBody: false,
           child: Center(
             child: ErrorMessage(
+              icon: FontAwesomeIcons.solidFaceDizzy,
               message:
-                  'Failed to fetch deals. IsThereAnyDeal API might be down at the moment.',
+                  'Failed to fetch deals. IsThereAnyDeal might be down at the moment. Please try again later.',
               helper: TextButton.icon(
                 icon: const Icon(Icons.refresh),
                 label: const Text('Refresh'),
@@ -80,12 +82,15 @@ class DealsList extends ConsumerWidget {
             child: Center(
               child: ErrorMessage(
                 message:
-                    'No deals matching the current filters found in the selected category',
-                icon: Icons.sentiment_dissatisfied,
-                helper: TextButton(
-                  child: const Text('Refresh'),
+                    'No deals matching the current filters found in the selected category.',
+                icon: FontAwesomeIcons.solidFaceSadCry,
+                helper: TextButton.icon(
+                  icon: const Icon(Icons.refresh_rounded),
+                  label: const Text('Refresh'),
                   onPressed: () async {
-                    await dealsNotifier.reset();
+                    await dealsNotifier.reset(
+                      withLoading: true,
+                    );
                   },
                 ),
               ),

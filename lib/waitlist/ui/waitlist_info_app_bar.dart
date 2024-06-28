@@ -15,9 +15,7 @@ class WaitlistInfoAppBar extends ConsumerWidget {
     final SearchState searchState = ref.watch(filterResultsProvider);
 
     if (searchState.isOpen) {
-      return const SliverToBoxAdapter(
-        child: SizedBox.shrink(),
-      );
+      return const SizedBox.shrink();
     }
 
     return ref.watch(asyncWaitListProvider).when(

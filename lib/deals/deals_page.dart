@@ -22,7 +22,7 @@ class DealsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final DealCategory activeTab = ref.watch(
       asyncSettingsProvider.select(
-        (value) => value.value?.dealsTab ?? DealCategory.steam_top_sellers,
+        (value) => value.value?.dealsTab ?? DealCategory.all,
       ),
     );
     final provider = getProvider(activeTab);

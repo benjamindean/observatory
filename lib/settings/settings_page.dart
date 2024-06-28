@@ -49,7 +49,7 @@ class SettingsPage extends ConsumerWidget {
             );
 
             return ErrorMessage(
-              message: 'Failed to load settings',
+              message: 'Failed to load settings.',
               helper: TextButton.icon(
                 icon: const Icon(Icons.refresh),
                 label: const Text('Refresh'),
