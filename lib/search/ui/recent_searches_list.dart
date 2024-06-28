@@ -46,10 +46,11 @@ class RecentSearchesList extends ConsumerWidget {
           sliver: SliverList.builder(
             itemBuilder: (context, index) {
               if (index == recentsList.length) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Center(
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.clear_all),
                       onPressed: () async {
                         showAdaptiveDialog(
                           context: context,
@@ -72,9 +73,9 @@ class RecentSearchesList extends ConsumerWidget {
                           },
                         );
                       },
-                      child: const Text('Clear All'),
+                      label: const Text('Clear All'),
                     ),
-                  ],
+                  ),
                 );
               }
 

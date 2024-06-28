@@ -53,7 +53,7 @@ class ITADFiltersInfoBar extends ConsumerWidget {
             ),
             trailing: IconButton(
               icon: Icon(
-                Icons.highlight_remove_outlined,
+                Icons.cancel,
                 color: context.colors.scheme.onSurfaceVariant,
               ),
               onPressed: filters != const ITADFilters()
@@ -83,27 +83,47 @@ class ITADFiltersInfoBar extends ConsumerWidget {
               TextSpan(
                 children: [
                   const TextSpan(
-                    text: 'Price: ',
+                    text: 'Price:',
+                  ),
+                  WidgetSpan(
+                    child: Visibility(
+                      visible: filters.price != null,
+                      child: const Icon(
+                        Icons.keyboard_arrow_left_rounded,
+                        size: 16,
+                      ),
+                    ),
+                    alignment: PlaceholderAlignment.middle,
                   ),
                   TextSpan(
                     text: filters.price != null
-                        ? '< ${NumberFormat.simpleCurrency(
+                        ? NumberFormat.simpleCurrency(
                             name: currency,
                             decimalDigits: 0,
-                          ).format(filters.price?.max)}'
-                        : 'Any',
+                          ).format(filters.price?.max)
+                        : ' Any',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   DotSeparator.textSpan(context),
                   const TextSpan(
-                    text: 'Discount: ',
+                    text: 'Discount:',
+                  ),
+                  WidgetSpan(
+                    child: Visibility(
+                      visible: filters.cut != null,
+                      child: const Icon(
+                        Icons.keyboard_arrow_right_rounded,
+                        size: 16,
+                      ),
+                    ),
+                    alignment: PlaceholderAlignment.middle,
                   ),
                   TextSpan(
                     text: filters.cut != null
-                        ? '> ${filters.cut?.min.toString()}%'
-                        : 'Any',
+                        ? '${filters.cut?.min.toString()}%'
+                        : ' Any',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),

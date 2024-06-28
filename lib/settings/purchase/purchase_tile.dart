@@ -45,7 +45,7 @@ class PurchaseTile extends ConsumerWidget {
                 spacing: 12.0,
                 children: data.products
                     .map(
-                      (e) => OutlinedButton(
+                      (e) => FilledButton(
                         onPressed: PurchaseStatus.pending == data.status
                             ? null
                             : () {
@@ -59,7 +59,7 @@ class PurchaseTile extends ConsumerWidget {
                             fontWeight: FontWeight.bold,
                             color: PurchaseStatus.pending == data.status
                                 ? context.colors.disabled
-                                : context.colors.scheme.onSurface,
+                                : context.colors.scheme.onPrimary,
                           ),
                         ),
                       ),

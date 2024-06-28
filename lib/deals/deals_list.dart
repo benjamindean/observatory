@@ -113,16 +113,12 @@ class DealsList extends ConsumerWidget {
           padding: const EdgeInsets.all(6.0),
           sliver: SliverFixedExtentList.builder(
             itemExtent: height,
-            itemCount:
-                data.hasReachedMax ? data.deals.length : data.deals.length + 1,
+            itemCount: data.deals.length + 1,
             itemBuilder: (context, index) {
               if (index >= data.deals.length) {
-                if (data.hasReachedMax) {
-                  return const SizedBox.shrink();
-                }
-
                 return LoadMore(
                   onPress: () => dealsNotifier.fetchMore(),
+                  hasReachedMax: data.hasReachedMax,
                 );
               }
 

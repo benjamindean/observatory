@@ -50,6 +50,7 @@ class DealsAppBar extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: OrySmallButton(
+                key: const Key('deals-filter-button'),
                 onPressed: () => showITADFilters(context),
                 icon: Icons.filter_list,
                 textColor: context.colors.scheme.onSecondary,
