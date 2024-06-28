@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
-import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/steam_tags_list.dart';
 
 class TagsListPage extends ConsumerStatefulWidget {
@@ -24,10 +23,10 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
 
   @override
   Widget build(BuildContext context) {
-    final ITADFilters filters = ref.watch(
-      itadFiltersProvider.select((value) => value.cached),
-    );
-    final List<String> tags = filters.tags ?? [];
+    final List<String> tags = ref.watch(
+          itadFiltersProvider.select((value) => value.cached.tags),
+        ) ??
+        [];
 
     return Scaffold(
       appBar: AppBar(
@@ -85,28 +84,27 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
                   padding: const EdgeInsets.all(16.0),
                   child: Wrap(
                     spacing: 8.0,
-                    children: filters.tags?.map(
-                          (tag) {
-                            return Chip(
-                              side: BorderSide.none,
-                              label: Text(
-                                tag,
-                                style: context.textStyles.labelMedium.copyWith(
-                                  color: context.colors.scheme.onPrimary,
-                                ),
-                              ),
-                              deleteIconColor: context.colors.scheme.onPrimary,
-                              visualDensity: VisualDensity.compact,
-                              backgroundColor: context.colors.scheme.primary,
-                              onDeleted: () {
-                                ref
-                                    .watch(itadFiltersProvider.notifier)
-                                    .removeTag(tag);
-                              },
-                            );
+                    children: tags.map(
+                      (tag) {
+                        return Chip(
+                          side: BorderSide.none,
+                          label: Text(
+                            tag,
+                            style: context.textStyles.labelMedium.copyWith(
+                              color: context.colors.scheme.onPrimary,
+                            ),
+                          ),
+                          deleteIconColor: context.colors.scheme.onPrimary,
+                          visualDensity: VisualDensity.compact,
+                          backgroundColor: context.colors.scheme.primary,
+                          onDeleted: () {
+                            ref
+                                .watch(itadFiltersProvider.notifier)
+                                .removeTag(tag);
                           },
-                        ).toList() ??
-                        [],
+                        );
+                      },
+                    ).toList(),
                   ),
                 ),
               ),
