@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/main.dart';
 import 'package:observatory/search/providers/search_provider.dart';
-import 'package:observatory/shared/api/igdb_api.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -31,7 +30,6 @@ void main() async {
 
   GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
   GetIt.I.registerSingleton<API>(API.create(cache));
-  GetIt.I.registerSingleton<IGDBAPI>(IGDBAPI.create(cache));
   GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
 
   await Firebase.initializeApp(

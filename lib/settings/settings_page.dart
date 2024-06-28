@@ -60,7 +60,7 @@ class SettingsPage extends ConsumerWidget {
             );
           },
           data: (data) {
-            final int totalStores = settings.value?.stores.length ?? 0;
+            final int totalStores = settings.valueOrNull?.stores.length ?? 0;
             final int selectedCount =
                 settings.valueOrNull?.selectedStores.length ?? 0;
 
@@ -184,7 +184,7 @@ class SettingsPage extends ConsumerWidget {
                   const WaitlistAlertsSettingsTile(),
                   const ListHeading(title: 'Internal'),
                   SwitchListTile(
-                    value: settings.value?.crashlyticsEnabled ?? false,
+                    value: settings.valueOrNull?.crashlyticsEnabled ?? false,
                     title: const Text('Crashlytics'),
                     subtitle: const Text('Send anonymouse crash reports.'),
                     onChanged: (value) {

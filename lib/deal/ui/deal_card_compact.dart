@@ -31,7 +31,7 @@ class DealCardCompact extends ConsumerWidget {
     );
     final List<String> waitlist = ref.watch(
       asyncWaitListProvider.select(
-        (waitListState) => waitListState.value?.ids ?? [],
+        (waitListState) => waitListState.valueOrNull?.ids ?? [],
       ),
     );
     final bool isInWaitlist = waitlist.contains(deal.id);

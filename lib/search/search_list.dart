@@ -21,7 +21,7 @@ class SearchList extends ConsumerWidget {
     ));
     final DealCardType cardType = ref.watch(
       asyncSettingsProvider.select(
-        (value) => value.value?.dealCardType ?? DealCardType.compact,
+        (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
       ),
     );
     final bool showHeaders = ref.watch(

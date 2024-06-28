@@ -16,7 +16,6 @@ import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
-import 'package:observatory/shared/api/igdb_api.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/ui/theme.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
@@ -33,7 +32,6 @@ Future<void> initSettings() async {
 
   GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
   GetIt.I.registerSingleton<API>(API.create(cache));
-  GetIt.I.registerSingleton<IGDBAPI>(IGDBAPI.create(cache));
   GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
 }
 

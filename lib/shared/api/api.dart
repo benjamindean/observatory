@@ -331,16 +331,11 @@ class API {
 
     final List<String> ids = deals.map((e) => e.id).toList();
     final Map<String, List<Price>?> listOfPrices = await prices(ids: ids);
-    // final Map<String, GameDetails?>? igdbList =
-    //     await GetIt.I<IGDBAPI>().searchSupabaseList(
-    //   ids: ids,
-    // );
 
     return deals.map(
       (deal) {
         return deal.copyWith(
           prices: listOfPrices[deal.id],
-          // igdbGame: igdbList?[deal.id],
         );
       },
     ).toList();

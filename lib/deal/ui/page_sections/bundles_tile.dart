@@ -21,8 +21,9 @@ class BundlesTile extends ConsumerWidget {
     final AsyncValue<Overview?> overviewState = ref.watch(
       overviewProvider(deal.id),
     );
-    final bool isEnabled = overviewState.value?.bundles?.isNotEmpty ?? false;
-    final List<Bundle>? bundles = overviewState.value?.bundles;
+    final bool isEnabled =
+        overviewState.valueOrNull?.bundles?.isNotEmpty ?? false;
+    final List<Bundle>? bundles = overviewState.valueOrNull?.bundles;
 
     return InkWell(
       onTap: isEnabled

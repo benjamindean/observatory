@@ -30,7 +30,7 @@ class DealsFilter extends ConsumerWidget {
             (value) => value.valueOrNull?.dealsTab,
           ),
         ) ??
-        DealCategory.steam_top_sellers;
+        DealCategory.all;
 
     return SafeArea(
       child: SingleChildScrollView(

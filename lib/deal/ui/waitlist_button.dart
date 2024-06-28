@@ -17,7 +17,7 @@ class WaitlistButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final List<String> waitlist = ref.watch(
       asyncWaitListProvider.select(
-        (waitListState) => waitListState.value?.ids ?? [],
+        (waitListState) => waitListState.valueOrNull?.ids ?? [],
       ),
     );
     final bool isInWaitlist = waitlist.contains(deal.id);

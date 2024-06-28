@@ -12,13 +12,13 @@ class DealCardTypeSettingsTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final DealCardType dealCardType = ref.watch(
       asyncSettingsProvider.select(
-        (value) => value.value?.dealCardType ?? DealCardType.expanded,
+        (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
       ),
     );
 
     return ListTile(
       title: const Text('Deal Card'),
-      subtitle: const Text('Full or Compact.'),
+      subtitle: const Text('Expanded or Compact.'),
       trailing: ToggleButtons(
         direction: Axis.horizontal,
         onPressed: (int index) {

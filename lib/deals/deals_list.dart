@@ -28,7 +28,7 @@ class DealsList extends ConsumerWidget {
     final AsyncDealsNotifier dealsNotifier = ref.watch(provider.notifier);
     final bool showHeaders = ref.watch(
       asyncSettingsProvider.select(
-        (value) => value.value?.showHeaders ?? false,
+        (value) => value.valueOrNull?.showHeaders ?? false,
       ),
     );
     final DealCardType cardType = ref.watch(

@@ -19,7 +19,7 @@ class DealsAppBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final DealCategory dealsTab = ref.watch(
       asyncSettingsProvider.select(
-        (value) => value.value?.dealsTab ?? DealCategory.steam_top_sellers,
+        (value) => value.valueOrNull?.dealsTab ?? DealCategory.all,
       ),
     );
 
