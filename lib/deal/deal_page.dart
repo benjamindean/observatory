@@ -1,4 +1,3 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deal/ui/page_sections/bundles_tile.dart';
@@ -29,14 +28,6 @@ class DealPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    FirebaseAnalytics.instance.logScreenView(
-      screenName: 'deal_page',
-      parameters: {
-        'id': deal.id,
-        'title': deal.titleParsed,
-      },
-    );
-
     final Deal dealState = ref.watch(dealProvider(deal));
 
     return ColoredBox(

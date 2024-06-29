@@ -47,12 +47,12 @@ class TagsFilterTile extends ConsumerWidget {
                           label: Text(
                             tag,
                             style: context.textStyles.labelMedium.copyWith(
-                              color: context.colors.scheme.onPrimary,
+                              color: context.colors.scheme.onSecondary,
                             ),
                           ),
-                          deleteIconColor: context.colors.scheme.onPrimary,
+                          deleteIconColor: context.colors.scheme.onSecondary,
                           visualDensity: VisualDensity.compact,
-                          backgroundColor: context.colors.scheme.primary,
+                          backgroundColor: context.colors.scheme.secondary,
                           onDeleted: () {
                             ref
                                 .watch(itadFiltersProvider.notifier)

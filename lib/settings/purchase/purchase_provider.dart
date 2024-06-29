@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -73,14 +72,6 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
           );
 
           await InAppPurchase.instance.completePurchase(purchaseDetails);
-
-          FirebaseAnalytics.instance.logBeginCheckout(
-            items: [
-              AnalyticsEventItem(
-                itemId: purchaseDetails.productID,
-              ),
-            ],
-          );
 
           state = await AsyncValue.guard(
             () async => state.requireValue.copyWith(

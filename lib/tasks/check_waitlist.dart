@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/notifications/waitlist_notification.dart';
@@ -58,10 +57,6 @@ Future<bool> checkWaitlistTask() async {
   if (!isEnabled) {
     return false;
   }
-
-  await FirebaseAnalytics.instance.logEvent(
-    name: 'check_waitlist_notification_sent',
-  );
 
   final List<Deal> deals = await getNewDiscountedDeals();
 
