@@ -59,8 +59,8 @@ class WaitlistSortingPage extends ConsumerWidget {
                 return ListTile(
                   key: ValueKey('waitlist_sorting_${sorting.name}'),
                   contentPadding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
-                  selectedTileColor: context.colors.scheme.secondaryContainer,
-                  selectedColor: context.colors.scheme.onSecondaryContainer,
+                  selectedTileColor: context.colors.scheme.secondary,
+                  selectedColor: context.colors.scheme.onSecondary,
                   selected: isSelected,
                   onTap: () async {
                     ref
@@ -82,7 +82,7 @@ class WaitlistSortingPage extends ConsumerWidget {
                     waitlistSortingStrings[sorting]?['title'] ?? 'Price',
                     style: context.textStyles.titleMedium.copyWith(
                         color: isSelected
-                            ? context.colors.scheme.onSecondaryContainer
+                            ? context.colors.scheme.onSecondary
                             : context.colors.scheme.onSurface),
                   ),
                   trailing: Builder(
@@ -95,10 +95,10 @@ class WaitlistSortingPage extends ConsumerWidget {
                                     ?[waitlistSortingDirection] ??
                                 'Unknown',
                             style: context.textStyles.labelMedium.copyWith(
-                              color: context.colors.scheme.onSecondary,
+                              color: context.colors.scheme.onTertiary,
                             ),
                           ),
-                          backgroundColor: context.colors.scheme.secondary,
+                          backgroundColor: context.colors.scheme.tertiary,
                         );
                       }
 

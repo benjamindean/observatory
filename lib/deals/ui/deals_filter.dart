@@ -52,8 +52,8 @@ class DealsFilter extends ConsumerWidget {
 
                 return ListTile(
                   key: Key('deal-category-${category.name.toString()}'),
-                  selectedTileColor: context.colors.scheme.secondaryContainer,
-                  selectedColor: context.colors.scheme.onSecondaryContainer,
+                  selectedTileColor: context.colors.scheme.secondary,
+                  selectedColor: context.colors.scheme.onSecondary,
                   selected: isSelected,
                   onTap: () async {
                     return ref
@@ -67,7 +67,7 @@ class DealsFilter extends ConsumerWidget {
                     dealCategoryLabels[category]?['title'] ?? 'Unknown',
                     style: context.textStyles.titleMedium.copyWith(
                       color: isSelected
-                          ? context.colors.scheme.onSecondaryContainer
+                          ? context.colors.scheme.onSecondary
                           : context.colors.scheme.onSurface,
                     ),
                   ),
@@ -75,7 +75,7 @@ class DealsFilter extends ConsumerWidget {
                     dealCategoryLabels[category]?['subtitle'] ?? 'Unknown',
                     style: context.textStyles.bodySmall.copyWith(
                       color: isSelected
-                          ? context.colors.scheme.onSecondaryContainer
+                          ? context.colors.scheme.onSecondary
                           : context.colors.scheme.onSurface,
                     ),
                   ),
