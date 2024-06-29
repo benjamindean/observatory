@@ -42,13 +42,13 @@ class ThemeListTile extends ConsumerWidget {
             height: 70,
             child: ListView.builder(
               itemExtent: 74,
-              key: const ValueKey('color_scheme_list'),
+              key: const Key('color-scheme-list'),
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemCount: schemes.length,
               itemBuilder: (context, index) {
                 return SchemePreview(
-                  key: ValueKey('color_scheme_${schemes[index].name}'),
+                  key: ValueKey('color-scheme-${schemes[index].name}'),
                   scheme: schemes[index],
                 );
               },

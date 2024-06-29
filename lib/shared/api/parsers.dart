@@ -72,10 +72,10 @@ class Parsers {
   static List<SteamFeaturedItem> steamStoreFront(contents) {
     final response = json.decode(contents.toString());
 
-    final List<dynamic> specials = response['specials']['items'];
-    final List<dynamic> topSellers = response['top_sellers']['items'];
-    final List<dynamic> comingSoon = response['coming_soon']['items'];
-    final List<dynamic> newReleases = response['new_releases']['items'];
+    final List<dynamic> specials = response['specials']['items'] ?? [];
+    final List<dynamic> topSellers = response['top_sellers']['items'] ?? [];
+    final List<dynamic> comingSoon = response['coming_soon']['items'] ?? [];
+    final List<dynamic> newReleases = response['new_releases']['items'] ?? [];
 
     return [...specials, ...topSellers, ...comingSoon, ...newReleases]
         .map((result) => SteamFeaturedItem.fromJson(result))

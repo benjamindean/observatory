@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/deals/providers/deals_provider.dart';
+import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/main.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
@@ -15,9 +15,9 @@ import 'package:observatory/shared/api/api.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import './mocks/deals_mocks.dart';
 import './mocks/waitlist_mocks.dart';
 import './mocks/search_mocks.dart';
+import './mocks/itad_filters_mocks.dart';
 
 void main() async {
   WidgetsApp.debugAllowBannerOverride = false;
@@ -47,7 +47,7 @@ void main() async {
     ProviderScope(
       overrides: [
         asyncWaitListProvider.overrideWith(AsyncWaitListNotifierMock.new),
-        asyncDealsProvider.overrideWith(AsyncDealsNotifierMock.new),
+        itadFiltersProvider.overrideWith(ITADFiltersNotifierMock.new),
         searchProvider.overrideWithProvider(
           (type) {
             if (type == SearchType.search) {

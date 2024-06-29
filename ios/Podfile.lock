@@ -18,19 +18,19 @@ PODS:
   - Firebase/Crashlytics (10.27.0):
     - Firebase/CoreOnly
     - FirebaseCrashlytics (~> 10.27.0)
-  - firebase_analytics (11.0.0):
+  - firebase_analytics (11.1.0):
     - Firebase/Analytics (= 10.27.0)
     - firebase_core
     - Flutter
-  - firebase_app_check (0.3.0):
+  - firebase_app_check (0.3.0-2):
     - Firebase/CoreOnly (~> 10.27.0)
     - firebase_core
-    - FirebaseAppCheck (~> 10.27.0-beta)
+    - FirebaseAppCheck (~> 10.27.0)
     - Flutter
-  - firebase_core (3.0.0):
+  - firebase_core (3.1.1):
     - Firebase/CoreOnly (= 10.27.0)
     - Flutter
-  - firebase_crashlytics (4.0.0):
+  - firebase_crashlytics (4.0.2):
     - Firebase/Crashlytics (= 10.27.0)
     - firebase_core
     - Flutter
@@ -261,10 +261,10 @@ SPEC CHECKSUMS:
   AppCheckCore: db04d539b37794558391bc56bc65e2440b01a195
   awesome_notifications: 66d28ab7174ca2823b04d275cb043e0a4a3eb9cf
   Firebase: 26b040b20866a55f55eb3611b9fcf3ae64816b86
-  firebase_analytics: 921262f343360193f8376eb89c01fb5f15571ca2
-  firebase_app_check: 438163f617304b66f7c077e54e379332ddc62041
-  firebase_core: 5926464bbb028fef87d2443369b73ada2a8a3608
-  firebase_crashlytics: fd7d916778823b47ca742a7cbd552c9520da1f1c
+  firebase_analytics: cc6e3ca8f159facf99fb1ceb2d81bda9cc811556
+  firebase_app_check: 231985654de5520d9b36f09571457a87f081cc60
+  firebase_core: f8d0424c45e0f1e596811085fc12c638d628457c
+  firebase_crashlytics: 39ca2155bac4fa2eec0aec9f0eb5e938a08bca23
   FirebaseAnalytics: f9211b719db260cc91aebee8bb539cb367d0dfd1
   FirebaseAppCheck: 2395c0d724d32911bba468f1ffde26d836a8d3ec
   FirebaseAppCheckInterop: 0dd062c9926a76332ca5711dbed6f1a9ac540b54

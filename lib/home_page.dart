@@ -62,19 +62,19 @@ class HomePage extends ConsumerWidget {
         selectedIndex: child.currentIndex,
         destinations: const <Widget>[
           NavigationDestination(
-            key: Key('navigation_deals'),
+            key: Key('navigation-deals'),
             selectedIcon: Icon(Icons.percent),
             icon: Icon(Icons.percent_rounded),
             label: 'Deals',
           ),
           NavigationDestination(
-            key: Key('navigation_search'),
+            key: Key('navigation-search'),
             selectedIcon: Icon(Icons.search_rounded),
             icon: Icon(Icons.search),
             label: 'Search',
           ),
           NavigationDestination(
-            key: Key('navigation_waitlist'),
+            key: Key('navigation-waitlist'),
             selectedIcon: Icon(Icons.favorite_rounded),
             icon: DiscountedBadge(),
             label: 'Waitlist',
