@@ -118,7 +118,11 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
               },
               onChanged: (value) => setState(() {
                 filteredTags = steamTags
-                    .where((tag) => tag.toLowerCase().contains(value))
+                    .where(
+                      (tag) => tag.toLowerCase().contains(
+                            value.toLowerCase(),
+                          ),
+                    )
                     .toList();
               }),
               onSubmitted: (_) {
