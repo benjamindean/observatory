@@ -26,6 +26,12 @@ extension BuildContextEntension<T> on BuildContext {
         APPBAR_ELEVATION,
       );
 
+  Color get midElevatedCanvasColor => ElevationOverlay.applySurfaceTint(
+        colors.scheme.surfaceContainer,
+        colors.scheme.surfaceTint,
+        8,
+      );
+
   Color get highElevatedCanvasColor => ElevationOverlay.applySurfaceTint(
         colors.scheme.surfaceContainer,
         colors.scheme.surfaceTint,
