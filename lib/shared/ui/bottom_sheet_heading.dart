@@ -14,7 +14,7 @@ class BottomSheetHeading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.only(left: 16.0),
+      contentPadding: const EdgeInsets.only(left: 16.0, right: 8.0),
       key: Key('bottom-sheet-heading-$text'),
       visualDensity: VisualDensity.compact,
       tileColor: context.colors.scheme.surfaceContainer,
