@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
+import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/steam_tags_list.dart';
 
 class TagsListPage extends ConsumerStatefulWidget {
@@ -74,7 +75,7 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: context.colors.scheme.surface,
+                  color: context.elevatedBottomAppBarColor,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
