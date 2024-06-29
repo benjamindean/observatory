@@ -22,7 +22,7 @@ class BottomSheetHeading extends StatelessWidget {
       title: Text(
         text,
         style: context.textStyles.labelLarge.copyWith(
-          color: context.colors.scheme.onSurfaceVariant,
+          color: context.colors.scheme.onSurface,
         ),
       ),
       trailing: trailing,
