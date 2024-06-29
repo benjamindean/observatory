@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/deal/deal_functions.dart';
+import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
@@ -27,7 +28,7 @@ class DealBottomSheet extends ConsumerWidget {
       color: context.colors.scheme.surface,
       child: SafeArea(
         child: ColoredBox(
-          color: context.colors.scheme.surfaceContainer,
+          color: context.highElevatedCanvasColor,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
