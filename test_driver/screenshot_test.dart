@@ -29,6 +29,7 @@ void main() async {
     await driver.waitUntilNoTransientCallbacks(
       timeout: const Duration(seconds: 10),
     );
+    await Future.delayed(const Duration(seconds: 2));
     await screenshot.capture(identifier);
   }
 
@@ -55,6 +56,13 @@ void main() async {
     await driver.tap(find.pageBack());
   }
 
+  closeBottomSheet() async {
+    await driver.tap(find.byValueKey('close-bottom-sheet-button'));
+    await driver.waitUntilNoTransientCallbacks(
+      timeout: const Duration(seconds: 10),
+    );
+  }
+
   test('Deals Page', () async {
     await toggleTheme('dark');
 
@@ -67,7 +75,7 @@ void main() async {
 
     await takeScreenshot('deals_page_filters');
 
-    await driver.tap(find.byType('ModalBarrier'));
+    await closeBottomSheet();
   });
 
   test('Waitlist Page', () async {
@@ -79,7 +87,7 @@ void main() async {
 
     await takeScreenshot('waitlist_page_filters');
 
-    await driver.tap(find.byType('ModalBarrier'));
+    await closeBottomSheet();
   });
 
   test('Search Page', () async {
@@ -127,6 +135,9 @@ void main() async {
     for (String scheme in testColorSchemes) {
       await toggleColorScheme(scheme);
       await driver.waitFor(find.byValueKey('waitlist-scroll-view'));
+      await driver.waitUntilNoTransientCallbacks(
+        timeout: const Duration(seconds: 10),
+      );
 
       await takeScreenshot('waitlist_page_$scheme');
     }

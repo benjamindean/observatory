@@ -43,6 +43,8 @@ void main() async {
     anonKey: GetIt.I<Secret>().supabaseAnonKey,
   );
 
+  await GetIt.I<SettingsRepository>().setITADFilters(filtersMock);
+
   runApp(
     ProviderScope(
       overrides: [

@@ -7,6 +7,17 @@ import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/shop.dart';
 
+const ITADFilters filtersMock = ITADFilters(
+  price: MinMax(
+    min: 0,
+    max: 10,
+  ),
+  cut: null,
+  bundled: false,
+  mature: false,
+  tags: ['RPG', 'Action RPG'],
+);
+
 final List<Deal> waitlist = [
   const Deal(
     id: '018d937f-505a-7386-b1c4-42986a89ec79',
@@ -252,19 +263,6 @@ class ITADFiltersNotifierMock extends AutoDisposeNotifier<ITADFiltersConfig>
     implements ITADFiltersNotifier {
   @override
   ITADFiltersConfig build() {
-    const ITADFilters filtersMock = ITADFilters(
-      price: MinMax(
-        min: 0,
-        max: 30,
-      ),
-      cut: MinMax(
-        min: 0,
-        max: 100,
-      ),
-      bundled: false,
-      tags: ['RPG', 'Dark'],
-    );
-
     return const ITADFiltersConfig(
       cached: filtersMock,
       current: filtersMock,
