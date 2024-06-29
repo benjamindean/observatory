@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
+import 'package:observatory/shared/ui/close_bottom_sheet_button.dart';
 import 'package:observatory/waitlist/ui/steam_import_list_tile.dart';
 import 'package:observatory/waitlist/ui/waitlist_sorting_strings.dart';
 
@@ -43,7 +44,10 @@ class WaitlistSortingPage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const BottomSheetHeading(text: 'Sort By'),
+            const BottomSheetHeading(
+              text: 'Sort By',
+              trailing: CloseBottomSheetButton(),
+            ),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

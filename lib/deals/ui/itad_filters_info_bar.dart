@@ -88,9 +88,10 @@ class ITADFiltersInfoBar extends ConsumerWidget {
                   WidgetSpan(
                     child: Visibility(
                       visible: filters.price != null,
-                      child: const Icon(
+                      child: Icon(
                         Icons.keyboard_arrow_left_rounded,
                         size: 16,
+                        color: context.colors.scheme.onSurfaceVariant,
                       ),
                     ),
                     alignment: PlaceholderAlignment.middle,
@@ -113,9 +114,10 @@ class ITADFiltersInfoBar extends ConsumerWidget {
                   WidgetSpan(
                     child: Visibility(
                       visible: filters.cut != null,
-                      child: const Icon(
+                      child: Icon(
                         Icons.keyboard_arrow_right_rounded,
                         size: 16,
+                        color: context.colors.scheme.onSurfaceVariant,
                       ),
                     ),
                     alignment: PlaceholderAlignment.middle,

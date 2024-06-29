@@ -6,6 +6,7 @@ import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
+import 'package:observatory/shared/ui/close_bottom_sheet_button.dart';
 import 'package:observatory/shared/ui/ory_small_button.dart';
 
 void showDealsFilter(BuildContext context) {
@@ -37,7 +38,10 @@ class DealsFilter extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const BottomSheetHeading(text: 'Deals Type'),
+            const BottomSheetHeading(
+              text: 'Deals Type',
+              trailing: CloseBottomSheetButton(),
+            ),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

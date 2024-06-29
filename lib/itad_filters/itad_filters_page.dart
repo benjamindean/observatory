@@ -13,6 +13,7 @@ import 'package:observatory/itad_filters/ui/tags_filter_tile.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
+import 'package:observatory/shared/ui/close_bottom_sheet_button.dart';
 import 'package:observatory/shared/ui/ory_small_button.dart';
 
 void showITADFilters(BuildContext context) {
@@ -21,6 +22,7 @@ void showITADFilters(BuildContext context) {
     useSafeArea: true,
     isScrollControlled: true,
     context: context,
+    barrierLabel: 'Close Filters Sheet',
     builder: (context) {
       return const ITADFiltersPage();
     },
@@ -83,6 +85,7 @@ class ITADFiltersPage extends ConsumerWidget {
                     icon: Icons.check,
                     label: 'Apply',
                   ),
+                  const CloseBottomSheetButton(),
                 ],
               ),
             ),
