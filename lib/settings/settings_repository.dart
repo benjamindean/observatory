@@ -82,7 +82,7 @@ class SettingsRepository {
   final String PREF_IGDB_ACCESS_TOKEN = 'observatory_igdb_access_token';
   final String PREF_ITAD_FILTERS = 'observatory_itad_filters';
 
-  final DealCategory defaultCategory = DealCategory.steam_top_sellers;
+  final DealCategory defaultCategory = DealCategory.all;
   final WaitlistSorting defaultWaitlistSorting = WaitlistSorting.discount_date;
   final DealCardType defaultDealCardType = DealCardType.compact;
   final WaitlistSortingDirection defaultWaitlistSortingDirection =
