@@ -18,7 +18,7 @@ export default function HeroBlock({
 }) {
   return (
     <div
-      className={classNames(["hero", "min-lg-screen"], {
+      className={classNames("hero", {
         [`${backgroundTint}`]: backgroundTint,
         "bg-base": !backgroundTint,
       })}
@@ -39,8 +39,9 @@ export default function HeroBlock({
                 })}
               >
                 <img
-                  className="rounded-lg shadow-2xl h-[400px] md:h-[600px]"
+                  className="rounded-3xl shadow-2xl h-[400px] md:h-[600px]"
                   src={imageUrl}
+                  alt={title}
                 />
               </div>
             ))}
@@ -50,7 +51,7 @@ export default function HeroBlock({
         <div className="px-8 py-8">
           <h1 className="text-5xl font-bold">{title}</h1>
           <p className="py-6">{subtitle}</p>
-          {bottom && <p className="py-6">{bottom}</p>}
+          {bottom}
         </div>
       </div>
     </div>

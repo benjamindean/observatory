@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 export default function App() {
   return (
-    <div className="justify-center">
+    <div className="justify-center font-display">
       <NavBar />
       <Outlet />
       <footer className="footer footer-center bg-base-300 text-base-content p-4">

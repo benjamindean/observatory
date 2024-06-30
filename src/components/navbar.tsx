@@ -8,7 +8,11 @@ function MenuItems() {
   return (
     <>
       <li>
-        <a href="https://github.com/benjamindean/observatory" target="_blank">
+        <a
+          href="https://github.com/benjamindean/observatory"
+          target="_blank"
+          rel="noreferrer"
+        >
           GitHub
         </a>
       </li>
@@ -54,7 +58,7 @@ export default function NavBar() {
         <a className="btn btn-ghost text-xl" href="/observatory">
           <div className="avatar pr-1">
             <div className="w-10 h-10 rounded-full">
-              <img src={logo} />
+              <img src={logo} alt="App Icon" />
             </div>
           </div>
           Observatory

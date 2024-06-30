@@ -28,14 +28,19 @@ export default function Main() {
         reversed
         backgroundTint="bg-red-200"
         bottom={
-          <>
+          <div className="full-w">
             <a
               href="https://apps.apple.com/app/observatory-for-itad/id6479194330"
               target="_blank"
+              rel="noreferrer"
             >
-              <img src={iosButton} className="h-40" />
+              <img
+                src={iosButton}
+                className="object-cover h-[60px] w-[160px]"
+                alt="AppStore Button"
+              />
             </a>
-          </>
+          </div>
         }
       />
 
@@ -64,9 +69,9 @@ export default function Main() {
         subtitle={[
           <p>
             <strong>No account</strong>. <strong>No ads.</strong>{" "}
-            <strong>No tracking</strong>. Just the best deals from the most
-            popular resellers like Fanatical, GreenManGaming, IndieGala Store,
-            and many more!
+            <strong>No tracking</strong>. Just the best deals from popular
+            resellers like Fanatical, GreenManGaming, IndieGala Store, and many
+            more!
           </p>,
         ]}
         imageUrls={[
@@ -77,7 +82,7 @@ export default function Main() {
       />
 
       <HeroBlock
-        title="Get detailed information and compare prices"
+        title="Get Detailed Information and Compare Prices"
         subtitle={[
           <p>
             Easily access comprehensive game details and compare prices from
@@ -89,18 +94,18 @@ export default function Main() {
           "https://raw.githubusercontent.com/benjamindean/observatory/dev/screenshots/ios/iPhone%2014%20Pro%20Max_deal_page_top.png",
         ]}
         reversed
-        backgroundTint="bg-emerald-300	"
+        backgroundTint="bg-emerald-300"
       />
 
       <HeroBlock
-        title="Track game prices with the Waitlist"
+        title="Track Game Prices with the Waitlist"
         subtitle={[
           <p>
             Add your favorite games to the waitlist and{" "}
             <strong>receive notifications</strong> when a price drop happens.
           </p>,
           <br></br>,
-          <p>You can also import your Wishlist from Steam.</p>,
+          <p>You can also import your wishlist from Steam.</p>,
         ]}
         imageUrls={[
           "https://raw.githubusercontent.com/benjamindean/observatory/main/screenshots/ios/iPhone%2014%20Pro%20Max_waitlist_page_filters.png",
@@ -137,6 +142,17 @@ export default function Main() {
           <br></br>
           <strong>A:</strong> No, all the stores within the app are legitimate
           key resellers, so there should be no "grey" keys whatsoever.
+        </p>
+        <p>
+          <strong>Q:</strong> I enabled notifications, but I'm not receiving
+          them. What's wrong?
+          <br></br>
+          <strong>A:</strong> Observatory doesn't use push notifications; it
+          utilizes local notifications. For notifications to function, the app
+          needs to be in a suspended state. If it's terminated (removed from
+          your recent app list), background operations cease. If you want to
+          manually check for recently discounted games, select the Discount Date
+          filter on the Waitlist page.
         </p>
       </article>
 
