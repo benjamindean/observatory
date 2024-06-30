@@ -37,6 +37,7 @@ class PullToRefresh extends StatelessWidget {
         safeArea: false,
         builder: (context, state) {
           return Container(
+            padding: const EdgeInsets.only(top: 8.0),
             color: context.colors.scaffoldBackground,
             height: state.offset,
             child: AnimatedSwitcher(
@@ -71,14 +72,12 @@ class PullToRefresh extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Icon(
-                                Icons.arrow_downward_rounded,
-                                size: context.textStyles.titleLarge.fontSize,
-                                color: context.colors.scheme.primary,
-                              ),
+                            Icon(
+                              Icons.arrow_downward_rounded,
+                              size: context.textStyles.titleLarge.fontSize,
+                              color: context.colors.scheme.primary,
                             ),
+                            const SizedBox(width: 8.0),
                             Text(
                               'Pull to refresh',
                               style: context.textStyles.labelLarge.copyWith(

@@ -1,14 +1,14 @@
-import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
-import 'package:observatory/search/search_provider.dart';
-import 'package:observatory/shared/ui/constants.dart';
+import 'package:observatory/search/providers/search_provider.dart';
+import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
+import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
-import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class RecentSearchesList extends ConsumerWidget {
   const RecentSearchesList({
@@ -46,10 +46,11 @@ class RecentSearchesList extends ConsumerWidget {
           sliver: SliverList.builder(
             itemBuilder: (context, index) {
               if (index == recentsList.length) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Center(
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.clear_all),
                       onPressed: () async {
                         showAdaptiveDialog(
                           context: context,
@@ -72,15 +73,13 @@ class RecentSearchesList extends ConsumerWidget {
                           },
                         );
                       },
-                      child: const Text('Clear All'),
+                      label: const Text('Clear All'),
                     ),
-                  ],
+                  ),
                 );
               }
 
-              return Card(
-                surfaceTintColor: context.colors.scheme.surfaceTint,
-                elevation: CARD_ELEVATION,
+              return ObservatoryCard(
                 child: InkWell(
                   onTap: () async {
                     await ref
@@ -90,7 +89,7 @@ class RecentSearchesList extends ConsumerWidget {
                   child: ListTile(
                     contentPadding: const EdgeInsets.fromLTRB(16.0, 0, 0, 0),
                     trailing: IconButton(
-                      icon: const Icon(Icons.remove_circle_rounded),
+                      icon: const Icon(Icons.cancel),
                       onPressed: () async {
                         await ref
                             .read(asynRecentsProvider.notifier)
@@ -122,20 +121,14 @@ class RecentSearchesList extends ConsumerWidget {
 
         return const SliverFillRemaining(
           hasScrollBody: false,
-          child: Center(
-            child: ErrorMessage(
-              message: 'Failed to load recents',
-            ),
+          child: ErrorMessage(
+            icon: FontAwesomeIcons.solidFaceDizzy,
+            message: 'Failed to load recents.',
           ),
         );
       },
       loading: () {
-        return const SliverFillRemaining(
-          hasScrollBody: false,
-          child: Center(
-            child: ObservatoryProgressIndicator(),
-          ),
-        );
+        return const OryFullScreenSpinner();
       },
     );
   }

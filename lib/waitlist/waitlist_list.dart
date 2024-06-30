@@ -1,22 +1,23 @@
-import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:collection/collection.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
-import 'package:observatory/search/search_provider.dart';
-import 'package:observatory/search/search_state.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/search/providers/search_provider.dart';
+import 'package:observatory/search/state/search_state.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
 import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/ui/constants.dart';
+import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
-import 'package:observatory/shared/widgets/progress_indicator.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
-import 'package:observatory/waitlist/waitlist_state.dart';
+import 'package:observatory/waitlist/ui/empty_waitlist.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
+import 'package:observatory/waitlist/state/waitlist_state.dart';
 
 class WaitListList extends ConsumerWidget {
   const WaitListList({super.key});
@@ -117,50 +118,42 @@ class WaitListList extends ConsumerWidget {
     final SearchState searchState = ref.watch(filterResultsProvider);
     final AsyncValue<WaitListState> waitlist = ref.watch(asyncWaitListProvider);
     final WaitlistSortingDirection sortingDirection = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.waitlistSortingDirection,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.waitlistSortingDirection,
+          ),
+        ) ??
+        WaitlistSortingDirection.asc;
     final WaitlistSorting sorting = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.waitlistSorting,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.waitlistSorting,
+          ),
+        ) ??
+        WaitlistSorting.date_added;
     final SteamImportState steamImportState = ref.watch(
       steamImportProvider,
     );
+    final bool showHeaders = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.showHeaders ?? false,
+      ),
+    );
+    final DealCardType cardType = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
+      ),
+    );
+    final double? screenWidth = cardType == DealCardType.compact
+        ? null
+        : MediaQuery.of(context).size.width;
+    final double height = cardHeight(showHeaders, cardType, screenWidth);
 
     if (steamImportState.isImporting || steamImportState.isLoading) {
-      return SliverFillRemaining(
-        hasScrollBody: false,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const ObservatoryProgressIndicator(),
-              Padding(
-                padding: const EdgeInsets.only(top: 32.0),
-                child: Text(
-                  'Importing Steam wishlist...',
-                  style: context.textStyles.titleMedium.copyWith(
-                    color: context.colors.scheme.onSurfaceVariant,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
+      return const OryFullScreenSpinner();
     }
 
     return waitlist.when(
       loading: () {
-        return const SliverFillRemaining(
-          hasScrollBody: false,
-          child: Center(
-            child: ObservatoryProgressIndicator(),
-          ),
-        );
+        return const OryFullScreenSpinner();
       },
       error: (error, stackTrace) {
         Logger().e(
@@ -178,11 +171,15 @@ class WaitListList extends ConsumerWidget {
           hasScrollBody: false,
           child: Center(
             child: ErrorMessage(
-              message: 'Failed to fetch waitlist',
-              helper: TextButton(
-                child: const Text('Refresh'),
+              icon: FontAwesomeIcons.solidFaceDizzy,
+              message: 'Failed to fetch waitlist.',
+              helper: TextButton.icon(
+                icon: const Icon(Icons.refresh),
+                label: const Text('Refresh'),
                 onPressed: () async {
-                  return ref.watch(asyncWaitListProvider.notifier).reset();
+                  return ref
+                      .watch(asyncWaitListProvider.notifier)
+                      .reset(withLoading: true);
                 },
               ),
             ),
@@ -191,54 +188,7 @@ class WaitListList extends ConsumerWidget {
       },
       data: (data) {
         if (data.deals.isEmpty) {
-          return SliverFillRemaining(
-            hasScrollBody: false,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const ErrorMessage(
-                    message:
-                        'Your waitlist is empty. You can add games from the Deals or Search tabs.',
-                    icon: Icons.heart_broken,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Wrap(
-                      spacing: 1.0,
-                      runSpacing: 1.0,
-                      alignment: WrapAlignment.center,
-                      runAlignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () {
-                            context.go('/deals');
-                          },
-                          icon: const Icon(Icons.percent_rounded),
-                          label: const Text('Deals'),
-                        ),
-                        TextButton.icon(
-                          onPressed: () {
-                            context.push('/steam-import');
-                          },
-                          icon: const Icon(Icons.download),
-                          label: const Text('Import from Steam'),
-                        ),
-                        TextButton.icon(
-                          onPressed: () {
-                            context.go('/search');
-                          },
-                          icon: const Icon(Icons.search),
-                          label: const Text('Search'),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
+          return const EmptyWaitlist();
         }
 
         if (searchState.isOpen && searchState.query != null) {
@@ -253,21 +203,21 @@ class WaitListList extends ConsumerWidget {
           if (foundGames.isEmpty) {
             return const SliverFillRemaining(
               hasScrollBody: false,
-              child: Center(
-                child: ErrorMessage(
-                  message: 'No games found',
-                  icon: Icons.sentiment_dissatisfied_rounded,
-                ),
+              child: ErrorMessage(
+                message: 'No games found for your query.',
+                icon: FontAwesomeIcons.solidFaceSadTear,
               ),
             );
           }
 
           return SliverPadding(
             padding: const EdgeInsets.all(6.0),
-            sliver: SliverList.builder(
+            sliver: SliverFixedExtentList.builder(
+              itemExtent: height,
               itemBuilder: (context, index) {
                 return DealCard(
                   deal: foundGames[index],
+                  cardType: cardType,
                 );
               },
               itemCount: foundGames.length,
@@ -283,10 +233,12 @@ class WaitListList extends ConsumerWidget {
 
         return SliverPadding(
           padding: const EdgeInsets.all(6.0),
-          sliver: SliverList.builder(
+          sliver: SliverFixedExtentList.builder(
+            itemExtent: height,
             itemBuilder: (context, index) {
               return DealCard(
                 deal: sortedWaitlist[index],
+                cardType: cardType,
               );
             },
             itemCount: sortedWaitlist.length,

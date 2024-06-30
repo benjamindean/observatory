@@ -36,11 +36,13 @@ class PriceDetails with _$PriceDetails {
       return 'FREE';
     }
 
-    final NumberFormat formatCurrency = NumberFormat.simpleCurrency(
-      name: currency,
-    );
+    if (currency == 'Unknown') {
+      return amount.toString();
+    }
 
-    return formatCurrency.format(amount);
+    return NumberFormat.simpleCurrency(
+      name: currency,
+    ).format(amount);
   }
 }
 

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:observatory/shared/models/chart_entry.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/models/game/game.dart';
 import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';
@@ -22,25 +23,26 @@ class Parsers {
   }
 
   static Map<String, List<Price>> prices(contents) {
-    final Map<String, List<Price>> mapOfPrices = {};
-    final List<dynamic> rawList = json.decode(contents.toString());
+    final List<dynamic> rawList = json
+        .decode(contents.toString())
+        .where(
+          (prices) =>
+              prices != null &&
+              prices['deals'] != null &&
+              prices['deals'].length > 0,
+        )
+        .toList();
 
-    for (final deal in rawList) {
-      if (deal['deals'] != null && deal['deals'].length > 0) {
-        deal['deals'].forEach((price) {
-          mapOfPrices.putIfAbsent(deal['id'], () => []);
-          mapOfPrices[deal['id']]?.add(
-            Price.fromJson(price).copyWith(
-              timestampMs: DateTime.tryParse(
-                price['timestamp'],
-              )?.millisecondsSinceEpoch,
-            ),
+    return {
+      for (final deal in rawList)
+        deal['id']: deal['deals'].map<Price>((price) {
+          return Price.fromJson(price).copyWith(
+            timestampMs: DateTime.tryParse(
+              price['timestamp'],
+            )?.millisecondsSinceEpoch,
           );
-        });
-      }
-    }
-
-    return mapOfPrices;
+        }).toList(),
+    };
   }
 
   static List<Store> stores(contents) {
@@ -70,10 +72,10 @@ class Parsers {
   static List<SteamFeaturedItem> steamStoreFront(contents) {
     final response = json.decode(contents.toString());
 
-    final List<dynamic> specials = response['specials']['items'];
-    final List<dynamic> topSellers = response['top_sellers']['items'];
-    final List<dynamic> comingSoon = response['coming_soon']['items'];
-    final List<dynamic> newReleases = response['new_releases']['items'];
+    final List<dynamic> specials = response['specials']['items'] ?? [];
+    final List<dynamic> topSellers = response['top_sellers']['items'] ?? [];
+    final List<dynamic> comingSoon = response['coming_soon']['items'] ?? [];
+    final List<dynamic> newReleases = response['new_releases']['items'] ?? [];
 
     return [...specials, ...topSellers, ...comingSoon, ...newReleases]
         .map((result) => SteamFeaturedItem.fromJson(result))
@@ -92,6 +94,21 @@ class Parsers {
     return [...specials, ...featuredWin, ...featuredMac, ...featuredLinux]
         .map((result) => SteamFeaturedItem.fromJson(result))
         .toSet()
+        .toList();
+  }
+
+  static List<GameDetails>? igdbSearchResult(contents) {
+    if (contents == null || contents.isEmpty) {
+      return null;
+    }
+
+    return List.of(contents)
+        .map(
+          (result) => result['game'] != null
+              ? GameDetails.fromJson(result['game'])
+              : const GameDetails(id: -1),
+        )
+        .where((element) => element.id != -1)
         .toList();
   }
 }

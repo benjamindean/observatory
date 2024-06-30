@@ -18,19 +18,16 @@ class PriceListView extends ConsumerWidget {
 
     if (allPrices.isEmpty) {
       return SliverPadding(
-        padding: const EdgeInsets.only(bottom: 16.0),
-        sliver: SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              ListTile(
-                title: Text(
-                  'No prices are available for this product at the selected stores.',
-                  style: TextStyle(
-                    color: context.colors.disabled,
-                  ),
-                ),
+        padding: const EdgeInsets.only(bottom: 8.0),
+        sliver: SliverToBoxAdapter(
+          key: const Key('no-prices'),
+          child: ListTile(
+            title: Text(
+              'No prices are available for this product at the selected stores.',
+              style: TextStyle(
+                color: context.colors.disabled,
               ),
-            ],
+            ),
           ),
         ),
       );
@@ -38,15 +35,13 @@ class PriceListView extends ConsumerWidget {
 
     return SliverPadding(
       padding: const EdgeInsets.all(6.0),
-      sliver: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            return PriceCard(
-              price: allPrices[index],
-            );
-          },
-          childCount: allPrices.length,
-        ),
+      sliver: SliverList.builder(
+        itemBuilder: (context, index) {
+          return PriceCard(
+            price: allPrices[index],
+          );
+        },
+        itemCount: allPrices.length,
       ),
     );
   }

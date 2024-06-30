@@ -1,8 +1,8 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
+import 'package:observatory/waitlist/state/waitlist_state.dart';
 
 class DiscountedBadge extends ConsumerWidget {
   const DiscountedBadge({
@@ -11,35 +11,23 @@ class DiscountedBadge extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<Deal> waitlist = ref.watch(
-      asyncWaitListProvider.select(
-        (value) => value.value?.deals ?? [],
-      ),
-    );
-    final List<Deal> discountedDeals = waitlist
-        .where(
-          (element) => element.bestPrice.cut > 0,
-        )
-        .toList();
+    final WaitListState? waitlist =
+        ref.watch(asyncWaitListProvider).valueOrNull;
+    final int discountedCount = waitlist?.discountedDeals.length ?? 0;
 
     return Badge(
-      backgroundColor: context.colors.scheme.secondaryContainer,
+      key: const Key('discounted-badge'),
+      backgroundColor: context.colors.scheme.secondary,
       alignment: Alignment.center,
-      isLabelVisible: discountedDeals.isNotEmpty,
+      isLabelVisible: discountedCount > 0,
       offset: const Offset(20.0, -8.0),
-      label: discountedDeals.length > 1000
-          ? Text(
-              '1000+',
-              style: context.textStyles.labelSmall.copyWith(
-                color: context.colors.scheme.onSecondaryContainer,
-              ),
-            )
-          : Text(
-              discountedDeals.length.toString(),
-              style: context.textStyles.labelSmall.copyWith(
-                color: context.colors.scheme.onSecondaryContainer,
-              ),
-            ),
+      label: Text(
+        discountedCount > 1000 ? '1000+' : discountedCount.toString(),
+        style: context.textStyles.labelSmall.copyWith(
+          color: context.colors.scheme.onSecondary,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       child: const Icon(Icons.favorite),
     );
   }

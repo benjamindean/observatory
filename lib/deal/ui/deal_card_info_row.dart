@@ -16,43 +16,43 @@ class DealCardInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
           flex: 25,
-          child: Column(
-            children: [
-              PriceCut(
-                priceCut: deal.prices?.firstOrNull?.cut ?? -1,
-              )
-            ],
+          child: PriceCut(
+            priceCut: deal.prices?.firstOrNull?.cut ?? -1,
           ),
         ),
         Expanded(
           flex: 56,
-          child: ListTile(
-            contentPadding: EdgeInsets.zero,
-            minVerticalPadding: 16.0,
-            title: Text(
-              deal.titleParsed,
-              maxLines: 2,
-              style: context.themes.text.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: context.colors.scheme.onSurface,
-              ),
-              overflow: TextOverflow.ellipsis,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  deal.titleParsed,
+                  maxLines: 2,
+                  style: context.themes.text.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.colors.scheme.onSurface,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                PriceNew(prices: deal.prices),
+              ],
             ),
-            subtitle: PriceNew(prices: deal.prices),
           ),
         ),
         Expanded(
           flex: 20,
-          child: Column(
-            children: [
-              WaitlistButton(deal: deal),
-            ],
-          ),
-        )
+          child: WaitlistButton(deal: deal),
+        ),
       ],
     );
   }

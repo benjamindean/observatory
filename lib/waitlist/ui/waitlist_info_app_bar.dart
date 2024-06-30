@@ -1,11 +1,9 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/search/search_provider.dart';
-import 'package:observatory/search/search_state.dart';
-import 'package:observatory/shared/ui/dot_separator.dart';
-import 'package:observatory/shared/ui/info_app_bar.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
+import 'package:observatory/search/providers/search_provider.dart';
+import 'package:observatory/search/state/search_state.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class WaitlistInfoAppBar extends ConsumerWidget {
   const WaitlistInfoAppBar({
@@ -17,65 +15,73 @@ class WaitlistInfoAppBar extends ConsumerWidget {
     final SearchState searchState = ref.watch(filterResultsProvider);
 
     if (searchState.isOpen) {
-      return const SliverToBoxAdapter(
-        child: SizedBox.shrink(),
-      );
+      return const SizedBox.shrink();
     }
 
-    return InfoAppBar(
-      child: ref.watch(asyncWaitListProvider).when(
-            data: (state) {
-              final int discounted = state.deals
-                  .where((element) => element.bestPrice.cut > 0)
-                  .length;
+    return ref.watch(asyncWaitListProvider).when(
+          data: (state) {
+            final int discounted = state.deals
+                .where((element) => element.bestPrice.cut > 0)
+                .length;
 
-              return Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text.rich(
-                      style: context.themes.text.labelLarge?.copyWith(
-                        color: context.colors.hint,
-                      ),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text.rich(
+                  style: context.themes.text.labelMedium?.copyWith(
+                    color: context.colors.hint,
+                  ),
+                  TextSpan(
+                    children: [
                       TextSpan(
-                        children: [
-                          TextSpan(
-                            text: state.deals.length.toString(),
-                            style: context.themes.text.labelLarge?.copyWith(
-                              color: context.colors.hint,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const TextSpan(text: ' games'),
-                        ],
+                        text: discounted.toString(),
+                        style: context.themes.text.labelMedium?.copyWith(
+                          color: context.colors.hint,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const DotSeparator(),
-                    Text.rich(
-                      style: context.themes.text.labelLarge?.copyWith(
-                        color: context.colors.hint,
-                      ),
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: discounted.toString(),
-                            style: context.themes.text.labelLarge?.copyWith(
-                              color: context.colors.hint,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const TextSpan(text: ' discounted'),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              );
-            },
-            loading: () => const SizedBox.shrink(),
-            error: (error, stackTrace) => const SizedBox.shrink(),
+                Text(
+                  ' of ',
+                  style: context.themes.text.labelMedium?.copyWith(
+                    color: context.colors.hint,
+                  ),
+                ),
+                Text.rich(
+                  style: context.themes.text.labelMedium?.copyWith(
+                    color: context.colors.hint,
+                  ),
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: state.deals.length.toString(),
+                        style: context.themes.text.labelMedium?.copyWith(
+                          color: context.colors.hint,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const TextSpan(text: ' discounted'),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+          loading: () => Text(
+            'Loading...',
+            style: context.themes.text.labelMedium?.copyWith(
+              color: context.colors.hint,
+            ),
           ),
-    );
+          error: (error, stackTrace) => Text(
+            'No games in your waitlist',
+            style: context.themes.text.labelMedium?.copyWith(
+              color: context.colors.hint,
+            ),
+          ),
+        );
   }
 }

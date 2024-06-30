@@ -19,6 +19,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return BottomAppBar(
       elevation: APPBAR_ELEVATION,
+      surfaceTintColor: context.colors.scheme.surfaceTint,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
@@ -37,7 +38,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
                   message: 'Open in Browser',
                   child: IconButton(
                     onPressed: deal.prices?.firstOrNull != null
-                        ? () => openDealLink(deal)
+                        ? () => DealFunctions.openDealLink(deal)
                         : null,
                     icon: Icon(
                       Icons.open_in_browser,
@@ -51,7 +52,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
                   message: 'Share Link',
                   child: IconButton(
                     onPressed: deal.prices?.firstOrNull != null
-                        ? () => shareDeal(deal)
+                        ? () => DealFunctions.shareDeal(deal)
                         : null,
                     icon: Icon(
                       Icons.share,

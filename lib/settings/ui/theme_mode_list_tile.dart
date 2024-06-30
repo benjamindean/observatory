@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 
 final List<ThemeMode> themeModes = [
@@ -36,15 +36,15 @@ class ThemeModeListTile extends ConsumerWidget {
         children: const [
           Icon(
             Icons.brightness_4,
-            key: Key('theme_togge_dark'),
+            key: Key('theme-toggle-dark'),
           ),
           Icon(
             Icons.brightness_7,
-            key: Key('theme_togge_light'),
+            key: Key('theme-toggle-light'),
           ),
           Icon(
             Icons.brightness_auto,
-            key: Key('theme_togge_auto'),
+            key: Key('theme-toggle-auto'),
           ),
         ],
       ),

@@ -1,7 +1,7 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
@@ -22,10 +22,11 @@ class DealAppBar extends ConsumerWidget {
     final double appBarHeight = const SliverAppBar().toolbarHeight;
 
     final bool showHeaders = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.showHeaders,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.showHeaders,
+          ),
+        ) ??
+        false;
 
     return SliverAppBar(
       automaticallyImplyLeading: false,
@@ -34,8 +35,8 @@ class DealAppBar extends ConsumerWidget {
       flexibleSpace: FlexibleSpaceBar(
         expandedTitleScale: 1,
         titlePadding: EdgeInsets.zero,
-        title: Container(
-          color: context.elevatedCanvasColor,
+        title: ColoredBox(
+          color: context.elevatedBottomAppBarColor,
           child: ListTile(
             title: Tooltip(
               message: deal.titleParsed,
@@ -57,7 +58,6 @@ class DealAppBar extends ConsumerWidget {
                 ),
                 child: HeaderImage(
                   url: deal.headerImageURL,
-                  id: deal.id,
                 ),
               )
             : null,

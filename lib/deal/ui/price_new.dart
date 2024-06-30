@@ -17,6 +17,7 @@ class PriceNew extends ConsumerWidget {
 
     if (price == null) {
       return Text(
+        key: const Key('no-prices-available'),
         'No prices available.',
         style: TextStyle(color: context.colors.disabled),
       );

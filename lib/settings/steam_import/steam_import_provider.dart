@@ -7,7 +7,7 @@ import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class SteamImportNotifier extends AutoDisposeNotifier<SteamImportState> {
   @override

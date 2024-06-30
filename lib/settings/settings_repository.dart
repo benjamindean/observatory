@@ -4,7 +4,10 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/models/game/game.dart';
+import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/shop.dart';
@@ -37,8 +40,8 @@ enum DealCategory {
 
 final Map<DealCategory, Map<String, String>> dealCategoryLabels = {
   DealCategory.all: {
-    'title': 'All Deals',
-    'subtitle': 'All available deals.',
+    'title': 'All Games',
+    'subtitle': 'All currently trending deals.',
   },
   DealCategory.steam_top_sellers: {
     'title': 'Steam Store',
@@ -63,9 +66,8 @@ class SettingsRepository {
     RECENT_SEARCHES_BOX_NAME,
   );
 
-  final int RECENTS_LIMIT = 10;
-
-  final String PREF_DEFAULT_COUNTRY = 'observatory_default_country';
+  final String PREF_COUNTRY = 'observatory_default_country';
+  final String PREF_CURRENCY = 'observatory_default_currency';
   final String PREF_SHOW_HEADERS = 'observatory_show_headers';
   final String PREF_SELECTED_STORES = 'observatory_selected_stores';
   final String PREF_DEALS_TAB = 'observatory_deals_tab_name';
@@ -77,6 +79,8 @@ class SettingsRepository {
   final String PREF_WAITLIST_SORTING_DIRECTION =
       'observatory_waitlist_sorting_direction';
   final String PREF_STEAM_USERNAME = 'observatory_steam_username';
+  final String PREF_IGDB_ACCESS_TOKEN = 'observatory_igdb_access_token';
+  final String PREF_ITAD_FILTERS = 'observatory_itad_filters';
 
   final DealCategory defaultCategory = DealCategory.steam_top_sellers;
   final WaitlistSorting defaultWaitlistSorting = WaitlistSorting.discount_date;
@@ -93,6 +97,9 @@ class SettingsRepository {
     Hive.registerAdapter(DealSourceAdapter());
     Hive.registerAdapter(DealAdapter());
     Hive.registerAdapter(ObservatoryThemeAdapter());
+    Hive.registerAdapter(IGDBAccessTokenAdapter());
+    Hive.registerAdapter(MinMaxAdapter());
+    Hive.registerAdapter(ITADFiltersAdapter());
 
     await Hive.openBox(SETTINGS_BOX_NAME);
     await Hive.openBox<Deal>(SAVED_DEALS_BOX_NAME);
@@ -103,15 +110,29 @@ class SettingsRepository {
 
   String getCountry() {
     return settingsBox.get(
-      PREF_DEFAULT_COUNTRY,
+      PREF_COUNTRY,
       defaultValue: 'US',
     );
   }
 
   Future<void> setCountry(String countryCode) async {
     return settingsBox.put(
-      PREF_DEFAULT_COUNTRY,
+      PREF_COUNTRY,
       countryCode,
+    );
+  }
+
+  String getCurrency() {
+    return settingsBox.get(
+      PREF_CURRENCY,
+      defaultValue: 'USD',
+    );
+  }
+
+  Future<void> setCurrency(String currency) async {
+    return settingsBox.put(
+      PREF_CURRENCY,
+      currency,
     );
   }
 
@@ -360,5 +381,38 @@ class SettingsRepository {
 
   Future<int> clearAllRecents() async {
     return recentSearchesBox.clear();
+  }
+
+  IGDBAccessToken? getIGDBAccessToken() {
+    return settingsBox.get(PREF_IGDB_ACCESS_TOKEN);
+  }
+
+  Future<void> setIGDBAccessToken(IGDBAccessToken? accessToken) async {
+    if (accessToken == null) {
+      return;
+    }
+
+    return settingsBox.put(
+      PREF_IGDB_ACCESS_TOKEN,
+      accessToken,
+    );
+  }
+
+  ITADFilters getITADFilters() {
+    return settingsBox.get(
+      PREF_ITAD_FILTERS,
+      defaultValue: const ITADFilters(),
+    );
+  }
+
+  Future<void> setITADFilters(ITADFilters? filters) async {
+    if (filters == null) {
+      return;
+    }
+
+    return settingsBox.put(
+      PREF_ITAD_FILTERS,
+      filters,
+    );
   }
 }

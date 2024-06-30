@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/router.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/stores_select/stores_list_provider.dart';
 import 'package:observatory/shared/models/store.dart';
+import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/observatory_back_button.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 
@@ -15,24 +16,28 @@ class StoreSelectPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Store> stores = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.stores,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.stores,
+          ),
+        ) ??
+        [];
     final List<int> selectedStores = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.selectedStores,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.selectedStores,
+          ),
+        ) ??
+        [];
 
     final listProvider = storeListProvider(selectedStores);
     final List<int> storeList = ref.watch(listProvider);
 
-    final bool hasChanged = (List.from(storeList)..sort()).join() !=
-        (List.from(selectedStores)..sort()).join();
+    final bool hasChanged = (List.of(storeList)..sort()).join() !=
+        (List.of(selectedStores)..sort()).join();
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
+        elevation: APPBAR_ELEVATION,
+        surfaceTintColor: context.colors.scheme.surfaceTint,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:observatory/deal/deal_page.dart';
 import 'package:observatory/deals/deals_page.dart';
 import 'package:observatory/home_page.dart';
+import 'package:observatory/itad_filters/tags_list_page.dart';
 import 'package:observatory/search/search_page.dart';
 import 'package:observatory/settings/settings_page.dart';
 import 'package:observatory/settings/steam_import/steam_import_page.dart';
@@ -91,6 +92,11 @@ final router = GoRouter(
       name: 'deal',
       path: '/deal',
       builder: (context, state) => DealPage(deal: state.extra as Deal),
+    ),
+    GoRoute(
+      name: 'tags-select',
+      path: '/tags-select',
+      builder: (context, state) => const TagsListPage(),
     ),
   ],
 );

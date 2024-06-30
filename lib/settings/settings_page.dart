@@ -5,14 +5,14 @@ import 'package:observatory/settings/ui/theme_list_tile.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
 import 'package:observatory/settings/ui/waitlist_alerts_settings_tile.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
-import 'package:observatory/waitlist/waitlist_provider.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
-import 'package:observatory/settings/settings_provider.dart';
-import 'package:observatory/settings/settings_state.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
+import 'package:observatory/settings/state/settings_state.dart';
 import 'package:observatory/settings/ui/deal_card_type_settings_tile.dart';
 import 'package:observatory/settings/ui/header_images_settings_tile.dart';
 import 'package:observatory/settings/ui/theme_mode_list_tile.dart';
@@ -49,9 +49,10 @@ class SettingsPage extends ConsumerWidget {
             );
 
             return ErrorMessage(
-              message: 'Failed to load settings',
-              helper: TextButton(
-                child: const Text('Refresh'),
+              message: 'Failed to load settings.',
+              helper: TextButton.icon(
+                icon: const Icon(Icons.refresh),
+                label: const Text('Refresh'),
                 onPressed: () {
                   ref.read(asyncSettingsProvider.notifier).build();
                 },
@@ -59,9 +60,9 @@ class SettingsPage extends ConsumerWidget {
             );
           },
           data: (data) {
-            final int totalStores = settings.value?.stores.length ?? 0;
+            final int totalStores = settings.valueOrNull?.stores.length ?? 0;
             final int selectedCount =
-                settings.value?.selectedStores.length ?? 0;
+                settings.valueOrNull?.selectedStores.length ?? 0;
 
             return SingleChildScrollView(
               child: Column(
@@ -164,9 +165,7 @@ class SettingsPage extends ConsumerWidget {
                   ),
                   const ListHeading(title: 'Appearance'),
                   const DealCardTypeSettingsTile(),
-                  HeaderImagesSettingsTile(
-                    isEnabled: settings.value?.showHeaders ?? true,
-                  ),
+                  const HeaderImagesSettingsTile(),
                   const ThemeModeListTile(),
                   const ThemeListTile(),
                   const ThemeTrueBlackListTile(),
@@ -182,12 +181,10 @@ class SettingsPage extends ConsumerWidget {
                       },
                     ),
                   ),
-                  WaitlistAlertsSettingsTile(
-                    isEnabled: settings.value?.waitlistNotifications ?? false,
-                  ),
+                  const WaitlistAlertsSettingsTile(),
                   const ListHeading(title: 'Internal'),
                   SwitchListTile(
-                    value: settings.value?.crashlyticsEnabled ?? false,
+                    value: settings.valueOrNull?.crashlyticsEnabled ?? false,
                     title: const Text('Crashlytics'),
                     subtitle: const Text('Send anonymouse crash reports.'),
                     onChanged: (value) {

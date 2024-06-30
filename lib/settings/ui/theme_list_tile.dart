@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/settings/ui/scheme_preview.dart';
 
 class ThemeListTile extends ConsumerWidget {
@@ -19,7 +19,7 @@ class ThemeListTile extends ConsumerWidget {
           (FlexScheme scheme) => scheme.name == selectedScheme,
         ) ??
         FlexScheme.mandyRed;
-    final List<FlexScheme> schemes = List.from(FlexScheme.values)
+    final List<FlexScheme> schemes = List.of(FlexScheme.values)
       ..insert(0, selectedFlexScheme);
 
     return Column(
@@ -41,13 +41,14 @@ class ThemeListTile extends ConsumerWidget {
           child: SizedBox(
             height: 70,
             child: ListView.builder(
-              key: const ValueKey('color_scheme_list'),
+              itemExtent: 74,
+              key: const Key('color-scheme-list'),
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemCount: schemes.length,
               itemBuilder: (context, index) {
                 return SchemePreview(
-                  key: ValueKey('color_scheme_${schemes[index].name}'),
+                  key: ValueKey('color-scheme-${schemes[index].name}'),
                   scheme: schemes[index],
                 );
               },

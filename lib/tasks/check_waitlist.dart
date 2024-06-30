@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/notifications/waitlist_notification.dart';
@@ -15,7 +14,7 @@ Future<List<Deal>> getNewDiscountedDeals() async {
   final List<Deal> waitlist = await GetIt.I<API>().fetchWaitlist();
   final List<Deal> pastWaitlist = settingsRepository.getWaitlistPast();
 
-  final List<Deal> updatedDeals = List.from(waitlist)
+  final List<Deal> updatedDeals = List.of(waitlist)
     ..retainWhere((deal) {
       final Deal? pastDeal = pastWaitlist.singleWhereOrNull(
         (pastDeal) => pastDeal.id == deal.id,
@@ -40,7 +39,7 @@ Future<List<Deal>> getNewDiscountedDeals() async {
       },
     );
 
-  await settingsRepository.setWaitlistPast(List.from(waitlist));
+  await settingsRepository.setWaitlistPast(List.of(waitlist));
 
   Logger().d({
     'waitlist': waitlist.length,
@@ -59,10 +58,6 @@ Future<bool> checkWaitlistTask() async {
     return false;
   }
 
-  await FirebaseAnalytics.instance.logEvent(
-    name: 'check_waitlist_notification_sent',
-  );
-
   final List<Deal> deals = await getNewDiscountedDeals();
 
   return await showWaitlistNotification(
@@ -71,7 +66,7 @@ Future<bool> checkWaitlistTask() async {
 }
 
 Future<void> enableCheckWaitlistTask({
-  Duration frequency = const Duration(hours: 3),
+  Duration frequency = const Duration(hours: 6),
 }) async {
   Logger().d('Enabling $TASK_CHECK_WAITLIST task');
 
@@ -79,7 +74,7 @@ Future<void> enableCheckWaitlistTask({
     TASK_CHECK_WAITLIST,
     TASK_CHECK_WAITLIST,
     frequency: frequency,
-    initialDelay: const Duration(minutes: 30),
+    initialDelay: const Duration(hours: 4),
     constraints: Constraints(
       networkType: NetworkType.connected,
     ),

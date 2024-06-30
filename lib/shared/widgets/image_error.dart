@@ -12,7 +12,8 @@ class ImageError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
+      key: const Key('image-error'),
       color: context.colors.scheme.surface,
       child: OverflowBox(
         maxWidth: double.infinity,

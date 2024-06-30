@@ -20,7 +20,7 @@ import workmanager
         GeneratedPluginRegistrant.register(with: registry)
     }
 
-    WorkmanagerPlugin.registerPeriodicTask(withIdentifier: "observatory-waitlist-check", frequency: NSNumber(value: 2 * 60 * 60))
+    WorkmanagerPlugin.registerPeriodicTask(withIdentifier: "observatory-waitlist-check", frequency: NSNumber(value: 6 * 60 * 60))
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }

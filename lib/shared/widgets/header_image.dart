@@ -1,17 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:observatory/shared/widgets/image_error.dart';
-import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class HeaderImage extends StatelessWidget {
-  final String id;
   final String? url;
   final bool isCompact;
 
   const HeaderImage({
     super.key,
     this.url,
-    required this.id,
     this.isCompact = false,
   });
 
@@ -24,14 +21,10 @@ class HeaderImage extends StatelessWidget {
     try {
       return CachedNetworkImage(
         fit: BoxFit.cover,
-        fadeInDuration: const Duration(milliseconds: 100),
+        fadeInDuration: const Duration(milliseconds: 200),
+        fadeOutDuration: const Duration(milliseconds: 200),
         imageUrl: url ?? '',
-        placeholder: (context, url) => const Opacity(
-          opacity: 0.3,
-          child: ObservatoryProgressIndicator(
-            size: 30,
-          ),
-        ),
+        placeholder: (context, url) => ImageError(isCompact: isCompact),
         errorWidget: (context, url, error) => ImageError(isCompact: isCompact),
         errorListener: (value) => true,
       );

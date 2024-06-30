@@ -6,13 +6,16 @@ import 'package:observatory/deal/ui/price_bottom_sheet.dart';
 import 'package:observatory/deal/ui/price_cut.dart';
 import 'package:observatory/deal/ui/voucher_list_tile.dart';
 import 'package:observatory/shared/models/price.dart';
-import 'package:observatory/shared/ui/constants.dart';
+import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PriceCard extends StatelessWidget {
+  final bool hasBottomSheet;
+
   const PriceCard({
     super.key,
     required this.price,
+    this.hasBottomSheet = true,
   });
 
   final Price price;
@@ -29,20 +32,20 @@ class PriceCard extends StatelessWidget {
           mode: LaunchMode.externalApplication,
         );
       },
-      onLongPress: () {
-        HapticFeedback.mediumImpact();
+      onLongPress: hasBottomSheet
+          ? () {
+              HapticFeedback.mediumImpact();
 
-        showModalBottomSheet(
-          context: context,
-          useSafeArea: true,
-          builder: (BuildContext context) {
-            return PriceBottomSheet(price: price);
-          },
-        );
-      },
-      child: Card(
-        surfaceTintColor: context.colors.scheme.surfaceTint,
-        elevation: CARD_ELEVATION,
+              showModalBottomSheet(
+                context: context,
+                useSafeArea: true,
+                builder: (BuildContext context) {
+                  return PriceBottomSheet(price: price);
+                },
+              );
+            }
+          : null,
+      child: ObservatoryCard(
         child: Column(
           children: [
             ListTile(

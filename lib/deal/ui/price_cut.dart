@@ -1,7 +1,6 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:observatory/shared/context_extension.dart';
 
 class PriceCut extends StatelessWidget {
   final num priceCut;
@@ -56,9 +55,7 @@ class PriceCut extends StatelessWidget {
       );
     }
 
-    final Color highlightColor = HSLColor.fromColor(
-      context.colors.scheme.primary.darken(),
-    ).withSaturation((priceCutInt / 100).clamp(0.4, 1.0)).toColor();
+    final Color highlightColor = context.colors.scheme.primary;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -77,9 +74,7 @@ class PriceCut extends StatelessWidget {
           priceCutInt.toString(),
           style: textStyle?.copyWith(
             color: highlightColor,
-            fontFamily: GoogleFonts.openSans(
-              fontWeight: FontWeight.w500,
-            ).fontFamily,
+            fontFamily: context.semiBoldFont,
           ),
         ),
         Padding(

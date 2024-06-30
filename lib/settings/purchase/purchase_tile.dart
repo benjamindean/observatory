@@ -19,83 +19,81 @@ class PurchaseTile extends ConsumerWidget {
       asyncPurchaseProvider,
     );
 
-    return Container(
-      child: purchases.when(
-        data: (data) {
-          if (data.products.isEmpty) {
-            return const SizedBox.shrink();
-          }
+    return purchases.when(
+      data: (data) {
+        if (data.products.isEmpty) {
+          return const SizedBox.shrink();
+        }
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const ListHeading(title: 'Support the app'),
-              const ListTile(
-                subtitle: Text(
-                  'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it. Any amount is appreciated. Please note that there are no additional features or benefits for supporters.',
-                ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const ListHeading(title: 'Support the app'),
+            const ListTile(
+              subtitle: Text(
+                'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it. Any amount is appreciated. Please note that there are no additional features or benefits for supporters.',
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  16.0,
-                  8.0,
-                  16.0,
-                  8.0,
-                ),
-                child: Wrap(
-                  spacing: 12.0,
-                  children: data.products
-                      .map(
-                        (e) => OutlinedButton(
-                          onPressed: PurchaseStatus.pending == data.status
-                              ? null
-                              : () {
-                                  ref
-                                      .watch(asyncPurchaseProvider.notifier)
-                                      .purchase(e);
-                                },
-                          child: Text(
-                            e.price,
-                            style: context.themes.text.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: PurchaseStatus.pending == data.status
-                                  ? context.colors.disabled
-                                  : context.colors.scheme.onSurface,
-                            ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                16.0,
+                8.0,
+                16.0,
+                8.0,
+              ),
+              child: Wrap(
+                spacing: 12.0,
+                children: data.products
+                    .map(
+                      (e) => FilledButton(
+                        onPressed: PurchaseStatus.pending == data.status
+                            ? null
+                            : () {
+                                ref
+                                    .watch(asyncPurchaseProvider.notifier)
+                                    .purchase(e);
+                              },
+                        child: Text(
+                          e.price,
+                          style: context.themes.text.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: PurchaseStatus.pending == data.status
+                                ? context.colors.disabled
+                                : context.colors.scheme.onPrimary,
                           ),
                         ),
-                      )
-                      .toList(),
-                ),
+                      ),
+                    )
+                    .toList(),
               ),
-            ],
-          );
-        },
-        error: (error, stackTrace) {
-          Logger().e(
-            'Failed to load purchases',
-            error: error,
-            stackTrace: stackTrace,
-          );
-
-          FirebaseCrashlytics.instance.recordError(
-            error,
-            stackTrace,
-          );
-
-          return const SizedBox.shrink();
-        },
-        loading: () {
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: LinearProgressIndicator(
-              borderRadius: BorderRadius.circular(12.0),
-              minHeight: 2,
-              color: context.colors.scheme.onSurfaceVariant,
             ),
-          );
-        },
-      ),
+          ],
+        );
+      },
+      error: (error, stackTrace) {
+        Logger().e(
+          'Failed to load purchases',
+          error: error,
+          stackTrace: stackTrace,
+        );
+
+        FirebaseCrashlytics.instance.recordError(
+          error,
+          stackTrace,
+        );
+
+        return const SizedBox.shrink();
+      },
+      loading: () {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: LinearProgressIndicator(
+            borderRadius: BorderRadius.circular(12.0),
+            minHeight: 2,
+            color: context.colors.scheme.onSurfaceVariant,
+          ),
+        );
+      },
     );
   }
 }

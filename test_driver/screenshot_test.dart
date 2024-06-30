@@ -3,9 +3,9 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 final List<String> testColorSchemes = [
-  'color_scheme_blue',
-  'color_scheme_sakura',
-  'color_scheme_gold'
+  'color-scheme-blue',
+  'color-scheme-sakura',
+  'color-scheme-gold'
 ];
 
 void main() async {
@@ -29,23 +29,24 @@ void main() async {
     await driver.waitUntilNoTransientCallbacks(
       timeout: const Duration(seconds: 10),
     );
+    await Future.delayed(const Duration(seconds: 2));
     await screenshot.capture(identifier);
   }
 
   toggleTheme(String theme) async {
     await driver.tap(find.byTooltip('Go to Settings'));
     await driver.waitFor(find.text('Appearance'));
-    await driver.tap(find.byValueKey('theme_togge_$theme'));
+    await driver.tap(find.byValueKey('theme-toggle-$theme'));
     await driver.tap(find.pageBack());
   }
 
   toggleColorScheme(String scheme) async {
     await driver.tap(find.byTooltip('Go to Settings'));
     await driver.waitFor(find.text('Appearance'));
-    await driver.tap(find.byValueKey('theme_togge_dark'));
+    await driver.tap(find.byValueKey('theme-toggle-dark'));
 
     await driver.scrollUntilVisible(
-      find.byValueKey('color_scheme_list'),
+      find.byValueKey('color-scheme-list'),
       find.byValueKey(scheme),
       dxScroll: -300,
       timeout: const Duration(minutes: 1),
@@ -55,56 +56,57 @@ void main() async {
     await driver.tap(find.pageBack());
   }
 
+  closeBottomSheet() async {
+    await driver.tap(find.byValueKey('close-bottom-sheet-button'));
+    await driver.waitUntilNoTransientCallbacks(
+      timeout: const Duration(seconds: 10),
+    );
+  }
+
   test('Deals Page', () async {
     await toggleTheme('dark');
+
+    await driver.tap(find.byValueKey('navigation-deals'));
+    await driver.tap(find.byValueKey('deal-category-all'));
+
     await takeScreenshot('deals_page');
 
-    await driver.tap(find.byValueKey('navigation_deals'));
+    await driver.tap(find.byValueKey('navigation-deals'));
 
     await takeScreenshot('deals_page_filters');
 
-    await driver.scroll(
-      find.byValueKey('deals_filter_all'),
-      0,
-      1000,
-      const Duration(milliseconds: 200),
-    );
+    await closeBottomSheet();
   });
 
   test('Waitlist Page', () async {
-    await driver.tap(find.byValueKey('navigation_waitlist'));
+    await driver.tap(find.byValueKey('navigation-waitlist'));
 
     await takeScreenshot('waitlist_page');
 
-    await driver.tap(find.byValueKey('navigation_waitlist'));
+    await driver.tap(find.byValueKey('navigation-waitlist'));
 
     await takeScreenshot('waitlist_page_filters');
 
-    await driver.scroll(
-      find.byValueKey('waitlist_sorting_title'),
-      0,
-      1000,
-      const Duration(milliseconds: 200),
-    );
+    await closeBottomSheet();
   });
 
   test('Search Page', () async {
-    await driver.tap(find.byValueKey('navigation_search'));
-    await driver.waitFor(find.byValueKey('search_scroll_view'));
+    await driver.tap(find.byValueKey('navigation-search'));
+    await driver.waitFor(find.byValueKey('search-scroll-view'));
 
     await takeScreenshot('search_page');
   });
 
   test('Deal Page', () async {
-    await driver.tap(find.byValueKey('navigation_waitlist'));
-    await driver.waitFor(find.byValueKey('waitlist_scroll_view'));
+    await driver.tap(find.byValueKey('navigation-waitlist'));
+    await driver.waitFor(find.byValueKey('waitlist-scroll-view'));
     await driver.tap(find.text('Lies Of P'));
-    await driver.waitFor(find.byValueKey('deal_scroll_view'));
+    await driver.waitFor(find.byValueKey('deal-scroll-view'));
 
     await takeScreenshot('deal_page_top');
 
     await driver.scroll(
-      find.byValueKey('deal_scroll_view'),
+      find.byValueKey('deal-scroll-view'),
       0,
       -1000,
       const Duration(milliseconds: 300),
@@ -122,17 +124,20 @@ void main() async {
 
     await takeScreenshot('waitlist_page_light');
 
-    await driver.tap(find.byValueKey('navigation_deals'));
+    await driver.tap(find.byValueKey('navigation-deals'));
 
     await takeScreenshot('deals_page_light');
 
-    await driver.tap(find.byValueKey('navigation_waitlist'));
+    await driver.tap(find.byValueKey('navigation-waitlist'));
 
     await toggleTheme('dark');
 
     for (String scheme in testColorSchemes) {
       await toggleColorScheme(scheme);
-      await driver.waitFor(find.byValueKey('waitlist_scroll_view'));
+      await driver.waitFor(find.byValueKey('waitlist-scroll-view'));
+      await driver.waitUntilNoTransientCallbacks(
+        timeout: const Duration(seconds: 10),
+      );
 
       await takeScreenshot('waitlist_page_$scheme');
     }

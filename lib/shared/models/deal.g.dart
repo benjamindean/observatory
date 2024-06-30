@@ -117,6 +117,9 @@ _$DealImpl _$$DealImplFromJson(Map<String, dynamic> json) => _$DealImpl(
       prices: (json['prices'] as List<dynamic>?)
           ?.map((e) => Price.fromJson(e as Map<String, dynamic>))
           .toList(),
+      igdbGame: json['igdbGame'] == null
+          ? null
+          : GameDetails.fromJson(json['igdbGame'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$DealImplToJson(_$DealImpl instance) =>
@@ -132,6 +135,7 @@ Map<String, dynamic> _$$DealImplToJson(_$DealImpl instance) =>
       'added': instance.added,
       'source': _$DealSourceEnumMap[instance.source]!,
       'prices': instance.prices,
+      'igdbGame': instance.igdbGame,
     };
 
 const _$DealSourceEnumMap = {

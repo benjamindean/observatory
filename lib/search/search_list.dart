@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
-import 'package:observatory/search/search_provider.dart';
-import 'package:observatory/search/search_state.dart';
+import 'package:observatory/search/providers/search_provider.dart';
+import 'package:observatory/search/state/search_state.dart';
 import 'package:observatory/search/ui/recent_searches_list.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
+import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/ui/constants.dart';
+import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
-import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class SearchList extends ConsumerWidget {
   const SearchList({super.key});
@@ -15,16 +19,25 @@ class SearchList extends ConsumerWidget {
     final SearchState searchState = ref.watch(searchProvider(
       SearchType.search,
     ));
+    final DealCardType cardType = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
+      ),
+    );
+    final bool showHeaders = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.showHeaders ?? false,
+      ),
+    );
+    final double? screenWidth = cardType == DealCardType.compact
+        ? null
+        : MediaQuery.of(context).size.width;
+    final double height = cardHeight(showHeaders, cardType, screenWidth);
 
     return Builder(
       builder: (BuildContext context) {
         if (searchState.isLoading) {
-          return const SliverFillRemaining(
-            hasScrollBody: false,
-            child: Center(
-              child: ObservatoryProgressIndicator(),
-            ),
-          );
+          return const OryFullScreenSpinner();
         }
 
         if (searchState.deals == null) {
@@ -34,23 +47,23 @@ class SearchList extends ConsumerWidget {
         if (searchState.deals != null && searchState.deals?.isEmpty == true) {
           return const SliverFillRemaining(
             hasScrollBody: false,
-            child: Center(
-              child: ErrorMessage(
-                message: 'No results found for your query.',
-                icon: Icons.sentiment_neutral_rounded,
-              ),
+            child: ErrorMessage(
+              message: 'No results found for your query.',
+              icon: FontAwesomeIcons.solidFaceSadTear,
             ),
           );
         }
 
         return SliverPadding(
-          key: const Key('search_scroll_view'),
+          key: const Key('search-scroll-view'),
           padding: const EdgeInsets.all(6.0),
-          sliver: SliverList.builder(
+          sliver: SliverFixedExtentList.builder(
+            itemExtent: height,
             itemCount: searchState.deals?.length ?? 0,
             itemBuilder: (context, index) {
               return DealCard(
                 deal: searchState.deals![index],
+                cardType: cardType,
               );
             },
           ),

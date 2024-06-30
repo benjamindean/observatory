@@ -45,17 +45,17 @@ class ErrorMessage extends StatelessWidget {
                     if (message != null) {
                       return Flexible(
                         child: Text(
-                          message!,
+                          message ?? 'Unknown Error',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: context.themes.text.labelLarge?.fontSize,
+                            fontSize: context.themes.text.bodyMedium?.fontSize,
                             color: context.colors.disabled,
                           ),
                         ),
                       );
                     }
 
-                    return child!;
+                    return child ?? const SizedBox.shrink();
                   },
                 )
               ],

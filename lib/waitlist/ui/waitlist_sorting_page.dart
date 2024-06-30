@@ -1,9 +1,10 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
+import 'package:observatory/shared/ui/close_bottom_sheet_button.dart';
 import 'package:observatory/waitlist/ui/steam_import_list_tile.dart';
 import 'package:observatory/waitlist/ui/waitlist_sorting_strings.dart';
 
@@ -25,15 +26,17 @@ class WaitlistSortingPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final WaitlistSortingDirection waitlistSortingDirection = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.waitlistSortingDirection,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.waitlistSortingDirection,
+          ),
+        ) ??
+        WaitlistSortingDirection.asc;
     final WaitlistSorting waitlistSorting = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.requireValue.waitlistSorting,
-      ),
-    );
+          asyncSettingsProvider.select(
+            (value) => value.valueOrNull?.waitlistSorting,
+          ),
+        ) ??
+        WaitlistSorting.date_added;
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -41,7 +44,10 @@ class WaitlistSortingPage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const BottomSheetHeading(text: 'Sort By'),
+            const BottomSheetHeading(
+              text: 'Sort By',
+              trailing: CloseBottomSheetButton(),
+            ),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -53,8 +59,8 @@ class WaitlistSortingPage extends ConsumerWidget {
                 return ListTile(
                   key: ValueKey('waitlist_sorting_${sorting.name}'),
                   contentPadding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
-                  selectedTileColor: context.colors.scheme.secondaryContainer,
-                  selectedColor: context.colors.scheme.onSecondaryContainer,
+                  selectedTileColor: context.colors.scheme.secondary,
+                  selectedColor: context.colors.scheme.onSecondary,
                   selected: isSelected,
                   onTap: () async {
                     ref
@@ -76,7 +82,7 @@ class WaitlistSortingPage extends ConsumerWidget {
                     waitlistSortingStrings[sorting]?['title'] ?? 'Price',
                     style: context.textStyles.titleMedium.copyWith(
                         color: isSelected
-                            ? context.colors.scheme.onSecondaryContainer
+                            ? context.colors.scheme.onSecondary
                             : context.colors.scheme.onSurface),
                   ),
                   trailing: Builder(
@@ -89,10 +95,10 @@ class WaitlistSortingPage extends ConsumerWidget {
                                     ?[waitlistSortingDirection] ??
                                 'Unknown',
                             style: context.textStyles.labelMedium.copyWith(
-                              color: context.colors.scheme.onSecondary,
+                              color: context.colors.scheme.onTertiary,
                             ),
                           ),
-                          backgroundColor: context.colors.scheme.secondary,
+                          backgroundColor: context.colors.scheme.tertiary,
                         );
                       }
 

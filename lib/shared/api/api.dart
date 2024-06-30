@@ -11,27 +11,12 @@ import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/api/utils.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/info.dart';
+import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/steam_featured_item.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
-import 'package:path_provider/path_provider.dart';
-
-final Map<String, String> dealFilters = {
-  'trending': 'Trending',
-  'time': 'Newest',
-  'cut': 'Highest Price Cut',
-  'price': 'Lowest Price',
-  'expiry': 'Expiring Soon',
-  'release-date': 'Release Date',
-  'rank': 'Most Popular',
-  'steam-players': 'Steam Players Count',
-  'steam-reviews': 'Steam Reviews',
-  'opencritic': 'OpenCritic Score',
-  'metacritic': 'Metacritic Score',
-  'metacritic-users': 'Metacritic User Score',
-};
 
 class API {
   final Dio dio;
@@ -43,18 +28,16 @@ class API {
     required this.cacheOptions,
   });
 
-  static Future<API> create() async {
+  static API create(String? directory) {
     final options = CacheOptions(
-      store: HiveCacheStore((await getApplicationDocumentsDirectory()).path),
+      store: HiveCacheStore(directory),
       policy: CachePolicy.noCache,
       maxStale: const Duration(days: 14),
     );
 
-    final Dio dio = Dio(BaseOptions(responseType: ResponseType.plain))
-      ..interceptors.add(DioCacheInterceptor(options: options));
-
     return API(
-      dio: dio,
+      dio: Dio(BaseOptions(responseType: ResponseType.plain))
+        ..interceptors.add(DioCacheInterceptor(options: options)),
       cacheOptions: options,
     );
   }
@@ -68,9 +51,7 @@ class API {
         'id': id,
       });
 
-      final response = await dio.get(url.toString());
-
-      return Parsers.info(response);
+      return Parsers.info(await dio.get(url.toString()));
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch info',
@@ -180,11 +161,12 @@ class API {
   }
 
   Future<List<Deal>> fetchDeals({
-    final int limit = 20,
+    final int limit = DEALS_COUNT,
     final int offset = 0,
   }) async {
     final String country = settingsReporsitory.getCountry();
     final List<int> stores = settingsReporsitory.getSelectedStores();
+    final ITADFilters filters = settingsReporsitory.getITADFilters();
 
     final Uri url = Uri.https(BASE_URL, '/deals/v2', {
       'key': API_KEY,
@@ -192,6 +174,10 @@ class API {
       'offset': offset.toString(),
       'country': country,
       'shops': stores.join(','),
+      'nondeals': filters.nondeals.toString(),
+      'mature': filters.mature.toString(),
+      'sort': '-trending',
+      'filter': filters.filtersString,
     });
 
     final response = await dio.get(url.toString());
@@ -312,7 +298,7 @@ class API {
   }
 
   Future<List<Deal>> fetchDealsCategory({
-    final int limit = 20,
+    final int limit = DEALS_COUNT,
     final int offset = 0,
     final DealCategory category = DealCategory.all,
   }) async {

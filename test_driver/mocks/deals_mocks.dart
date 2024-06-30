@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:observatory/deals/deals_provider.dart';
-import 'package:observatory/deals/deals_state.dart';
+import 'package:observatory/deals/providers/deals_provider.dart';
+import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/price.dart';
@@ -332,7 +332,7 @@ class AsyncDealsNotifierMock
   }
 
   @override
-  Future<void> reset() async {
+  Future<void> reset({bool withLoading = false}) async {
     state = state;
   }
 }

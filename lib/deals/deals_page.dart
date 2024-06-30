@@ -2,11 +2,11 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deals/deals_list.dart';
-import 'package:observatory/deals/deals_provider.dart';
-import 'package:observatory/deals/deals_state.dart';
+import 'package:observatory/deals/providers/deals_provider.dart';
+import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/deals/ui/deals_appbar.dart';
-import 'package:observatory/deals/ui/deals_info_app_bar.dart';
-import 'package:observatory/settings/settings_provider.dart';
+import 'package:observatory/deals/ui/itad_filters_info_bar.dart';
+import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/pull_to_refresh.dart';
 
@@ -22,7 +22,7 @@ class DealsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final DealCategory activeTab = ref.watch(
       asyncSettingsProvider.select(
-        (value) => value.value?.dealsTab ?? DealCategory.steam_top_sellers,
+        (value) => value.valueOrNull?.dealsTab ?? DealCategory.all,
       ),
     );
     final provider = getProvider(activeTab);
@@ -32,13 +32,15 @@ class DealsPage extends ConsumerWidget {
         await ref.read(provider.notifier).reset();
       },
       child: CustomScrollView(
-        key: const Key('deals_scroll_view'),
+        key: const Key('deals-scroll-view'),
         controller: PrimaryScrollController.of(context),
         slivers: [
           const DealsAppBar(),
           const HeaderLocator.sliver(),
-          DealsInfoAppBar(
-            provider: provider,
+          SliverToBoxAdapter(
+            child: ITADFiltersInfoBar(
+              dealsTab: activeTab,
+            ),
           ),
           DealsList(
             provider: provider,
