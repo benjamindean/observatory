@@ -1,6 +1,9 @@
 import React from "react";
 import HeroBlock from "../components/hero-block.tsx";
 
+// @ts-ignore
+import iosButton from "../assets/images/appstore-button.png";
+
 export default function Main() {
   return (
     <>
@@ -30,7 +33,7 @@ export default function Main() {
               href="https://apps.apple.com/app/observatory-for-itad/id6479194330"
               target="_blank"
             >
-              <img src="./images/appstore-button.pmng" />
+              <img src={iosButton} className="h-40" />
             </a>
           </>
         }

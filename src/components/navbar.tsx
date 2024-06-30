@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// @ts-ignore
+import logo from "../assets/icon/observatory_ios.png";
+
 function MenuItems() {
   return (
     <>
@@ -48,10 +51,10 @@ export default function NavBar() {
           </ul>
         </div>
 
-        <a className="btn btn-ghost text-xl" href="/">
+        <a className="btn btn-ghost text-xl" href="/observatory">
           <div className="avatar pr-1">
             <div className="w-10 h-10 rounded-full">
-              <img src="./assets/icon/observatory_ios.png" />
+              <img src={logo} />
             </div>
           </div>
           Observatory
