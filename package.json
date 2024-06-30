@@ -22,7 +22,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npx shx cp ./build/index.html ./build/privacy-policy.html && npx shx cp ./build/index.html ./build/terms-and-conditions.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
