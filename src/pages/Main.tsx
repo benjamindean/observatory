@@ -1,9 +1,6 @@
 import React from "react";
 import HeroBlock from "../components/hero-block.tsx";
 
-// @ts-ignore
-import { ReactComponent as IOSBadge } from "../images/ios-badge.svg";
-
 export default function Main() {
   return (
     <>
@@ -33,7 +30,7 @@ export default function Main() {
               href="https://apps.apple.com/app/observatory-for-itad/id6479194330"
               target="_blank"
             >
-              <IOSBadge />
+              <img src="./images/appstore-button.pmng" />
             </a>
           </>
         }
