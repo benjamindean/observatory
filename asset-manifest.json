@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/observatory/static/css/main.cf880fae.css",
-    "main.js": "/observatory/static/js/main.e182e0de.js",
+    "main.css": "/observatory/static/css/main.04ff9383.css",
+    "main.js": "/observatory/static/js/main.409e4318.js",
     "static/media/observatory_ios.png": "/observatory/static/media/observatory_ios.c4d2ae7352118ec61a79.png",
     "static/media/appstore-button.png": "/observatory/static/media/appstore-button.8d98421a597f340eb727.png",
     "index.html": "/observatory/index.html",
-    "main.cf880fae.css.map": "/observatory/static/css/main.cf880fae.css.map",
-    "main.e182e0de.js.map": "/observatory/static/js/main.e182e0de.js.map"
+    "main.04ff9383.css.map": "/observatory/static/css/main.04ff9383.css.map",
+    "main.409e4318.js.map": "/observatory/static/js/main.409e4318.js.map"
   },
   "entrypoints": [
-    "static/css/main.cf880fae.css",
-    "static/js/main.e182e0de.js"
+    "static/css/main.04ff9383.css",
+    "static/js/main.409e4318.js"
   ]
 }
