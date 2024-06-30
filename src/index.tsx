@@ -10,19 +10,19 @@ import TermsAndConditions from "./pages/TermsAndConditions.tsx";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/observatory",
     element: <App />,
     children: [
       {
-        path: "/",
+        path: "/observatory",
         element: <Main />,
       },
       {
-        path: "/privacy-policy",
+        path: "/observatory/privacy-policy",
         element: <PrivacyPolicy />,
       },
       {
-        path: "/terms-and-conditions",
+        path: "/observatory/terms-and-conditions",
         element: <TermsAndConditions />,
       },
     ],

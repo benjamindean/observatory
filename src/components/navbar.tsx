@@ -10,10 +10,10 @@ function MenuItems() {
         </a>
       </li>
       <li>
-        <Link to="/privacy-policy">Privacy Policy</Link>
+        <Link to="/observatory/privacy-policy">Privacy Policy</Link>
       </li>
       <li>
-        <Link to="/terms-and-conditions">Terms & Conditions</Link>
+        <Link to="/observatory/terms-and-conditions">Terms & Conditions</Link>
       </li>
     </>
   );
