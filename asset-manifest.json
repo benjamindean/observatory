@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/observatory/static/css/main.07ee0091.css",
+    "main.js": "/observatory/static/js/main.27b9ea3a.js",
+    "static/media/ios-badge.svg": "/observatory/static/media/ios-badge.8c4986ee4828b47d16f5cd694ef065f2.svg",
+    "index.html": "/observatory/index.html",
+    "main.07ee0091.css.map": "/observatory/static/css/main.07ee0091.css.map",
+    "main.27b9ea3a.js.map": "/observatory/static/js/main.27b9ea3a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.07ee0091.css",
+    "static/js/main.27b9ea3a.js"
+  ]
+}
