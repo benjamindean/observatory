@@ -28,7 +28,7 @@ export default function Main() {
         reversed
         backgroundTint="bg-red-200"
         bottom={
-          <div className="full-w">
+          <div className="full-w pb-8">
             <a
               href="https://apps.apple.com/app/observatory-for-itad/id6479194330"
               target="_blank"

@@ -29,7 +29,7 @@ export default function HeroBlock({
           "lg:flex-row": !reversed,
         })}
       >
-        <div className="flex justify-center items-center px-8 pb-[4.2rem] pt-8 w-full min-h-[480px] md:min-h-[680px]">
+        <div className="flex lg:w-1/2 justify-center items-center px-8 pb-[4.2rem] pt-8 w-full min-h-[480px] md:min-h-[680px]">
           <div className="flex relative min-h-[420px] min-w-[220px] md:h-[620px] md:w-[420px]">
             {imageUrls.map((imageUrl, index) => (
               <div
@@ -48,7 +48,7 @@ export default function HeroBlock({
           </div>
         </div>
 
-        <div className="px-8 py-8">
+        <div className="flex-col lg:w-1/2 px-8">
           <h1 className="text-5xl font-bold">{title}</h1>
           <p className="py-6">{subtitle}</p>
           {bottom}
