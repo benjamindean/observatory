@@ -1,15 +1,23 @@
 {
   "files": {
     "main.css": "/observatory/static/css/main.c3fba748.css",
-    "main.js": "/observatory/static/js/main.b65d5a3a.js",
+    "main.js": "/observatory/static/js/main.2b5db64f.js",
+    "static/media/waitlist_page.png": "/observatory/static/media/waitlist_page.0cd6a1d27f4d1f406919.png",
+    "static/media/deals_page_light.png": "/observatory/static/media/deals_page_light.bc858ce47caf5817cbdc.png",
+    "static/media/deals_page.png": "/observatory/static/media/deals_page.07349afd70ec2d5e66f1.png",
+    "static/media/search_page.png": "/observatory/static/media/search_page.a91958e2bd954241dfb0.png",
+    "static/media/deal_page_top.png": "/observatory/static/media/deal_page_top.a47742f2b9ef7adc4a62.png",
+    "static/media/waitlist_page_filters.png": "/observatory/static/media/waitlist_page_filters.8c3941edfa413fed9b35.png",
+    "static/media/deals_page_filters.png": "/observatory/static/media/deals_page_filters.4cfe950323901fff8abb.png",
+    "static/media/deal_page.png": "/observatory/static/media/deal_page.1a06d11bbb685d56ebf0.png",
     "static/media/observatory_ios.png": "/observatory/static/media/observatory_ios.c4d2ae7352118ec61a79.png",
     "static/media/appstore-button.png": "/observatory/static/media/appstore-button.8d98421a597f340eb727.png",
     "index.html": "/observatory/index.html",
     "main.c3fba748.css.map": "/observatory/static/css/main.c3fba748.css.map",
-    "main.b65d5a3a.js.map": "/observatory/static/js/main.b65d5a3a.js.map"
+    "main.2b5db64f.js.map": "/observatory/static/js/main.2b5db64f.js.map"
   },
   "entrypoints": [
     "static/css/main.c3fba748.css",
-    "static/js/main.b65d5a3a.js"
+    "static/js/main.2b5db64f.js"
   ]
 }

@@ -3,6 +3,14 @@ import HeroBlock from "../components/hero-block.tsx";
 
 // @ts-ignore
 import iosButton from "../assets/images/appstore-button.png";
+import deals_page_light from "../assets/screenshots/deals_page_light.png";
+import deals_page from "../assets/screenshots/deals_page.png";
+import deals_page_filters from "../assets/screenshots/deals_page_filters.png";
+import search_page from "../assets/screenshots/search_page.png";
+import deal_page from "../assets/screenshots/deal_page.png";
+import deal_page_top from "../assets/screenshots/deal_page_top.png";
+import waitlist_page_filters from "../assets/screenshots/waitlist_page_filters.png";
+import waitlist_page from "../assets/screenshots/waitlist_page.png";
 
 export default function Main() {
   return (
@@ -21,10 +29,7 @@ export default function Main() {
             on a sale.
           </p>,
         ]}
-        imageUrls={[
-          "https://raw.githubusercontent.com/benjamindean/observatory/main/screenshots/ios/iPhone%2014%20Pro%20Max_deals_page_light.png",
-          "https://raw.githubusercontent.com/benjamindean/observatory/main/screenshots/ios/iPhone%2014%20Pro%20Max_deals_page.png",
-        ]}
+        imageUrls={[deals_page_light, deals_page]}
         reversed
         backgroundTint="bg-red-200"
         bottom={
@@ -74,10 +79,7 @@ export default function Main() {
             more!
           </p>,
         ]}
-        imageUrls={[
-          "https://raw.githubusercontent.com/benjamindean/observatory/main/screenshots/ios/iPhone%2014%20Pro%20Max_deals_page_filters.png",
-          "https://raw.githubusercontent.com/benjamindean/observatory/main/screenshots/ios/iPhone%2014%20Pro%20Max_search_page.png",
-        ]}
+        imageUrls={[deals_page_filters, search_page]}
         backgroundTint="bg-sky-300"
       />
 
@@ -89,10 +91,7 @@ export default function Main() {
             multiple resellers to find the best deals.
           </p>,
         ]}
-        imageUrls={[
-          "https://raw.githubusercontent.com/benjamindean/observatory/main/screenshots/ios/iPhone%2014%20Pro%20Max_deal_page.png",
-          "https://raw.githubusercontent.com/benjamindean/observatory/dev/screenshots/ios/iPhone%2014%20Pro%20Max_deal_page_top.png",
-        ]}
+        imageUrls={[deal_page, deal_page_top]}
         reversed
         backgroundTint="bg-emerald-300"
       />
@@ -107,10 +106,7 @@ export default function Main() {
           <br></br>,
           <p>You can also import your wishlist from Steam.</p>,
         ]}
-        imageUrls={[
-          "https://raw.githubusercontent.com/benjamindean/observatory/main/screenshots/ios/iPhone%2014%20Pro%20Max_waitlist_page_filters.png",
-          "https://raw.githubusercontent.com/benjamindean/observatory/main/screenshots/ios/iPhone%2014%20Pro%20Max_waitlist_page.png",
-        ]}
+        imageUrls={[waitlist_page_filters, waitlist_page]}
         backgroundTint="bg-zinc-200"
       />
 
