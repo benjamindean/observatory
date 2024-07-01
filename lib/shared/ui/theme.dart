@@ -71,7 +71,7 @@ ThemeData darkTheme({
       tones: FlexTones.jolly(Brightness.dark),
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       useMaterial3: true,
-      fontFamily: GoogleFonts.notoSans().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
     );
 
 ThemeData lightTheme({
@@ -142,5 +142,5 @@ ThemeData lightTheme({
       tones: FlexTones.jolly(Brightness.light),
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       useMaterial3: true,
-      fontFamily: GoogleFonts.notoSans().fontFamily,
+      fontFamily: GoogleFonts.openSans().fontFamily,
     );
