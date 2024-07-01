@@ -114,8 +114,8 @@ export default function Main() {
         backgroundTint="bg-zinc-200"
       />
 
-      <article className="prose max-w-6xl container mx-auto py-8 px-8">
-        <h2 className="text-center">FAQ</h2>
+      <article className="prose max-w-6xl container mx-auto pt-16 px-8">
+        <h1 className="text-center">FAQ</h1>
         <p>
           <strong>Q:</strong> Why does the discount in the app not match the
           discount at the store?
@@ -156,8 +156,8 @@ export default function Main() {
         </p>
       </article>
 
-      <article className="prose max-w-6xl container mx-auto py-8 px-8">
-        <h2 className="text-center">Disclaimer</h2>
+      <article className="prose max-w-6xl container mx-auto py-16 px-8">
+        <h1 className="text-center">Disclaimer</h1>
         <p>
           All the data about prices, stores, coupons, review scores and
           discounts is provided by{" "}

@@ -24,7 +24,7 @@ export default function HeroBlock({
       })}
     >
       <div
-        className={classNames(["hero-content", "flex-col"], {
+        className={classNames(["hero-content", "flex-col", "px-0"], {
           "lg:flex-row-reverse": reversed,
           "lg:flex-row": !reversed,
         })}
