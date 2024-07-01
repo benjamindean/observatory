@@ -10,7 +10,7 @@ extension BuildContextEntension<T> on BuildContext {
       MediaQuery.of(this).size.width < 1024.0 &&
       MediaQuery.of(this).size.width >= 650.0;
 
-  String? get semiBoldFont => GoogleFonts.openSans(
+  String? get semiBoldFont => GoogleFonts.lato(
         fontWeight: FontWeight.w500,
       ).fontFamily;
 
