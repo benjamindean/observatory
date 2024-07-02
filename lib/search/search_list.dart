@@ -7,6 +7,7 @@ import 'package:observatory/search/state/search_state.dart';
 import 'package:observatory/search/ui/recent_searches_list.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
@@ -44,7 +45,9 @@ class SearchList extends ConsumerWidget {
           return const RecentSearchesList();
         }
 
-        if (searchState.deals != null && searchState.deals?.isEmpty == true) {
+        final List<Deal> deals = searchState.deals ?? [];
+
+        if (searchState.deals?.isEmpty == true) {
           return const SliverFillRemaining(
             hasScrollBody: false,
             child: ErrorMessage(
@@ -62,7 +65,7 @@ class SearchList extends ConsumerWidget {
             itemCount: searchState.deals?.length ?? 0,
             itemBuilder: (context, index) {
               return DealCard(
-                deal: searchState.deals![index],
+                deal: deals[index],
                 cardType: cardType,
               );
             },

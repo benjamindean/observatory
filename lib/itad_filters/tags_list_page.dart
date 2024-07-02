@@ -1,10 +1,12 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/steam_tags_list.dart';
+import 'package:observatory/shared/widgets/error_message.dart';
 
 class TagsListPage extends ConsumerStatefulWidget {
   const TagsListPage({super.key});
@@ -28,6 +30,15 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
           itadFiltersProvider.select((value) => value.cached.tags),
         ) ??
         [];
+
+    if (filteredTags.isEmpty) {
+      return const Center(
+        child: ErrorMessage(
+          message: 'No tags found for your query.',
+          icon: FontAwesomeIcons.solidFaceSadTear,
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -75,7 +86,7 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: context.elevatedBottomAppBarColor,
+                  color: context.midElevatedCanvasColor,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
@@ -126,14 +137,18 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
                     )
                     .toList();
               }),
-              onSubmitted: (_) {
-                ref
-                    .watch(itadFiltersProvider.notifier)
-                    .addTags([filteredTags.first]);
+              onSubmitted: (_) async {
+                final String? firstTag = filteredTags.firstOrNull;
 
-                setState(() {
-                  filteredTags = steamTags;
-                });
+                if (firstTag != null) {
+                  await ref
+                      .watch(itadFiltersProvider.notifier)
+                      .addTags([firstTag]);
+
+                  setState(() {
+                    filteredTags = steamTags;
+                  });
+                }
               },
               decoration: InputDecoration(
                 suffixIcon: TextButton.icon(

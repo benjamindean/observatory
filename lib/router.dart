@@ -16,7 +16,7 @@ final shellNavigatorKeyDeals = GlobalKey<NavigatorState>();
 final shellNavigatorKeySearch = GlobalKey<NavigatorState>();
 final shellNavigatorKeyWaitlist = GlobalKey<NavigatorState>();
 
-final router = GoRouter(
+final GoRouter router = GoRouter(
   initialLocation: '/deals',
   navigatorKey: rootNavigatorKey,
   routes: [

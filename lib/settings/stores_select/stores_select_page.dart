@@ -2,7 +2,6 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:observatory/router.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/stores_select/stores_list_provider.dart';
 import 'package:observatory/shared/models/store.dart';
@@ -59,7 +58,7 @@ class StoreSelectPage extends ConsumerWidget {
                       onPressed: () {
                         showModalBottomSheet(
                           useSafeArea: true,
-                          context: rootNavigatorKey.currentContext!,
+                          context: context,
                           builder: (BuildContext context) {
                             return SafeArea(
                               child: Wrap(

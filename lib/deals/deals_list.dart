@@ -100,13 +100,11 @@ class DealsList extends ConsumerWidget {
 
         ref.read(asyncSettingsProvider.notifier).setCurrency(
               data.deals
-                  .firstWhere(
-                    (deal) => (deal.prices ?? []).isNotEmpty,
-                  )
-                  .prices!
-                  .first
-                  .price
-                  .currency,
+                      .firstWhere(
+                        (deal) => (deal.prices ?? []).isNotEmpty,
+                      )
+                      .prices ??
+                  [].firstOrNull?.price.currency,
             );
 
         return SliverPadding(

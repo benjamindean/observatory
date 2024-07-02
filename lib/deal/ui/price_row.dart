@@ -29,7 +29,7 @@ class PriceRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         PriceCut(
-          priceCut: price!.cut,
+          priceCut: price?.cut ?? 0,
         ),
         const Padding(
           padding: EdgeInsets.only(top: 2.0),
@@ -37,7 +37,7 @@ class PriceRow extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 3.5),
-          child: CurrentPrice(price: price!),
+          child: CurrentPrice(price: price),
         ),
       ],
     );
