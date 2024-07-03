@@ -31,15 +31,6 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
         ) ??
         [];
 
-    if (filteredTags.isEmpty) {
-      return const Center(
-        child: ErrorMessage(
-          message: 'No tags found for your query.',
-          icon: FontAwesomeIcons.solidFaceSadTear,
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Genres & Tags'),
@@ -51,35 +42,45 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: ListView.builder(
-                itemCount: filteredTags.length,
-                itemBuilder: (context, index) {
-                  final bool isSelected = tags.contains(filteredTags[index]);
+              child: filteredTags.isEmpty
+                  ? const Center(
+                      child: ErrorMessage(
+                        message: 'No tags found for your query.',
+                        icon: FontAwesomeIcons.solidFaceAngry,
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: filteredTags.length,
+                      itemBuilder: (context, index) {
+                        final bool isSelected =
+                            tags.contains(filteredTags[index]);
 
-                  return ListTile(
-                    selectedTileColor: context.colors.scheme.secondaryContainer,
-                    selectedColor: context.colors.scheme.onSecondaryContainer,
-                    trailing: index == 0
-                        ? const Icon(Icons.keyboard_return_rounded)
-                        : null,
-                    selected: isSelected,
-                    title: Text(filteredTags[index]),
-                    onTap: () async {
-                      if (isSelected) {
-                        ref
-                            .watch(itadFiltersProvider.notifier)
-                            .removeTag(filteredTags[index]);
-                      } else {
-                        ref
-                            .watch(itadFiltersProvider.notifier)
-                            .addTags([filteredTags[index]]);
-                      }
+                        return ListTile(
+                          selectedTileColor:
+                              context.colors.scheme.secondaryContainer,
+                          selectedColor:
+                              context.colors.scheme.onSecondaryContainer,
+                          trailing: index == 0
+                              ? const Icon(Icons.keyboard_return_rounded)
+                              : null,
+                          selected: isSelected,
+                          title: Text(filteredTags[index]),
+                          onTap: () async {
+                            if (isSelected) {
+                              ref
+                                  .watch(itadFiltersProvider.notifier)
+                                  .removeTag(filteredTags[index]);
+                            } else {
+                              ref
+                                  .watch(itadFiltersProvider.notifier)
+                                  .addTags([filteredTags[index]]);
+                            }
 
-                      autocompleteController.clear();
-                    },
-                  );
-                },
-              ),
+                            autocompleteController.clear();
+                          },
+                        );
+                      },
+                    ),
             ),
             Visibility(
               visible: tags.isNotEmpty,
