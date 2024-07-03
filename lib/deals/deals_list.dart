@@ -103,8 +103,11 @@ class DealsList extends ConsumerWidget {
                       .firstWhere(
                         (deal) => (deal.prices ?? []).isNotEmpty,
                       )
-                      .prices ??
-                  [].firstOrNull?.price.currency,
+                      .prices
+                      ?.firstOrNull
+                      ?.price
+                      .currency ??
+                  'USD',
             );
 
         return SliverPadding(

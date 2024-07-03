@@ -115,8 +115,9 @@ _$DealImpl _$$DealImplFromJson(Map<String, dynamic> json) => _$DealImpl(
       source: $enumDecodeNullable(_$DealSourceEnumMap, json['source']) ??
           DealSource.itad,
       prices: (json['prices'] as List<dynamic>?)
-          ?.map((e) => Price.fromJson(e as Map<String, dynamic>))
-          .toList(),
+              ?.map((e) => Price.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$DealImplToJson(_$DealImpl instance) =>

@@ -335,7 +335,7 @@ class API {
     return deals.map(
       (deal) {
         return deal.copyWith(
-          prices: listOfPrices[deal.id],
+          prices: listOfPrices[deal.id] ?? [],
         );
       },
     ).toList();
@@ -354,7 +354,7 @@ class API {
     return deals.map(
       (deal) {
         return deal.copyWith(
-          prices: mapOfPrices[deal.id],
+          prices: mapOfPrices[deal.id] ?? [],
         );
       },
     ).toList();

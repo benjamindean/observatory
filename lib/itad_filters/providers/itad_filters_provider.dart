@@ -105,15 +105,13 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
     );
   }
 
-  Future<void> addTags(List<String> tags) async {
+  void addTags(List<String> tags) {
     state = state.copyWith(
       cached: state.cached.copyWith(
         tags: Set<String>.of(List.of(state.cached.tags ?? [])..addAll(tags))
             .toList(),
       ),
     );
-
-    await save();
   }
 
   void removeTag(String tag) {

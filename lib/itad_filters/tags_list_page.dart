@@ -141,9 +141,7 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
                 final String? firstTag = filteredTags.firstOrNull;
 
                 if (firstTag != null) {
-                  await ref
-                      .watch(itadFiltersProvider.notifier)
-                      .addTags([firstTag]);
+                  ref.watch(itadFiltersProvider.notifier).addTags([firstTag]);
 
                   setState(() {
                     filteredTags = steamTags;
