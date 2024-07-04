@@ -10,14 +10,6 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
     _$SettingsStateImpl(
       showHeaders: json['showHeaders'] as bool,
       waitlistNotifications: json['waitlistNotifications'] as bool,
-      selectedCountry: json['selectedCountry'] as String,
-      currency: json['currency'] as String? ?? 'USD',
-      selectedStores: (json['selectedStores'] as List<dynamic>)
-          .map((e) => (e as num).toInt())
-          .toList(),
-      stores: (json['stores'] as List<dynamic>)
-          .map((e) => Store.fromJson(e as Map<String, dynamic>))
-          .toList(),
       dealsTab: $enumDecodeNullable(_$DealCategoryEnumMap, json['dealsTab']) ??
           DealCategory.all,
       dealCardType: $enumDecode(_$DealCardTypeEnumMap, json['dealCardType']),
@@ -32,10 +24,6 @@ Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
     <String, dynamic>{
       'showHeaders': instance.showHeaders,
       'waitlistNotifications': instance.waitlistNotifications,
-      'selectedCountry': instance.selectedCountry,
-      'currency': instance.currency,
-      'selectedStores': instance.selectedStores,
-      'stores': instance.stores,
       'dealsTab': _$DealCategoryEnumMap[instance.dealsTab]!,
       'dealCardType': _$DealCardTypeEnumMap[instance.dealCardType]!,
       'waitlistSorting': _$WaitlistSortingEnumMap[instance.waitlistSorting]!,

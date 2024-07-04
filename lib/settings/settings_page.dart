@@ -1,6 +1,7 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:observatory/settings/purchase/purchase_tile.dart';
 import 'package:observatory/settings/ui/about_links.dart';
+import 'package:observatory/settings/ui/country_settings_list_tile.dart';
+import 'package:observatory/settings/ui/stores_settings_list_tile.dart';
 import 'package:observatory/settings/ui/theme_list_tile.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
 import 'package:observatory/settings/ui/waitlist_alerts_settings_tile.dart';
@@ -27,7 +28,9 @@ class SettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<SettingsState> settings = ref.watch(asyncSettingsProvider);
+    final AsyncValue<SettingsState> settings = ref.watch(
+      asyncSettingsProvider,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -60,109 +63,13 @@ class SettingsPage extends ConsumerWidget {
             );
           },
           data: (data) {
-            final int totalStores = settings.valueOrNull?.stores.length ?? 0;
-            final int selectedCount =
-                settings.valueOrNull?.selectedStores.length ?? 0;
-
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  // const ListHeading(title: 'Account'),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(6.0),
-                  //   child: Card(
-                  //     child: StreamBuilder<User?>(
-                  //       initialData: null,
-                  //       stream: FirebaseAuth.instance.authStateChanges(),
-                  //       builder: (context, snapshot) {
-                  //         if (!snapshot.hasData) {
-                  //           return ListTile(
-                  //             title: const Text('Sign In'),
-                  //             subtitle:
-                  //                 const Text('Sync your waitlist and settings'),
-                  //             trailing: OutlinedButton(
-                  //               onPressed: () {
-                  //                 context.push('/settings/log-in');
-                  //               },
-                  //               child: const Text('Sign In'),
-                  //             ),
-                  //           );
-                  //         }
-
-                  //         return ListTile(
-                  //           title: const Text('Signed In'),
-                  //           subtitle: Text(
-                  //               snapshot.data!.email ?? snapshot.data!.uid),
-                  //           trailing: TextButton(
-                  //             child: const Text('Sign Out'),
-                  //             onPressed: () async {
-                  //               await FirebaseAuth.instance.signOut();
-                  //             },
-                  //           ),
-                  //         );
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
                   const ListHeading(title: 'General'),
-                  const ListTile(
-                    title: Text('Country'),
-                    subtitle: Text(
-                      'Availability of certain stores may vary based on your country.',
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 24.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: OutlinedButton.icon(
-                            icon: const Icon(
-                              Icons.arrow_drop_down_circle_sharp,
-                            ),
-                            onPressed: () {
-                              showCountryPicker(
-                                context: context,
-                                useRootNavigator: true,
-                                useSafeArea: true,
-                                countryListTheme: CountryListThemeData(
-                                  bottomSheetHeight:
-                                      MediaQuery.of(context).size.height * 0.8,
-                                  borderRadius: BorderRadius.zero,
-                                ),
-                                onSelect: (Country country) {
-                                  ref
-                                      .watch(asyncSettingsProvider.notifier)
-                                      .setCountry(country.countryCode);
-                                },
-                              );
-                            },
-                            label: Text(
-                              Country.tryParse(data.selectedCountry)?.name ??
-                                  data.selectedCountry.toString().toUpperCase(),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    title: const Text('Stores'),
-                    subtitle:
-                        const Text('Choose stores to retrieve prices from.'),
-                    trailing: OutlinedButton.icon(
-                      icon: const Icon(Icons.arrow_drop_down_circle),
-                      label: Text(
-                        '${selectedCount.toString()} of ${totalStores.toString()}',
-                      ),
-                      onPressed: () {
-                        context.push('/store-select');
-                      },
-                    ),
-                  ),
+                  const CountrySettingsListTile(),
+                  const StoresSettingsListTile(),
                   const ListHeading(title: 'Appearance'),
                   const DealCardTypeSettingsTile(),
                   const HeaderImagesSettingsTile(),
@@ -218,6 +125,36 @@ class SettingsPage extends ConsumerWidget {
                                 title: 'Confirm Waitlist Clearing',
                                 body:
                                     'Are you sure you want to clear your waitlist?',
+                                discardText: 'Cancel',
+                                applyText: 'Yes',
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      ListTile(
+                        title: const Text('Remove Steam imports'),
+                        subtitle: const Text(
+                          'Remove games imported from your Steam wishlist.',
+                        ),
+                        onTap: () async {
+                          showAdaptiveDialog(
+                            context: context,
+                            builder: (context) {
+                              return ObservatoryDialog(
+                                onApply: () async {
+                                  ref
+                                      .watch(asyncWaitListProvider.notifier)
+                                      .removeSteamImports();
+
+                                  context.pop();
+                                },
+                                onDiscard: () {
+                                  context.pop();
+                                },
+                                title: 'Confirm Steam imports removal',
+                                body:
+                                    'Are you sure you want to remove games imported from Steam?',
                                 discardText: 'Cancel',
                                 applyText: 'Yes',
                               );

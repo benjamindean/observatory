@@ -21,7 +21,7 @@ class TagsFilterTile extends ConsumerWidget {
         ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
           title: Text(
-            'Tags',
+            'Genres & Tags',
             style: context.textStyles.titleMedium.copyWith(
               color: context.colors.scheme.onSurface,
             ),

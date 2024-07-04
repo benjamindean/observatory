@@ -1,7 +1,6 @@
 import 'package:observatory/settings/settings_repository.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:observatory/shared/models/store.dart';
 
 part 'settings_state.freezed.dart';
 part 'settings_state.g.dart';
@@ -11,10 +10,6 @@ class SettingsState with _$SettingsState {
   factory SettingsState({
     required bool showHeaders,
     required bool waitlistNotifications,
-    required String selectedCountry,
-    @Default('USD') String currency,
-    required List<int> selectedStores,
-    required List<Store> stores,
     @Default(DealCategory.all) DealCategory dealsTab,
     required DealCardType dealCardType,
     required WaitlistSorting waitlistSorting,

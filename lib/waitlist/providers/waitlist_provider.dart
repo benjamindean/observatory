@@ -68,6 +68,22 @@ class AsyncWaitListNotifier extends AsyncNotifier<WaitListState> {
     );
   }
 
+  Future<void> removeSteamImports() async {
+    state = await AsyncValue.guard(
+      () async {
+        final List<Deal> newList = [...state.requireValue.deals]
+          ..removeWhere((element) => element.source == DealSource.steam);
+
+        await settingsRepository.removeDealsFromSteam();
+
+        return state.requireValue.copyWith(
+          ids: newList.map((e) => e.id).toList(),
+          deals: newList,
+        );
+      },
+    );
+  }
+
   Future<void> clearWaitlist() async {
     state = await AsyncValue.guard(
       () async {

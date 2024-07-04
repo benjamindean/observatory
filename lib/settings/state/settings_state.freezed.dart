@@ -22,10 +22,6 @@ SettingsState _$SettingsStateFromJson(Map<String, dynamic> json) {
 mixin _$SettingsState {
   bool get showHeaders => throw _privateConstructorUsedError;
   bool get waitlistNotifications => throw _privateConstructorUsedError;
-  String get selectedCountry => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
-  List<int> get selectedStores => throw _privateConstructorUsedError;
-  List<Store> get stores => throw _privateConstructorUsedError;
   DealCategory get dealsTab => throw _privateConstructorUsedError;
   DealCardType get dealCardType => throw _privateConstructorUsedError;
   WaitlistSorting get waitlistSorting => throw _privateConstructorUsedError;
@@ -48,10 +44,6 @@ abstract class $SettingsStateCopyWith<$Res> {
   $Res call(
       {bool showHeaders,
       bool waitlistNotifications,
-      String selectedCountry,
-      String currency,
-      List<int> selectedStores,
-      List<Store> stores,
       DealCategory dealsTab,
       DealCardType dealCardType,
       WaitlistSorting waitlistSorting,
@@ -74,10 +66,6 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   $Res call({
     Object? showHeaders = null,
     Object? waitlistNotifications = null,
-    Object? selectedCountry = null,
-    Object? currency = null,
-    Object? selectedStores = null,
-    Object? stores = null,
     Object? dealsTab = null,
     Object? dealCardType = null,
     Object? waitlistSorting = null,
@@ -93,22 +81,6 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.waitlistNotifications
           : waitlistNotifications // ignore: cast_nullable_to_non_nullable
               as bool,
-      selectedCountry: null == selectedCountry
-          ? _value.selectedCountry
-          : selectedCountry // ignore: cast_nullable_to_non_nullable
-              as String,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectedStores: null == selectedStores
-          ? _value.selectedStores
-          : selectedStores // ignore: cast_nullable_to_non_nullable
-              as List<int>,
-      stores: null == stores
-          ? _value.stores
-          : stores // ignore: cast_nullable_to_non_nullable
-              as List<Store>,
       dealsTab: null == dealsTab
           ? _value.dealsTab
           : dealsTab // ignore: cast_nullable_to_non_nullable
@@ -144,10 +116,6 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
   $Res call(
       {bool showHeaders,
       bool waitlistNotifications,
-      String selectedCountry,
-      String currency,
-      List<int> selectedStores,
-      List<Store> stores,
       DealCategory dealsTab,
       DealCardType dealCardType,
       WaitlistSorting waitlistSorting,
@@ -168,10 +136,6 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
   $Res call({
     Object? showHeaders = null,
     Object? waitlistNotifications = null,
-    Object? selectedCountry = null,
-    Object? currency = null,
-    Object? selectedStores = null,
-    Object? stores = null,
     Object? dealsTab = null,
     Object? dealCardType = null,
     Object? waitlistSorting = null,
@@ -187,22 +151,6 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.waitlistNotifications
           : waitlistNotifications // ignore: cast_nullable_to_non_nullable
               as bool,
-      selectedCountry: null == selectedCountry
-          ? _value.selectedCountry
-          : selectedCountry // ignore: cast_nullable_to_non_nullable
-              as String,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectedStores: null == selectedStores
-          ? _value._selectedStores
-          : selectedStores // ignore: cast_nullable_to_non_nullable
-              as List<int>,
-      stores: null == stores
-          ? _value._stores
-          : stores // ignore: cast_nullable_to_non_nullable
-              as List<Store>,
       dealsTab: null == dealsTab
           ? _value.dealsTab
           : dealsTab // ignore: cast_nullable_to_non_nullable
@@ -233,17 +181,11 @@ class _$SettingsStateImpl implements _SettingsState {
   _$SettingsStateImpl(
       {required this.showHeaders,
       required this.waitlistNotifications,
-      required this.selectedCountry,
-      this.currency = 'USD',
-      required final List<int> selectedStores,
-      required final List<Store> stores,
       this.dealsTab = DealCategory.all,
       required this.dealCardType,
       required this.waitlistSorting,
       required this.waitlistSortingDirection,
-      required this.crashlyticsEnabled})
-      : _selectedStores = selectedStores,
-        _stores = stores;
+      required this.crashlyticsEnabled});
 
   factory _$SettingsStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$SettingsStateImplFromJson(json);
@@ -252,27 +194,6 @@ class _$SettingsStateImpl implements _SettingsState {
   final bool showHeaders;
   @override
   final bool waitlistNotifications;
-  @override
-  final String selectedCountry;
-  @override
-  @JsonKey()
-  final String currency;
-  final List<int> _selectedStores;
-  @override
-  List<int> get selectedStores {
-    if (_selectedStores is EqualUnmodifiableListView) return _selectedStores;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_selectedStores);
-  }
-
-  final List<Store> _stores;
-  @override
-  List<Store> get stores {
-    if (_stores is EqualUnmodifiableListView) return _stores;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_stores);
-  }
-
   @override
   @JsonKey()
   final DealCategory dealsTab;
@@ -287,7 +208,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, selectedCountry: $selectedCountry, currency: $currency, selectedStores: $selectedStores, stores: $stores, dealsTab: $dealsTab, dealCardType: $dealCardType, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, crashlyticsEnabled: $crashlyticsEnabled)';
+    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, dealsTab: $dealsTab, dealCardType: $dealCardType, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, crashlyticsEnabled: $crashlyticsEnabled)';
   }
 
   @override
@@ -299,13 +220,6 @@ class _$SettingsStateImpl implements _SettingsState {
                 other.showHeaders == showHeaders) &&
             (identical(other.waitlistNotifications, waitlistNotifications) ||
                 other.waitlistNotifications == waitlistNotifications) &&
-            (identical(other.selectedCountry, selectedCountry) ||
-                other.selectedCountry == selectedCountry) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            const DeepCollectionEquality()
-                .equals(other._selectedStores, _selectedStores) &&
-            const DeepCollectionEquality().equals(other._stores, _stores) &&
             (identical(other.dealsTab, dealsTab) ||
                 other.dealsTab == dealsTab) &&
             (identical(other.dealCardType, dealCardType) ||
@@ -325,10 +239,6 @@ class _$SettingsStateImpl implements _SettingsState {
       runtimeType,
       showHeaders,
       waitlistNotifications,
-      selectedCountry,
-      currency,
-      const DeepCollectionEquality().hash(_selectedStores),
-      const DeepCollectionEquality().hash(_stores),
       dealsTab,
       dealCardType,
       waitlistSorting,
@@ -353,10 +263,6 @@ abstract class _SettingsState implements SettingsState {
   factory _SettingsState(
       {required final bool showHeaders,
       required final bool waitlistNotifications,
-      required final String selectedCountry,
-      final String currency,
-      required final List<int> selectedStores,
-      required final List<Store> stores,
       final DealCategory dealsTab,
       required final DealCardType dealCardType,
       required final WaitlistSorting waitlistSorting,
@@ -370,14 +276,6 @@ abstract class _SettingsState implements SettingsState {
   bool get showHeaders;
   @override
   bool get waitlistNotifications;
-  @override
-  String get selectedCountry;
-  @override
-  String get currency;
-  @override
-  List<int> get selectedStores;
-  @override
-  List<Store> get stores;
   @override
   DealCategory get dealsTab;
   @override

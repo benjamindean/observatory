@@ -140,6 +140,8 @@ void main() async {
     await enableCheckWaitlistTask();
   }
 
+  await GetIt.I<SettingsRepository>().incrementLaunchCounter();
+
   runApp(
     const ProviderScope(
       child: Observatory(),

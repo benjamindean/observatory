@@ -1,7 +1,6 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/state/settings_state.dart';
@@ -9,7 +8,6 @@ import 'package:observatory/settings/state/settings_state.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
-import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
   final SettingsRepository repository = GetIt.I<SettingsRepository>();
@@ -24,18 +22,12 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
     }
 
     return SettingsState(
-      selectedCountry: repository.getCountry(),
-      currency: repository.getCurrency(),
       showHeaders: repository.getShowHeaders(),
-      stores: stores,
       dealsTab: repository.getDealsTab(),
       waitlistNotifications: await repository.getWaitlistNotifications(),
       waitlistSorting: repository.getWaitlistSorting(),
       waitlistSortingDirection: repository.getWaitlistSortingDirection(),
       dealCardType: repository.getDealCardType(),
-      selectedStores: selectedStores.isEmpty
-          ? stores.map((e) => e.id).toList()
-          : selectedStores,
       crashlyticsEnabled:
           FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled,
     );
@@ -48,30 +40,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
     return _fetchSettings();
   }
 
-  Future<void> setCountry(String country) async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(
-      () async {
-        await repository.setCountry(country);
-
-        final List<Store> stores = await api.stores();
-
-        await repository.setSelectedStores(stores.map((e) => e.id).toList());
-
-        ref
-            .read(asyncDealsProvider(state.requireValue.dealsTab).notifier)
-            .reset();
-        ref.read(asyncWaitListProvider.notifier).reset();
-
-        return state.requireValue.copyWith(
-          selectedCountry: country,
-          stores: stores,
-          selectedStores: stores.map((e) => e.id).toList(),
-        );
-      },
-    );
-  }
-
   Future<void> setShowHeaders(bool showHeaders) async {
     state = await AsyncValue.guard(
       () async {
@@ -79,22 +47,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
         return state.requireValue.copyWith(
           showHeaders: showHeaders,
-        );
-      },
-    );
-  }
-
-  Future<void> setCurrency(String currency) async {
-    if (state.requireValue.currency == currency) {
-      return;
-    }
-
-    state = await AsyncValue.guard(
-      () async {
-        await repository.setCurrency(currency);
-
-        return state.requireValue.copyWith(
-          currency: currency,
         );
       },
     );
@@ -125,25 +77,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
         return state.requireValue.copyWith(
           waitlistNotifications: isEnabled,
-        );
-      },
-    );
-  }
-
-  Future<void> setSelectedStores(List<int> ids) async {
-    state = await AsyncValue.guard(
-      () async {
-        final List<int> storeIds = ids.toSet().toList();
-
-        await repository.setSelectedStores(storeIds);
-
-        ref
-            .read(asyncDealsProvider(state.requireValue.dealsTab).notifier)
-            .reset();
-        ref.read(asyncWaitListProvider.notifier).reset();
-
-        return state.requireValue.copyWith(
-          selectedStores: ids,
         );
       },
     );

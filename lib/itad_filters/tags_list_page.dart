@@ -1,12 +1,11 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
+import 'package:observatory/itad_filters/ui/filtered_tags_list.dart';
 import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/steam_tags_list.dart';
-import 'package:observatory/shared/widgets/error_message.dart';
 
 class TagsListPage extends ConsumerStatefulWidget {
   const TagsListPage({super.key});
@@ -42,45 +41,10 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: filteredTags.isEmpty
-                  ? const Center(
-                      child: ErrorMessage(
-                        message: 'No tags found for your query.',
-                        icon: FontAwesomeIcons.solidFaceAngry,
-                      ),
-                    )
-                  : ListView.builder(
-                      itemCount: filteredTags.length,
-                      itemBuilder: (context, index) {
-                        final bool isSelected =
-                            tags.contains(filteredTags[index]);
-
-                        return ListTile(
-                          selectedTileColor:
-                              context.colors.scheme.secondaryContainer,
-                          selectedColor:
-                              context.colors.scheme.onSecondaryContainer,
-                          trailing: index == 0
-                              ? const Icon(Icons.keyboard_return_rounded)
-                              : null,
-                          selected: isSelected,
-                          title: Text(filteredTags[index]),
-                          onTap: () async {
-                            if (isSelected) {
-                              ref
-                                  .watch(itadFiltersProvider.notifier)
-                                  .removeTag(filteredTags[index]);
-                            } else {
-                              ref
-                                  .watch(itadFiltersProvider.notifier)
-                                  .addTags([filteredTags[index]]);
-                            }
-
-                            autocompleteController.clear();
-                          },
-                        );
-                      },
-                    ),
+              child: FilteredTagsList(
+                filteredTags: filteredTags,
+                autocompleteController: autocompleteController,
+              ),
             ),
             Visibility(
               visible: tags.isNotEmpty,
@@ -169,7 +133,7 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.zero,
                 ),
-                hintText: 'Filter by name',
+                hintText: 'Filter by tag name',
               ),
             ),
           ],

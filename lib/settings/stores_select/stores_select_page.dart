@@ -2,7 +2,7 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:observatory/settings/providers/settings_provider.dart';
+import 'package:observatory/settings/providers/itad_config_provider.dart';
 import 'package:observatory/settings/stores_select/stores_list_provider.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:observatory/shared/ui/constants.dart';
@@ -15,13 +15,13 @@ class StoreSelectPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Store> stores = ref.watch(
-          asyncSettingsProvider.select(
+          itadConfigProvider.select(
             (value) => value.valueOrNull?.stores,
           ),
         ) ??
         [];
     final List<int> selectedStores = ref.watch(
-          asyncSettingsProvider.select(
+          itadConfigProvider.select(
             (value) => value.valueOrNull?.selectedStores,
           ),
         ) ??
@@ -119,12 +119,14 @@ class StoreSelectPage extends ConsumerWidget {
                           ? null
                           : () async {
                               await ref
-                                  .read(asyncSettingsProvider.notifier)
+                                  .read(itadConfigProvider.notifier)
                                   .setSelectedStores(storeList)
-                                  .then((value) => context.pop());
+                                  .then(
+                                    (value) => context.pop(),
+                                  );
                             },
-                      icon: const Icon(Icons.save),
-                      label: const Text('Save'),
+                      icon: const Icon(Icons.check),
+                      label: const Text('Apply'),
                     )
                   ],
                 ),
@@ -158,7 +160,7 @@ class StoreSelectPage extends ConsumerWidget {
                       },
                       onApply: () async {
                         await ref
-                            .read(asyncSettingsProvider.notifier)
+                            .read(itadConfigProvider.notifier)
                             .setSelectedStores(storeList)
                             .then(
                           (value) {

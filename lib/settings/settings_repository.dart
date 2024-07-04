@@ -4,6 +4,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:logger/logger.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/game/game.dart';
@@ -81,6 +82,7 @@ class SettingsRepository {
   final String PREF_STEAM_USERNAME = 'observatory_steam_username';
   final String PREF_IGDB_ACCESS_TOKEN = 'observatory_igdb_access_token';
   final String PREF_ITAD_FILTERS = 'observatory_itad_filters';
+  final String PREF_LAUNCH_COUNTER = 'observatory_launch_counter';
 
   final DealCategory defaultCategory = DealCategory.all;
   final WaitlistSorting defaultWaitlistSorting = WaitlistSorting.discount_date;
@@ -215,6 +217,24 @@ class SettingsRepository {
     return settingsBox.put(
       PREF_SELECTED_STORES,
       ids,
+    );
+  }
+
+  int getLaunchCounter() {
+    return settingsBox.get(
+      PREF_LAUNCH_COUNTER,
+      defaultValue: 0,
+    );
+  }
+
+  Future<void> incrementLaunchCounter() async {
+    final int count = getLaunchCounter() + 1;
+
+    Logger().i('Launch count: $count');
+
+    return settingsBox.put(
+      PREF_LAUNCH_COUNTER,
+      count,
     );
   }
 

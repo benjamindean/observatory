@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
+import 'package:observatory/settings/providers/itad_config_provider.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/constants.dart';
@@ -63,7 +64,7 @@ class DealsList extends ConsumerWidget {
             child: ErrorMessage(
               icon: FontAwesomeIcons.solidFaceDizzy,
               message:
-                  'Failed to fetch deals. IsThereAnyDeal might be down at the moment. Please try again later.',
+                  'Failed to fetch deals. The service might be down at the moment. Please try again later.',
               helper: TextButton.icon(
                 icon: const Icon(Icons.refresh),
                 label: const Text('Refresh'),
@@ -98,7 +99,7 @@ class DealsList extends ConsumerWidget {
           );
         }
 
-        ref.read(asyncSettingsProvider.notifier).setCurrency(
+        ref.read(itadConfigProvider.notifier).setCurrency(
               data.deals
                       .firstWhere(
                         (deal) => (deal.prices ?? []).isNotEmpty,

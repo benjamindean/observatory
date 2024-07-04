@@ -49,7 +49,7 @@ class RecentSearchesList extends ConsumerWidget {
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Center(
-                    child: OutlinedButton.icon(
+                    child: TextButton.icon(
                       icon: const Icon(Icons.clear_all),
                       onPressed: () async {
                         showAdaptiveDialog(
