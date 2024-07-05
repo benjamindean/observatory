@@ -91,7 +91,7 @@ class ITADFiltersInfoBar extends ConsumerWidget {
                       visible: filters.price != null,
                       child: Icon(
                         Icons.keyboard_arrow_left_rounded,
-                        size: 16,
+                        size: 14,
                         color: context.colors.scheme.onSurfaceVariant,
                       ),
                     ),
@@ -117,7 +117,7 @@ class ITADFiltersInfoBar extends ConsumerWidget {
                       visible: filters.cut != null,
                       child: Icon(
                         Icons.keyboard_arrow_right_rounded,
-                        size: 16,
+                        size: 14,
                         color: context.colors.scheme.onSurfaceVariant,
                       ),
                     ),

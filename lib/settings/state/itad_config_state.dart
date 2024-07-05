@@ -7,7 +7,7 @@ part 'itad_config_state.g.dart';
 @freezed
 class ITADConfigState with _$ITADConfigState {
   factory ITADConfigState({
-    required String selectedCountry,
+    @Default('US') String selectedCountry,
     @Default('USD') String currency,
     required List<int> selectedStores,
     required List<Store> stores,

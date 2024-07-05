@@ -9,7 +9,7 @@ part of 'itad_config_state.dart';
 _$ITADConfigStateImpl _$$ITADConfigStateImplFromJson(
         Map<String, dynamic> json) =>
     _$ITADConfigStateImpl(
-      selectedCountry: json['selectedCountry'] as String,
+      selectedCountry: json['selectedCountry'] as String? ?? 'US',
       currency: json['currency'] as String? ?? 'USD',
       selectedStores: (json['selectedStores'] as List<dynamic>)
           .map((e) => (e as num).toInt())

@@ -2,10 +2,13 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
+import 'package:observatory/shared/ui/observatory_shimmer.dart';
+import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
 
 class PurchaseTile extends ConsumerWidget {
@@ -23,6 +26,18 @@ class PurchaseTile extends ConsumerWidget {
       data: (data) {
         if (data.products.isEmpty) {
           return const SizedBox.shrink();
+        }
+
+        if (PurchaseStatus.pending == data.status) {
+          return const ObservatoryShimmer();
+        }
+
+        if (PurchaseStatus.purchased == data.status) {
+          ObservatorySnackBar.show(
+            context,
+            content: const Text('Thank you for your support!'),
+            icon: FontAwesomeIcons.solidHeart,
+          );
         }
 
         return Column(

@@ -139,7 +139,7 @@ class __$$ITADConfigStateImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ITADConfigStateImpl implements _ITADConfigState {
   _$ITADConfigStateImpl(
-      {required this.selectedCountry,
+      {this.selectedCountry = 'US',
       this.currency = 'USD',
       required final List<int> selectedStores,
       required final List<Store> stores})
@@ -150,6 +150,7 @@ class _$ITADConfigStateImpl implements _ITADConfigState {
       _$$ITADConfigStateImplFromJson(json);
 
   @override
+  @JsonKey()
   final String selectedCountry;
   @override
   @JsonKey()
@@ -215,7 +216,7 @@ class _$ITADConfigStateImpl implements _ITADConfigState {
 
 abstract class _ITADConfigState implements ITADConfigState {
   factory _ITADConfigState(
-      {required final String selectedCountry,
+      {final String selectedCountry,
       final String currency,
       required final List<int> selectedStores,
       required final List<Store> stores}) = _$ITADConfigStateImpl;

@@ -18,7 +18,7 @@ class FilteredTagsList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (filteredTags.isEmpty) {
-      const Center(
+      return const Center(
         child: ErrorMessage(
           message: 'No tags found for your query.',
           icon: FontAwesomeIcons.solidFaceAngry,
