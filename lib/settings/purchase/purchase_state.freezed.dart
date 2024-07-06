@@ -19,7 +19,6 @@ mixin _$PurchaseState {
   List<ProductDetails> get products => throw _privateConstructorUsedError;
   PurchaseStatus? get status => throw _privateConstructorUsedError;
   bool? get isPending => throw _privateConstructorUsedError;
-  bool? get didPurchase => throw _privateConstructorUsedError;
   List<String> get purchasedProductIds => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -37,7 +36,6 @@ abstract class $PurchaseStateCopyWith<$Res> {
       {List<ProductDetails> products,
       PurchaseStatus? status,
       bool? isPending,
-      bool? didPurchase,
       List<String> purchasedProductIds});
 }
 
@@ -57,7 +55,6 @@ class _$PurchaseStateCopyWithImpl<$Res, $Val extends PurchaseState>
     Object? products = null,
     Object? status = freezed,
     Object? isPending = freezed,
-    Object? didPurchase = freezed,
     Object? purchasedProductIds = null,
   }) {
     return _then(_value.copyWith(
@@ -72,10 +69,6 @@ class _$PurchaseStateCopyWithImpl<$Res, $Val extends PurchaseState>
       isPending: freezed == isPending
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      didPurchase: freezed == didPurchase
-          ? _value.didPurchase
-          : didPurchase // ignore: cast_nullable_to_non_nullable
               as bool?,
       purchasedProductIds: null == purchasedProductIds
           ? _value.purchasedProductIds
@@ -97,7 +90,6 @@ abstract class _$$PurchaseStateImplCopyWith<$Res>
       {List<ProductDetails> products,
       PurchaseStatus? status,
       bool? isPending,
-      bool? didPurchase,
       List<String> purchasedProductIds});
 }
 
@@ -115,7 +107,6 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
     Object? products = null,
     Object? status = freezed,
     Object? isPending = freezed,
-    Object? didPurchase = freezed,
     Object? purchasedProductIds = null,
   }) {
     return _then(_$PurchaseStateImpl(
@@ -130,10 +121,6 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
       isPending: freezed == isPending
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      didPurchase: freezed == didPurchase
-          ? _value.didPurchase
-          : didPurchase // ignore: cast_nullable_to_non_nullable
               as bool?,
       purchasedProductIds: null == purchasedProductIds
           ? _value._purchasedProductIds
@@ -150,7 +137,6 @@ class _$PurchaseStateImpl implements _PurchaseState {
       {final List<ProductDetails> products = const [],
       this.status,
       this.isPending = false,
-      this.didPurchase = false,
       final List<String> purchasedProductIds = const []})
       : _products = products,
         _purchasedProductIds = purchasedProductIds;
@@ -169,9 +155,6 @@ class _$PurchaseStateImpl implements _PurchaseState {
   @override
   @JsonKey()
   final bool? isPending;
-  @override
-  @JsonKey()
-  final bool? didPurchase;
   final List<String> _purchasedProductIds;
   @override
   @JsonKey()
@@ -184,7 +167,7 @@ class _$PurchaseStateImpl implements _PurchaseState {
 
   @override
   String toString() {
-    return 'PurchaseState(products: $products, status: $status, isPending: $isPending, didPurchase: $didPurchase, purchasedProductIds: $purchasedProductIds)';
+    return 'PurchaseState(products: $products, status: $status, isPending: $isPending, purchasedProductIds: $purchasedProductIds)';
   }
 
   @override
@@ -196,8 +179,6 @@ class _$PurchaseStateImpl implements _PurchaseState {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.isPending, isPending) ||
                 other.isPending == isPending) &&
-            (identical(other.didPurchase, didPurchase) ||
-                other.didPurchase == didPurchase) &&
             const DeepCollectionEquality()
                 .equals(other._purchasedProductIds, _purchasedProductIds));
   }
@@ -208,7 +189,6 @@ class _$PurchaseStateImpl implements _PurchaseState {
       const DeepCollectionEquality().hash(_products),
       status,
       isPending,
-      didPurchase,
       const DeepCollectionEquality().hash(_purchasedProductIds));
 
   @JsonKey(ignore: true)
@@ -223,7 +203,6 @@ abstract class _PurchaseState implements PurchaseState {
       {final List<ProductDetails> products,
       final PurchaseStatus? status,
       final bool? isPending,
-      final bool? didPurchase,
       final List<String> purchasedProductIds}) = _$PurchaseStateImpl;
 
   @override
@@ -232,8 +211,6 @@ abstract class _PurchaseState implements PurchaseState {
   PurchaseStatus? get status;
   @override
   bool? get isPending;
-  @override
-  bool? get didPurchase;
   @override
   List<String> get purchasedProductIds;
   @override

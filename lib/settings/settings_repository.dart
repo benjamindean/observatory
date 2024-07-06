@@ -453,7 +453,7 @@ class SettingsRepository {
 
     return settingsBox.put(
       PREF_PURCHASED_PRODUCTS,
-      Set.of(purchasedProducts..add(id)).toList(),
+      Set<String>.of(purchasedProducts..add(id)).toList(),
     );
   }
 }

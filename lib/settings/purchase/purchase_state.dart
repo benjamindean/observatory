@@ -9,7 +9,6 @@ class PurchaseState with _$PurchaseState {
     @Default([]) List<ProductDetails> products,
     PurchaseStatus? status,
     @Default(false) bool? isPending,
-    @Default(false) bool? didPurchase,
     @Default([]) List<String> purchasedProductIds,
   }) = _PurchaseState;
 }

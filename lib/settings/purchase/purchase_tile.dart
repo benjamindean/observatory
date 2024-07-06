@@ -7,7 +7,6 @@ import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/products_list.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
-import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
 
 class PurchaseTile extends ConsumerWidget {
@@ -25,14 +24,6 @@ class PurchaseTile extends ConsumerWidget {
       data: (data) {
         if (data.products.isEmpty) {
           return const SizedBox.shrink();
-        }
-
-        if (data.didPurchase == true) {
-          ObservatorySnackBar.show(
-            context,
-            content: const Text('Thank you for your support!'),
-            icon: FontAwesomeIcons.solidHeart,
-          );
         }
 
         return Column(
@@ -57,6 +48,21 @@ class PurchaseTile extends ConsumerWidget {
                 purchasedProductIds: data.purchasedProductIds,
               ),
             ),
+            TextButton.icon(
+              onPressed: () async {
+                await ref.watch(asyncPurchaseProvider.notifier).restore();
+              },
+              label: Text(
+                'Restore Purchases',
+                style: context.textStyles.labelMedium.copyWith(
+                  color: context.colors.scheme.primary,
+                ),
+              ),
+              icon: Icon(
+                FontAwesomeIcons.arrowsRotate,
+                color: context.colors.scheme.primary,
+              ),
+            )
           ],
         );
       },

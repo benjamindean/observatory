@@ -42,8 +42,8 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     subscription = purchaseUpdated.listen(
       (purchaseDetailsList) async {
         for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
-          state = await AsyncValue.guard(
-            () async => state.requireValue.copyWith(
+          state = AsyncValue.data(
+            state.requireValue.copyWith(
               status: purchaseDetails.status,
             ),
           );
@@ -53,31 +53,15 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
               break;
             case PurchaseStatus.error:
             case PurchaseStatus.purchased:
-              GetIt.I<SettingsRepository>().setPurchasedProductIds(
-                purchaseDetails.productID,
-              );
+              await addToPurchasedList(purchaseDetails.productID);
 
-              state = await AsyncValue.guard(
-                () async => state.requireValue.copyWith(
-                  didPurchase: true,
-                  purchasedProductIds: Set<String>.of(
-                    (state.valueOrNull?.purchasedProductIds ?? [])
-                      ..add(
-                        purchaseDetails.productID,
-                      ),
-                  ).toList(),
-                ),
-              );
               break;
             case PurchaseStatus.restored:
-              GetIt.I<SettingsRepository>().setPurchasedProductIds(
-                purchaseDetails.productID,
-              );
+              await addToPurchasedList(purchaseDetails.productID);
 
               state = await AsyncValue.guard(
                 () async => state.requireValue.copyWith(
                   isPending: false,
-                  didPurchase: false,
                 ),
               );
 
@@ -89,27 +73,24 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
           }
 
           if (purchaseDetails.pendingCompletePurchase) {
-            state = await AsyncValue.guard(
-              () async => state.requireValue.copyWith(
-                isPending: true,
-                didPurchase: false,
+            state = AsyncValue.data(
+              state.requireValue.copyWith(
+                isPending: false,
               ),
             );
 
             await InAppPurchase.instance.completePurchase(purchaseDetails);
 
-            state = await AsyncValue.guard(
-              () async => state.requireValue.copyWith(
+            state = AsyncValue.data(
+              state.requireValue.copyWith(
                 isPending: false,
-                didPurchase: true,
               ),
             );
           }
 
-          state = await AsyncValue.guard(
-            () async => state.requireValue.copyWith(
+          state = AsyncValue.data(
+            state.requireValue.copyWith(
               isPending: false,
-              didPurchase: false,
             ),
           );
         }
@@ -125,17 +106,21 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     return PurchaseState(
       products: await _fetchPurchases(),
       status: PurchaseStatus.canceled,
-      didPurchase: false,
       purchasedProductIds:
           GetIt.I<SettingsRepository>().getPurchasedProductIds(),
     );
   }
 
-  Future<void> reset() async {
-    subscription?.cancel();
+  Future<void> addToPurchasedList(String id) async {
+    await GetIt.I<SettingsRepository>().setPurchasedProductIds(id);
 
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() => build());
+    state = await AsyncValue.guard(
+      () async => state.requireValue.copyWith(
+        purchasedProductIds: Set<String>.of(
+          (state.valueOrNull?.purchasedProductIds ?? [])..add(id),
+        ).toList(),
+      ),
+    );
   }
 
   Future<void> purchase(ProductDetails product) async {
@@ -150,6 +135,25 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to purchase product',
+        error: error,
+        stackTrace: stackTrace,
+      );
+
+      FirebaseCrashlytics.instance.recordError(
+        error,
+        stackTrace,
+      );
+
+      return;
+    }
+  }
+
+  Future<void> restore() async {
+    try {
+      await InAppPurchase.instance.restorePurchases();
+    } catch (error, stackTrace) {
+      Logger().e(
+        'Failed to restore purchases',
         error: error,
         stackTrace: stackTrace,
       );
