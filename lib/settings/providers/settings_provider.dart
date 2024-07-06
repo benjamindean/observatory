@@ -1,8 +1,6 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:logger/logger.dart';
-import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/state/settings_state.dart';
 
@@ -36,21 +34,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
   @override
   Future<SettingsState> build() async {
-    try {
-      await ref.watch(asyncPurchaseProvider.future);
-    } catch (error, stackTrace) {
-      Logger().e(
-        'Failed to fetch purchase information',
-        error: error,
-        stackTrace: stackTrace,
-      );
-
-      FirebaseCrashlytics.instance.recordError(
-        error,
-        stackTrace,
-      );
-    }
-
     return _fetchSettings();
   }
 

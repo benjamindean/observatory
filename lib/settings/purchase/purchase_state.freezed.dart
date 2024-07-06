@@ -19,6 +19,8 @@ mixin _$PurchaseState {
   List<ProductDetails> get products => throw _privateConstructorUsedError;
   PurchaseStatus? get status => throw _privateConstructorUsedError;
   bool? get isPending => throw _privateConstructorUsedError;
+  bool? get didPurchase => throw _privateConstructorUsedError;
+  List<String> get purchasedProductIds => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PurchaseStateCopyWith<PurchaseState> get copyWith =>
@@ -32,7 +34,11 @@ abstract class $PurchaseStateCopyWith<$Res> {
       _$PurchaseStateCopyWithImpl<$Res, PurchaseState>;
   @useResult
   $Res call(
-      {List<ProductDetails> products, PurchaseStatus? status, bool? isPending});
+      {List<ProductDetails> products,
+      PurchaseStatus? status,
+      bool? isPending,
+      bool? didPurchase,
+      List<String> purchasedProductIds});
 }
 
 /// @nodoc
@@ -51,6 +57,8 @@ class _$PurchaseStateCopyWithImpl<$Res, $Val extends PurchaseState>
     Object? products = null,
     Object? status = freezed,
     Object? isPending = freezed,
+    Object? didPurchase = freezed,
+    Object? purchasedProductIds = null,
   }) {
     return _then(_value.copyWith(
       products: null == products
@@ -65,6 +73,14 @@ class _$PurchaseStateCopyWithImpl<$Res, $Val extends PurchaseState>
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
               as bool?,
+      didPurchase: freezed == didPurchase
+          ? _value.didPurchase
+          : didPurchase // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      purchasedProductIds: null == purchasedProductIds
+          ? _value.purchasedProductIds
+          : purchasedProductIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -78,7 +94,11 @@ abstract class _$$PurchaseStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<ProductDetails> products, PurchaseStatus? status, bool? isPending});
+      {List<ProductDetails> products,
+      PurchaseStatus? status,
+      bool? isPending,
+      bool? didPurchase,
+      List<String> purchasedProductIds});
 }
 
 /// @nodoc
@@ -95,6 +115,8 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
     Object? products = null,
     Object? status = freezed,
     Object? isPending = freezed,
+    Object? didPurchase = freezed,
+    Object? purchasedProductIds = null,
   }) {
     return _then(_$PurchaseStateImpl(
       products: null == products
@@ -109,6 +131,14 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
               as bool?,
+      didPurchase: freezed == didPurchase
+          ? _value.didPurchase
+          : didPurchase // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      purchasedProductIds: null == purchasedProductIds
+          ? _value._purchasedProductIds
+          : purchasedProductIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -119,8 +149,11 @@ class _$PurchaseStateImpl implements _PurchaseState {
   _$PurchaseStateImpl(
       {final List<ProductDetails> products = const [],
       this.status,
-      this.isPending = false})
-      : _products = products;
+      this.isPending = false,
+      this.didPurchase = false,
+      final List<String> purchasedProductIds = const []})
+      : _products = products,
+        _purchasedProductIds = purchasedProductIds;
 
   final List<ProductDetails> _products;
   @override
@@ -136,10 +169,22 @@ class _$PurchaseStateImpl implements _PurchaseState {
   @override
   @JsonKey()
   final bool? isPending;
+  @override
+  @JsonKey()
+  final bool? didPurchase;
+  final List<String> _purchasedProductIds;
+  @override
+  @JsonKey()
+  List<String> get purchasedProductIds {
+    if (_purchasedProductIds is EqualUnmodifiableListView)
+      return _purchasedProductIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_purchasedProductIds);
+  }
 
   @override
   String toString() {
-    return 'PurchaseState(products: $products, status: $status, isPending: $isPending)';
+    return 'PurchaseState(products: $products, status: $status, isPending: $isPending, didPurchase: $didPurchase, purchasedProductIds: $purchasedProductIds)';
   }
 
   @override
@@ -150,12 +195,21 @@ class _$PurchaseStateImpl implements _PurchaseState {
             const DeepCollectionEquality().equals(other._products, _products) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.isPending, isPending) ||
-                other.isPending == isPending));
+                other.isPending == isPending) &&
+            (identical(other.didPurchase, didPurchase) ||
+                other.didPurchase == didPurchase) &&
+            const DeepCollectionEquality()
+                .equals(other._purchasedProductIds, _purchasedProductIds));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_products), status, isPending);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_products),
+      status,
+      isPending,
+      didPurchase,
+      const DeepCollectionEquality().hash(_purchasedProductIds));
 
   @JsonKey(ignore: true)
   @override
@@ -168,7 +222,9 @@ abstract class _PurchaseState implements PurchaseState {
   factory _PurchaseState(
       {final List<ProductDetails> products,
       final PurchaseStatus? status,
-      final bool? isPending}) = _$PurchaseStateImpl;
+      final bool? isPending,
+      final bool? didPurchase,
+      final List<String> purchasedProductIds}) = _$PurchaseStateImpl;
 
   @override
   List<ProductDetails> get products;
@@ -176,6 +232,10 @@ abstract class _PurchaseState implements PurchaseState {
   PurchaseStatus? get status;
   @override
   bool? get isPending;
+  @override
+  bool? get didPurchase;
+  @override
+  List<String> get purchasedProductIds;
   @override
   @JsonKey(ignore: true)
   _$$PurchaseStateImplCopyWith<_$PurchaseStateImpl> get copyWith =>

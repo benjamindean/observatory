@@ -15,6 +15,7 @@ class SettingsState with _$SettingsState {
     required WaitlistSorting waitlistSorting,
     required WaitlistSortingDirection waitlistSortingDirection,
     required bool crashlyticsEnabled,
+    @Default([]) List<String> purchasedProductIds,
   }) = _SettingsState;
 
   factory SettingsState.fromJson(Map<String, Object?> json) =>

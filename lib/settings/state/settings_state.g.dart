@@ -18,6 +18,10 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
       waitlistSortingDirection: $enumDecode(
           _$WaitlistSortingDirectionEnumMap, json['waitlistSortingDirection']),
       crashlyticsEnabled: json['crashlyticsEnabled'] as bool,
+      purchasedProductIds: (json['purchasedProductIds'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
@@ -30,6 +34,7 @@ Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
       'waitlistSortingDirection':
           _$WaitlistSortingDirectionEnumMap[instance.waitlistSortingDirection]!,
       'crashlyticsEnabled': instance.crashlyticsEnabled,
+      'purchasedProductIds': instance.purchasedProductIds,
     };
 
 const _$DealCategoryEnumMap = {

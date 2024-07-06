@@ -3,11 +3,10 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/settings/purchase/products_list.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
-import 'package:observatory/shared/ui/observatory_shimmer.dart';
 import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
 
@@ -28,11 +27,7 @@ class PurchaseTile extends ConsumerWidget {
           return const SizedBox.shrink();
         }
 
-        if (PurchaseStatus.pending == data.status) {
-          return const ObservatoryShimmer();
-        }
-
-        if (PurchaseStatus.purchased == data.status) {
+        if (data.didPurchase == true) {
           ObservatorySnackBar.show(
             context,
             content: const Text('Thank you for your support!'),
@@ -56,30 +51,10 @@ class PurchaseTile extends ConsumerWidget {
                 16.0,
                 8.0,
               ),
-              child: Wrap(
-                spacing: 12.0,
-                children: data.products
-                    .map(
-                      (e) => FilledButton(
-                        onPressed: PurchaseStatus.pending == data.status
-                            ? null
-                            : () {
-                                ref
-                                    .watch(asyncPurchaseProvider.notifier)
-                                    .purchase(e);
-                              },
-                        child: Text(
-                          e.price,
-                          style: context.themes.text.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: PurchaseStatus.pending == data.status
-                                ? context.colors.disabled
-                                : context.colors.scheme.onPrimary,
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
+              child: ProductsList(
+                products: data.products,
+                status: data.status,
+                purchasedProductIds: data.purchasedProductIds,
               ),
             ),
           ],

@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
+import 'package:observatory/settings/settings_repository.dart';
 
 class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
   StreamSubscription<List<PurchaseDetails>>? subscription;
@@ -34,61 +36,98 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
 
   @override
   Future<PurchaseState> build() async {
-    ref.onDispose(() {
-      subscription?.cancel();
-    });
-
     final Stream<List<PurchaseDetails>> purchaseUpdated =
         InAppPurchase.instance.purchaseStream;
 
-    subscription = purchaseUpdated.listen((purchaseDetailsList) async {
-      for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
-        state = await AsyncValue.guard(
-          () async => state.requireValue.copyWith(
-            status: purchaseDetails.status,
-          ),
-        );
-
-        switch (purchaseDetails.status) {
-          case PurchaseStatus.pending:
-            break;
-          case PurchaseStatus.error:
-            break;
-          case PurchaseStatus.purchased:
-            break;
-          case PurchaseStatus.restored:
-            break;
-          case PurchaseStatus.canceled:
-            await InAppPurchase.instance.completePurchase(purchaseDetails);
-
-            break;
-        }
-
-        if (purchaseDetails.pendingCompletePurchase) {
+    subscription = purchaseUpdated.listen(
+      (purchaseDetailsList) async {
+        for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
           state = await AsyncValue.guard(
             () async => state.requireValue.copyWith(
-              isPending: true,
+              status: purchaseDetails.status,
             ),
           );
 
-          await InAppPurchase.instance.completePurchase(purchaseDetails);
+          switch (purchaseDetails.status) {
+            case PurchaseStatus.pending:
+              break;
+            case PurchaseStatus.error:
+            case PurchaseStatus.purchased:
+              GetIt.I<SettingsRepository>().setPurchasedProductIds(
+                purchaseDetails.productID,
+              );
+
+              state = await AsyncValue.guard(
+                () async => state.requireValue.copyWith(
+                  didPurchase: true,
+                  purchasedProductIds: Set<String>.of(
+                    (state.valueOrNull?.purchasedProductIds ?? [])
+                      ..add(
+                        purchaseDetails.productID,
+                      ),
+                  ).toList(),
+                ),
+              );
+              break;
+            case PurchaseStatus.restored:
+              GetIt.I<SettingsRepository>().setPurchasedProductIds(
+                purchaseDetails.productID,
+              );
+
+              state = await AsyncValue.guard(
+                () async => state.requireValue.copyWith(
+                  isPending: false,
+                  didPurchase: false,
+                ),
+              );
+
+              break;
+            case PurchaseStatus.canceled:
+              await InAppPurchase.instance.completePurchase(purchaseDetails);
+
+              break;
+          }
+
+          if (purchaseDetails.pendingCompletePurchase) {
+            state = await AsyncValue.guard(
+              () async => state.requireValue.copyWith(
+                isPending: true,
+                didPurchase: false,
+              ),
+            );
+
+            await InAppPurchase.instance.completePurchase(purchaseDetails);
+
+            state = await AsyncValue.guard(
+              () async => state.requireValue.copyWith(
+                isPending: false,
+                didPurchase: true,
+              ),
+            );
+          }
 
           state = await AsyncValue.guard(
             () async => state.requireValue.copyWith(
               isPending: false,
+              didPurchase: false,
             ),
           );
         }
-      }
-    }, onDone: () {
-      subscription?.cancel();
-    }, onError: (error) {
-      return;
-    });
+      },
+      onDone: () {
+        subscription?.cancel();
+      },
+      onError: (error) {
+        return;
+      },
+    );
 
     return PurchaseState(
       products: await _fetchPurchases(),
       status: PurchaseStatus.canceled,
+      didPurchase: false,
+      purchasedProductIds:
+          GetIt.I<SettingsRepository>().getPurchasedProductIds(),
     );
   }
 

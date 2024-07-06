@@ -83,6 +83,7 @@ class SettingsRepository {
   final String PREF_IGDB_ACCESS_TOKEN = 'observatory_igdb_access_token';
   final String PREF_ITAD_FILTERS = 'observatory_itad_filters';
   final String PREF_LAUNCH_COUNTER = 'observatory_launch_counter';
+  final String PREF_PURCHASED_PRODUCTS = 'observatory_purchased_products';
 
   final DealCategory defaultCategory = DealCategory.all;
   final WaitlistSorting defaultWaitlistSorting = WaitlistSorting.discount_date;
@@ -433,6 +434,26 @@ class SettingsRepository {
     return settingsBox.put(
       PREF_ITAD_FILTERS,
       filters,
+    );
+  }
+
+  List<String> getPurchasedProductIds() {
+    return settingsBox.get(
+      PREF_PURCHASED_PRODUCTS,
+      defaultValue: <String>[],
+    );
+  }
+
+  Future<void> setPurchasedProductIds(String? id) async {
+    if (id == null) {
+      return;
+    }
+
+    final List<String> purchasedProducts = getPurchasedProductIds();
+
+    return settingsBox.put(
+      PREF_PURCHASED_PRODUCTS,
+      Set.of(purchasedProducts..add(id)).toList(),
     );
   }
 }
