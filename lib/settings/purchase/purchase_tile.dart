@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/products_list.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
+import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
 
 class PurchaseTile extends ConsumerWidget {
@@ -21,8 +22,8 @@ class PurchaseTile extends ConsumerWidget {
     );
 
     return purchases.when(
-      data: (data) {
-        if (data.products.isEmpty) {
+      data: (state) {
+        if (state.products.isEmpty) {
           return const SizedBox.shrink();
         }
 
@@ -35,32 +36,54 @@ class PurchaseTile extends ConsumerWidget {
                 'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it. Any amount is appreciated. Please note that there are no additional features or benefits for supporters.',
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
+            const Padding(
+              padding: EdgeInsets.fromLTRB(
                 16.0,
                 8.0,
                 16.0,
                 8.0,
               ),
-              child: ProductsList(
-                products: data.products,
-                status: data.status,
-                purchasedProductIds: data.purchasedProductIds,
-              ),
+              child: ProductsList(),
             ),
-            TextButton.icon(
-              onPressed: () async {
-                await ref.watch(asyncPurchaseProvider.notifier).restore();
-              },
-              label: Text(
-                'Restore Purchases',
-                style: context.textStyles.labelMedium.copyWith(
-                  color: context.colors.scheme.primary,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextButton.icon(
+                onPressed: () async {
+                  ObservatorySnackBar.show(
+                    context,
+                    content: const Text('Restoring purchases...'),
+                  );
+
+                  await ref
+                      .watch(asyncPurchaseProvider.notifier)
+                      .restore()
+                      .then(
+                    (value) {
+                      if (value) {
+                        ObservatorySnackBar.show(
+                          context,
+                          content: const Text('Purchases restored!'),
+                        );
+                      } else {
+                        ObservatorySnackBar.show(
+                          context,
+                          content: const Text('No purchases to restore.'),
+                        );
+                      }
+                    },
+                  );
+                },
+                label: Text(
+                  'Restore Purchases',
+                  style: context.textStyles.labelMedium.copyWith(
+                    color: context.colors.scheme.primary,
+                  ),
                 ),
-              ),
-              icon: Icon(
-                FontAwesomeIcons.arrowsRotate,
-                color: context.colors.scheme.primary,
+                icon: Icon(
+                  FontAwesomeIcons.arrowsRotate,
+                  color: context.colors.scheme.primary,
+                  size: 16.0,
+                ),
               ),
             )
           ],

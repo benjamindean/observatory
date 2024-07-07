@@ -18,8 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PurchaseState {
   List<ProductDetails> get products => throw _privateConstructorUsedError;
   PurchaseStatus? get status => throw _privateConstructorUsedError;
-  bool? get isPending => throw _privateConstructorUsedError;
+  bool get isPending => throw _privateConstructorUsedError;
   List<String> get purchasedProductIds => throw _privateConstructorUsedError;
+  StreamSubscription<List<PurchaseDetails>>? get subscription =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PurchaseStateCopyWith<PurchaseState> get copyWith =>
@@ -35,8 +37,9 @@ abstract class $PurchaseStateCopyWith<$Res> {
   $Res call(
       {List<ProductDetails> products,
       PurchaseStatus? status,
-      bool? isPending,
-      List<String> purchasedProductIds});
+      bool isPending,
+      List<String> purchasedProductIds,
+      StreamSubscription<List<PurchaseDetails>>? subscription});
 }
 
 /// @nodoc
@@ -54,8 +57,9 @@ class _$PurchaseStateCopyWithImpl<$Res, $Val extends PurchaseState>
   $Res call({
     Object? products = null,
     Object? status = freezed,
-    Object? isPending = freezed,
+    Object? isPending = null,
     Object? purchasedProductIds = null,
+    Object? subscription = freezed,
   }) {
     return _then(_value.copyWith(
       products: null == products
@@ -66,14 +70,18 @@ class _$PurchaseStateCopyWithImpl<$Res, $Val extends PurchaseState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as PurchaseStatus?,
-      isPending: freezed == isPending
+      isPending: null == isPending
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
       purchasedProductIds: null == purchasedProductIds
           ? _value.purchasedProductIds
           : purchasedProductIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      subscription: freezed == subscription
+          ? _value.subscription
+          : subscription // ignore: cast_nullable_to_non_nullable
+              as StreamSubscription<List<PurchaseDetails>>?,
     ) as $Val);
   }
 }
@@ -89,8 +97,9 @@ abstract class _$$PurchaseStateImplCopyWith<$Res>
   $Res call(
       {List<ProductDetails> products,
       PurchaseStatus? status,
-      bool? isPending,
-      List<String> purchasedProductIds});
+      bool isPending,
+      List<String> purchasedProductIds,
+      StreamSubscription<List<PurchaseDetails>>? subscription});
 }
 
 /// @nodoc
@@ -106,8 +115,9 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
   $Res call({
     Object? products = null,
     Object? status = freezed,
-    Object? isPending = freezed,
+    Object? isPending = null,
     Object? purchasedProductIds = null,
+    Object? subscription = freezed,
   }) {
     return _then(_$PurchaseStateImpl(
       products: null == products
@@ -118,14 +128,18 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as PurchaseStatus?,
-      isPending: freezed == isPending
+      isPending: null == isPending
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
       purchasedProductIds: null == purchasedProductIds
           ? _value._purchasedProductIds
           : purchasedProductIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      subscription: freezed == subscription
+          ? _value.subscription
+          : subscription // ignore: cast_nullable_to_non_nullable
+              as StreamSubscription<List<PurchaseDetails>>?,
     ));
   }
 }
@@ -137,7 +151,8 @@ class _$PurchaseStateImpl implements _PurchaseState {
       {final List<ProductDetails> products = const [],
       this.status,
       this.isPending = false,
-      final List<String> purchasedProductIds = const []})
+      final List<String> purchasedProductIds = const [],
+      this.subscription})
       : _products = products,
         _purchasedProductIds = purchasedProductIds;
 
@@ -154,7 +169,7 @@ class _$PurchaseStateImpl implements _PurchaseState {
   final PurchaseStatus? status;
   @override
   @JsonKey()
-  final bool? isPending;
+  final bool isPending;
   final List<String> _purchasedProductIds;
   @override
   @JsonKey()
@@ -166,8 +181,11 @@ class _$PurchaseStateImpl implements _PurchaseState {
   }
 
   @override
+  final StreamSubscription<List<PurchaseDetails>>? subscription;
+
+  @override
   String toString() {
-    return 'PurchaseState(products: $products, status: $status, isPending: $isPending, purchasedProductIds: $purchasedProductIds)';
+    return 'PurchaseState(products: $products, status: $status, isPending: $isPending, purchasedProductIds: $purchasedProductIds, subscription: $subscription)';
   }
 
   @override
@@ -180,7 +198,9 @@ class _$PurchaseStateImpl implements _PurchaseState {
             (identical(other.isPending, isPending) ||
                 other.isPending == isPending) &&
             const DeepCollectionEquality()
-                .equals(other._purchasedProductIds, _purchasedProductIds));
+                .equals(other._purchasedProductIds, _purchasedProductIds) &&
+            (identical(other.subscription, subscription) ||
+                other.subscription == subscription));
   }
 
   @override
@@ -189,7 +209,8 @@ class _$PurchaseStateImpl implements _PurchaseState {
       const DeepCollectionEquality().hash(_products),
       status,
       isPending,
-      const DeepCollectionEquality().hash(_purchasedProductIds));
+      const DeepCollectionEquality().hash(_purchasedProductIds),
+      subscription);
 
   @JsonKey(ignore: true)
   @override
@@ -200,19 +221,23 @@ class _$PurchaseStateImpl implements _PurchaseState {
 
 abstract class _PurchaseState implements PurchaseState {
   factory _PurchaseState(
-      {final List<ProductDetails> products,
-      final PurchaseStatus? status,
-      final bool? isPending,
-      final List<String> purchasedProductIds}) = _$PurchaseStateImpl;
+          {final List<ProductDetails> products,
+          final PurchaseStatus? status,
+          final bool isPending,
+          final List<String> purchasedProductIds,
+          final StreamSubscription<List<PurchaseDetails>>? subscription}) =
+      _$PurchaseStateImpl;
 
   @override
   List<ProductDetails> get products;
   @override
   PurchaseStatus? get status;
   @override
-  bool? get isPending;
+  bool get isPending;
   @override
   List<String> get purchasedProductIds;
+  @override
+  StreamSubscription<List<PurchaseDetails>>? get subscription;
   @override
   @JsonKey(ignore: true)
   _$$PurchaseStateImplCopyWith<_$PurchaseStateImpl> get copyWith =>

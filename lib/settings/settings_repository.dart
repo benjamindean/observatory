@@ -437,8 +437,8 @@ class SettingsRepository {
     );
   }
 
-  List<String> getPurchasedProductIds() {
-    return settingsBox.get(
+  Future<List<String>> getPurchasedProductIds() async {
+    return await settingsBox.get(
       PREF_PURCHASED_PRODUCTS,
       defaultValue: <String>[],
     );
@@ -449,7 +449,7 @@ class SettingsRepository {
       return;
     }
 
-    final List<String> purchasedProducts = getPurchasedProductIds();
+    final List<String> purchasedProducts = await getPurchasedProductIds();
 
     return settingsBox.put(
       PREF_PURCHASED_PRODUCTS,
