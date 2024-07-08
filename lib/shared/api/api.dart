@@ -70,7 +70,7 @@ class API {
   Future<Overview?> overview({
     required List<String> ids,
   }) async {
-    final String country = settingsReporsitory.getCountry();
+    final String country = await settingsReporsitory.getCountry();
 
     try {
       final Uri url = Uri.https(BASE_URL, '/games/overview/v2', {
@@ -102,8 +102,8 @@ class API {
   Future<Map<String, List<Price>?>> prices({
     required List<String> ids,
   }) async {
-    final String country = settingsReporsitory.getCountry();
-    final List<int> stores = settingsReporsitory.getSelectedStores();
+    final String country = await settingsReporsitory.getCountry();
+    final List<int> stores = await settingsReporsitory.getSelectedStores();
 
     final Map<String, List<Price>> prices = {};
     final List<List<String>> listOfIds = splitIDs(ids);
@@ -141,7 +141,7 @@ class API {
   }
 
   Future<List<Store>> stores() async {
-    final String country = settingsReporsitory.getCountry();
+    final String country = await settingsReporsitory.getCountry();
 
     final Uri url = Uri.https(BASE_URL, '/service/shops/v1', {
       'key': API_KEY,
@@ -164,8 +164,8 @@ class API {
     final int limit = DEALS_COUNT,
     final int offset = 0,
   }) async {
-    final String country = settingsReporsitory.getCountry();
-    final List<int> stores = settingsReporsitory.getSelectedStores();
+    final String country = await settingsReporsitory.getCountry();
+    final List<int> stores = await settingsReporsitory.getSelectedStores();
     final ITADFilters filters = settingsReporsitory.getITADFilters();
 
     final Uri url = Uri.https(BASE_URL, '/deals/v2', {

@@ -59,9 +59,9 @@ class ITADFiltersInfoBar extends ConsumerWidget {
               ),
               onPressed: filters != const ITADFilters()
                   ? () {
-                      ref.watch(itadFiltersProvider.notifier).reset();
+                      ref.read(itadFiltersProvider.notifier).reset();
                       ref
-                          .watch(asyncDealsProvider(DealCategory.all).notifier)
+                          .read(asyncDealsProvider(DealCategory.all).notifier)
                           .reset(withLoading: true);
                     }
                   : null,

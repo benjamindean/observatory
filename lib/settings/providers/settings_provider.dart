@@ -14,19 +14,19 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
   Future<SettingsState> _fetchSettings() async {
     final List<Store> stores = await api.stores();
-    final List<int> selectedStores = repository.getSelectedStores();
+    final List<int> selectedStores = await repository.getSelectedStores();
 
     if (selectedStores.isEmpty) {
       await repository.setSelectedStores(stores.map((e) => e.id).toList());
     }
 
     return SettingsState(
-      showHeaders: repository.getShowHeaders(),
-      dealsTab: repository.getDealsTab(),
+      showHeaders: await repository.getShowHeaders(),
+      dealsTab: await repository.getDealsTab(),
       waitlistNotifications: await repository.getWaitlistNotifications(),
-      waitlistSorting: repository.getWaitlistSorting(),
-      waitlistSortingDirection: repository.getWaitlistSortingDirection(),
-      dealCardType: repository.getDealCardType(),
+      waitlistSorting: await repository.getWaitlistSorting(),
+      waitlistSortingDirection: await repository.getWaitlistSortingDirection(),
+      dealCardType: await repository.getDealCardType(),
       crashlyticsEnabled:
           FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled,
     );

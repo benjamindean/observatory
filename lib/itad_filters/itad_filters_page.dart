@@ -59,7 +59,7 @@ class ITADFiltersPage extends ConsumerWidget {
                   OrySmallButton(
                     onPressed: isUpdated
                         ? () {
-                            ref.watch(itadFiltersProvider.notifier).revert();
+                            ref.read(itadFiltersProvider.notifier).revert();
                           }
                         : null,
                     icon: Icons.restore_rounded,
@@ -73,9 +73,9 @@ class ITADFiltersPage extends ConsumerWidget {
                   OrySmallButton(
                     onPressed: isUpdated
                         ? () {
-                            ref.watch(itadFiltersProvider.notifier).save();
+                            ref.read(itadFiltersProvider.notifier).save();
                             ref
-                                .watch(asyncDealsProvider(DealCategory.all)
+                                .read(asyncDealsProvider(DealCategory.all)
                                     .notifier)
                                 .reset(withLoading: true);
 

@@ -15,15 +15,15 @@ class ITADConfigProvider extends AsyncNotifier<ITADConfigState> {
 
   Future<ITADConfigState> _fetchITADConfig() async {
     final List<Store> stores = await api.stores();
-    final List<int> selectedStores = repository.getSelectedStores();
+    final List<int> selectedStores = await repository.getSelectedStores();
 
     if (selectedStores.isEmpty) {
       await repository.setSelectedStores(stores.map((e) => e.id).toList());
     }
 
     return ITADConfigState(
-      selectedCountry: repository.getCountry(),
-      currency: repository.getCurrency(),
+      selectedCountry: await repository.getCountry(),
+      currency: await repository.getCurrency(),
       stores: stores,
       selectedStores: selectedStores.isEmpty
           ? stores.map((e) => e.id).toList()

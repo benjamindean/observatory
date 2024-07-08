@@ -19,7 +19,7 @@ class SupabaseAPI {
         },
       );
 
-      return response.data != null
+      return response.data != null && response.data['data'] != null
           ? GameDetails.fromJson(response.data['data'])
           : null;
     } catch (error) {

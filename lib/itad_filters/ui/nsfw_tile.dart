@@ -30,7 +30,7 @@ class NSFWTile extends ConsumerWidget {
       ),
       value: isEnabled,
       onChanged: (value) {
-        ref.watch(itadFiltersProvider.notifier).setNSFW(value);
+        ref.read(itadFiltersProvider.notifier).setNSFW(value);
       },
     );
   }

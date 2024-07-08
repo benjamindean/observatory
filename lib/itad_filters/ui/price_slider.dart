@@ -45,7 +45,7 @@ class PriceSlider extends ConsumerWidget {
             max: FilterBounds.price.max.toDouble(),
             divisions: 20,
             onChanged: (value) {
-              ref.watch(itadFiltersProvider.notifier).setMaxPrice(value);
+              ref.read(itadFiltersProvider.notifier).setMaxPrice(value);
             },
           ),
         ),

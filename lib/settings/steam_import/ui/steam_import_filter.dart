@@ -41,7 +41,7 @@ class SteamImportFilter extends ConsumerWidget {
               style: context.textStyles.bodySmall,
             ),
             onTap: () async {
-              return ref.watch(steamImportProvider.notifier).set([]);
+              return ref.read(steamImportProvider.notifier).set([]);
             },
           ),
         ],

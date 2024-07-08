@@ -111,8 +111,8 @@ class SettingsRepository {
     await Hive.openBox<String>(RECENT_SEARCHES_BOX_NAME);
   }
 
-  String getCountry() {
-    return settingsBox.get(
+  Future<String> getCountry() async {
+    return await settingsBox.get(
       PREF_COUNTRY,
       defaultValue: 'US',
     );
@@ -125,8 +125,8 @@ class SettingsRepository {
     );
   }
 
-  String getCurrency() {
-    return settingsBox.get(
+  Future<String> getCurrency() async {
+    return await settingsBox.get(
       PREF_CURRENCY,
       defaultValue: 'USD',
     );
@@ -139,8 +139,8 @@ class SettingsRepository {
     );
   }
 
-  bool getShowHeaders() {
-    return settingsBox.get(
+  Future<bool> getShowHeaders() async {
+    return await settingsBox.get(
       PREF_SHOW_HEADERS,
       defaultValue: true,
     );
@@ -207,8 +207,8 @@ class SettingsRepository {
     return removeDeals(steamDeals);
   }
 
-  List<int> getSelectedStores() {
-    return settingsBox.get(
+  Future<List<int>> getSelectedStores() async {
+    return await settingsBox.get(
       PREF_SELECTED_STORES,
       defaultValue: <int>[],
     );
@@ -221,15 +221,15 @@ class SettingsRepository {
     );
   }
 
-  int getLaunchCounter() {
-    return settingsBox.get(
+  Future<int> getLaunchCounter() async {
+    return await settingsBox.get(
       PREF_LAUNCH_COUNTER,
       defaultValue: 0,
     );
   }
 
   Future<void> incrementLaunchCounter() async {
-    final int count = getLaunchCounter() + 1;
+    final int count = await getLaunchCounter() + 1;
 
     Logger().i('Launch count: $count');
 
@@ -239,8 +239,8 @@ class SettingsRepository {
     );
   }
 
-  DealCategory getDealsTab() {
-    final String category = settingsBox.get(
+  Future<DealCategory> getDealsTab() async {
+    final String category = await settingsBox.get(
       PREF_DEALS_TAB,
       defaultValue: defaultCategory.name.toString(),
     );
@@ -259,7 +259,7 @@ class SettingsRepository {
     final bool isEnabledOnSystem =
         await AwesomeNotifications().isNotificationAllowed();
 
-    return settingsBox.get(
+    return await settingsBox.get(
           PREF_WAITLIST_NOTIFICATIONS,
           defaultValue: false,
         ) &&
@@ -291,8 +291,8 @@ class SettingsRepository {
     );
   }
 
-  DealCardType getDealCardType() {
-    final String type = settingsBox.get(
+  Future<DealCardType> getDealCardType() async {
+    final String type = await settingsBox.get(
       PREF_DEAL_CARD_TYPE,
       defaultValue: defaultDealCardType.name.toString(),
     );
@@ -307,8 +307,8 @@ class SettingsRepository {
     );
   }
 
-  WaitlistSorting getWaitlistSorting() {
-    final String sorting = settingsBox.get(
+  Future<WaitlistSorting> getWaitlistSorting() async {
+    final String sorting = await settingsBox.get(
       PREF_WAITLIST_SORTING,
       defaultValue: defaultWaitlistSorting.name.toString(),
     );
@@ -348,8 +348,8 @@ class SettingsRepository {
     });
   }
 
-  WaitlistSortingDirection getWaitlistSortingDirection() {
-    final String? sorting = settingsBox.get(
+  Future<WaitlistSortingDirection> getWaitlistSortingDirection() async {
+    final String? sorting = await settingsBox.get(
       PREF_WAITLIST_SORTING_DIRECTION,
       defaultValue: defaultWaitlistSortingDirection.name.toString(),
     );
@@ -404,8 +404,8 @@ class SettingsRepository {
     return recentSearchesBox.clear();
   }
 
-  IGDBAccessToken? getIGDBAccessToken() {
-    return settingsBox.get(PREF_IGDB_ACCESS_TOKEN);
+  Future<IGDBAccessToken?> getIGDBAccessToken() async {
+    return await settingsBox.get(PREF_IGDB_ACCESS_TOKEN);
   }
 
   Future<void> setIGDBAccessToken(IGDBAccessToken? accessToken) async {

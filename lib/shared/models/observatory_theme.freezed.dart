@@ -127,11 +127,12 @@ class __$$ObservatoryThemeImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ObservatoryThemeImpl implements _ObservatoryTheme {
+class _$ObservatoryThemeImpl extends _ObservatoryTheme {
   const _$ObservatoryThemeImpl(
       {@HiveField(0) required this.mode,
       @HiveField(1) required this.isTrueBlack,
-      @HiveField(2) this.scheme = 'mandyRed'});
+      @HiveField(2) this.scheme = 'mandyRed'})
+      : super._();
 
   factory _$ObservatoryThemeImpl.fromJson(Map<String, dynamic> json) =>
       _$$ObservatoryThemeImplFromJson(json);
@@ -182,11 +183,12 @@ class _$ObservatoryThemeImpl implements _ObservatoryTheme {
   }
 }
 
-abstract class _ObservatoryTheme implements ObservatoryTheme {
+abstract class _ObservatoryTheme extends ObservatoryTheme {
   const factory _ObservatoryTheme(
       {@HiveField(0) required final String mode,
       @HiveField(1) required final bool isTrueBlack,
       @HiveField(2) final String? scheme}) = _$ObservatoryThemeImpl;
+  const _ObservatoryTheme._() : super._();
 
   factory _ObservatoryTheme.fromJson(Map<String, dynamic> json) =
       _$ObservatoryThemeImpl.fromJson;

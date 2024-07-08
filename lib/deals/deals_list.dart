@@ -6,7 +6,6 @@ import 'package:logger/logger.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
-import 'package:observatory/settings/providers/itad_config_provider.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/constants.dart';
@@ -98,18 +97,6 @@ class DealsList extends ConsumerWidget {
             ),
           );
         }
-
-        ref.read(itadConfigProvider.notifier).setCurrency(
-              data.deals
-                      .firstWhere(
-                        (deal) => (deal.prices ?? []).isNotEmpty,
-                      )
-                      .prices
-                      ?.firstOrNull
-                      ?.price
-                      .currency ??
-                  'USD',
-            );
 
         return SliverPadding(
           padding: const EdgeInsets.all(6.0),

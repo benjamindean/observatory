@@ -120,7 +120,7 @@ class IGDBAPI {
 
   Future<IGDBAccessToken?> getIGDBToken() async {
     final IGDBAccessToken? cachedToken =
-        settingsReporsitory.getIGDBAccessToken();
+        await settingsReporsitory.getIGDBAccessToken();
 
     if (cachedToken != null) {
       final double currentDate = DateTime.now().millisecondsSinceEpoch / 1000;

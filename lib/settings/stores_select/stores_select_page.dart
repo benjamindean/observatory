@@ -99,7 +99,7 @@ class StoreSelectPage extends ConsumerWidget {
                                       style: context.textStyles.bodySmall,
                                     ),
                                     onTap: () async {
-                                      ref.watch(listProvider.notifier).set(
+                                      ref.read(listProvider.notifier).set(
                                             stores.map((e) => e.id).toList(),
                                           );
 

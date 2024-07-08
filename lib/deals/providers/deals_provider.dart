@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:observatory/deals/state/deals_state.dart';
+import 'package:observatory/settings/providers/itad_config_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/api/constans.dart';
@@ -11,6 +12,18 @@ class AsyncDealsNotifier
   Future<DealsState> _initDeals() async {
     final List<Deal> results = await fetchDeals();
     final List<Deal> deals = Set<Deal>.from(results).toList();
+
+    ref.read(itadConfigProvider.notifier).setCurrency(
+          results
+                  .firstWhere(
+                    (deal) => (deal.prices ?? []).isNotEmpty,
+                  )
+                  .prices
+                  ?.firstOrNull
+                  ?.price
+                  .currency ??
+              'USD',
+        );
 
     return DealsState(
       deals: deals,

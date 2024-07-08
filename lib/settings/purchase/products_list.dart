@@ -30,7 +30,7 @@ class ProductsList extends ConsumerWidget {
           children: state.products.map((e) {
             return FilledButton(
               onPressed: () {
-                ref.watch(asyncPurchaseProvider.notifier).purchase(e);
+                ref.read(asyncPurchaseProvider.notifier).purchase(e);
               },
               child: Text(
                 e.price,

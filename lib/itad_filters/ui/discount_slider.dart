@@ -38,7 +38,7 @@ class DiscountSlider extends ConsumerWidget {
             max: FilterBounds.cut.max.toDouble(),
             divisions: 20,
             onChanged: (value) {
-              ref.watch(itadFiltersProvider.notifier).setMinDiscount(value);
+              ref.read(itadFiltersProvider.notifier).setMinDiscount(value);
             },
           ),
         ),
