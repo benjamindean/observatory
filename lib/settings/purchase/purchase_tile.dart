@@ -30,7 +30,7 @@ class PurchaseTile extends ConsumerWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ListHeading(title: 'Support the app'),
+            const ListHeading(title: 'Observatory+'),
             const ListTile(
               subtitle: Text(
                 'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it. Any amount is appreciated. Please note that there are no additional features or benefits for supporters.',

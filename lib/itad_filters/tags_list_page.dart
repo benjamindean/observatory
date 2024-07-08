@@ -1,30 +1,21 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/itad_filters/ui/filtered_tags_list.dart';
 import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/steam_tags_list.dart';
 
-class TagsListPage extends ConsumerStatefulWidget {
+class TagsListPage extends HookConsumerWidget {
   const TagsListPage({super.key});
 
   @override
-  TagsListPageState createState() => TagsListPageState();
-}
-
-class TagsListPageState extends ConsumerState<TagsListPage> {
-  List<String> filteredTags = steamTags;
-  final TextEditingController autocompleteController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final TextEditingController autocompleteController =
+        useTextEditingController();
+    final ValueNotifier<List<String>> filteredTags = useState(steamTags);
     final List<String> tags = ref.watch(
           itadFiltersProvider.select((value) => value.cached.tags),
         ) ??
@@ -42,7 +33,7 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
           children: [
             Expanded(
               child: FilteredTagsList(
-                filteredTags: filteredTags,
+                filteredTags: filteredTags.value,
                 autocompleteController: autocompleteController,
               ),
             ),
@@ -93,24 +84,22 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
               onEditingComplete: () {
                 autocompleteController.clear();
               },
-              onChanged: (value) => setState(() {
-                filteredTags = steamTags
+              onChanged: (value) {
+                filteredTags.value = steamTags
                     .where(
                       (tag) => tag.toLowerCase().contains(
                             value.toLowerCase(),
                           ),
                     )
                     .toList();
-              }),
+              },
               onSubmitted: (_) async {
-                final String? firstTag = filteredTags.firstOrNull;
+                final String? firstTag = filteredTags.value.firstOrNull;
 
                 if (firstTag != null) {
                   ref.read(itadFiltersProvider.notifier).addTags([firstTag]);
 
-                  setState(() {
-                    filteredTags = steamTags;
-                  });
+                  filteredTags.value = steamTags;
                 }
               },
               decoration: InputDecoration(

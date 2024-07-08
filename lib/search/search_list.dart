@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/search/state/search_state.dart';
@@ -8,7 +9,6 @@ import 'package:observatory/search/ui/recent_searches_list.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 
@@ -25,15 +25,9 @@ class SearchList extends ConsumerWidget {
         (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
       ),
     );
-    final bool showHeaders = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.valueOrNull?.showHeaders ?? false,
-      ),
-    );
-    final double? screenWidth = cardType == DealCardType.compact
-        ? null
-        : MediaQuery.of(context).size.width;
-    final double height = cardHeight(showHeaders, cardType, screenWidth);
+    final double cardHeight = ref
+        .watch(dealCardSizeProvider.notifier)
+        .getHeight(MediaQuery.of(context).size.width);
 
     return Builder(
       builder: (BuildContext context) {
@@ -61,7 +55,7 @@ class SearchList extends ConsumerWidget {
           key: const Key('search-scroll-view'),
           padding: const EdgeInsets.all(6.0),
           sliver: SliverFixedExtentList.builder(
-            itemExtent: height,
+            itemExtent: cardHeight,
             itemCount: searchState.deals?.length ?? 0,
             itemBuilder: (context, index) {
               return DealCard(

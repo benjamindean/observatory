@@ -55,6 +55,8 @@ dependencies:
   uuid: ^4.4.0
   lzstring: ^2.0.0+2
   supabase: ^2.2.2
+  flutter_hooks: ^0.20.5
+  hooks_riverpod: ^2.5.1
 
 dependency_overrides:
   intl: any

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/load_more.dart';
@@ -26,20 +26,14 @@ class DealsList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<DealsState> deals = ref.watch(provider);
     final AsyncDealsNotifier dealsNotifier = ref.watch(provider.notifier);
-    final bool showHeaders = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.valueOrNull?.showHeaders ?? false,
-      ),
-    );
     final DealCardType cardType = ref.watch(
       asyncSettingsProvider.select(
         (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
       ),
     );
-    final double? screenWidth = cardType == DealCardType.compact
-        ? null
-        : MediaQuery.of(context).size.width;
-    final double height = cardHeight(showHeaders, cardType, screenWidth);
+    final double cardHeight = ref
+        .watch(dealCardSizeProvider.notifier)
+        .getHeight(MediaQuery.of(context).size.width);
 
     return deals.when(
       loading: () {
@@ -101,7 +95,7 @@ class DealsList extends ConsumerWidget {
         return SliverPadding(
           padding: const EdgeInsets.all(6.0),
           sliver: SliverFixedExtentList.builder(
-            itemExtent: height,
+            itemExtent: cardHeight,
             itemCount: data.deals.length + 1,
             itemBuilder: (context, index) {
               if (index >= data.deals.length) {

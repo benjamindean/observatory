@@ -18,6 +18,16 @@ class ProductsList extends ConsumerWidget {
 
     return purchases.when(
       data: (state) {
+        if (state.purchasedProductIds.isNotEmpty) {
+          return Text(
+            'Thank you for your support!',
+            style: context.themes.text.titleMedium?.copyWith(
+              color: context.colors.scheme.onSurface,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        }
+
         if (state.isPending) {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 22.0, horizontal: 4.0),

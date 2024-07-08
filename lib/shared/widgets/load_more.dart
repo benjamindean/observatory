@@ -1,8 +1,9 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 
-class LoadMore extends StatefulWidget {
+class LoadMore extends HookWidget {
   final Function onPress;
   final bool hasReachedMax;
 
@@ -13,15 +14,10 @@ class LoadMore extends StatefulWidget {
   });
 
   @override
-  LoadMoreState createState() => LoadMoreState();
-}
-
-class LoadMoreState extends State<LoadMore> {
-  bool isLoading = false;
-
-  @override
   Widget build(BuildContext context) {
-    if (widget.hasReachedMax) {
+    final ValueNotifier<bool> isLoading = useState(false);
+
+    if (hasReachedMax) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -39,22 +35,18 @@ class LoadMoreState extends State<LoadMore> {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: OutlinedButton.icon(
-          icon: isLoading
+          icon: isLoading.value
               ? const ObservatoryIconProgressIndicator()
               : const Icon(Icons.arrow_downward_rounded),
           label: const Text('Load More'),
-          onPressed: isLoading
+          onPressed: isLoading.value
               ? null
               : () async {
-                  setState(() {
-                    isLoading = true;
-                  });
+                  isLoading.value = true;
 
-                  await widget.onPress();
+                  await onPress();
 
-                  setState(() {
-                    isLoading = false;
-                  });
+                  isLoading.value = false;
                 },
         ),
       ),

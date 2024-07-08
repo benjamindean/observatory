@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/waitlist/ui/empty_waitlist.dart';
@@ -34,20 +34,14 @@ class WaitListList extends ConsumerWidget {
         (value) => value.isImporting || value.isLoading,
       ),
     );
-    final bool showHeaders = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.valueOrNull?.showHeaders ?? false,
-      ),
-    );
     final DealCardType cardType = ref.watch(
       asyncSettingsProvider.select(
         (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
       ),
     );
-    final double? screenWidth = cardType == DealCardType.compact
-        ? null
-        : MediaQuery.of(context).size.width;
-    final double height = cardHeight(showHeaders, cardType, screenWidth);
+    final double cardHeight = ref
+        .watch(dealCardSizeProvider.notifier)
+        .getHeight(MediaQuery.of(context).size.width);
 
     if (isSteamImportLoading) {
       return const OryFullScreenSpinner();
@@ -106,7 +100,7 @@ class WaitListList extends ConsumerWidget {
         return SliverPadding(
           padding: const EdgeInsets.all(6.0),
           sliver: SliverFixedExtentList.builder(
-            itemExtent: height,
+            itemExtent: cardHeight,
             itemBuilder: (context, index) {
               return DealCard(
                 deal: filteredWaitlist[index],
