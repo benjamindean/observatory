@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/ui/deal_card_compact.dart';
 import 'package:observatory/shared/models/deal.dart';
@@ -7,6 +8,7 @@ import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:observatory/shared/ui/close_bottom_sheet_button.dart';
 import 'package:observatory/shared/ui/rounded_container.dart';
+import 'package:observatory/shared/widgets/error_message.dart';
 
 void showBookmarks(BuildContext context) {
   showModalBottomSheet(
@@ -48,15 +50,26 @@ class BookmarksPage extends ConsumerWidget {
               ),
             ),
             Expanded(
-              child: RoundedContainer(
-                child: ListView.builder(
-                  itemCount: bookmarks.length,
-                  itemBuilder: (context, index) {
-                    return DealCardCompact(deal: bookmarks[index]);
-                  },
-                ),
-              ),
-            )
+              child: RoundedContainer(child: Builder(
+                builder: (context) {
+                  if (bookmarks.isEmpty) {
+                    return const Center(
+                      child: ErrorMessage(
+                        message: 'You have no bookmarks.',
+                        icon: FontAwesomeIcons.solidFaceSadTear,
+                      ),
+                    );
+                  }
+
+                  return ListView.builder(
+                    itemCount: bookmarks.length,
+                    itemBuilder: (context, index) {
+                      return DealCardCompact(deal: bookmarks[index]);
+                    },
+                  );
+                },
+              )),
+            ),
           ],
         ),
       ),
