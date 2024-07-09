@@ -15,6 +15,7 @@ import 'package:observatory/shared/models/shop.dart';
 
 const SETTINGS_BOX_NAME = 'observatory_user_data';
 const SAVED_DEALS_BOX_NAME = 'observatory_saved_deals';
+const BOOKMARKED_DEALS_BOX_NAME = 'observatory_bookmarked_deals';
 const PAST_SAVED_DEALS_BOX_NAME = 'observatory_past_saved_deals';
 const RECENT_SEARCHES_BOX_NAME = 'observatory_recent_searches';
 
@@ -59,6 +60,9 @@ class SettingsRepository {
   final Box settingsBox = Hive.box(SETTINGS_BOX_NAME);
   final Box<Deal> savedDealsBox = Hive.box<Deal>(
     SAVED_DEALS_BOX_NAME,
+  );
+  final Box<Deal> bookmarkedDealsBox = Hive.box<Deal>(
+    BOOKMARKED_DEALS_BOX_NAME,
   );
   final Box<Deal> pastSavedDealsBox = Hive.box<Deal>(
     PAST_SAVED_DEALS_BOX_NAME,
@@ -106,6 +110,7 @@ class SettingsRepository {
 
     await Hive.openBox(SETTINGS_BOX_NAME);
     await Hive.openBox<Deal>(SAVED_DEALS_BOX_NAME);
+    await Hive.openBox<Deal>(BOOKMARKED_DEALS_BOX_NAME);
     await Hive.openBox<Deal>(PAST_SAVED_DEALS_BOX_NAME);
     await Hive.openBox<Deal>(PAST_SAVED_DEALS_BOX_NAME);
     await Hive.openBox<String>(RECENT_SEARCHES_BOX_NAME);
@@ -455,5 +460,30 @@ class SettingsRepository {
       PREF_PURCHASED_PRODUCTS,
       Set<String>.of(purchasedProducts..add(id)).toList(),
     );
+  }
+
+  Future<List<Deal>> getBookmarks() async {
+    return bookmarkedDealsBox.values.toList();
+  }
+
+  Future<void> saveBookmark(Deal deal) async {
+    return bookmarkedDealsBox.put(
+      deal.id,
+      Deal(
+        id: deal.id,
+        slug: deal.slug,
+        title: deal.title,
+        added: DateTime.now().millisecondsSinceEpoch,
+        source: DealSource.itad,
+      ),
+    );
+  }
+
+  Future<void> removeBoomark(Deal deal) async {
+    return bookmarkedDealsBox.delete(deal.id);
+  }
+
+  Future<int> removeAllBookmarks() async {
+    return bookmarkedDealsBox.clear();
   }
 }

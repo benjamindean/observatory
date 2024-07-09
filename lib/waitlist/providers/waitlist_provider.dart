@@ -6,23 +6,17 @@ import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/waitlist/state/waitlist_state.dart';
 
-class AsyncWaitListNotifier extends AsyncNotifier<WaitListState> {
+class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   final SettingsRepository settingsRepository = GetIt.I<SettingsRepository>();
   final API api = GetIt.I<API>();
 
-  Future<WaitListState> _fetchWaitList() async {
-    final List<Deal> waitlist = await api.fetchWaitlist();
-
-    return WaitListState(
-      deals: waitlist,
-      ids: waitlist.map((e) => e.id).toList(),
-    );
+  Future<List<Deal>> _fetchWaitList() async {
+    return await api.fetchWaitlist();
   }
 
   @override
-  Future<WaitListState> build() async {
+  Future<List<Deal>> build() async {
     return _fetchWaitList();
   }
 
@@ -37,19 +31,16 @@ class AsyncWaitListNotifier extends AsyncNotifier<WaitListState> {
   Future<void> addToWaitlist(Deal deal) async {
     state = await AsyncValue.guard(
       () async {
-        final List<Deal> newList = {
-          ...state.requireValue.deals,
-          deal.copyWith(
-            added: DateTime.now().millisecondsSinceEpoch,
-          ),
-        }.toList();
-
         await settingsRepository.saveDeal(deal);
 
-        return state.requireValue.copyWith(
-          ids: newList.map((e) => e.id).toList(),
-          deals: newList,
-        );
+        return Set<Deal>.of(
+          List.of(state.valueOrNull ?? [])
+            ..add(
+              deal.copyWith(
+                added: DateTime.now().millisecondsSinceEpoch,
+              ),
+            ),
+        ).toList();
       },
     );
   }
@@ -57,16 +48,12 @@ class AsyncWaitListNotifier extends AsyncNotifier<WaitListState> {
   Future<void> removeFromWaitList(Deal deal) async {
     state = await AsyncValue.guard(
       () async {
-        final List<Deal> newList = [...state.requireValue.deals]..removeWhere(
-            (element) => element.id == deal.id,
-          );
-
         await settingsRepository.removeDeal(deal);
 
-        return state.requireValue.copyWith(
-          ids: newList.map((e) => e.id).toList(),
-          deals: newList,
-        );
+        return List.of(state.valueOrNull ?? [])
+          ..removeWhere(
+            (element) => element.id == deal.id,
+          );
       },
     );
   }
@@ -74,15 +61,12 @@ class AsyncWaitListNotifier extends AsyncNotifier<WaitListState> {
   Future<void> removeSteamImports() async {
     state = await AsyncValue.guard(
       () async {
-        final List<Deal> newList = [...state.requireValue.deals]
-          ..removeWhere((element) => element.source == DealSource.steam);
-
         await settingsRepository.removeDealsFromSteam();
 
-        return state.requireValue.copyWith(
-          ids: newList.map((e) => e.id).toList(),
-          deals: newList,
-        );
+        return List.of(state.valueOrNull ?? [])
+          ..removeWhere(
+            (element) => element.source == DealSource.steam,
+          );
       },
     );
   }
@@ -99,14 +83,14 @@ class AsyncWaitListNotifier extends AsyncNotifier<WaitListState> {
 }
 
 final asyncWaitListProvider =
-    AsyncNotifierProvider<AsyncWaitListNotifier, WaitListState>(() {
+    AsyncNotifierProvider<AsyncWaitListNotifier, List<Deal>>(() {
   return AsyncWaitListNotifier();
 });
 
 class SortedWailistNotifier extends Notifier<List<Deal>> {
   @override
   List<Deal> build() {
-    final AsyncValue<WaitListState> waitlist = ref.watch(asyncWaitListProvider);
+    final AsyncValue<List<Deal>> waitlist = ref.watch(asyncWaitListProvider);
     final WaitlistSortingDirection sortingDirection = ref.watch(
           asyncSettingsProvider.select(
             (value) => value.valueOrNull?.waitlistSortingDirection,
@@ -121,7 +105,7 @@ class SortedWailistNotifier extends Notifier<List<Deal>> {
         WaitlistSorting.date_added;
 
     return getSortedWaitlist(
-      waitlist.valueOrNull?.deals ?? [],
+      waitlist.valueOrNull ?? [],
       sorting,
       sortingDirection,
     );
@@ -247,4 +231,18 @@ class FilteredWailistNotifier extends Notifier<List<Deal>> {
 final filteredWaitlistProvider =
     NotifierProvider<FilteredWailistNotifier, List<Deal>>(
   FilteredWailistNotifier.new,
+);
+
+class WaitlistIdsNotifier extends Notifier<List<String>> {
+  @override
+  List<String> build() {
+    final List<Deal> filteredWaitlist =
+        ref.watch(asyncWaitListProvider).valueOrNull ?? [];
+
+    return filteredWaitlist.map((deal) => deal.id).toList();
+  }
+}
+
+final waitlistIdsProvider = NotifierProvider<WaitlistIdsNotifier, List<String>>(
+  WaitlistIdsNotifier.new,
 );

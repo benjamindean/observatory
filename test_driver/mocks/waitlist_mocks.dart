@@ -8,7 +8,6 @@ import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/shop.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
-import 'package:observatory/waitlist/state/waitlist_state.dart';
 
 final List<Deal> waitlist = [
   const Deal(
@@ -543,7 +542,7 @@ final List<Deal> waitlist = [
   ),
 ];
 
-class AsyncWaitListNotifierMock extends AsyncNotifier<WaitListState>
+class AsyncWaitListNotifierMock extends AsyncNotifier<List<Deal>>
     with Mock
     implements AsyncWaitListNotifier {
   @override
@@ -551,15 +550,12 @@ class AsyncWaitListNotifierMock extends AsyncNotifier<WaitListState>
   @override
   final API api = GetIt.I<API>();
 
-  Future<WaitListState> _fetchWaitList() async {
-    return WaitListState(
-      deals: waitlist,
-      ids: <Deal>[].map((e) => e.id).toList(),
-    );
+  Future<List<Deal>> _fetchWaitList() async {
+    return waitlist;
   }
 
   @override
-  Future<WaitListState> build() async {
+  Future<List<Deal>> build() async {
     return _fetchWaitList();
   }
 

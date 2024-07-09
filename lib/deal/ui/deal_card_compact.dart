@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
+import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/deal_functions.dart';
 import 'package:observatory/deal/ui/deal_bottom_sheet.dart';
 import 'package:observatory/deal/ui/deal_card_compact_info_row.dart';
@@ -29,37 +30,59 @@ class DealCardCompact extends ConsumerWidget {
         (value) => value.valueOrNull?.showHeaders ?? false,
       ),
     );
-    final List<String> waitlist = ref.watch(
-      asyncWaitListProvider.select(
-        (waitListState) => waitListState.valueOrNull?.ids ?? [],
-      ),
-    );
+    final List<String> waitlist = ref.watch(waitlistIdsProvider);
+    final List<String> bookmarks = ref.watch(bookmarkIdsProvider);
+
     final bool isInWaitlist = waitlist.contains(deal.id);
+    final bool isInBookmarks = bookmarks.contains(deal.id);
 
     return Slidable(
       endActionPane: ActionPane(
-        extentRatio: 0.2,
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
+            borderRadius: BorderRadius.circular(12),
+            backgroundColor: Colors.transparent,
             onPressed: (_) {
               if (isInWaitlist) {
-                return DealFunctions.addDealToWaitlist(
+                return DealFunctions.removeDealFromWaitlist(
                   context: context,
                   ref: ref,
                   deal: deal,
                 );
               }
 
-              return DealFunctions.removeDealFromWaitlist(
+              return DealFunctions.addDealToWaitlist(
+                context: context,
+                ref: ref,
+                deal: deal,
+              );
+            },
+            foregroundColor: context.colors.scheme.primary,
+            icon: isInWaitlist
+                ? Icons.favorite_rounded
+                : Icons.favorite_outline_rounded,
+          ),
+          SlidableAction(
+            borderRadius: BorderRadius.circular(12),
+            onPressed: (_) {
+              if (isInBookmarks) {
+                return DealFunctions.removeBookmark(
+                  context: context,
+                  ref: ref,
+                  deal: deal,
+                );
+              }
+
+              return DealFunctions.addBookmark(
                 context: context,
                 ref: ref,
                 deal: deal,
               );
             },
             backgroundColor: Colors.transparent,
-            foregroundColor: context.colors.scheme.primary,
-            icon: isInWaitlist ? Icons.favorite : Icons.favorite_outline,
+            foregroundColor: context.colors.scheme.secondary,
+            icon: isInBookmarks ? Icons.bookmark : Icons.bookmark_outline,
           ),
         ],
       ),

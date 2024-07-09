@@ -2,6 +2,7 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/ui/observatory_snack_bar.dart';
@@ -32,7 +33,7 @@ class DealFunctions {
     }
   }
 
-  static void addDealToWaitlist({
+  static void removeDealFromWaitlist({
     required BuildContext context,
     required WidgetRef ref,
     required Deal deal,
@@ -83,7 +84,7 @@ class DealFunctions {
     );
   }
 
-  static void removeDealFromWaitlist({
+  static void addDealToWaitlist({
     required BuildContext context,
     required WidgetRef ref,
     required Deal deal,
@@ -122,6 +123,96 @@ class DealFunctions {
                 ),
                 TextSpan(
                   text: ' has been added to your waitlist.',
+                  style: context.themes.snackBar.contentTextStyle?.copyWith(
+                    color: context.colors.scheme.onInverseSurface,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static void addBookmark({
+    required BuildContext context,
+    required WidgetRef ref,
+    required Deal deal,
+    bool showToast = true,
+  }) async {
+    HapticFeedback.mediumImpact();
+
+    await ref.read(asyncBookmarksProvider.notifier).addBookmark(deal).then(
+      (value) {
+        if (!showToast) {
+          return;
+        }
+
+        return ObservatorySnackBar.show(
+          context,
+          onAction: () async {
+            await ref
+                .read(asyncBookmarksProvider.notifier)
+                .removeBookmark(deal);
+          },
+          icon: Icons.bookmark_add_rounded,
+          content: RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                  text: deal.titleParsed,
+                  style: context.themes.snackBar.contentTextStyle?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.colors.scheme.onInverseSurface,
+                  ),
+                ),
+                TextSpan(
+                  text: ' has been added to your bookmarks.',
+                  style: context.themes.snackBar.contentTextStyle?.copyWith(
+                    color: context.colors.scheme.onInverseSurface,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static void removeBookmark({
+    required BuildContext context,
+    required WidgetRef ref,
+    required Deal deal,
+    bool showToast = true,
+  }) async {
+    HapticFeedback.mediumImpact();
+
+    await ref.read(asyncBookmarksProvider.notifier).removeBookmark(deal).then(
+      (value) {
+        if (!showToast) {
+          return;
+        }
+
+        return ObservatorySnackBar.show(
+          context,
+          onAction: () async {
+            await ref.read(asyncBookmarksProvider.notifier).addBookmark(deal);
+          },
+          icon: Icons.bookmark_remove_rounded,
+          content: RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                  text: deal.titleParsed,
+                  style: context.themes.snackBar.contentTextStyle?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.colors.scheme.onInverseSurface,
+                  ),
+                ),
+                TextSpan(
+                  text: ' has been removed from your bookmarks.',
                   style: context.themes.snackBar.contentTextStyle?.copyWith(
                     color: context.colors.scheme.onInverseSurface,
                   ),

@@ -14,14 +14,13 @@ import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/waitlist/ui/empty_waitlist.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
-import 'package:observatory/waitlist/state/waitlist_state.dart';
 
 class WaitListList extends ConsumerWidget {
   const WaitListList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<WaitListState> waitlist = ref.watch(asyncWaitListProvider);
+    final AsyncValue<List<Deal>> waitlist = ref.watch(asyncWaitListProvider);
     final List<Deal> filteredWaitlist = ref.watch(filteredWaitlistProvider);
 
     final bool isSearchActive = ref.watch(
@@ -82,8 +81,8 @@ class WaitListList extends ConsumerWidget {
           ),
         );
       },
-      data: (data) {
-        if (data.deals.isEmpty) {
+      data: (deals) {
+        if (deals.isEmpty) {
           return const EmptyWaitlist();
         }
 
