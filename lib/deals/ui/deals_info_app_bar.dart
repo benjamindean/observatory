@@ -6,18 +6,19 @@ import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
 
 class DealsInfoAppBar extends ConsumerWidget {
-  final AutoDisposeFamilyAsyncNotifierProvider<AsyncDealsNotifier, DealsState,
-      DealCategory> provider;
   final DealCategory dealsTab;
 
   const DealsInfoAppBar({
     super.key,
-    required this.provider,
     required this.dealsTab,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<DealsState> deals = ref.watch(
+      asyncDealsProvider(dealsTab),
+    );
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,51 +30,51 @@ class DealsInfoAppBar extends ConsumerWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        ref.watch(provider).when(
-              data: (state) {
-                final int discounted = state.deals
-                    .where((element) => element.bestPrice.cut > 0)
-                    .length;
+        deals.when(
+          data: (state) {
+            final int discounted = state.deals
+                .where((element) => element.bestPrice.cut > 0)
+                .length;
 
-                return Text.rich(
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.themes.text.labelMedium?.copyWith(
-                    color: context.colors.hint,
-                  ),
+            return Text.rich(
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: context.themes.text.labelMedium?.copyWith(
+                color: context.colors.hint,
+              ),
+              TextSpan(
+                children: [
                   TextSpan(
-                    children: [
-                      TextSpan(
-                        text: discounted.toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const TextSpan(text: ' of '),
-                      TextSpan(
-                        text: state.deals.length.toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const TextSpan(text: ' discounted'),
-                    ],
+                    text: discounted.toString(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                );
-              },
-              loading: () => Text(
-                'Loading...',
-                style: context.themes.text.labelMedium?.copyWith(
-                  color: context.colors.hint,
-                ),
+                  const TextSpan(text: ' of '),
+                  TextSpan(
+                    text: state.deals.length.toString(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const TextSpan(text: ' discounted'),
+                ],
               ),
-              error: (error, stackTrace) => Text(
-                'No discounted games',
-                style: context.themes.text.labelMedium?.copyWith(
-                  color: context.colors.hint,
-                ),
-              ),
-            )
+            );
+          },
+          loading: () => Text(
+            'Loading...',
+            style: context.themes.text.labelMedium?.copyWith(
+              color: context.colors.hint,
+            ),
+          ),
+          error: (error, stackTrace) => Text(
+            'No discounted games',
+            style: context.themes.text.labelMedium?.copyWith(
+              color: context.colors.hint,
+            ),
+          ),
+        )
       ],
     );
   }

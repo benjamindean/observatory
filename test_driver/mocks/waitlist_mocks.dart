@@ -1,9 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
-import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/shop.dart';
@@ -545,11 +542,6 @@ final List<Deal> waitlist = [
 class AsyncWaitListNotifierMock extends AsyncNotifier<List<Deal>>
     with Mock
     implements AsyncWaitListNotifier {
-  @override
-  final SettingsRepository settingsRepository = GetIt.I<SettingsRepository>();
-  @override
-  final API api = GetIt.I<API>();
-
   Future<List<Deal>> _fetchWaitList() async {
     return waitlist;
   }

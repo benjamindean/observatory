@@ -14,23 +14,30 @@ import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/load_more.dart';
 
 class DealsList extends ConsumerWidget {
-  final AutoDisposeFamilyAsyncNotifierProvider<AsyncDealsNotifier, DealsState,
-      DealCategory> provider;
-
   const DealsList({
     super.key,
-    required this.provider,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<DealsState> deals = ref.watch(provider);
-    final AsyncDealsNotifier dealsNotifier = ref.watch(provider.notifier);
+    final DealCategory dealsCategory = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.dealsTab ?? DealCategory.all,
+      ),
+    );
     final DealCardType cardType = ref.watch(
       asyncSettingsProvider.select(
         (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
       ),
     );
+
+    final AsyncValue<DealsState> deals = ref.watch(
+      asyncDealsProvider(dealsCategory),
+    );
+    final AsyncDealsNotifier dealsNotifier = ref.watch(
+      asyncDealsProvider(dealsCategory).notifier,
+    );
+
     final double cardHeight = ref
         .watch(dealCardSizeProvider.notifier)
         .getHeight(MediaQuery.of(context).size.width);

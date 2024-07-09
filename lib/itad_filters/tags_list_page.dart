@@ -16,6 +16,7 @@ class TagsListPage extends HookConsumerWidget {
     final TextEditingController autocompleteController =
         useTextEditingController();
     final ValueNotifier<List<String>> filteredTags = useState(steamTags);
+
     final List<String> tags = ref.watch(
           itadFiltersProvider.select((value) => value.cached.tags),
         ) ??

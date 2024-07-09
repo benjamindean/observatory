@@ -8,11 +8,8 @@ import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/deal.dart';
 
 class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
-  final SettingsRepository settingsRepository = GetIt.I<SettingsRepository>();
-  final API api = GetIt.I<API>();
-
   Future<List<Deal>> _fetchWaitList() async {
-    return await api.fetchWaitlist();
+    return await GetIt.I<API>().fetchWaitlist();
   }
 
   @override
@@ -31,7 +28,7 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   Future<void> addToWaitlist(Deal deal) async {
     state = await AsyncValue.guard(
       () async {
-        await settingsRepository.saveDeal(deal);
+        await GetIt.I<SettingsRepository>().saveDeal(deal);
 
         return Set<Deal>.of(
           List.of(state.valueOrNull ?? [])
@@ -48,7 +45,7 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   Future<void> removeFromWaitList(Deal deal) async {
     state = await AsyncValue.guard(
       () async {
-        await settingsRepository.removeDeal(deal);
+        await GetIt.I<SettingsRepository>().removeDeal(deal);
 
         return List.of(state.valueOrNull ?? [])
           ..removeWhere(
@@ -61,7 +58,7 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   Future<void> removeSteamImports() async {
     state = await AsyncValue.guard(
       () async {
-        await settingsRepository.removeDealsFromSteam();
+        await GetIt.I<SettingsRepository>().removeDealsFromSteam();
 
         return List.of(state.valueOrNull ?? [])
           ..removeWhere(
@@ -74,7 +71,7 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   Future<void> clearWaitlist() async {
     state = await AsyncValue.guard(
       () async {
-        await settingsRepository.removeAllDeals();
+        await GetIt.I<SettingsRepository>().removeAllDeals();
 
         return build();
       },

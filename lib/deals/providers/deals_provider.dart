@@ -47,6 +47,7 @@ class AsyncDealsNotifier
     state = await AsyncValue.guard(
       () async {
         final int offset = state.requireValue.pageNumber * DEALS_COUNT;
+
         final List<Deal> results = await fetchDeals(offset: offset);
         final List<Deal> deals = Set<Deal>.of(
           List.of(state.valueOrNull?.deals ?? [])..addAll(results),
