@@ -45,6 +45,8 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   }
 
   Future<void> removeFromWaitList(Deal deal) async {
+    await ref.read(asyncBookmarksProvider.notifier).removeBookmark(deal);
+
     state = await AsyncValue.guard(
       () async {
         await GetIt.I<SettingsRepository>().removeDeal(deal);
@@ -58,9 +60,15 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   }
 
   Future<void> removeSteamImports() async {
+    await ref.read(asyncBookmarksProvider.notifier).removeBookmarksFromSteam();
+
     state = await AsyncValue.guard(
       () async {
-        await GetIt.I<SettingsRepository>().removeDealsFromSteam();
+        final List<Deal> steamDeals = (state.valueOrNull ?? [])
+            .where((game) => game.source == DealSource.steam)
+            .toList();
+
+        await GetIt.I<SettingsRepository>().removeDeals(steamDeals);
 
         return List.of(state.valueOrNull ?? [])
           ..removeWhere(
@@ -71,6 +79,8 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   }
 
   Future<void> clearWaitlist() async {
+    await ref.read(asyncBookmarksProvider.notifier).clearBookmarks();
+
     state = await AsyncValue.guard(
       () async {
         await GetIt.I<SettingsRepository>().removeAllDeals();
@@ -105,11 +115,21 @@ class SortedWailistNotifier extends Notifier<List<Deal>> {
         ) ??
         WaitlistSorting.date_added;
 
+    final bool collapse = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.collapsePinned ?? false,
+      ),
+    );
+
     final Map<bool, List<Deal>> groupedList = getSortedWaitlist(
       waitlist,
       sorting,
       sortingDirection,
     ).groupListsBy((deal) => bookmarkIds.contains(deal.id));
+
+    if (collapse) {
+      return groupedList[false] ?? [];
+    }
 
     return groupedList[true] ?? []
       ..addAll(groupedList[false] ?? []);

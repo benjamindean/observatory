@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:observatory/bookmarks/bookmarks_page.dart';
 import 'package:observatory/deal/deal_page.dart';
 import 'package:observatory/deals/deals_page.dart';
 import 'package:observatory/home_page.dart';
@@ -75,14 +76,11 @@ final GoRouter router = GoRouter(
       name: 'settings',
       path: '/settings',
       builder: (context, state) => const SettingsPage(),
-      // routes: [
-      //   GoRoute(
-      //     name: 'log-in',
-      //     path: 'log-in',
-      //     parentNavigatorKey: rootNavigatorKey,
-      //     builder: (context, state) => const LogInPage(),
-      //   ),
-      // ],
+    ),
+    GoRoute(
+      name: 'bookmarks',
+      path: '/bookmarks',
+      builder: (context, state) => const BookmarksPage(),
     ),
     GoRoute(
       name: 'store-select',

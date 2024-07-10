@@ -88,6 +88,7 @@ class SettingsRepository {
   final String PREF_ITAD_FILTERS = 'observatory_itad_filters';
   final String PREF_LAUNCH_COUNTER = 'observatory_launch_counter';
   final String PREF_PURCHASED_PRODUCTS = 'observatory_purchased_products';
+  final String PREF_COLLAPSE_PINNED = 'observatory_collapse_pinned';
 
   final DealCategory defaultCategory = DealCategory.all;
   final WaitlistSorting defaultWaitlistSorting = WaitlistSorting.discount_date;
@@ -202,14 +203,6 @@ class SettingsRepository {
     return savedDealsBox.deleteAll(
       deals.map((e) => e.id).toList(),
     );
-  }
-
-  Future<void> removeDealsFromSteam() async {
-    final List<Deal> steamDeals = savedDealsBox.values
-        .where((d) => d.source == DealSource.steam)
-        .toList();
-
-    return removeDeals(steamDeals);
   }
 
   Future<List<int>> getSelectedStores() async {
@@ -479,11 +472,27 @@ class SettingsRepository {
     );
   }
 
-  Future<void> removeBoomark(Deal deal) async {
-    return bookmarkedDealsBox.delete(deal.id);
+  Future<void> removeBoomarks(List<Deal> deals) async {
+    return bookmarkedDealsBox.deleteAll(
+      deals.map((deal) => deal.id).toList(),
+    );
   }
 
   Future<int> removeAllBookmarks() async {
     return bookmarkedDealsBox.clear();
+  }
+
+  Future<bool> getCollapsePinned() async {
+    return await settingsBox.get(
+      PREF_COLLAPSE_PINNED,
+      defaultValue: false,
+    );
+  }
+
+  Future<void> setCollapsePinned(bool collapse) async {
+    return settingsBox.put(
+      PREF_COLLAPSE_PINNED,
+      collapse,
+    );
   }
 }

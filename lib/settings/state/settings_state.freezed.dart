@@ -29,6 +29,7 @@ mixin _$SettingsState {
       throw _privateConstructorUsedError;
   bool get crashlyticsEnabled => throw _privateConstructorUsedError;
   List<String> get purchasedProductIds => throw _privateConstructorUsedError;
+  bool get collapsePinned => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,7 +51,8 @@ abstract class $SettingsStateCopyWith<$Res> {
       WaitlistSorting waitlistSorting,
       WaitlistSortingDirection waitlistSortingDirection,
       bool crashlyticsEnabled,
-      List<String> purchasedProductIds});
+      List<String> purchasedProductIds,
+      bool collapsePinned});
 }
 
 /// @nodoc
@@ -74,6 +76,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? waitlistSortingDirection = null,
     Object? crashlyticsEnabled = null,
     Object? purchasedProductIds = null,
+    Object? collapsePinned = null,
   }) {
     return _then(_value.copyWith(
       showHeaders: null == showHeaders
@@ -108,6 +111,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.purchasedProductIds
           : purchasedProductIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      collapsePinned: null == collapsePinned
+          ? _value.collapsePinned
+          : collapsePinned // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -128,7 +135,8 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       WaitlistSorting waitlistSorting,
       WaitlistSortingDirection waitlistSortingDirection,
       bool crashlyticsEnabled,
-      List<String> purchasedProductIds});
+      List<String> purchasedProductIds,
+      bool collapsePinned});
 }
 
 /// @nodoc
@@ -150,6 +158,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? waitlistSortingDirection = null,
     Object? crashlyticsEnabled = null,
     Object? purchasedProductIds = null,
+    Object? collapsePinned = null,
   }) {
     return _then(_$SettingsStateImpl(
       showHeaders: null == showHeaders
@@ -184,6 +193,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value._purchasedProductIds
           : purchasedProductIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      collapsePinned: null == collapsePinned
+          ? _value.collapsePinned
+          : collapsePinned // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -199,7 +212,8 @@ class _$SettingsStateImpl implements _SettingsState {
       required this.waitlistSorting,
       required this.waitlistSortingDirection,
       required this.crashlyticsEnabled,
-      final List<String> purchasedProductIds = const []})
+      final List<String> purchasedProductIds = const [],
+      this.collapsePinned = false})
       : _purchasedProductIds = purchasedProductIds;
 
   factory _$SettingsStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -231,8 +245,12 @@ class _$SettingsStateImpl implements _SettingsState {
   }
 
   @override
+  @JsonKey()
+  final bool collapsePinned;
+
+  @override
   String toString() {
-    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, dealsTab: $dealsTab, dealCardType: $dealCardType, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, crashlyticsEnabled: $crashlyticsEnabled, purchasedProductIds: $purchasedProductIds)';
+    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, dealsTab: $dealsTab, dealCardType: $dealCardType, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, crashlyticsEnabled: $crashlyticsEnabled, purchasedProductIds: $purchasedProductIds, collapsePinned: $collapsePinned)';
   }
 
   @override
@@ -256,7 +274,9 @@ class _$SettingsStateImpl implements _SettingsState {
             (identical(other.crashlyticsEnabled, crashlyticsEnabled) ||
                 other.crashlyticsEnabled == crashlyticsEnabled) &&
             const DeepCollectionEquality()
-                .equals(other._purchasedProductIds, _purchasedProductIds));
+                .equals(other._purchasedProductIds, _purchasedProductIds) &&
+            (identical(other.collapsePinned, collapsePinned) ||
+                other.collapsePinned == collapsePinned));
   }
 
   @JsonKey(ignore: true)
@@ -270,7 +290,8 @@ class _$SettingsStateImpl implements _SettingsState {
       waitlistSorting,
       waitlistSortingDirection,
       crashlyticsEnabled,
-      const DeepCollectionEquality().hash(_purchasedProductIds));
+      const DeepCollectionEquality().hash(_purchasedProductIds),
+      collapsePinned);
 
   @JsonKey(ignore: true)
   @override
@@ -295,7 +316,8 @@ abstract class _SettingsState implements SettingsState {
       required final WaitlistSorting waitlistSorting,
       required final WaitlistSortingDirection waitlistSortingDirection,
       required final bool crashlyticsEnabled,
-      final List<String> purchasedProductIds}) = _$SettingsStateImpl;
+      final List<String> purchasedProductIds,
+      final bool collapsePinned}) = _$SettingsStateImpl;
 
   factory _SettingsState.fromJson(Map<String, dynamic> json) =
       _$SettingsStateImpl.fromJson;
@@ -316,6 +338,8 @@ abstract class _SettingsState implements SettingsState {
   bool get crashlyticsEnabled;
   @override
   List<String> get purchasedProductIds;
+  @override
+  bool get collapsePinned;
   @override
   @JsonKey(ignore: true)
   _$$SettingsStateImplCopyWith<_$SettingsStateImpl> get copyWith =>

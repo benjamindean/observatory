@@ -38,7 +38,8 @@ class SteamImportListTile extends ConsumerWidget {
 
     return ListTile(
       contentPadding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
-      title: steamUserName?.isEmpty != false
+      title: const Text('Steam Import'),
+      subtitle: steamUserName?.isEmpty != false
           ? Text(
               'No Steam username set',
               style: context.textStyles.titleMedium.copyWith(

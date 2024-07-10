@@ -22,6 +22,7 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           const [],
+      collapsePinned: json['collapsePinned'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
@@ -35,6 +36,7 @@ Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
           _$WaitlistSortingDirectionEnumMap[instance.waitlistSortingDirection]!,
       'crashlyticsEnabled': instance.crashlyticsEnabled,
       'purchasedProductIds': instance.purchasedProductIds,
+      'collapsePinned': instance.collapsePinned,
     };
 
 const _$DealCategoryEnumMap = {

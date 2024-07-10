@@ -1,6 +1,7 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:observatory/bookmarks/bookmarks_info_bar.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/pull_to_refresh.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
@@ -35,6 +36,9 @@ class WaitListPage extends ConsumerWidget {
         slivers: const [
           WaitlistAppBar(),
           HeaderLocator.sliver(),
+          SliverToBoxAdapter(
+            child: BookmarksInfoBar(),
+          ),
           WaitListList(),
         ],
       ),

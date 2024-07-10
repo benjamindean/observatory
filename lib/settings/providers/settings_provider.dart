@@ -27,6 +27,7 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
       waitlistSorting: await repository.getWaitlistSorting(),
       waitlistSortingDirection: await repository.getWaitlistSortingDirection(),
       dealCardType: await repository.getDealCardType(),
+      collapsePinned: await repository.getCollapsePinned(),
       crashlyticsEnabled:
           FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled,
     );
@@ -129,6 +130,18 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
         return state.requireValue.copyWith(
           crashlyticsEnabled:
               FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled,
+        );
+      },
+    );
+  }
+
+  Future<void> setCollapsePinned(bool collapse) async {
+    state = await AsyncValue.guard(
+      () async {
+        await repository.setCollapsePinned(collapse);
+
+        return state.requireValue.copyWith(
+          collapsePinned: collapse,
         );
       },
     );

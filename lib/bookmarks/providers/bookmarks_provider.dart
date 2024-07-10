@@ -2,10 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
   Future<List<Deal>> _fetchBookmarks() async {
-    return GetIt.I<SettingsRepository>().getBookmarks();
+    return await GetIt.I<SettingsRepository>().getBookmarks();
   }
 
   @override
@@ -35,11 +36,29 @@ class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
   Future<void> removeBookmark(Deal deal) async {
     state = await AsyncValue.guard(
       () async {
-        await GetIt.I<SettingsRepository>().removeBoomark(deal);
+        await GetIt.I<SettingsRepository>().removeBoomarks([deal]);
 
         return List.of(state.requireValue)
           ..removeWhere(
             (element) => element.id == deal.id,
+          );
+      },
+    );
+  }
+
+  Future<void> removeBookmarksFromSteam() async {
+    state = await AsyncValue.guard(
+      () async {
+        final List<Deal> steamDeals =
+            (ref.read(asyncWaitListProvider).valueOrNull ?? [])
+                .where((game) => game.source == DealSource.steam)
+                .toList();
+
+        await GetIt.I<SettingsRepository>().removeBoomarks(steamDeals);
+
+        return List.of(state.requireValue)
+          ..removeWhere(
+            (element) => element.source == DealSource.steam,
           );
       },
     );
