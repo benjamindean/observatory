@@ -34,7 +34,9 @@ class DealPage extends ConsumerWidget {
       color: context.elevatedBottomAppBarColor,
       child: SafeArea(
         child: Scaffold(
-          bottomNavigationBar: DealPageBottomAppBar(deal: dealState),
+          bottomNavigationBar: DealPageBottomAppBar(
+            deal: dealState,
+          ),
           body: CustomScrollView(
             key: const Key('deal-scroll-view'),
             slivers: [

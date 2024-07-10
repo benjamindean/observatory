@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/deal_functions.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class BookmarkButton extends ConsumerWidget {
   final Deal deal;
@@ -15,19 +16,23 @@ class BookmarkButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final List<String> waitlist = ref.watch(waitlistIdsProvider);
+    final bool isInWaitlist = waitlist.contains(deal.id);
+
     final List<String> bookmarks = ref.watch(bookmarkIdsProvider);
     final bool isInBookmarks = bookmarks.contains(deal.id);
 
     return Tooltip(
-      message: isInBookmarks ? 'Remove from Bookmarks' : 'Add to Bookmarks',
+      message: isInBookmarks ? 'Unpin' : 'Pin',
       child: IconButton(
         icon: Icon(
-          isInBookmarks
-              ? Icons.bookmark_rounded
-              : Icons.bookmark_border_rounded,
-          color: context.colors.scheme.secondary,
+          isInBookmarks ? Icons.push_pin_rounded : Icons.push_pin_outlined,
+          color: isInWaitlist
+              ? context.colors.scheme.secondary
+              : context.colors.disabled,
         ),
-        onPressed: () => onPressed(isInBookmarks, ref, context),
+        onPressed:
+            isInWaitlist ? () => onPressed(isInBookmarks, ref, context) : null,
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
+import 'package:observatory/router.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/search/state/search_state.dart';
 import 'package:observatory/search/ui/recent_searches_list.dart';
@@ -61,6 +62,7 @@ class SearchList extends ConsumerWidget {
               return DealCard(
                 deal: deals[index],
                 cardType: cardType,
+                page: NavigationBranch.search,
               );
             },
           ),

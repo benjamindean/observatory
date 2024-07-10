@@ -7,6 +7,7 @@ import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
+import 'package:observatory/router.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
@@ -115,6 +116,7 @@ class DealsList extends ConsumerWidget {
               return DealCard(
                 deal: data.deals[index],
                 cardType: cardType,
+                page: NavigationBranch.deals,
               );
             },
           ),

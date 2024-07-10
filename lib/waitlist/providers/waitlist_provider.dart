@@ -1,5 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
+import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/search/state/search_state.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
@@ -87,7 +89,9 @@ final asyncWaitListProvider =
 class SortedWailistNotifier extends Notifier<List<Deal>> {
   @override
   List<Deal> build() {
-    final AsyncValue<List<Deal>> waitlist = ref.watch(asyncWaitListProvider);
+    final List<Deal> waitlist =
+        ref.watch(asyncWaitListProvider).valueOrNull ?? [];
+    final List<String> bookmarkIds = ref.watch(bookmarkIdsProvider);
     final WaitlistSortingDirection sortingDirection = ref.watch(
           asyncSettingsProvider.select(
             (value) => value.valueOrNull?.waitlistSortingDirection,
@@ -101,11 +105,14 @@ class SortedWailistNotifier extends Notifier<List<Deal>> {
         ) ??
         WaitlistSorting.date_added;
 
-    return getSortedWaitlist(
-      waitlist.valueOrNull ?? [],
+    final Map<bool, List<Deal>> groupedList = getSortedWaitlist(
+      waitlist,
       sorting,
       sortingDirection,
-    );
+    ).groupListsBy((deal) => bookmarkIds.contains(deal.id));
+
+    return groupedList[true] ?? []
+      ..addAll(groupedList[false] ?? []);
   }
 
   List<Deal> getSortedWaitlist(

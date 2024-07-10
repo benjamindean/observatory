@@ -126,6 +126,10 @@ void main() async {
     channelGroups: NOTIFICATION_GROUPS,
   );
 
+  // await AwesomeNotifications().setListeners(
+  //   onActionReceivedMethod: (ReceivedAction receivedAction) async {},
+  // );
+
   await Workmanager().initialize(
     callbackDispatcher,
   );

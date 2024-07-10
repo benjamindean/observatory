@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
+import 'package:observatory/router.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
@@ -104,6 +105,7 @@ class WaitListList extends ConsumerWidget {
               return DealCard(
                 deal: filteredWaitlist[index],
                 cardType: cardType,
+                page: NavigationBranch.waitlist,
               );
             },
             itemCount: filteredWaitlist.length,

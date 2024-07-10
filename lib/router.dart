@@ -11,6 +11,12 @@ import 'package:observatory/settings/stores_select/stores_select_page.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/waitlist_page.dart';
 
+enum NavigationBranch {
+  deals,
+  search,
+  waitlist,
+}
+
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final shellNavigatorKeyDeals = GlobalKey<NavigatorState>();
 final shellNavigatorKeySearch = GlobalKey<NavigatorState>();

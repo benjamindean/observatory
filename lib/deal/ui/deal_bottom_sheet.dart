@@ -2,24 +2,33 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/deal_functions.dart';
+import 'package:observatory/router.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/rounded_container.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class DealBottomSheet extends ConsumerWidget {
+  final Deal deal;
+  final NavigationBranch page;
+
   const DealBottomSheet({
     super.key,
     required this.deal,
+    required this.page,
   });
-
-  final Deal deal;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final bool isWaitlistPage = page == NavigationBranch.waitlist;
+
     final List<String> waitlist = ref.watch(waitlistIdsProvider);
     final bool isInWaitlist = waitlist.contains(deal.id);
+
+    final List<String> bookmarks = ref.watch(bookmarkIdsProvider);
+    final bool isInBookmarks = bookmarks.contains(deal.id);
 
     return BottomSheetContainer(
       child: Column(
@@ -65,6 +74,35 @@ class DealBottomSheet extends ConsumerWidget {
                     );
                   },
                 ),
+                if (isWaitlistPage)
+                  ListTile(
+                    leading: Icon(
+                      isInBookmarks
+                          ? Icons.push_pin_rounded
+                          : Icons.push_pin_outlined,
+                      color: context.colors.scheme.tertiary,
+                    ),
+                    title: Text(
+                      isInBookmarks ? 'Unpin' : 'Pin',
+                    ),
+                    onTap: () {
+                      if (isInBookmarks) {
+                        return DealFunctions.removeBookmark(
+                          context: context,
+                          ref: ref,
+                          deal: deal,
+                          showToast: false,
+                        );
+                      }
+
+                      return DealFunctions.addBookmark(
+                        context: context,
+                        ref: ref,
+                        deal: deal,
+                        showToast: false,
+                      );
+                    },
+                  ),
                 ListTile(
                   leading: Icon(
                     Icons.open_in_browser,

@@ -156,7 +156,7 @@ class DealFunctions {
                 .read(asyncBookmarksProvider.notifier)
                 .removeBookmark(deal);
           },
-          icon: Icons.bookmark_add_rounded,
+          icon: Icons.push_pin_rounded,
           content: RichText(
             text: TextSpan(
               children: <TextSpan>[
@@ -168,7 +168,7 @@ class DealFunctions {
                   ),
                 ),
                 TextSpan(
-                  text: ' has been added to your bookmarks.',
+                  text: ' has been pinned to the top of the list.',
                   style: context.themes.snackBar.contentTextStyle?.copyWith(
                     color: context.colors.scheme.onInverseSurface,
                   ),
@@ -200,7 +200,7 @@ class DealFunctions {
           onAction: () async {
             await ref.read(asyncBookmarksProvider.notifier).addBookmark(deal);
           },
-          icon: Icons.bookmark_remove_rounded,
+          icon: Icons.push_pin_outlined,
           content: RichText(
             text: TextSpan(
               children: <TextSpan>[
@@ -212,7 +212,7 @@ class DealFunctions {
                   ),
                 ),
                 TextSpan(
-                  text: ' has been removed from your bookmarks.',
+                  text: ' has been un-pinned from the top of the list.',
                   style: context.themes.snackBar.contentTextStyle?.copyWith(
                     color: context.colors.scheme.onInverseSurface,
                   ),

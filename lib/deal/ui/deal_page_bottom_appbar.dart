@@ -26,11 +26,11 @@ class DealPageBottomAppBar extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           const Expanded(
-            flex: 30,
+            flex: 40,
             child: ObservatoryBackButton(),
           ),
           Expanded(
-            flex: 70,
+            flex: 60,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.min,

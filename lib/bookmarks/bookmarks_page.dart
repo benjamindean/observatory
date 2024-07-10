@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/ui/deal_card_compact.dart';
+import 'package:observatory/router.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
@@ -64,7 +65,10 @@ class BookmarksPage extends ConsumerWidget {
                   return ListView.builder(
                     itemCount: bookmarks.length,
                     itemBuilder: (context, index) {
-                      return DealCardCompact(deal: bookmarks[index]);
+                      return DealCardCompact(
+                        deal: bookmarks[index],
+                        page: NavigationBranch.waitlist,
+                      );
                     },
                   );
                 },

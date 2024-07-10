@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/deal/ui/deal_bottom_sheet.dart';
 import 'package:observatory/deal/ui/deal_card_info_row.dart';
+import 'package:observatory/router.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/constants.dart';
@@ -13,10 +14,12 @@ import 'package:observatory/shared/widgets/header_image.dart';
 
 class DealCardExpanded extends ConsumerWidget {
   final Deal deal;
+  final NavigationBranch page;
 
   const DealCardExpanded({
     super.key,
     required this.deal,
+    required this.page,
   });
 
   @override
@@ -42,7 +45,10 @@ class DealCardExpanded extends ConsumerWidget {
           builder: (BuildContext context) {
             return Consumer(
               builder: (context, ref, _) {
-                return DealBottomSheet(deal: deal);
+                return DealBottomSheet(
+                  deal: deal,
+                  page: page,
+                );
               },
             );
           },
