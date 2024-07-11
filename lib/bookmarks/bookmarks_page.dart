@@ -79,76 +79,74 @@ class BookmarksPage extends ConsumerWidget {
           ],
         ),
       ),
-      body: SafeArea(
-        child: CustomScrollView(
-          key: const Key('waitlist-scroll-view'),
-          controller: PrimaryScrollController.of(context),
-          slivers: [
-            SliverAppBar(
-              surfaceTintColor: context.colors.scheme.surfaceTint,
-              floating: true,
-              flexibleSpace: AppBar(
-                title: Text(
-                  'Pinned Games',
-                  style: context.textStyles.titleMedium.copyWith(
-                    color: context.colors.scheme.onSurface,
-                  ),
+      body: CustomScrollView(
+        key: const Key('waitlist-scroll-view'),
+        controller: PrimaryScrollController.of(context),
+        slivers: [
+          SliverAppBar(
+            surfaceTintColor: context.colors.scheme.surfaceTint,
+            floating: true,
+            flexibleSpace: AppBar(
+              title: Text(
+                'Pinned Games',
+                style: context.textStyles.titleMedium.copyWith(
+                  color: context.colors.scheme.onSurface,
                 ),
               ),
             ),
-            waitlist.when(
-              loading: () => const OryFullScreenSpinner(),
-              error: (error, stackTrace) {
-                Logger().e(
-                  'Failed to load bookmarks',
-                  error: error,
-                  stackTrace: stackTrace,
-                );
+          ),
+          waitlist.when(
+            loading: () => const OryFullScreenSpinner(),
+            error: (error, stackTrace) {
+              Logger().e(
+                'Failed to load bookmarks',
+                error: error,
+                stackTrace: stackTrace,
+              );
 
-                FirebaseCrashlytics.instance.recordError(
-                  error,
-                  stackTrace,
-                );
+              FirebaseCrashlytics.instance.recordError(
+                error,
+                stackTrace,
+              );
 
-                return const ErrorMessage(
-                  icon: FontAwesomeIcons.solidFaceFrown,
-                  message: 'Failed to load pinned games.',
-                );
-              },
-              data: (deals) {
-                final List<Deal> bookmarks = deals.where((deal) {
-                  return bookmarksIds.contains(deal.id);
-                }).toList();
+              return const ErrorMessage(
+                icon: FontAwesomeIcons.solidFaceFrown,
+                message: 'Failed to load pinned games.',
+              );
+            },
+            data: (deals) {
+              final List<Deal> bookmarks = deals.where((deal) {
+                return bookmarksIds.contains(deal.id);
+              }).toList();
 
-                if (bookmarks.isEmpty) {
-                  return const SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Center(
-                      child: ErrorMessage(
-                        message: 'You have no bookmarks.',
-                        icon: FontAwesomeIcons.solidFaceSadTear,
-                      ),
+              if (bookmarks.isEmpty) {
+                return const SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(
+                    child: ErrorMessage(
+                      message: 'You have no bookmarks.',
+                      icon: FontAwesomeIcons.solidFaceSadTear,
                     ),
-                  );
-                }
-
-                return SliverPadding(
-                  padding: const EdgeInsets.all(6.0),
-                  sliver: SliverFixedExtentList.builder(
-                    itemExtent: cardHeight,
-                    itemCount: bookmarks.length,
-                    itemBuilder: (context, index) {
-                      return DealCardCompact(
-                        deal: bookmarks[index],
-                        page: NavigationBranch.waitlist,
-                      );
-                    },
                   ),
                 );
-              },
-            ),
-          ],
-        ),
+              }
+
+              return SliverPadding(
+                padding: const EdgeInsets.all(6.0),
+                sliver: SliverFixedExtentList.builder(
+                  itemExtent: cardHeight,
+                  itemCount: bookmarks.length,
+                  itemBuilder: (context, index) {
+                    return DealCardCompact(
+                      deal: bookmarks[index],
+                      page: NavigationBranch.waitlist,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

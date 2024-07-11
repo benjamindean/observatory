@@ -56,7 +56,7 @@ class DealFunctions {
           context,
           onAction: () async {
             await ref
-                .watch(asyncWaitListProvider.notifier)
+                .read(asyncWaitListProvider.notifier)
                 .addToWaitlist(updatedDeal);
           },
           icon: Icons.remove_circle,
@@ -107,7 +107,7 @@ class DealFunctions {
           context,
           onAction: () async {
             await ref
-                .watch(asyncWaitListProvider.notifier)
+                .read(asyncWaitListProvider.notifier)
                 .removeFromWaitList(updatedDeal);
           },
           icon: Icons.add_circle_outlined,
@@ -141,9 +141,14 @@ class DealFunctions {
     required Deal deal,
     bool showToast = true,
   }) async {
+    final Deal updatedDeal = deal.copyWith();
+
     HapticFeedback.mediumImpact();
 
-    await ref.read(asyncBookmarksProvider.notifier).addBookmark(deal).then(
+    await ref
+        .read(asyncBookmarksProvider.notifier)
+        .addBookmark(updatedDeal)
+        .then(
       (value) {
         if (!showToast) {
           return;
@@ -154,7 +159,7 @@ class DealFunctions {
           onAction: () async {
             await ref
                 .read(asyncBookmarksProvider.notifier)
-                .removeBookmarks([deal]);
+                .removeBookmarks([updatedDeal]);
           },
           icon: Icons.push_pin_rounded,
           content: RichText(
@@ -187,11 +192,13 @@ class DealFunctions {
     required Deal deal,
     bool showToast = true,
   }) async {
+    final Deal updatedDeal = deal.copyWith();
+
     HapticFeedback.mediumImpact();
 
     await ref
         .read(asyncBookmarksProvider.notifier)
-        .removeBookmarks([deal]).then(
+        .removeBookmarks([updatedDeal]).then(
       (value) {
         if (!showToast) {
           return;
@@ -200,7 +207,9 @@ class DealFunctions {
         return ObservatorySnackBar.show(
           context,
           onAction: () async {
-            await ref.read(asyncBookmarksProvider.notifier).addBookmark(deal);
+            await ref
+                .read(asyncBookmarksProvider.notifier)
+                .addBookmark(updatedDeal);
           },
           icon: Icons.push_pin_outlined,
           content: RichText(
