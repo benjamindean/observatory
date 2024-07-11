@@ -71,7 +71,7 @@ class SteamImportForm extends ConsumerWidget {
             child: FilledButton.icon(
               icon: steamImportState.isLoading
                   ? const ObservatoryIconProgressIndicator()
-                  : const Icon(Icons.download),
+                  : const Icon(Icons.arrow_downward_rounded),
               onPressed: steamImportState.isLoading
                   ? null
                   : () async {

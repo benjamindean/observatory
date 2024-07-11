@@ -45,11 +45,10 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   }
 
   Future<void> removeFromWaitList(Deal deal) async {
-    await ref.read(asyncBookmarksProvider.notifier).removeBookmark(deal);
-
     state = await AsyncValue.guard(
       () async {
         await GetIt.I<SettingsRepository>().removeDeal(deal);
+        await ref.read(asyncBookmarksProvider.notifier).removeBookmarks([deal]);
 
         return List.of(state.valueOrNull ?? [])
           ..removeWhere(
@@ -60,30 +59,35 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   }
 
   Future<void> removeSteamImports() async {
-    await ref.read(asyncBookmarksProvider.notifier).removeBookmarksFromSteam();
-
     state = await AsyncValue.guard(
       () async {
         final List<Deal> steamDeals = (state.valueOrNull ?? [])
             .where((game) => game.source == DealSource.steam)
             .toList();
+        final List<String> steamDealIds = steamDeals
+            .map(
+              (deal) => deal.id,
+            )
+            .toList();
 
         await GetIt.I<SettingsRepository>().removeDeals(steamDeals);
+        await ref
+            .read(asyncBookmarksProvider.notifier)
+            .removeBookmarks(steamDeals);
 
         return List.of(state.valueOrNull ?? [])
           ..removeWhere(
-            (element) => element.source == DealSource.steam,
+            (element) => steamDealIds.contains(element.id),
           );
       },
     );
   }
 
   Future<void> clearWaitlist() async {
-    await ref.read(asyncBookmarksProvider.notifier).clearBookmarks();
-
     state = await AsyncValue.guard(
       () async {
         await GetIt.I<SettingsRepository>().removeAllDeals();
+        await ref.read(asyncBookmarksProvider.notifier).clearBookmarks();
 
         return build();
       },

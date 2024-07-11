@@ -12,7 +12,7 @@ final combinedDetailsProvider = FutureProvider.family<CombinedDetails, Deal>(
   (ref, deal) async {
     final GameDetails? gameDetails = ref
         .watch(
-          gameDetailsProvider(deal),
+          gameDetailsProvider(Deal(id: deal.id, title: deal.title)),
         )
         .valueOrNull;
 

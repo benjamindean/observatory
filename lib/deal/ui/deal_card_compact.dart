@@ -89,7 +89,7 @@ class DealCardCompact extends ConsumerWidget {
                 );
               },
               backgroundColor: Colors.transparent,
-              foregroundColor: context.colors.scheme.secondary,
+              foregroundColor: context.colors.scheme.tertiary,
               icon: isInBookmarks
                   ? Icons.push_pin_rounded
                   : Icons.push_pin_outlined,

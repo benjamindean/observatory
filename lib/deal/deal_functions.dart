@@ -154,7 +154,7 @@ class DealFunctions {
           onAction: () async {
             await ref
                 .read(asyncBookmarksProvider.notifier)
-                .removeBookmark(deal);
+                .removeBookmarks([deal]);
           },
           icon: Icons.push_pin_rounded,
           content: RichText(
@@ -189,7 +189,9 @@ class DealFunctions {
   }) async {
     HapticFeedback.mediumImpact();
 
-    await ref.read(asyncBookmarksProvider.notifier).removeBookmark(deal).then(
+    await ref
+        .read(asyncBookmarksProvider.notifier)
+        .removeBookmarks([deal]).then(
       (value) {
         if (!showToast) {
           return;

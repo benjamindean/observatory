@@ -28,7 +28,7 @@ class BookmarkButton extends ConsumerWidget {
         icon: Icon(
           isInBookmarks ? Icons.push_pin_rounded : Icons.push_pin_outlined,
           color: isInWaitlist
-              ? context.colors.scheme.secondary
+              ? context.colors.scheme.tertiary
               : context.colors.disabled,
         ),
         onPressed:

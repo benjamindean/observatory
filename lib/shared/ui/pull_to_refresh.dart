@@ -12,7 +12,7 @@ const Curve opacityCurve = Interval(
 );
 
 class PullToRefresh extends StatelessWidget {
-  final Future<void> Function() onRefresh;
+  final Future<void> Function()? onRefresh;
   final Widget child;
 
   const PullToRefresh({
@@ -95,11 +95,13 @@ class PullToRefresh extends StatelessWidget {
           );
         },
       ),
-      onRefresh: () async {
-        HapticFeedback.mediumImpact();
+      onRefresh: onRefresh != null
+          ? () async {
+              HapticFeedback.mediumImpact();
 
-        return onRefresh();
-      },
+              return onRefresh != null ? onRefresh!() : null;
+            }
+          : null,
       child: child,
     );
   }

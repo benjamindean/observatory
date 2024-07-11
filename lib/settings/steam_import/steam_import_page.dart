@@ -119,7 +119,7 @@ class SteamImportPage extends ConsumerWidget {
                               },
                         icon: steamImportState.isImporting
                             ? const ObservatoryIconProgressIndicator()
-                            : const Icon(Icons.import_export_rounded),
+                            : const Icon(Icons.expand_circle_down_rounded),
                         label: const Text('Import'),
                       ),
                     ],

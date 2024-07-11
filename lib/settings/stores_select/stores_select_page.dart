@@ -136,7 +136,12 @@ class StoreSelectPage extends ConsumerWidget {
         ),
       ),
       appBar: AppBar(
-        title: const Text('Select Stores'),
+        title: Text(
+          'Select Stores',
+          style: context.textStyles.titleMedium.copyWith(
+            color: context.colors.scheme.onSurfaceVariant,
+          ),
+        ),
       ),
       body: Column(
         children: [

@@ -83,10 +83,6 @@ class WaitListList extends ConsumerWidget {
         );
       },
       data: (deals) {
-        if (deals.isEmpty) {
-          return const EmptyWaitlist();
-        }
-
         if (isSearchActive && filteredWaitlist.isEmpty) {
           return const SliverFillRemaining(
             hasScrollBody: false,
@@ -95,6 +91,20 @@ class WaitListList extends ConsumerWidget {
               icon: FontAwesomeIcons.solidFaceSadTear,
             ),
           );
+        }
+
+        if (filteredWaitlist.isEmpty && deals.isNotEmpty) {
+          return const SliverFillRemaining(
+            hasScrollBody: false,
+            child: ErrorMessage(
+              message: 'All of your waitlisted games are pinned.',
+              icon: Icons.push_pin_rounded,
+            ),
+          );
+        }
+
+        if (filteredWaitlist.isEmpty) {
+          return const EmptyWaitlist();
         }
 
         return SliverPadding(

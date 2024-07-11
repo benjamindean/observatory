@@ -22,12 +22,6 @@ class ObservatoryDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog.adaptive(
-      actionsPadding: const EdgeInsets.fromLTRB(
-        16.0,
-        8.0,
-        16.0,
-        8.0,
-      ),
       title: Text(
         title,
         style: context.textStyles.titleLarge.copyWith(

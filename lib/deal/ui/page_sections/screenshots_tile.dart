@@ -26,7 +26,7 @@ class ScreenshotsTile extends ConsumerWidget {
     const double thumbDelimiter = 2.5;
 
     final AsyncValue<GameDetails?> infoState = ref.watch(
-      gameDetailsProvider(deal),
+      gameDetailsProvider(Deal(id: deal.id, title: deal.title)),
     );
 
     void openGallery(
