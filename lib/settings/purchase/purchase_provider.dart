@@ -12,10 +12,6 @@ import 'package:observatory/settings/settings_repository.dart';
 class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
   @override
   Future<PurchaseState> build() async {
-    ref.onDispose(() {
-      state.valueOrNull?.subscription?.cancel();
-    });
-
     final List<String> purchasedProductIds =
         await GetIt.I<SettingsRepository>().getPurchasedProductIds();
     final List<ProductDetails> products = await _fetchPurchases();
@@ -24,52 +20,6 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
       products: products,
       status: PurchaseStatus.canceled,
       purchasedProductIds: purchasedProductIds,
-      subscription: InAppPurchase.instance.purchaseStream.listen(
-        (purchaseDetailsList) async {
-          for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
-            switch (purchaseDetails.status) {
-              case PurchaseStatus.pending:
-                setIsPending(true);
-
-                break;
-              case PurchaseStatus.error:
-                setIsPending(false);
-
-                break;
-              case PurchaseStatus.purchased:
-                await handleEndPurchase(purchaseDetails.productID);
-
-                break;
-              case PurchaseStatus.restored:
-                await handleEndPurchase(purchaseDetails.productID);
-
-                break;
-              case PurchaseStatus.canceled:
-                await InAppPurchase.instance.completePurchase(purchaseDetails);
-
-                setIsPending(false);
-
-                break;
-            }
-
-            if (purchaseDetails.pendingCompletePurchase) {
-              setIsPending(true);
-
-              await InAppPurchase.instance.completePurchase(purchaseDetails);
-
-              setIsPending(false);
-            }
-          }
-        },
-        onDone: () {
-          state.valueOrNull?.subscription?.cancel();
-
-          build();
-        },
-        onError: (error) {
-          return;
-        },
-      ),
     );
   }
 

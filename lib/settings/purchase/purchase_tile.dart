@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/products_list.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
@@ -10,15 +13,79 @@ import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
 
-class PurchaseTile extends ConsumerWidget {
-  const PurchaseTile({
-    super.key,
-  });
+class PurchaseTile extends ConsumerStatefulWidget {
+  const PurchaseTile({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  PurchaseTileState createState() => PurchaseTileState();
+}
+
+class PurchaseTileState extends ConsumerState<PurchaseTile> {
+  StreamSubscription<List<PurchaseDetails>>? _purchaseStream;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _purchaseStream?.cancel();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final AsyncValue<PurchaseState> purchases = ref.watch(
       asyncPurchaseProvider,
+    );
+
+    _purchaseStream = InAppPurchase.instance.purchaseStream.listen(
+      (purchaseDetailsList) async {
+        for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
+          switch (purchaseDetails.status) {
+            case PurchaseStatus.pending:
+              ref.watch(asyncPurchaseProvider.notifier).setIsPending(true);
+
+              break;
+            case PurchaseStatus.error:
+              ref.watch(asyncPurchaseProvider.notifier).setIsPending(false);
+
+              break;
+            case PurchaseStatus.purchased:
+              await ref
+                  .watch(asyncPurchaseProvider.notifier)
+                  .handleEndPurchase(purchaseDetails.productID);
+
+              break;
+            case PurchaseStatus.restored:
+              await ref
+                  .watch(asyncPurchaseProvider.notifier)
+                  .handleEndPurchase(purchaseDetails.productID);
+
+              break;
+            case PurchaseStatus.canceled:
+              await InAppPurchase.instance.completePurchase(purchaseDetails);
+
+              ref.watch(asyncPurchaseProvider.notifier).setIsPending(false);
+
+              break;
+          }
+
+          if (purchaseDetails.pendingCompletePurchase) {
+            ref.watch(asyncPurchaseProvider.notifier).setIsPending(true);
+
+            await InAppPurchase.instance.completePurchase(purchaseDetails);
+
+            await ref
+                .watch(asyncPurchaseProvider.notifier)
+                .handleEndPurchase(purchaseDetails.productID);
+
+            ref.watch(asyncPurchaseProvider.notifier).setIsPending(false);
+          }
+        }
+      },
     );
 
     return purchases.when(
@@ -30,7 +97,7 @@ class PurchaseTile extends ConsumerWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ListHeading(title: 'Observatory+'),
+            const ListHeading(title: 'Support the app'),
             const ListTile(
               subtitle: Text(
                 'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it. Any amount is appreciated. Please note that there are no additional features or benefits for supporters.',
