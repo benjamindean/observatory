@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:hive_flutter/adapters.dart';
+import 'package:icloud_storage/icloud_storage.dart';
 import 'package:observatory/settings/purchase/purchase_tile.dart';
+import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/ui/about_links.dart';
 import 'package:observatory/settings/ui/country_settings_list_tile.dart';
 import 'package:observatory/settings/ui/stores_settings_list_tile.dart';
@@ -6,6 +11,7 @@ import 'package:observatory/settings/ui/theme_list_tile.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
 import 'package:observatory/settings/ui/waitlist_alerts_settings_tile.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
+import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -163,6 +169,79 @@ class SettingsPage extends ConsumerWidget {
                         },
                       ),
                     ],
+                  ),
+                  ListTile(
+                    title: const Text('Backup'),
+                    trailing: TextButton.icon(
+                      onPressed: () async {
+                        final List<String> boxes = [
+                          SAVED_DEALS_BOX_NAME,
+                          BOOKMARKED_DEALS_BOX_NAME,
+                          SETTINGS_BOX_NAME
+                        ];
+
+                        for (final box in boxes) {
+                          final Box hiveBox = Hive.box(box);
+
+                          await ICloudStorage.upload(
+                            containerId: 'iCloud.com.benjaminabel.observatory',
+                            filePath: hiveBox.path ?? '',
+                            onProgress: (stream) {
+                              stream.listen(
+                                (progress) {},
+                                onDone: () {
+                                  ObservatorySnackBar.show(
+                                    context,
+                                    icon: Icons.cloud_done_rounded,
+                                    content: const Text('Backup Complete'),
+                                  );
+                                },
+                                onError: (err) {
+                                  ObservatorySnackBar.show(
+                                    context,
+                                    icon: Icons.cloud_off_rounded,
+                                    content: Text('Backup Failed: $err'),
+                                  );
+                                },
+                                cancelOnError: true,
+                              );
+                            },
+                          );
+                        }
+                      },
+                      label: const Text('Backup Now'),
+                      icon: const Icon(Icons.cloud_upload),
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Restore Backup'),
+                    trailing: TextButton.icon(
+                      onPressed: () async {
+                        final List<String> boxes = [
+                          SAVED_DEALS_BOX_NAME,
+                          BOOKMARKED_DEALS_BOX_NAME,
+                          SETTINGS_BOX_NAME
+                        ];
+
+                        for (final box in boxes) {
+                          final Box hiveBox = Hive.box(box);
+
+                          await hiveBox.close();
+
+                          final fileList = await ICloudStorage.gather(
+                            containerId: 'iCloud.com.benjaminabel.observatory',
+                          );
+
+                          for (final file in fileList) {
+                            await File(file.relativePath).copy(
+                              hiveBox.path ?? '',
+                            );
+                          }
+                        }
+                      },
+                      label: const Text('Restore Now'),
+                      icon: const Icon(Icons.backup),
+                    ),
                   ),
                   const PurchaseTile(),
                   const ListHeading(title: 'About'),
