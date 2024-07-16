@@ -45,14 +45,19 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     }
   }
 
-  Future<void> handleEndPurchase(String id) async {
-    await GetIt.I<SettingsRepository>().setPurchasedProductIds(id);
+  Future<void> handleEndPurchase(PurchaseDetails purchase) async {
+    await InAppPurchase.instance.completePurchase(purchase);
+
+    await GetIt.I<SettingsRepository>().setPurchasedProductIds(
+      purchase.productID,
+    );
 
     state = await AsyncValue.guard(
       () async => state.requireValue.copyWith(
         isPending: false,
         purchasedProductIds: Set<String>.of(
-          (state.valueOrNull?.purchasedProductIds ?? [])..add(id),
+          (state.valueOrNull?.purchasedProductIds ?? [])
+            ..add(purchase.productID),
         ).toList(),
       ),
     );

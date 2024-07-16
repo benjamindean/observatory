@@ -56,13 +56,13 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
             case PurchaseStatus.purchased:
               await ref
                   .watch(asyncPurchaseProvider.notifier)
-                  .handleEndPurchase(purchaseDetails.productID);
+                  .handleEndPurchase(purchaseDetails);
 
               break;
             case PurchaseStatus.restored:
               await ref
                   .watch(asyncPurchaseProvider.notifier)
-                  .handleEndPurchase(purchaseDetails.productID);
+                  .handleEndPurchase(purchaseDetails);
 
               break;
             case PurchaseStatus.canceled:
@@ -76,11 +76,9 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
           if (purchaseDetails.pendingCompletePurchase) {
             ref.watch(asyncPurchaseProvider.notifier).setIsPending(true);
 
-            await InAppPurchase.instance.completePurchase(purchaseDetails);
-
             await ref
                 .watch(asyncPurchaseProvider.notifier)
-                .handleEndPurchase(purchaseDetails.productID);
+                .handleEndPurchase(purchaseDetails);
 
             ref.watch(asyncPurchaseProvider.notifier).setIsPending(false);
           }
@@ -97,10 +95,24 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ListHeading(title: 'Support the app'),
+            const ListHeading(title: 'Observatory+'),
             const ListTile(
-              subtitle: Text(
-                'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it. Any amount is appreciated. Please note that there are no additional features or benefits for supporters.',
+              subtitle: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text:
+                          'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it.',
+                    ),
+                    TextSpan(
+                      text:
+                          'Please note that there are currently no additional features or benefits for supporters, but it might change in the near future.',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const Padding(
@@ -118,6 +130,7 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
                 onPressed: () async {
                   ObservatorySnackBar.show(
                     context,
+                    icon: Icons.refresh,
                     content: const Text('Restoring purchases...'),
                   );
 
@@ -129,11 +142,13 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
                       if (value) {
                         ObservatorySnackBar.show(
                           context,
+                          icon: Icons.check,
                           content: const Text('Purchases restored!'),
                         );
                       } else {
                         ObservatorySnackBar.show(
                           context,
+                          icon: Icons.info,
                           content: const Text('No purchases to restore.'),
                         );
                       }
