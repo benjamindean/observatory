@@ -113,7 +113,6 @@ class SettingsRepository {
     await Hive.openBox<Deal>(SAVED_DEALS_BOX_NAME);
     await Hive.openBox<Deal>(BOOKMARKED_DEALS_BOX_NAME);
     await Hive.openBox<Deal>(PAST_SAVED_DEALS_BOX_NAME);
-    await Hive.openBox<Deal>(PAST_SAVED_DEALS_BOX_NAME);
     await Hive.openBox<String>(RECENT_SEARCHES_BOX_NAME);
   }
 
@@ -494,5 +493,14 @@ class SettingsRepository {
       PREF_COLLAPSE_PINNED,
       collapse,
     );
+  }
+
+  List<Box> getBoxes() {
+    return [
+      settingsBox,
+      savedDealsBox,
+      bookmarkedDealsBox,
+      recentSearchesBox,
+    ];
   }
 }

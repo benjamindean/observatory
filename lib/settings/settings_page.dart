@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:icloud_storage/icloud_storage.dart';
 import 'package:observatory/settings/purchase/purchase_tile.dart';
@@ -174,39 +175,50 @@ class SettingsPage extends ConsumerWidget {
                     title: const Text('Backup'),
                     trailing: TextButton.icon(
                       onPressed: () async {
-                        final List<String> boxes = [
-                          SAVED_DEALS_BOX_NAME,
-                          BOOKMARKED_DEALS_BOX_NAME,
-                          SETTINGS_BOX_NAME
-                        ];
+                        final boxes = GetIt.I<SettingsRepository>().getBoxes();
 
-                        for (final box in boxes) {
-                          final Box hiveBox = Hive.box(box);
+                        ObservatorySnackBar.show(
+                          context,
+                          icon: Icons.cloud_download_rounded,
+                          content: const Text('Starting Backup...'),
+                        );
 
-                          await ICloudStorage.upload(
-                            containerId: 'iCloud.com.benjaminabel.observatory',
-                            filePath: hiveBox.path ?? '',
-                            onProgress: (stream) {
-                              stream.listen(
-                                (progress) {},
-                                onDone: () {
-                                  ObservatorySnackBar.show(
-                                    context,
-                                    icon: Icons.cloud_done_rounded,
-                                    content: const Text('Backup Complete'),
-                                  );
-                                },
-                                onError: (err) {
-                                  ObservatorySnackBar.show(
-                                    context,
-                                    icon: Icons.cloud_off_rounded,
-                                    content: Text('Backup Failed: $err'),
-                                  );
-                                },
-                                cancelOnError: true,
-                              );
-                            },
-                          );
+                        try {
+                          for (final box in boxes) {
+                            await ICloudStorage.upload(
+                              containerId:
+                                  'iCloud.com.benjaminabel.observatory',
+                              filePath: box.path ?? '',
+                              onProgress: (stream) {
+                                stream.listen(
+                                  (progress) {},
+                                  onDone: () {
+                                    ObservatorySnackBar.show(
+                                      context,
+                                      icon: Icons.cloud_done_rounded,
+                                      content: const Text('Backup Complete'),
+                                    );
+                                  },
+                                  onError: (err) {
+                                    ObservatorySnackBar.show(
+                                      context,
+                                      icon: Icons.cloud_off_rounded,
+                                      content: Text('Backup Failed: $err'),
+                                    );
+                                  },
+                                  cancelOnError: true,
+                                );
+                              },
+                            );
+                          }
+                        } catch (error) {
+                          if (context.mounted) {
+                            ObservatorySnackBar.show(
+                              context,
+                              icon: Icons.cloud_off_rounded,
+                              content: Text('Backup Failed: $error'),
+                            );
+                          }
                         }
                       },
                       label: const Text('Backup Now'),
@@ -217,16 +229,16 @@ class SettingsPage extends ConsumerWidget {
                     title: const Text('Restore Backup'),
                     trailing: TextButton.icon(
                       onPressed: () async {
-                        final List<String> boxes = [
-                          SAVED_DEALS_BOX_NAME,
-                          BOOKMARKED_DEALS_BOX_NAME,
-                          SETTINGS_BOX_NAME
-                        ];
+                        final boxes = GetIt.I<SettingsRepository>().getBoxes();
+
+                        ObservatorySnackBar.show(
+                          context,
+                          icon: Icons.cloud_download_rounded,
+                          content: const Text('Starting Restore...'),
+                        );
 
                         for (final box in boxes) {
-                          final Box hiveBox = Hive.box(box);
-
-                          await hiveBox.close();
+                          await box.close();
 
                           final fileList = await ICloudStorage.gather(
                             containerId: 'iCloud.com.benjaminabel.observatory',
@@ -234,9 +246,11 @@ class SettingsPage extends ConsumerWidget {
 
                           for (final file in fileList) {
                             await File(file.relativePath).copy(
-                              hiveBox.path ?? '',
+                              box.path ?? '',
                             );
                           }
+
+                          await Hive.openBox(box.name);
                         }
                       },
                       label: const Text('Restore Now'),
