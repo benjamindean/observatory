@@ -3,7 +3,7 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
-import 'package:observatory/shared/ui/rounded_container.dart';
+import 'package:observatory/shared/ui/backdrop_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void showBundlesBottomSheet(BuildContext context, List<Bundle> bundles) {
@@ -37,7 +37,7 @@ class BundlesBottomSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const BottomSheetHeading(text: 'Bundles'),
-            RoundedContainer(
+            BackdropContainer(
               child: ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

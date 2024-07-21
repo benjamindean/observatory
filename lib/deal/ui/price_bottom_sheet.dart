@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/deal/ui/price_card.dart';
 import 'package:observatory/shared/models/price.dart';
+import 'package:observatory/shared/ui/backdrop_container.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,14 +31,7 @@ class PriceBottomSheet extends ConsumerWidget {
               hasBottomSheet: false,
             ),
           ),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: context.colors.scheme.surface,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-            ),
+          BackdropContainer(
             child: Column(
               children: [
                 ListTile(

@@ -4,7 +4,7 @@ import 'package:observatory/deal/ui/page_sections/search_on_tile.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
-import 'package:observatory/shared/ui/rounded_container.dart';
+import 'package:observatory/shared/ui/backdrop_container.dart';
 
 void showLinksBottomSheet(BuildContext context, Deal deal) {
   showModalBottomSheet(
@@ -37,7 +37,7 @@ class LinksBottomSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const BottomSheetHeading(text: 'Links'),
-            RoundedContainer(
+            BackdropContainer(
               child: Column(
                 children: [
                   Builder(

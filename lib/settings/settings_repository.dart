@@ -495,7 +495,7 @@ class SettingsRepository {
     );
   }
 
-  List<Box> getBoxes() {
+  List<Box> get boxes {
     return [
       settingsBox,
       savedDealsBox,

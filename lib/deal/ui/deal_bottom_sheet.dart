@@ -7,7 +7,7 @@ import 'package:observatory/deal/deal_functions.dart';
 import 'package:observatory/router.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
-import 'package:observatory/shared/ui/rounded_container.dart';
+import 'package:observatory/shared/ui/backdrop_container.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class DealBottomSheet extends ConsumerWidget {
@@ -45,7 +45,7 @@ class DealBottomSheet extends ConsumerWidget {
               ),
             ),
           ),
-          RoundedContainer(
+          BackdropContainer(
             child: Column(
               children: [
                 ListTile(

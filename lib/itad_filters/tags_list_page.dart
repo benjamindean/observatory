@@ -42,13 +42,7 @@ class TagsListPage extends HookConsumerWidget {
               visible: tags.isNotEmpty,
               child: Container(
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  color: context.midElevatedCanvasColor,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                  ),
-                ),
+                color: context.midElevatedCanvasColor,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Wrap(

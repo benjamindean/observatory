@@ -141,7 +141,7 @@ class GalleryView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Expanded(
-              flex: 50,
+              flex: 40,
               child: BackButton(
                 color: Colors.white30,
                 key: const Key('observatory-back-button-screenshot'),
@@ -151,7 +151,7 @@ class GalleryView extends StatelessWidget {
               ),
             ),
             const Expanded(
-              flex: 50,
+              flex: 60,
               child: SizedBox.expand(),
             ),
           ],

@@ -16,7 +16,7 @@ import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:observatory/shared/ui/close_bottom_sheet_button.dart';
 import 'package:observatory/shared/ui/ory_small_button.dart';
-import 'package:observatory/shared/ui/rounded_container.dart';
+import 'package:observatory/shared/ui/backdrop_container.dart';
 
 void showITADFilters(BuildContext context) {
   showModalBottomSheet(
@@ -90,7 +90,7 @@ class ITADFiltersPage extends ConsumerWidget {
                 ],
               ),
             ),
-            const RoundedContainer(
+            const BackdropContainer(
               child: Column(
                 children: [
                   TagsFilterTile(),

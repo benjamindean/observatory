@@ -14,5 +14,9 @@
 	<array>
 		<string>iCloud.com.benjaminabel.observatory</string>
 	</array>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:benjamindean.github.io</string>
+	</array>
 </dict>
 </plist>
