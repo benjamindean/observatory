@@ -58,6 +58,7 @@ dependencies:
   flutter_hooks: ^0.20.5
   hooks_riverpod: ^2.5.1
   icloud_storage: ^2.2.0
+  app_links: ^6.1.4
 
 dependency_overrides:
   intl: any

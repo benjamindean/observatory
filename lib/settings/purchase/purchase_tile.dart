@@ -102,7 +102,7 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
                   children: [
                     TextSpan(
                       text:
-                          'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it.',
+                          'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it. ',
                     ),
                     TextSpan(
                       text:
