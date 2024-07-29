@@ -30,7 +30,7 @@ class AboutLinks extends StatelessWidget {
                       ..onTap = () {
                         launchUrl(
                           Uri.parse(
-                            'https://benjamindean.github.io/observatory/',
+                            'https://getobservatory.app',
                           ),
                           mode: LaunchMode.externalApplication,
                         );
@@ -54,7 +54,7 @@ class AboutLinks extends StatelessWidget {
                       ..onTap = () {
                         launchUrl(
                           Uri.parse(
-                            'https://benjamindean.github.io/observatory/privacy-policy',
+                            'https://getobservatory.app/privacy-policy',
                           ),
                           mode: LaunchMode.externalApplication,
                         );
@@ -78,7 +78,7 @@ class AboutLinks extends StatelessWidget {
                       ..onTap = () {
                         launchUrl(
                           Uri.parse(
-                            'https://benjamindean.github.io/observatory/terms-and-conditions',
+                            'https://getobservatory.app/terms-and-conditions',
                           ),
                           mode: LaunchMode.externalApplication,
                         );

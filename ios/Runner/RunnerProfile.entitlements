@@ -16,8 +16,8 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:benjamindean.github.io</string>
-		<string>webcredentials:benjamindean.github.io</string>
+		<string>applinks:getobservatory.app</string>
+		<string>webcredentials:getobservatory.app</string>
 	</array>
 </dict>
 </plist>

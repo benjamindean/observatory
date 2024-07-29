@@ -25,6 +25,8 @@ import app_links
 
     if let url = AppLinks.shared.getLink(launchOptions: launchOptions) {
       AppLinks.shared.handleLink(url: url)
+
+      return true
     }
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
