@@ -86,19 +86,30 @@ class HistoryChart extends ConsumerWidget {
                     },
                   ),
                 ),
-                titlesData: const FlTitlesData(
+                titlesData: FlTitlesData(
                   show: true,
-                  rightTitles: AxisTitles(
+                  rightTitles: const AxisTitles(
                     sideTitles: SideTitles(showTitles: false),
                   ),
-                  topTitles: AxisTitles(
+                  topTitles: const AxisTitles(
                     sideTitles: SideTitles(showTitles: false),
                   ),
-                  bottomTitles: AxisTitles(
+                  bottomTitles: const AxisTitles(
                     sideTitles: SideTitles(showTitles: false),
                   ),
                   leftTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
+                    sideTitles: SideTitles(
+                      showTitles: false,
+                      interval: 15,
+                      getTitlesWidget: (value, meta) {
+                        return Text(
+                          value.toStringAsFixed(0),
+                          style: TextStyle(
+                            color: context.colors.scheme.secondary,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 borderData: FlBorderData(
@@ -115,6 +126,8 @@ class HistoryChart extends ConsumerWidget {
                     spots: spots,
                     barWidth: 3,
                     color: context.colors.scheme.secondary,
+                    isStrokeJoinRound: true,
+                    isStrokeCapRound: true,
                     dotData: const FlDotData(
                       show: false,
                     ),
