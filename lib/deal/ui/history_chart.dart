@@ -50,18 +50,27 @@ class HistoryChart extends ConsumerWidget {
 
         final Map<int, History> sortedHistory = {
           for (final h in history)
-            DateTime.parse(h.timestamp ?? '').millisecondsSinceEpoch: h
+            DateTime.parse(h.timestamp ?? '').toLocal().millisecondsSinceEpoch:
+                h
         };
 
-        final List<FlSpot> spots =
-            sortedHistory.entries.sorted((a, b) => a.key.compareTo(b.key)).map(
-          (entry) {
-            return FlSpot(
+        final List<FlSpot> spots = [];
+
+        for (final entry
+            in sortedHistory.entries.sorted((a, b) => a.key.compareTo(b.key))) {
+          final lastSpot = spots.lastOrNull;
+
+          if (lastSpot != null && lastSpot.x > entry.key - 86400000) {
+            continue;
+          }
+
+          spots.add(
+            FlSpot(
               entry.key.toDouble(),
               entry.value.deal?.price.amount ?? regularPrice,
-            );
-          },
-        ).toList();
+            ),
+          );
+        }
 
         return Padding(
           padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 16.0),
@@ -71,6 +80,7 @@ class HistoryChart extends ConsumerWidget {
               LineChartData(
                 lineTouchData: LineTouchData(
                   touchTooltipData: LineTouchTooltipData(
+                    fitInsideHorizontally: true,
                     getTooltipColor: (touchedSpot) =>
                         context.colors.scheme.tertiary,
                     getTooltipItems: (List<LineBarSpot> touchedSpots) {
@@ -128,6 +138,7 @@ class HistoryChart extends ConsumerWidget {
                   LineChartBarData(
                     preventCurveOverShooting: true,
                     spots: spots,
+                    isStepLineChart: true,
                     barWidth: 1,
                     color: context.colors.scheme.secondary,
                     isStrokeJoinRound: true,
@@ -137,6 +148,9 @@ class HistoryChart extends ConsumerWidget {
                     belowBarData: BarAreaData(
                       show: true,
                       color: context.colors.scheme.secondary.withOpacity(0.3),
+                    ),
+                    lineChartStepData: const LineChartStepData(
+                      stepDirection: LineChartStepData.stepDirectionForward,
                     ),
                   ),
                 ],
