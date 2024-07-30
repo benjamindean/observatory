@@ -3,7 +3,9 @@ import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:observatory/deal/providers/history_provider.dart';
+import 'package:observatory/settings/providers/itad_config_provider.dart';
 import 'package:observatory/shared/models/history.dart';
 import 'package:observatory/shared/ui/observatory_shimmer.dart';
 
@@ -17,6 +19,11 @@ class HistoryChart extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final String currency = ref.watch(
+      itadConfigProvider.select(
+        (value) => value.valueOrNull?.currency ?? 'USD',
+      ),
+    );
     final AsyncValue<List<History>?> historyState = ref.watch(
       historyProvider(id),
     );
@@ -24,17 +31,7 @@ class HistoryChart extends ConsumerWidget {
     return historyState.when(
       data: (history) {
         if (history == null || history.isEmpty) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: ListTile(
-              title: Text(
-                'No historical price data available.',
-                style: TextStyle(
-                  color: context.colors.disabled,
-                ),
-              ),
-            ),
-          );
+          return const HistoryEmptyMessage();
         }
 
         final double regularPrice = history
@@ -51,19 +48,23 @@ class HistoryChart extends ConsumerWidget {
             .ceil()
             .toDouble();
 
-        final List<FlSpot> spots = history
-            .asMap()
-            .entries
-            .map(
-              (entry) => FlSpot(
-                entry.key.toDouble(),
-                entry.value.deal?.price.amount ?? regularPrice,
-              ),
-            )
-            .toList();
+        final Map<int, History> sortedHistory = {
+          for (final h in history)
+            DateTime.parse(h.timestamp ?? '').millisecondsSinceEpoch: h
+        };
+
+        final List<FlSpot> spots =
+            sortedHistory.entries.sorted((a, b) => a.key.compareTo(b.key)).map(
+          (entry) {
+            return FlSpot(
+              entry.key.toDouble(),
+              entry.value.deal?.price.amount ?? regularPrice,
+            );
+          },
+        ).toList();
 
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 16.0),
           child: SizedBox(
             height: 200,
             child: LineChart(
@@ -76,7 +77,9 @@ class HistoryChart extends ConsumerWidget {
                       return touchedSpots
                           .map(
                             (LineBarSpot touchedSpot) => LineTooltipItem(
-                              touchedSpot.y.toString(),
+                              '${NumberFormat.simpleCurrency(
+                                name: currency,
+                              ).format(touchedSpot.y)}\n${DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY).format(DateTime.fromMillisecondsSinceEpoch(touchedSpot.x.toInt()))}',
                               TextStyle(
                                 color: context.colors.scheme.onTertiary,
                               ),
@@ -113,23 +116,23 @@ class HistoryChart extends ConsumerWidget {
                   ),
                 ),
                 borderData: FlBorderData(
-                  show: true,
+                  show: false,
                   border: Border.all(
                     color: context.colors.scheme.secondary,
-                    width: 0.5,
+                    width: 1.5,
                   ),
                 ),
-                minY: lowestPrice - 1,
-                maxY: regularPrice + 1,
+                minY: lowestPrice - 0.1,
+                maxY: regularPrice + 0.1,
                 lineBarsData: [
                   LineChartBarData(
+                    preventCurveOverShooting: true,
                     spots: spots,
-                    barWidth: 3,
+                    barWidth: 1,
                     color: context.colors.scheme.secondary,
                     isStrokeJoinRound: true,
-                    isStrokeCapRound: true,
                     dotData: const FlDotData(
-                      show: false,
+                      show: true,
                     ),
                     belowBarData: BarAreaData(
                       show: true,
@@ -146,18 +149,29 @@ class HistoryChart extends ConsumerWidget {
         return const ObservatoryShimmer();
       },
       error: (error, stackTrace) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: ListTile(
-            title: Text(
-              'No historical price data available.',
-              style: TextStyle(
-                color: context.colors.disabled,
-              ),
-            ),
-          ),
-        );
+        return const HistoryEmptyMessage();
       },
+    );
+  }
+}
+
+class HistoryEmptyMessage extends StatelessWidget {
+  const HistoryEmptyMessage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: ListTile(
+        title: Text(
+          'No historical price data available.',
+          style: TextStyle(
+            color: context.colors.disabled,
+          ),
+        ),
+      ),
     );
   }
 }

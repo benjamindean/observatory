@@ -64,7 +64,10 @@ class DealPage extends ConsumerWidget {
                 prices: dealState.prices,
               ),
               const SliverToBoxAdapter(
-                child: ListHeading(title: 'Price History'),
+                child: ListHeading(
+                  title: 'Price History',
+                  subtitle: Text('Past 6 months'),
+                ),
               ),
               SliverToBoxAdapter(
                 child: HistoryChart(
