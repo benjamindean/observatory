@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:observatory/shared/models/chart_entry.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/game/game.dart';
+import 'package:observatory/shared/models/history.dart';
 import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';
@@ -14,6 +15,15 @@ class Parsers {
     final Map<String, dynamic> jsonResponse = json.decode(contents.toString());
 
     return Info.fromJson(jsonResponse);
+  }
+
+  static List<History> history(contents) {
+    final List<dynamic> rawList = json
+        .decode(contents.toString())
+        .where((history) => history != null && history['deal'] != null)
+        .toList();
+
+    return rawList.map((e) => History.fromJson(e)).toList();
   }
 
   static Overview overview(contents) {

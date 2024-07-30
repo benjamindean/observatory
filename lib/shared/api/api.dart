@@ -10,6 +10,7 @@ import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/api/utils.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/models/history.dart';
 import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/models/overview.dart';
@@ -391,6 +392,31 @@ class API {
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch steam ID mappings',
+        error: error,
+      );
+
+      FirebaseCrashlytics.instance.recordError(
+        error,
+        stackTrace,
+      );
+
+      return null;
+    }
+  }
+
+  Future<List<History>?> history({
+    required String id,
+  }) async {
+    try {
+      final Uri url = Uri.https(BASE_URL, '/games/history/v2', {
+        'key': API_KEY,
+        'id': id,
+      });
+
+      return Parsers.history(await dio.get(url.toString()));
+    } catch (error, stackTrace) {
+      Logger().e(
+        'Failed to fetch history',
         error: error,
       );
 

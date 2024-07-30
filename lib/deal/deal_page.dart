@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:observatory/deal/ui/history_chart.dart';
 import 'package:observatory/deal/ui/page_sections/bundles_tile.dart';
 import 'package:observatory/deal/ui/deal_app_bar.dart';
 import 'package:observatory/deal/ui/deal_page_bottom_appbar.dart';
@@ -61,6 +62,14 @@ class DealPage extends ConsumerWidget {
               ),
               PriceListView(
                 prices: dealState.prices,
+              ),
+              const SliverToBoxAdapter(
+                child: ListHeading(title: 'Price History'),
+              ),
+              SliverToBoxAdapter(
+                child: HistoryChart(
+                  id: deal.id,
+                ),
               ),
               const SliverToBoxAdapter(
                 child: IsThereAnyDealInfo(),

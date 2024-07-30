@@ -59,6 +59,7 @@ dependencies:
   hooks_riverpod: ^2.5.1
   icloud_storage: ^2.2.0
   app_links: ^6.1.4
+  fl_chart: ^0.68.0
 
 dependency_overrides:
   intl: any
