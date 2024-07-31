@@ -1,5 +1,4 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,53 +23,24 @@ class HistoryChart extends ConsumerWidget {
         (value) => value.valueOrNull?.currency ?? 'USD',
       ),
     );
-    final AsyncValue<List<History>?> historyState = ref.watch(
+    final AsyncValue<List<MapEntry<int, History>>> historyState = ref.watch(
       historyProvider(id),
     );
 
     return historyState.when(
       data: (history) {
-        if (history == null || history.isEmpty) {
+        if (history.isEmpty) {
           return const HistoryEmptyMessage();
         }
 
-        final double regularPrice = history
-            .map((item) => item.deal?.regular.amount ?? 0)
-            .sorted((a, b) => b.compareTo(a))
-            .first
-            .ceil()
-            .toDouble();
-
-        final double lowestPrice = history
-            .map((item) => item.deal?.price.amount ?? 0)
-            .sorted((a, b) => a.compareTo(b))
-            .first
-            .ceil()
-            .toDouble();
-
-        final Map<int, History> sortedHistory = {
-          for (final h in history)
-            DateTime.parse(h.timestamp ?? '').toLocal().millisecondsSinceEpoch:
-                h
-        };
-
-        final List<FlSpot> spots = [];
-
-        for (final entry
-            in sortedHistory.entries.sorted((a, b) => a.key.compareTo(b.key))) {
-          final lastSpot = spots.lastOrNull;
-
-          if (lastSpot != null && lastSpot.x > entry.key - 86400000) {
-            continue;
-          }
-
-          spots.add(
-            FlSpot(
-              entry.key.toDouble(),
-              entry.value.deal?.price.amount ?? regularPrice,
-            ),
-          );
-        }
+        final List<FlSpot> spots = history
+            .map(
+              (entry) => FlSpot(
+                entry.key.toDouble(),
+                entry.value.deal?.price.amount.toDouble() ?? 0,
+              ),
+            )
+            .toList();
 
         return Padding(
           padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 16.0),
@@ -81,21 +51,33 @@ class HistoryChart extends ConsumerWidget {
                 lineTouchData: LineTouchData(
                   touchTooltipData: LineTouchTooltipData(
                     fitInsideHorizontally: true,
-                    getTooltipColor: (touchedSpot) =>
-                        context.colors.scheme.tertiary,
+                    fitInsideVertically: true,
+                    getTooltipColor: (_) => context.colors.scheme.tertiary,
+                    tooltipRoundedRadius: 12.0,
                     getTooltipItems: (List<LineBarSpot> touchedSpots) {
-                      return touchedSpots
-                          .map(
-                            (LineBarSpot touchedSpot) => LineTooltipItem(
-                              '${NumberFormat.simpleCurrency(
-                                name: currency,
-                              ).format(touchedSpot.y)}\n${DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY).format(DateTime.fromMillisecondsSinceEpoch(touchedSpot.x.toInt()))}',
-                              TextStyle(
-                                color: context.colors.scheme.onTertiary,
-                              ),
+                      return touchedSpots.map(
+                        (LineBarSpot touchedSpot) {
+                          return LineTooltipItem(
+                            NumberFormat.simpleCurrency(
+                              name: currency,
+                            ).format(touchedSpot.y),
+                            context.textStyles.labelMedium.copyWith(
+                              color: context.colors.scheme.onTertiary,
                             ),
-                          )
-                          .toList();
+                            children: [
+                              const TextSpan(text: '\n'),
+                              TextSpan(
+                                text: DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY)
+                                    .format(
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                    touchedSpot.x.toInt(),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ).toList();
                     },
                   ),
                 ),
@@ -107,41 +89,45 @@ class HistoryChart extends ConsumerWidget {
                   topTitles: const AxisTitles(
                     sideTitles: SideTitles(showTitles: false),
                   ),
-                  bottomTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  leftTitles: AxisTitles(
+                  bottomTitles: AxisTitles(
                     sideTitles: SideTitles(
-                      showTitles: false,
-                      interval: 15,
+                      showTitles: true,
+                      interval: 60 * 60 * 24 * 30 * 1000,
                       getTitlesWidget: (value, meta) {
+                        if (meta.min == value || meta.max == value) {
+                          return const SizedBox.shrink();
+                        }
+
                         return Text(
-                          value.toStringAsFixed(0),
-                          style: TextStyle(
+                          DateFormat(DateFormat.ABBR_MONTH).format(
+                            DateTime.fromMillisecondsSinceEpoch(
+                              value.toInt(),
+                            ),
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          style: context.textStyles.labelSmall.copyWith(
                             color: context.colors.scheme.secondary,
                           ),
                         );
                       },
                     ),
                   ),
+                  leftTitles: const AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: false,
+                    ),
+                  ),
                 ),
                 borderData: FlBorderData(
                   show: false,
-                  border: Border.all(
-                    color: context.colors.scheme.secondary,
-                    width: 1.5,
-                  ),
                 ),
-                minY: lowestPrice - 0.1,
-                maxY: regularPrice + 0.1,
                 lineBarsData: [
                   LineChartBarData(
-                    preventCurveOverShooting: true,
                     spots: spots,
+                    preventCurveOverShooting: true,
                     isStepLineChart: true,
                     barWidth: 1,
                     color: context.colors.scheme.secondary,
-                    isStrokeJoinRound: true,
                     dotData: const FlDotData(
                       show: true,
                     ),
@@ -150,7 +136,7 @@ class HistoryChart extends ConsumerWidget {
                       color: context.colors.scheme.secondary.withOpacity(0.3),
                     ),
                     lineChartStepData: const LineChartStepData(
-                      stepDirection: LineChartStepData.stepDirectionForward,
+                      stepDirection: LineChartStepData.stepDirectionBackward,
                     ),
                   ),
                 ],
