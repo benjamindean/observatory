@@ -112,9 +112,23 @@ class HistoryChart extends ConsumerWidget {
                       },
                     ),
                   ),
-                  leftTitles: const AxisTitles(
+                  leftTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: false,
+                      interval: 10,
+                      getTitlesWidget: (value, meta) {
+                        if (meta.min == value || meta.max == value) {
+                          return Text(
+                            value.toInt().toString(),
+                            overflow: TextOverflow.ellipsis,
+                            style: context.textStyles.labelSmall.copyWith(
+                              color: context.colors.scheme.secondary,
+                            ),
+                          );
+                        }
+
+                        return const SizedBox.shrink();
+                      },
                     ),
                   ),
                 ),
@@ -136,7 +150,7 @@ class HistoryChart extends ConsumerWidget {
                       color: context.colors.scheme.secondary.withOpacity(0.3),
                     ),
                     lineChartStepData: const LineChartStepData(
-                      stepDirection: LineChartStepData.stepDirectionBackward,
+                      stepDirection: LineChartStepData.stepDirectionForward,
                     ),
                   ),
                 ],
