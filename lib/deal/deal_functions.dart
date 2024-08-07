@@ -52,34 +52,36 @@ class DealFunctions {
           return;
         }
 
-        return ObservatorySnackBar.show(
-          context,
-          onAction: () async {
-            await ref
-                .read(asyncWaitListProvider.notifier)
-                .addToWaitlist(updatedDeal);
-          },
-          icon: Icons.remove_circle,
-          content: RichText(
-            text: TextSpan(
-              children: <TextSpan>[
-                TextSpan(
-                  text: deal.titleParsed,
-                  style: context.themes.snackBar.contentTextStyle?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: context.colors.scheme.onInverseSurface,
+        if (context.mounted) {
+          return ObservatorySnackBar.show(
+            context,
+            onAction: () async {
+              await ref
+                  .read(asyncWaitListProvider.notifier)
+                  .addToWaitlist(updatedDeal);
+            },
+            icon: Icons.remove_circle,
+            content: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    text: deal.titleParsed,
+                    style: context.themes.snackBar.contentTextStyle?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: context.colors.scheme.onInverseSurface,
+                    ),
                   ),
-                ),
-                TextSpan(
-                  text: ' has been removed from your waitlist.',
-                  style: context.themes.snackBar.contentTextStyle?.copyWith(
-                    color: context.colors.scheme.onInverseSurface,
+                  TextSpan(
+                    text: ' has been removed from your waitlist.',
+                    style: context.themes.snackBar.contentTextStyle?.copyWith(
+                      color: context.colors.scheme.onInverseSurface,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        }
       },
     );
   }
@@ -103,34 +105,36 @@ class DealFunctions {
           return;
         }
 
-        return ObservatorySnackBar.show(
-          context,
-          onAction: () async {
-            await ref
-                .read(asyncWaitListProvider.notifier)
-                .removeFromWaitList(updatedDeal);
-          },
-          icon: Icons.add_circle_outlined,
-          content: RichText(
-            text: TextSpan(
-              children: <TextSpan>[
-                TextSpan(
-                  text: deal.titleParsed,
-                  style: context.themes.snackBar.contentTextStyle?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: context.colors.scheme.onInverseSurface,
+        if (context.mounted) {
+          return ObservatorySnackBar.show(
+            context,
+            onAction: () async {
+              await ref
+                  .read(asyncWaitListProvider.notifier)
+                  .removeFromWaitList(updatedDeal);
+            },
+            icon: Icons.add_circle_outlined,
+            content: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    text: deal.titleParsed,
+                    style: context.themes.snackBar.contentTextStyle?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: context.colors.scheme.onInverseSurface,
+                    ),
                   ),
-                ),
-                TextSpan(
-                  text: ' has been added to your waitlist.',
-                  style: context.themes.snackBar.contentTextStyle?.copyWith(
-                    color: context.colors.scheme.onInverseSurface,
+                  TextSpan(
+                    text: ' has been added to your waitlist.',
+                    style: context.themes.snackBar.contentTextStyle?.copyWith(
+                      color: context.colors.scheme.onInverseSurface,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        }
       },
     );
   }
@@ -154,34 +158,36 @@ class DealFunctions {
           return;
         }
 
-        return ObservatorySnackBar.show(
-          context,
-          onAction: () async {
-            await ref
-                .read(asyncBookmarksProvider.notifier)
-                .removeBookmarks([updatedDeal]);
-          },
-          icon: Icons.push_pin_rounded,
-          content: RichText(
-            text: TextSpan(
-              children: <TextSpan>[
-                TextSpan(
-                  text: deal.titleParsed,
-                  style: context.themes.snackBar.contentTextStyle?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: context.colors.scheme.onInverseSurface,
+        if (context.mounted) {
+          return ObservatorySnackBar.show(
+            context,
+            onAction: () async {
+              await ref
+                  .read(asyncBookmarksProvider.notifier)
+                  .removeBookmarks([updatedDeal]);
+            },
+            icon: Icons.push_pin_rounded,
+            content: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    text: deal.titleParsed,
+                    style: context.themes.snackBar.contentTextStyle?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: context.colors.scheme.onInverseSurface,
+                    ),
                   ),
-                ),
-                TextSpan(
-                  text: ' has been pinned to the top of the list.',
-                  style: context.themes.snackBar.contentTextStyle?.copyWith(
-                    color: context.colors.scheme.onInverseSurface,
+                  TextSpan(
+                    text: ' has been pinned to the top of the list.',
+                    style: context.themes.snackBar.contentTextStyle?.copyWith(
+                      color: context.colors.scheme.onInverseSurface,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        }
       },
     );
   }
@@ -204,34 +210,36 @@ class DealFunctions {
           return;
         }
 
-        return ObservatorySnackBar.show(
-          context,
-          onAction: () async {
-            await ref
-                .read(asyncBookmarksProvider.notifier)
-                .addBookmark(updatedDeal);
-          },
-          icon: Icons.push_pin_outlined,
-          content: RichText(
-            text: TextSpan(
-              children: <TextSpan>[
-                TextSpan(
-                  text: deal.titleParsed,
-                  style: context.themes.snackBar.contentTextStyle?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: context.colors.scheme.onInverseSurface,
+        if (context.mounted) {
+          return ObservatorySnackBar.show(
+            context,
+            onAction: () async {
+              await ref
+                  .read(asyncBookmarksProvider.notifier)
+                  .addBookmark(updatedDeal);
+            },
+            icon: Icons.push_pin_outlined,
+            content: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    text: deal.titleParsed,
+                    style: context.themes.snackBar.contentTextStyle?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: context.colors.scheme.onInverseSurface,
+                    ),
                   ),
-                ),
-                TextSpan(
-                  text: ' has been un-pinned from the top of the list.',
-                  style: context.themes.snackBar.contentTextStyle?.copyWith(
-                    color: context.colors.scheme.onInverseSurface,
+                  TextSpan(
+                    text: ' has been un-pinned from the top of the list.',
+                    style: context.themes.snackBar.contentTextStyle?.copyWith(
+                      color: context.colors.scheme.onInverseSurface,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        }
       },
     );
   }

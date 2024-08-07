@@ -42,7 +42,7 @@ class DealCardCompact extends ConsumerWidget {
 
     return Slidable(
       endActionPane: ActionPane(
-        extentRatio: page == NavigationBranch.waitlist ? 0.4 : 0.2,
+        extentRatio: isInWaitlist ? 0.4 : 0.2,
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
@@ -69,7 +69,7 @@ class DealCardCompact extends ConsumerWidget {
                 ? Icons.favorite_rounded
                 : Icons.favorite_outline_rounded,
           ),
-          if (isWaitlistPage)
+          if (isInWaitlist)
             SlidableAction(
               padding: EdgeInsets.zero,
               borderRadius: BorderRadius.circular(12),

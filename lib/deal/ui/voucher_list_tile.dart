@@ -20,36 +20,41 @@ class VoucherListTile extends StatelessWidget {
       child: ListTile(
         onTap: () async {
           await Clipboard.setData(ClipboardData(text: price.voucher ?? ''))
-              .then(
-            (value) => ObservatorySnackBar.show(
-              context,
-              content: RichText(
-                text: TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Voucher ',
-                      style: context.themes.snackBar.contentTextStyle?.copyWith(
-                        color: context.colors.scheme.onInverseSurface,
+              .then((value) {
+            if (context.mounted) {
+              ObservatorySnackBar.show(
+                context,
+                content: RichText(
+                  text: TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Voucher ',
+                        style:
+                            context.themes.snackBar.contentTextStyle?.copyWith(
+                          color: context.colors.scheme.onInverseSurface,
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: price.voucher ?? 'None',
-                      style: context.themes.snackBar.contentTextStyle?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: context.colors.scheme.onInverseSurface,
+                      TextSpan(
+                        text: price.voucher ?? 'None',
+                        style:
+                            context.themes.snackBar.contentTextStyle?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: context.colors.scheme.onInverseSurface,
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: ' copied to clipboard.',
-                      style: context.themes.snackBar.contentTextStyle?.copyWith(
-                        color: context.colors.scheme.onInverseSurface,
+                      TextSpan(
+                        text: ' copied to clipboard.',
+                        style:
+                            context.themes.snackBar.contentTextStyle?.copyWith(
+                          color: context.colors.scheme.onInverseSurface,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ),
-          );
+              );
+            }
+          });
         },
         dense: true,
         visualDensity: VisualDensity.compact,

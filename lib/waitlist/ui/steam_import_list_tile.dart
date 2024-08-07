@@ -59,7 +59,11 @@ class SteamImportListTile extends ConsumerWidget {
                     ref
                         .watch(steamImportProvider.notifier)
                         .reImport()
-                        .whenComplete(() => context.pop());
+                        .whenComplete(() {
+                      if (context.mounted) {
+                        context.pop();
+                      }
+                    });
                   }
                 } catch (error, stackTrace) {
                   Logger().w(

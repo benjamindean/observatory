@@ -36,5 +36,9 @@ final historyProvider =
     spots.add(entry);
   }
 
+  if (spots.length < 2) {
+    return [];
+  }
+
   return spots;
 });

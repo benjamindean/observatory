@@ -60,8 +60,12 @@ class DealsFilter extends ConsumerWidget {
                         .read(asyncSettingsProvider.notifier)
                         .setDealsTab(category)
                         .then(
-                          (value) => context.pop(),
-                        );
+                      (value) {
+                        if (context.mounted) {
+                          context.pop();
+                        }
+                      },
+                    );
                   },
                   title: Text(
                     dealCategoryLabels[category]?['title'] ?? 'Unknown',

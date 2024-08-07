@@ -18,6 +18,7 @@ import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/is_there_any_deal_info.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
+import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 
 class DealPage extends ConsumerWidget {
   final Deal deal;
@@ -42,6 +43,18 @@ class DealPage extends ConsumerWidget {
             key: const Key('deal-scroll-view'),
             slivers: [
               DealAppBar(deal: deal),
+              PinnedHeaderSliver(
+                child: ColoredBox(
+                  color: context.elevatedCanvasColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      deal.titleParsed,
+                      style: context.textStyles.titleMedium,
+                    ),
+                  ),
+                ),
+              ),
               SliverList.list(
                 key: Key('deal-${deal.id}-sliver-list'),
                 children: [

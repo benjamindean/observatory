@@ -71,49 +71,52 @@ class SteamImportPage extends ConsumerWidget {
                                       return;
                                     }
 
-                                    return ObservatorySnackBar.show(
-                                      context,
-                                      content: RichText(
-                                        text: TextSpan(
-                                          style: context
-                                              .themes.snackBar.contentTextStyle
-                                              ?.copyWith(
-                                            color: context
-                                                .colors.scheme.onInverseSurface,
+                                    if (context.mounted) {
+                                      return ObservatorySnackBar.show(
+                                        context,
+                                        content: RichText(
+                                          text: TextSpan(
+                                            style: context.themes.snackBar
+                                                .contentTextStyle
+                                                ?.copyWith(
+                                              color: context.colors.scheme
+                                                  .onInverseSurface,
+                                            ),
+                                            children: [
+                                              TextSpan(
+                                                text: 'Successfully imported ',
+                                                style: context.themes.snackBar
+                                                    .contentTextStyle
+                                                    ?.copyWith(
+                                                  color: context.colors.scheme
+                                                      .onInverseSurface,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: result.length.toString(),
+                                                style: context.themes.snackBar
+                                                    .contentTextStyle
+                                                    ?.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: context.colors.scheme
+                                                      .onInverseSurface,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text:
+                                                    ' games to your waitlist!',
+                                                style: context.themes.snackBar
+                                                    .contentTextStyle
+                                                    ?.copyWith(
+                                                  color: context.colors.scheme
+                                                      .onInverseSurface,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          children: [
-                                            TextSpan(
-                                              text: 'Successfully imported ',
-                                              style: context.themes.snackBar
-                                                  .contentTextStyle
-                                                  ?.copyWith(
-                                                color: context.colors.scheme
-                                                    .onInverseSurface,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: result.length.toString(),
-                                              style: context.themes.snackBar
-                                                  .contentTextStyle
-                                                  ?.copyWith(
-                                                fontWeight: FontWeight.bold,
-                                                color: context.colors.scheme
-                                                    .onInverseSurface,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: ' games to your waitlist!',
-                                              style: context.themes.snackBar
-                                                  .contentTextStyle
-                                                  ?.copyWith(
-                                                color: context.colors.scheme
-                                                    .onInverseSurface,
-                                              ),
-                                            ),
-                                          ],
                                         ),
-                                      ),
-                                    );
+                                      );
+                                    }
                                   },
                                 );
                               },
@@ -140,7 +143,7 @@ class SteamImportPage extends ConsumerWidget {
           PopScope(
             canPop: (steamImportState.deals ?? []).isEmpty ||
                 steamImportState.isImporting,
-            onPopInvoked: (canPop) {
+            onPopInvokedWithResult: (canPop, _) {
               if (canPop) {
                 return;
               }

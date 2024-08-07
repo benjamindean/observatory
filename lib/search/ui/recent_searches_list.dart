@@ -39,7 +39,7 @@ class RecentSearchesList extends ConsumerWidget {
           );
         }
 
-        final List<String> recentsList = data.reversed.toList();
+        final List<String> recentsList = data.toList();
 
         return SliverPadding(
           padding: const EdgeInsets.all(6.0),
@@ -60,7 +60,13 @@ class RecentSearchesList extends ConsumerWidget {
                                 ref
                                     .read(asynRecentsProvider.notifier)
                                     .clearRecents()
-                                    .then((value) => context.pop());
+                                    .then(
+                                  (value) {
+                                    if (context.mounted) {
+                                      context.pop();
+                                    }
+                                  },
+                                );
                               },
                               onDiscard: () {
                                 context.pop();

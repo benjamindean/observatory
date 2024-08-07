@@ -43,7 +43,7 @@ class BookmarksInfoBar extends ConsumerWidget {
               ),
               child: ListTile(
                 dense: true,
-                contentPadding: const EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                contentPadding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
                 leading: Icon(
                   Icons.push_pin,
                   color: context.colors.scheme.onSurfaceVariant,

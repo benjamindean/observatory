@@ -122,8 +122,12 @@ class StoreSelectPage extends ConsumerWidget {
                                   .read(itadConfigProvider.notifier)
                                   .setSelectedStores(storeList)
                                   .then(
-                                    (value) => context.pop(),
-                                  );
+                                (value) {
+                                  if (context.mounted) {
+                                    context.pop();
+                                  }
+                                },
+                              );
                             },
                       icon: const Icon(Icons.check),
                       label: const Text('Apply'),
@@ -147,7 +151,7 @@ class StoreSelectPage extends ConsumerWidget {
         children: [
           PopScope(
             canPop: !hasChanged,
-            onPopInvoked: (canPop) {
+            onPopInvokedWithResult: (canPop, _) {
               if (!canPop) {
                 showAdaptiveDialog<void>(
                   context: context,
@@ -169,8 +173,10 @@ class StoreSelectPage extends ConsumerWidget {
                             .setSelectedStores(storeList)
                             .then(
                           (value) {
-                            context.pop();
-                            context.pop();
+                            if (context.mounted) {
+                              context.pop();
+                              context.pop();
+                            }
                           },
                         );
                       },
