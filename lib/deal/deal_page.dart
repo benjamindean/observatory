@@ -45,12 +45,14 @@ class DealPage extends ConsumerWidget {
               DealAppBar(deal: deal),
               PinnedHeaderSliver(
                 child: ColoredBox(
-                  color: context.elevatedCanvasColor,
+                  color: context.elevatedBottomAppBarColor,
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Text(
                       deal.titleParsed,
-                      style: context.textStyles.titleMedium,
+                      style: context.textStyles.titleMedium.copyWith(
+                        color: context.colors.scheme.onSurface,
+                      ),
                     ),
                   ),
                 ),

@@ -26,11 +26,10 @@ class DealAppBar extends ConsumerWidget {
         false;
 
     return SliverAppBar(
+      toolbarHeight: 0,
       automaticallyImplyLeading: false,
       expandedHeight: showHeaders ? headerHeight : 0,
       flexibleSpace: FlexibleSpaceBar(
-        expandedTitleScale: 1,
-        titlePadding: EdgeInsets.zero,
         background: showHeaders
             ? HeaderImage(
                 url: deal.headerImageURL,

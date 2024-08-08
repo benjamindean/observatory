@@ -113,7 +113,6 @@ class DealCardCompact extends ConsumerWidget {
                 builder: (context, ref, _) {
                   return DealBottomSheet(
                     deal: deal,
-                    page: page,
                   );
                 },
               );

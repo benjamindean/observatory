@@ -47,7 +47,6 @@ class DealCardExpanded extends ConsumerWidget {
               builder: (context, ref, _) {
                 return DealBottomSheet(
                   deal: deal,
-                  page: page,
                 );
               },
             );

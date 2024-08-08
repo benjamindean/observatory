@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/deal_functions.dart';
-import 'package:observatory/router.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/backdrop_container.dart';
@@ -12,18 +11,14 @@ import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class DealBottomSheet extends ConsumerWidget {
   final Deal deal;
-  final NavigationBranch page;
 
   const DealBottomSheet({
     super.key,
     required this.deal,
-    required this.page,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool isWaitlistPage = page == NavigationBranch.waitlist;
-
     final List<String> waitlist = ref.watch(waitlistIdsProvider);
     final bool isInWaitlist = waitlist.contains(deal.id);
 
@@ -74,35 +69,40 @@ class DealBottomSheet extends ConsumerWidget {
                     );
                   },
                 ),
-                if (isWaitlistPage)
-                  ListTile(
-                    leading: Icon(
-                      isInBookmarks
-                          ? Icons.push_pin_rounded
-                          : Icons.push_pin_outlined,
-                      color: context.colors.scheme.tertiary,
-                    ),
-                    title: Text(
-                      isInBookmarks ? 'Unpin' : 'Pin',
-                    ),
-                    onTap: () {
-                      if (isInBookmarks) {
-                        return DealFunctions.removeBookmark(
-                          context: context,
-                          ref: ref,
-                          deal: deal,
-                          showToast: false,
-                        );
-                      }
-
-                      return DealFunctions.addBookmark(
-                        context: context,
-                        ref: ref,
-                        deal: deal,
-                        showToast: false,
-                      );
-                    },
+                ListTile(
+                  enabled: isInWaitlist,
+                  leading: Icon(
+                    isInBookmarks
+                        ? Icons.push_pin_rounded
+                        : Icons.push_pin_outlined,
+                    color: context.colors.scheme.tertiary,
                   ),
+                  title: Text(
+                    isInBookmarks ? 'Unpin' : 'Pin',
+                  ),
+                  subtitle: !isInWaitlist
+                      ? const Text('You can only pin deals in your waitlist')
+                      : null,
+                  onTap: isInWaitlist
+                      ? () {
+                          if (isInBookmarks) {
+                            return DealFunctions.removeBookmark(
+                              context: context,
+                              ref: ref,
+                              deal: deal,
+                              showToast: false,
+                            );
+                          }
+
+                          return DealFunctions.addBookmark(
+                            context: context,
+                            ref: ref,
+                            deal: deal,
+                            showToast: false,
+                          );
+                        }
+                      : null,
+                ),
                 ListTile(
                   leading: Icon(
                     Icons.open_in_browser,
