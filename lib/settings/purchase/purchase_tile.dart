@@ -127,17 +127,14 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: TextButton.icon(
-                onPressed: () async {
+                onPressed: () {
                   ObservatorySnackBar.show(
                     context,
                     icon: Icons.refresh,
                     content: const Text('Restoring purchases...'),
                   );
 
-                  await ref
-                      .watch(asyncPurchaseProvider.notifier)
-                      .restore()
-                      .then(
+                  ref.watch(asyncPurchaseProvider.notifier).restore().then(
                     (value) {
                       if (context.mounted) {
                         if (value) {

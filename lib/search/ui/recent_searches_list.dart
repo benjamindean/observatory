@@ -51,12 +51,12 @@ class RecentSearchesList extends ConsumerWidget {
                   child: Center(
                     child: TextButton.icon(
                       icon: const Icon(Icons.cancel_rounded),
-                      onPressed: () async {
+                      onPressed: () {
                         showAdaptiveDialog(
                           context: context,
                           builder: (context) {
                             return ObservatoryDialog(
-                              onApply: () async {
+                              onApply: () {
                                 ref
                                     .read(asynRecentsProvider.notifier)
                                     .clearRecents()
@@ -96,10 +96,8 @@ class RecentSearchesList extends ConsumerWidget {
                     contentPadding: const EdgeInsets.fromLTRB(16.0, 0, 0, 0),
                     trailing: IconButton(
                       icon: const Icon(Icons.cancel),
-                      onPressed: () async {
-                        await ref
-                            .read(asynRecentsProvider.notifier)
-                            .removeRecent(
+                      onPressed: () {
+                        ref.read(asynRecentsProvider.notifier).removeRecent(
                               recentsList[index],
                             );
                       },

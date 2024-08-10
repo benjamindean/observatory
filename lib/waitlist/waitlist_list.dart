@@ -72,8 +72,8 @@ class WaitListList extends ConsumerWidget {
               helper: TextButton.icon(
                 icon: const Icon(Icons.refresh),
                 label: const Text('Refresh'),
-                onPressed: () async {
-                  return ref
+                onPressed: () {
+                  ref
                       .watch(asyncWaitListProvider.notifier)
                       .reset(withLoading: true);
                 },

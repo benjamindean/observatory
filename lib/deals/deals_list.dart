@@ -69,8 +69,8 @@ class DealsList extends ConsumerWidget {
               helper: TextButton.icon(
                 icon: const Icon(Icons.refresh),
                 label: const Text('Refresh'),
-                onPressed: () async {
-                  await dealsNotifier.reset(withLoading: true);
+                onPressed: () {
+                  dealsNotifier.reset(withLoading: true);
                 },
               ),
             ),
@@ -89,10 +89,8 @@ class DealsList extends ConsumerWidget {
                 helper: TextButton.icon(
                   icon: const Icon(Icons.refresh_rounded),
                   label: const Text('Refresh'),
-                  onPressed: () async {
-                    await dealsNotifier.reset(
-                      withLoading: true,
-                    );
+                  onPressed: () {
+                    dealsNotifier.reset(withLoading: true);
                   },
                 ),
               ),

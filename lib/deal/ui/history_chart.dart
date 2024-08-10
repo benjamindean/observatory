@@ -49,6 +49,7 @@ class HistoryChart extends ConsumerWidget {
             child: LineChart(
               LineChartData(
                 lineTouchData: LineTouchData(
+                  touchSpotThreshold: 50,
                   touchTooltipData: LineTouchTooltipData(
                     fitInsideHorizontally: true,
                     fitInsideVertically: true,

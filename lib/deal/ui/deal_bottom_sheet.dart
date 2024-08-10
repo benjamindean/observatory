@@ -70,7 +70,6 @@ class DealBottomSheet extends ConsumerWidget {
                   },
                 ),
                 ListTile(
-                  enabled: isInWaitlist,
                   leading: Icon(
                     isInBookmarks
                         ? Icons.push_pin_rounded
@@ -78,30 +77,36 @@ class DealBottomSheet extends ConsumerWidget {
                     color: context.colors.scheme.tertiary,
                   ),
                   title: Text(
-                    isInBookmarks ? 'Unpin' : 'Pin',
+                    !isInWaitlist
+                        ? 'Add to waitlist and pin'
+                        : (isInBookmarks ? 'Unpin' : 'Pin'),
                   ),
-                  subtitle: !isInWaitlist
-                      ? const Text('You can only pin deals in your waitlist')
-                      : null,
-                  onTap: isInWaitlist
-                      ? () {
-                          if (isInBookmarks) {
-                            return DealFunctions.removeBookmark(
-                              context: context,
-                              ref: ref,
-                              deal: deal,
-                              showToast: false,
-                            );
-                          }
+                  onTap: () {
+                    if (!isInWaitlist) {
+                      DealFunctions.addDealToWaitlist(
+                        context: context,
+                        ref: ref,
+                        deal: deal,
+                        showToast: false,
+                      );
+                    }
 
-                          return DealFunctions.addBookmark(
-                            context: context,
-                            ref: ref,
-                            deal: deal,
-                            showToast: false,
-                          );
-                        }
-                      : null,
+                    if (isInBookmarks) {
+                      return DealFunctions.removeBookmark(
+                        context: context,
+                        ref: ref,
+                        deal: deal,
+                        showToast: false,
+                      );
+                    }
+
+                    return DealFunctions.addBookmark(
+                      context: context,
+                      ref: ref,
+                      deal: deal,
+                      showToast: false,
+                    );
+                  },
                 ),
                 ListTile(
                   leading: Icon(

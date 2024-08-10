@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:observatory/firebase_options.dart';
 import 'package:observatory/notifications/constants.dart';
 import 'package:observatory/router.dart';
@@ -89,6 +90,13 @@ void callbackDispatcher() {
   });
 }
 
+@pragma('vm:entry-point')
+Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
+  if (rootNavigatorKey.currentContext != null) {
+    GoRouter.of(rootNavigatorKey.currentContext!).go('/waitlist');
+  }
+}
+
 class Observatory extends ConsumerWidget {
   const Observatory({
     super.key,
@@ -126,9 +134,9 @@ void main() async {
     channelGroups: NOTIFICATION_GROUPS,
   );
 
-  // await AwesomeNotifications().setListeners(
-  //   onActionReceivedMethod: (ReceivedAction receivedAction) async {},
-  // );
+  await AwesomeNotifications().setListeners(
+    onActionReceivedMethod: onActionReceivedMethod,
+  );
 
   await Workmanager().initialize(
     callbackDispatcher,
@@ -140,7 +148,7 @@ void main() async {
     await enableCheckWaitlistTask();
   }
 
-  await GetIt.I<SettingsRepository>().incrementLaunchCounter();
+  GetIt.I<SettingsRepository>().incrementLaunchCounter();
 
   runApp(
     const ProviderScope(

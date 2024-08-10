@@ -55,8 +55,8 @@ class DealFunctions {
         if (context.mounted) {
           return ObservatorySnackBar.show(
             context,
-            onAction: () async {
-              await ref
+            onAction: () {
+              ref
                   .read(asyncWaitListProvider.notifier)
                   .addToWaitlist(updatedDeal);
             },
@@ -108,8 +108,8 @@ class DealFunctions {
         if (context.mounted) {
           return ObservatorySnackBar.show(
             context,
-            onAction: () async {
-              await ref
+            onAction: () {
+              ref
                   .read(asyncWaitListProvider.notifier)
                   .removeFromWaitList(updatedDeal);
             },
@@ -161,8 +161,8 @@ class DealFunctions {
         if (context.mounted) {
           return ObservatorySnackBar.show(
             context,
-            onAction: () async {
-              await ref
+            onAction: () {
+              ref
                   .read(asyncBookmarksProvider.notifier)
                   .removeBookmarks([updatedDeal]);
             },
@@ -213,8 +213,8 @@ class DealFunctions {
         if (context.mounted) {
           return ObservatorySnackBar.show(
             context,
-            onAction: () async {
-              await ref
+            onAction: () {
+              ref
                   .read(asyncBookmarksProvider.notifier)
                   .addBookmark(updatedDeal);
             },

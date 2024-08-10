@@ -58,7 +58,7 @@ dependencies:
   flutter_hooks: ^0.20.5
   hooks_riverpod: ^2.5.1
   icloud_storage: ^2.2.0
-  app_links: ^6.1.4
+  app_links: ^6.2.0
   fl_chart: ^0.68.0
 
 dependency_overrides:
@@ -90,7 +90,7 @@ dev_dependencies:
   lints: ^4.0.0
   custom_lint:
   riverpod_lint:
-  emulators: ^0.6.0
+  emulators: ^0.6.1
   test:
   flutter_native_splash: ^2.4.0
 
