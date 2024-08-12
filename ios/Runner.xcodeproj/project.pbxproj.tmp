@@ -216,7 +216,7 @@
 				<key>CODE_SIGN_STYLE</key>
 				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>109</string>
+				<string>110</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>ENABLE_BITCODE</key>
@@ -440,7 +440,7 @@
 				<key>CODE_SIGN_STYLE</key>
 				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>109</string>
+				<string>110</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>GENERATE_INFOPLIST_FILE</key>
@@ -478,7 +478,7 @@
 				<key>CODE_SIGN_STYLE</key>
 				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>109</string>
+				<string>110</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>GENERATE_INFOPLIST_FILE</key>
@@ -512,7 +512,7 @@
 				<key>CODE_SIGN_STYLE</key>
 				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>109</string>
+				<string>110</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>GENERATE_INFOPLIST_FILE</key>
@@ -587,22 +587,7 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>53FCEBEC1BB95FE82A595A4E</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>name</key>
-			<string>GoogleService-Info.plist</string>
-			<key>path</key>
-			<string>Runner/GoogleService-Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>631C1ECDEBBC560E34CB59AC</key>
+		<key>52644DCEF770F66CB62C7F37</key>
 		<dict>
 			<key>buildActionMask</key>
 			<string>2147483647</string>
@@ -630,6 +615,21 @@
 PATH="${PATH}:$FLUTTER_ROOT/bin:$HOME/.pub-cache/bin"
 flutterfire upload-crashlytics-symbols --upload-symbols-script-path="$PODS_ROOT/FirebaseCrashlytics/upload-symbols" --platform=ios --apple-project-path="${SRCROOT}" --env-platform-name="${PLATFORM_NAME}" --env-configuration="${CONFIGURATION}" --env-project-dir="${PROJECT_DIR}" --env-built-products-dir="${BUILT_PRODUCTS_DIR}" --env-dwarf-dsym-folder-path="${DWARF_DSYM_FOLDER_PATH}" --env-dwarf-dsym-file-name="${DWARF_DSYM_FILE_NAME}" --env-infoplist-path="${INFOPLIST_PATH}" --default-config=default
 </string>
+		</dict>
+		<key>53FCEBEC1BB95FE82A595A4E</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>name</key>
+			<string>GoogleService-Info.plist</string>
+			<key>path</key>
+			<string>Runner/GoogleService-Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>63B359F9998DEFEF835F21D3</key>
 		<dict>
@@ -957,7 +957,7 @@ flutterfire upload-crashlytics-symbols --upload-symbols-script-path="$PODS_ROOT/
 				<string>9705A1C41CF9048500538489</string>
 				<string>3B06AD1E1E4923F5004D2608</string>
 				<string>2FF08016DD5F67EC640678E2</string>
-				<string>631C1ECDEBBC560E34CB59AC</string>
+				<string>52644DCEF770F66CB62C7F37</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -1368,7 +1368,7 @@ flutterfire upload-crashlytics-symbols --upload-symbols-script-path="$PODS_ROOT/
 				<key>CODE_SIGN_STYLE</key>
 				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>109</string>
+				<string>110</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>ENABLE_BITCODE</key>
@@ -1435,7 +1435,7 @@ flutterfire upload-crashlytics-symbols --upload-symbols-script-path="$PODS_ROOT/
 				<key>CODE_SIGN_STYLE</key>
 				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>109</string>
+				<string>110</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>ENABLE_BITCODE</key>
