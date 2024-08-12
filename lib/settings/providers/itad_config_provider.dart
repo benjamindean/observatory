@@ -3,7 +3,6 @@ import 'package:get_it/get_it.dart';
 import 'package:observatory/deal/providers/deal_provider.dart';
 import 'package:observatory/deal/providers/history_provider.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
-import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/state/itad_config_state.dart';
 
