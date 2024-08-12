@@ -458,6 +458,13 @@ class SettingsRepository {
     return bookmarkedDealsBox.values.toList();
   }
 
+  Future<List<Deal>> setBookmarks(List<Deal> bookmarks) async {
+    await bookmarkedDealsBox.clear();
+    await bookmarkedDealsBox.addAll(bookmarks);
+
+    return bookmarks;
+  }
+
   Future<void> saveBookmark(Deal deal) async {
     return bookmarkedDealsBox.put(
       deal.id,

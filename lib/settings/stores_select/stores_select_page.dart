@@ -91,6 +91,38 @@ class StoreSelectPage extends ConsumerWidget {
                                   ),
                                   ListTile(
                                     title: Text(
+                                      'Only Steam Keys',
+                                      style: context.textStyles.titleMedium,
+                                    ),
+                                    subtitle: Text(
+                                      'Select only Steam key re-sellers',
+                                      style: context.textStyles.bodySmall,
+                                    ),
+                                    onTap: () async {
+                                      final List<int> steamKeyStores = stores
+                                          .where(
+                                            (element) => ![
+                                              'epic games store',
+                                              'ea store',
+                                              'gog',
+                                              'ubisoft store',
+                                              'microsoft store',
+                                            ].contains(
+                                              element.title.toLowerCase(),
+                                            ),
+                                          )
+                                          .map((e) => e.id)
+                                          .toList();
+
+                                      ref
+                                          .watch(listProvider.notifier)
+                                          .set(steamKeyStores);
+
+                                      context.pop();
+                                    },
+                                  ),
+                                  ListTile(
+                                    title: Text(
                                       'All Stores',
                                       style: context.textStyles.titleMedium,
                                     ),

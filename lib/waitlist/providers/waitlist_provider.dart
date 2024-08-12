@@ -48,7 +48,6 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
     state = await AsyncValue.guard(
       () async {
         await GetIt.I<SettingsRepository>().removeDeal(deal);
-        await ref.read(asyncBookmarksProvider.notifier).removeBookmarks([deal]);
 
         return List.of(state.valueOrNull ?? [])
           ..removeWhere(
@@ -71,9 +70,6 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
             .toList();
 
         await GetIt.I<SettingsRepository>().removeDeals(steamDeals);
-        await ref
-            .read(asyncBookmarksProvider.notifier)
-            .removeBookmarks(steamDeals);
 
         return List.of(state.valueOrNull ?? [])
           ..removeWhere(
@@ -87,7 +83,6 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
     state = await AsyncValue.guard(
       () async {
         await GetIt.I<SettingsRepository>().removeAllDeals();
-        await ref.read(asyncBookmarksProvider.notifier).clearBookmarks();
 
         return build();
       },

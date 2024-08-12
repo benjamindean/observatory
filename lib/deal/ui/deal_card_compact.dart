@@ -42,7 +42,7 @@ class DealCardCompact extends ConsumerWidget {
 
     return Slidable(
       endActionPane: ActionPane(
-        extentRatio: isInWaitlist ? 0.4 : 0.2,
+        extentRatio: 0.4,
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
@@ -69,31 +69,38 @@ class DealCardCompact extends ConsumerWidget {
                 ? Icons.favorite_rounded
                 : Icons.favorite_outline_rounded,
           ),
-          if (isInWaitlist)
-            SlidableAction(
-              padding: EdgeInsets.zero,
-              borderRadius: BorderRadius.circular(12),
-              onPressed: (_) {
-                if (isInBookmarks) {
-                  return DealFunctions.removeBookmark(
-                    context: context,
-                    ref: ref,
-                    deal: deal,
-                  );
-                }
-
-                return DealFunctions.addBookmark(
+          SlidableAction(
+            padding: EdgeInsets.zero,
+            borderRadius: BorderRadius.circular(12),
+            onPressed: (_) {
+              if (!isInWaitlist) {
+                DealFunctions.addDealToWaitlist(
                   context: context,
                   ref: ref,
                   deal: deal,
                 );
-              },
-              backgroundColor: Colors.transparent,
-              foregroundColor: context.colors.scheme.tertiary,
-              icon: isInBookmarks
-                  ? Icons.push_pin_rounded
-                  : Icons.push_pin_outlined,
-            ),
+              }
+
+              if (isInBookmarks) {
+                return DealFunctions.removeBookmark(
+                  context: context,
+                  ref: ref,
+                  deal: deal,
+                );
+              }
+
+              return DealFunctions.addBookmark(
+                context: context,
+                ref: ref,
+                deal: deal,
+              );
+            },
+            backgroundColor: Colors.transparent,
+            foregroundColor: context.colors.scheme.tertiary,
+            icon: isInBookmarks
+                ? Icons.push_pin_rounded
+                : Icons.push_pin_outlined,
+          ),
         ],
       ),
       child: InkWell(

@@ -78,7 +78,7 @@ class DealBottomSheet extends ConsumerWidget {
                   ),
                   title: Text(
                     !isInWaitlist
-                        ? 'Add to waitlist and pin'
+                        ? 'Add to Waitlist and Pin'
                         : (isInBookmarks ? 'Unpin' : 'Pin'),
                   ),
                   onTap: () {

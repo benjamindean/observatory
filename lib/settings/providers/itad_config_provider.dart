@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
+import 'package:observatory/deal/providers/deal_provider.dart';
+import 'package:observatory/deal/providers/history_provider.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
@@ -37,14 +39,10 @@ class ITADConfigProvider extends AsyncNotifier<ITADConfigState> {
   }
 
   void resetRelatedProviders() {
-    final DealCategory dealsTab = ref.read(
-      asyncSettingsProvider.select(
-        (settings) => settings.valueOrNull?.dealsTab ?? DealCategory.all,
-      ),
-    );
-
-    ref.read(asyncDealsProvider(dealsTab).notifier).reset();
-    ref.read(asyncWaitListProvider.notifier).reset();
+    ref.invalidate(dealProvider);
+    ref.invalidate(historyProvider);
+    ref.invalidate(asyncDealsProvider);
+    ref.invalidate(asyncWaitListProvider);
   }
 
   Future<void> setCountry(String country) async {

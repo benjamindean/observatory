@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
   Future<List<Deal>> _fetchBookmarks() async {
@@ -10,7 +11,20 @@ class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
 
   @override
   Future<List<Deal>> build() async {
-    return _fetchBookmarks();
+    final List<String> wailtistIds = ref.watch(waitlistIdsProvider);
+    final List<Deal> bookmarks = await _fetchBookmarks();
+
+    final List<Deal> filteredBookmarks = bookmarks
+        .where(
+          (deal) => wailtistIds.contains(deal.id),
+        )
+        .toList();
+
+    if (filteredBookmarks.length != bookmarks.length) {
+      await GetIt.I<SettingsRepository>().setBookmarks(filteredBookmarks);
+    }
+
+    return filteredBookmarks;
   }
 
   Future<void> addBookmark(Deal deal) async {
