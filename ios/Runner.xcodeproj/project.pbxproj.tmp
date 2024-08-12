@@ -211,8 +211,12 @@
 				<string>YES</string>
 				<key>CODE_SIGN_ENTITLEMENTS</key>
 				<string>Runner/RunnerProfile.entitlements</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>Apple Distribution: ROMAN KHAZIZOV (3ZX4FWS39V)</string>
+				<key>CODE_SIGN_STYLE</key>
+				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>108</string>
+				<string>109</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>ENABLE_BITCODE</key>
@@ -242,6 +246,8 @@
 				<string>com.benjaminabel.observatory</string>
 				<key>PRODUCT_NAME</key>
 				<string>$(TARGET_NAME)</string>
+				<key>PROVISIONING_PROFILE_SPECIFIER</key>
+				<string>XC com benjaminabel observatory ios_app_store 1721636384</string>
 				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
 				<string>Runner/Runner-Bridging-Header.h</string>
 				<key>SWIFT_VERSION</key>
@@ -429,10 +435,14 @@
 			<dict>
 				<key>BUNDLE_LOADER</key>
 				<string>$(TEST_HOST)</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>Apple Distribution: ROMAN KHAZIZOV (3ZX4FWS39V)</string>
 				<key>CODE_SIGN_STYLE</key>
-				<string>Automatic</string>
+				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>108</string>
+				<string>109</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>3ZX4FWS39V</string>
 				<key>GENERATE_INFOPLIST_FILE</key>
 				<string>YES</string>
 				<key>MARKETING_VERSION</key>
@@ -463,10 +473,14 @@
 			<dict>
 				<key>BUNDLE_LOADER</key>
 				<string>$(TEST_HOST)</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>Apple Distribution: ROMAN KHAZIZOV (3ZX4FWS39V)</string>
 				<key>CODE_SIGN_STYLE</key>
-				<string>Automatic</string>
+				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>108</string>
+				<string>109</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>3ZX4FWS39V</string>
 				<key>GENERATE_INFOPLIST_FILE</key>
 				<string>YES</string>
 				<key>MARKETING_VERSION</key>
@@ -493,10 +507,14 @@
 			<dict>
 				<key>BUNDLE_LOADER</key>
 				<string>$(TEST_HOST)</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>Apple Distribution: ROMAN KHAZIZOV (3ZX4FWS39V)</string>
 				<key>CODE_SIGN_STYLE</key>
-				<string>Automatic</string>
+				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>108</string>
+				<string>109</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>3ZX4FWS39V</string>
 				<key>GENERATE_INFOPLIST_FILE</key>
 				<string>YES</string>
 				<key>MARKETING_VERSION</key>
@@ -583,6 +601,35 @@
 			<string>Runner/GoogleService-Info.plist</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>631C1ECDEBBC560E34CB59AC</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputFileListPaths</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>FlutterFire: "flutterfire upload-crashlytics-symbols"</string>
+			<key>outputFileListPaths</key>
+			<array/>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>
+#!/bin/bash
+PATH="${PATH}:$FLUTTER_ROOT/bin:$HOME/.pub-cache/bin"
+flutterfire upload-crashlytics-symbols --upload-symbols-script-path="$PODS_ROOT/FirebaseCrashlytics/upload-symbols" --platform=ios --apple-project-path="${SRCROOT}" --env-platform-name="${PLATFORM_NAME}" --env-configuration="${CONFIGURATION}" --env-project-dir="${PROJECT_DIR}" --env-built-products-dir="${BUILT_PRODUCTS_DIR}" --env-dwarf-dsym-folder-path="${DWARF_DSYM_FOLDER_PATH}" --env-dwarf-dsym-file-name="${DWARF_DSYM_FILE_NAME}" --env-infoplist-path="${INFOPLIST_PATH}" --default-config=default
+</string>
 		</dict>
 		<key>63B359F9998DEFEF835F21D3</key>
 		<dict>
@@ -790,6 +837,8 @@
 					<dict>
 						<key>CreatedOnToolsVersion</key>
 						<string>14.0</string>
+						<key>DevelopmentTeam</key>
+						<string>3ZX4FWS39V</string>
 						<key>TestTargetID</key>
 						<string>97C146ED1CF9000F007C117D</string>
 					</dict>
@@ -797,8 +846,12 @@
 					<dict>
 						<key>CreatedOnToolsVersion</key>
 						<string>7.3.1</string>
+						<key>DevelopmentTeam</key>
+						<string>3ZX4FWS39V</string>
 						<key>LastSwiftMigration</key>
 						<string>1100</string>
+						<key>ProvisioningStyle</key>
+						<string>Manual</string>
 					</dict>
 				</dict>
 			</dict>
@@ -904,7 +957,7 @@
 				<string>9705A1C41CF9048500538489</string>
 				<string>3B06AD1E1E4923F5004D2608</string>
 				<string>2FF08016DD5F67EC640678E2</string>
-				<string>D4782F665BBA11B24E311099</string>
+				<string>631C1ECDEBBC560E34CB59AC</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -1310,8 +1363,12 @@
 				<string>YES</string>
 				<key>CODE_SIGN_ENTITLEMENTS</key>
 				<string>Runner/RunnerDebug.entitlements</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>Apple Distribution: ROMAN KHAZIZOV (3ZX4FWS39V)</string>
+				<key>CODE_SIGN_STYLE</key>
+				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>108</string>
+				<string>109</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>ENABLE_BITCODE</key>
@@ -1341,6 +1398,8 @@
 				<string>com.benjaminabel.observatory</string>
 				<key>PRODUCT_NAME</key>
 				<string>$(TARGET_NAME)</string>
+				<key>PROVISIONING_PROFILE_SPECIFIER</key>
+				<string>XC com benjaminabel observatory ios_app_store 1721636384</string>
 				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
 				<string>Runner/Runner-Bridging-Header.h</string>
 				<key>SWIFT_OPTIMIZATION_LEVEL</key>
@@ -1371,8 +1430,12 @@
 				<string>YES</string>
 				<key>CODE_SIGN_ENTITLEMENTS</key>
 				<string>Runner/Runner.entitlements</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>Apple Distribution: ROMAN KHAZIZOV (3ZX4FWS39V)</string>
+				<key>CODE_SIGN_STYLE</key>
+				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>108</string>
+				<string>109</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>ENABLE_BITCODE</key>
@@ -1402,6 +1465,8 @@
 				<string>com.benjaminabel.observatory</string>
 				<key>PRODUCT_NAME</key>
 				<string>$(TARGET_NAME)</string>
+				<key>PROVISIONING_PROFILE_SPECIFIER</key>
+				<string>XC com benjaminabel observatory ios_app_store 1721636384</string>
 				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
 				<string>Runner/Runner-Bridging-Header.h</string>
 				<key>SWIFT_VERSION</key>
@@ -1505,35 +1570,6 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 			<string>Frameworks</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D4782F665BBA11B24E311099</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputFileListPaths</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>FlutterFire: "flutterfire upload-crashlytics-symbols"</string>
-			<key>outputFileListPaths</key>
-			<array/>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>
-#!/bin/bash
-PATH="${PATH}:$FLUTTER_ROOT/bin:$HOME/.pub-cache/bin"
-flutterfire upload-crashlytics-symbols --upload-symbols-script-path="$PODS_ROOT/FirebaseCrashlytics/upload-symbols" --platform=ios --apple-project-path="${SRCROOT}" --env-platform-name="${PLATFORM_NAME}" --env-configuration="${CONFIGURATION}" --env-project-dir="${PROJECT_DIR}" --env-built-products-dir="${BUILT_PRODUCTS_DIR}" --env-dwarf-dsym-folder-path="${DWARF_DSYM_FOLDER_PATH}" --env-dwarf-dsym-file-name="${DWARF_DSYM_FILE_NAME}" --env-infoplist-path="${INFOPLIST_PATH}" --default-config=default
-</string>
 		</dict>
 		<key>D9FBF4F72C32B4ED00AE8387</key>
 		<dict>
