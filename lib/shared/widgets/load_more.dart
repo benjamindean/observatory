@@ -34,7 +34,7 @@ class LoadMore extends HookWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: OutlinedButton.icon(
+        child: TextButton.icon(
           icon: isLoading.value
               ? const ObservatoryIconProgressIndicator()
               : const Icon(Icons.arrow_downward_rounded),

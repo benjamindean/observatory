@@ -50,7 +50,7 @@ class RecentSearchesList extends ConsumerWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Center(
                     child: TextButton.icon(
-                      icon: const Icon(Icons.cancel_rounded),
+                      icon: const Icon(Icons.cancel),
                       onPressed: () {
                         showAdaptiveDialog(
                           context: context,
@@ -86,6 +86,7 @@ class RecentSearchesList extends ConsumerWidget {
               }
 
               return ObservatoryCard(
+                elevation: 0,
                 child: InkWell(
                   onTap: () async {
                     await ref

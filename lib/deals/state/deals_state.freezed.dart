@@ -20,7 +20,9 @@ mixin _$DealsState {
   bool get hasReachedMax => throw _privateConstructorUsedError;
   int get pageNumber => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DealsStateCopyWith<DealsState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -44,6 +46,8 @@ class _$DealsStateCopyWithImpl<$Res, $Val extends DealsState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DealsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +91,8 @@ class __$$DealsStateImplCopyWithImpl<$Res>
       _$DealsStateImpl _value, $Res Function(_$DealsStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DealsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -154,7 +160,9 @@ class _$DealsStateImpl implements _DealsState {
   int get hashCode => Object.hash(runtimeType,
       const DeepCollectionEquality().hash(_deals), hasReachedMax, pageNumber);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DealsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DealsStateImplCopyWith<_$DealsStateImpl> get copyWith =>
@@ -173,8 +181,11 @@ abstract class _DealsState implements DealsState {
   bool get hasReachedMax;
   @override
   int get pageNumber;
+
+  /// Create a copy of DealsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DealsStateImplCopyWith<_$DealsStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -7,8 +7,6 @@ import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/router.dart';
 import 'package:observatory/search/providers/search_provider.dart';
-import 'package:observatory/settings/providers/settings_provider.dart';
-import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
@@ -32,11 +30,6 @@ class WaitListList extends ConsumerWidget {
     final bool isSteamImportLoading = ref.watch(
       steamImportProvider.select(
         (value) => value.isImporting || value.isLoading,
-      ),
-    );
-    final DealCardType cardType = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
       ),
     );
     final double cardHeight = ref
@@ -114,7 +107,6 @@ class WaitListList extends ConsumerWidget {
             itemBuilder: (context, index) {
               return DealCard(
                 deal: filteredWaitlist[index],
-                cardType: cardType,
                 page: NavigationBranch.waitlist,
               );
             },

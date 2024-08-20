@@ -27,8 +27,12 @@ mixin _$ObservatoryTheme {
   @HiveField(2)
   String? get scheme => throw _privateConstructorUsedError;
 
+  /// Serializes this ObservatoryTheme to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ObservatoryTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ObservatoryThemeCopyWith<ObservatoryTheme> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -55,6 +59,8 @@ class _$ObservatoryThemeCopyWithImpl<$Res, $Val extends ObservatoryTheme>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ObservatoryTheme
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -101,6 +107,8 @@ class __$$ObservatoryThemeImplCopyWithImpl<$Res>
       $Res Function(_$ObservatoryThemeImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ObservatoryTheme
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -164,11 +172,13 @@ class _$ObservatoryThemeImpl extends _ObservatoryTheme {
             (identical(other.scheme, scheme) || other.scheme == scheme));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, mode, isTrueBlack, scheme);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ObservatoryTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ObservatoryThemeImplCopyWith<_$ObservatoryThemeImpl> get copyWith =>
@@ -202,8 +212,11 @@ abstract class _ObservatoryTheme extends ObservatoryTheme {
   @override
   @HiveField(2)
   String? get scheme;
+
+  /// Create a copy of ObservatoryTheme
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ObservatoryThemeImplCopyWith<_$ObservatoryThemeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

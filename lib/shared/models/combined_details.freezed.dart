@@ -19,7 +19,9 @@ mixin _$CombinedDetails {
   GameDetails? get igdb => throw _privateConstructorUsedError;
   Info? get itad => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CombinedDetails
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CombinedDetailsCopyWith<CombinedDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -46,6 +48,8 @@ class _$CombinedDetailsCopyWithImpl<$Res, $Val extends CombinedDetails>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CombinedDetails
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -64,6 +68,8 @@ class _$CombinedDetailsCopyWithImpl<$Res, $Val extends CombinedDetails>
     ) as $Val);
   }
 
+  /// Create a copy of CombinedDetails
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $GameDetailsCopyWith<$Res>? get igdb {
@@ -76,6 +82,8 @@ class _$CombinedDetailsCopyWithImpl<$Res, $Val extends CombinedDetails>
     });
   }
 
+  /// Create a copy of CombinedDetails
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $InfoCopyWith<$Res>? get itad {
@@ -113,6 +121,8 @@ class __$$CombinedDetailsImplCopyWithImpl<$Res>
       _$CombinedDetailsImpl _value, $Res Function(_$CombinedDetailsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CombinedDetails
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -170,7 +180,9 @@ class _$CombinedDetailsImpl
   @override
   int get hashCode => Object.hash(runtimeType, igdb, itad);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CombinedDetails
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CombinedDetailsImplCopyWith<_$CombinedDetailsImpl> get copyWith =>
@@ -186,8 +198,11 @@ abstract class _CombinedDetails implements CombinedDetails {
   GameDetails? get igdb;
   @override
   Info? get itad;
+
+  /// Create a copy of CombinedDetails
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CombinedDetailsImplCopyWith<_$CombinedDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

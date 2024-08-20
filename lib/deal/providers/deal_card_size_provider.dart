@@ -15,19 +15,6 @@ class DealCardSizeProvider extends Notifier<double> {
         (value) => value.valueOrNull?.showHeaders ?? false,
       ),
     );
-    final DealCardType cardType = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
-      ),
-    );
-
-    if (cardType == DealCardType.expanded) {
-      if (showHeaders && screenWidth != null) {
-        return ((IMAGE_HEIGHT / IMAGE_WIDTH) * screenWidth) + BASE_CARD_HEIGHT;
-      }
-
-      return BASE_CARD_HEIGHT + 8;
-    }
 
     return showHeaders ? (IMAGE_HEIGHT / SIZE_DELIMITER) + 8 : BASE_CARD_HEIGHT;
   }

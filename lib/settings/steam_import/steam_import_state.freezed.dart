@@ -26,7 +26,9 @@ mixin _$SteamImportState {
   TextEditingController get usernameInputController =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SteamImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SteamImportStateCopyWith<SteamImportState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -58,6 +60,8 @@ class _$SteamImportStateCopyWithImpl<$Res, $Val extends SteamImportState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SteamImportState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -134,6 +138,8 @@ class __$$SteamImportStateImplCopyWithImpl<$Res>
       $Res Function(_$SteamImportStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SteamImportState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -271,7 +277,9 @@ class _$SteamImportStateImpl implements _SteamImportState {
       focusNode,
       usernameInputController);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SteamImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SteamImportStateImplCopyWith<_$SteamImportStateImpl> get copyWith =>
@@ -307,8 +315,11 @@ abstract class _SteamImportState implements SteamImportState {
   FocusNode get focusNode;
   @override
   TextEditingController get usernameInputController;
+
+  /// Create a copy of SteamImportState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SteamImportStateImplCopyWith<_$SteamImportStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

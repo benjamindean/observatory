@@ -23,7 +23,9 @@ mixin _$PurchaseState {
   StreamSubscription<List<PurchaseDetails>>? get subscription =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PurchaseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PurchaseStateCopyWith<PurchaseState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -52,6 +54,8 @@ class _$PurchaseStateCopyWithImpl<$Res, $Val extends PurchaseState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PurchaseState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -110,6 +114,8 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
       _$PurchaseStateImpl _value, $Res Function(_$PurchaseStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PurchaseState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -212,7 +218,9 @@ class _$PurchaseStateImpl implements _PurchaseState {
       const DeepCollectionEquality().hash(_purchasedProductIds),
       subscription);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PurchaseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PurchaseStateImplCopyWith<_$PurchaseStateImpl> get copyWith =>
@@ -238,8 +246,11 @@ abstract class _PurchaseState implements PurchaseState {
   List<String> get purchasedProductIds;
   @override
   StreamSubscription<List<PurchaseDetails>>? get subscription;
+
+  /// Create a copy of PurchaseState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PurchaseStateImplCopyWith<_$PurchaseStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

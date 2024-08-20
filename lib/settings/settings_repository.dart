@@ -32,8 +32,6 @@ enum WaitlistSorting {
 
 enum WaitlistSortingDirection { asc, desc }
 
-enum DealCardType { expanded, compact }
-
 enum DealCategory {
   all,
   steam_top_sellers,
@@ -92,7 +90,6 @@ class SettingsRepository {
 
   final DealCategory defaultCategory = DealCategory.all;
   final WaitlistSorting defaultWaitlistSorting = WaitlistSorting.discount_date;
-  final DealCardType defaultDealCardType = DealCardType.compact;
   final WaitlistSortingDirection defaultWaitlistSortingDirection =
       WaitlistSortingDirection.asc;
 
@@ -285,22 +282,6 @@ class SettingsRepository {
     return settingsBox.put(
       PREF_THEME,
       theme,
-    );
-  }
-
-  Future<DealCardType> getDealCardType() async {
-    final String type = await settingsBox.get(
-      PREF_DEAL_CARD_TYPE,
-      defaultValue: defaultDealCardType.name.toString(),
-    );
-
-    return DealCardType.values.asNameMap()[type] ?? defaultDealCardType;
-  }
-
-  Future<void> setDealCardType(DealCardType type) async {
-    return settingsBox.put(
-      PREF_DEAL_CARD_TYPE,
-      type.name.toString(),
     );
   }
 

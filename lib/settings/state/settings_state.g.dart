@@ -12,7 +12,6 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
       waitlistNotifications: json['waitlistNotifications'] as bool,
       dealsTab: $enumDecodeNullable(_$DealCategoryEnumMap, json['dealsTab']) ??
           DealCategory.all,
-      dealCardType: $enumDecode(_$DealCardTypeEnumMap, json['dealCardType']),
       waitlistSorting:
           $enumDecode(_$WaitlistSortingEnumMap, json['waitlistSorting']),
       waitlistSortingDirection: $enumDecode(
@@ -30,7 +29,6 @@ Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
       'showHeaders': instance.showHeaders,
       'waitlistNotifications': instance.waitlistNotifications,
       'dealsTab': _$DealCategoryEnumMap[instance.dealsTab]!,
-      'dealCardType': _$DealCardTypeEnumMap[instance.dealCardType]!,
       'waitlistSorting': _$WaitlistSortingEnumMap[instance.waitlistSorting]!,
       'waitlistSortingDirection':
           _$WaitlistSortingDirectionEnumMap[instance.waitlistSortingDirection]!,
@@ -43,11 +41,6 @@ const _$DealCategoryEnumMap = {
   DealCategory.all: 'all',
   DealCategory.steam_top_sellers: 'steam_top_sellers',
   DealCategory.steam_featured: 'steam_featured',
-};
-
-const _$DealCardTypeEnumMap = {
-  DealCardType.expanded: 'expanded',
-  DealCardType.compact: 'compact',
 };
 
 const _$WaitlistSortingEnumMap = {

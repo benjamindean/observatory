@@ -24,8 +24,12 @@ mixin _$Backup {
   List<String> get waitlist => throw _privateConstructorUsedError;
   String? get date => throw _privateConstructorUsedError;
 
+  /// Serializes this Backup to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Backup
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BackupCopyWith<Backup> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -47,6 +51,8 @@ class _$BackupCopyWithImpl<$Res, $Val extends Backup>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Backup
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -89,6 +95,8 @@ class __$$BackupImplCopyWithImpl<$Res>
       _$BackupImpl _value, $Res Function(_$BackupImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Backup
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -153,12 +161,14 @@ class _$BackupImpl extends _Backup {
             (identical(other.date, date) || other.date == date));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, folder,
       const DeepCollectionEquality().hash(_waitlist), date);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Backup
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BackupImplCopyWith<_$BackupImpl> get copyWith =>
@@ -187,8 +197,11 @@ abstract class _Backup extends Backup {
   List<String> get waitlist;
   @override
   String? get date;
+
+  /// Create a copy of Backup
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BackupImplCopyWith<_$BackupImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

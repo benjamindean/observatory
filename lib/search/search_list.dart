@@ -7,8 +7,6 @@ import 'package:observatory/router.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/search/state/search_state.dart';
 import 'package:observatory/search/ui/recent_searches_list.dart';
-import 'package:observatory/settings/providers/settings_provider.dart';
-import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
@@ -18,14 +16,12 @@ class SearchList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final SearchState searchState = ref.watch(searchProvider(
-      SearchType.search,
-    ));
-    final DealCardType cardType = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
+    final SearchState searchState = ref.watch(
+      searchProvider(
+        SearchType.search,
       ),
     );
+
     final double cardHeight = ref
         .watch(dealCardSizeProvider.notifier)
         .getHeight(MediaQuery.of(context).size.width);
@@ -61,7 +57,6 @@ class SearchList extends ConsumerWidget {
             itemBuilder: (context, index) {
               return DealCard(
                 deal: deals[index],
-                cardType: cardType,
                 page: NavigationBranch.search,
               );
             },

@@ -17,9 +17,13 @@ class ObservatorySnackBar {
     BuildContext context, {
     void Function()? onAction,
     IconData? icon,
+    bool? dismissPrevious = false,
     required Widget content,
   }) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    if (dismissPrevious == true) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    }
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         elevation: CARD_ELEVATION,

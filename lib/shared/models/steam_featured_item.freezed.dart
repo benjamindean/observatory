@@ -48,8 +48,12 @@ mixin _$SteamFeaturedItem {
   @JsonKey(name: 'header_image')
   String? get headerImage => throw _privateConstructorUsedError;
 
+  /// Serializes this SteamFeaturedItem to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SteamFeaturedItem
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SteamFeaturedItemCopyWith<SteamFeaturedItem> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -89,6 +93,8 @@ class _$SteamFeaturedItemCopyWithImpl<$Res, $Val extends SteamFeaturedItem>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SteamFeaturedItem
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -213,6 +219,8 @@ class __$$SteamFeaturedItemImplCopyWithImpl<$Res>
       $Res Function(_$SteamFeaturedItemImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SteamFeaturedItem
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -412,7 +420,7 @@ class _$SteamFeaturedItemImpl implements _SteamFeaturedItem {
                 other.headerImage == headerImage));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -433,7 +441,9 @@ class _$SteamFeaturedItemImpl implements _SteamFeaturedItem {
       discountExpiration,
       headerImage);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SteamFeaturedItem
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SteamFeaturedItemImplCopyWith<_$SteamFeaturedItemImpl> get copyWith =>
@@ -515,8 +525,11 @@ abstract class _SteamFeaturedItem implements SteamFeaturedItem {
   @override
   @JsonKey(name: 'header_image')
   String? get headerImage;
+
+  /// Create a copy of SteamFeaturedItem
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SteamFeaturedItemImplCopyWith<_$SteamFeaturedItemImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

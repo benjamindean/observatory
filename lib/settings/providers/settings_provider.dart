@@ -26,7 +26,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
       waitlistNotifications: await repository.getWaitlistNotifications(),
       waitlistSorting: await repository.getWaitlistSorting(),
       waitlistSortingDirection: await repository.getWaitlistSortingDirection(),
-      dealCardType: await repository.getDealCardType(),
       collapsePinned: await repository.getCollapsePinned(),
       crashlyticsEnabled:
           FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled,
@@ -75,18 +74,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
         return state.requireValue.copyWith(
           waitlistNotifications: isEnabled,
-        );
-      },
-    );
-  }
-
-  Future<void> setDealCardType(DealCardType type) async {
-    state = await AsyncValue.guard(
-      () async {
-        await repository.setDealCardType(type);
-
-        return state.requireValue.copyWith(
-          dealCardType: type,
         );
       },
     );

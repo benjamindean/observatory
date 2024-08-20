@@ -26,11 +26,6 @@ class DealsList extends ConsumerWidget {
         (value) => value.valueOrNull?.dealsTab ?? DealCategory.all,
       ),
     );
-    final DealCardType cardType = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
-      ),
-    );
 
     final AsyncValue<DealsState> deals = ref.watch(
       asyncDealsProvider(dealsCategory),
@@ -113,7 +108,6 @@ class DealsList extends ConsumerWidget {
 
               return DealCard(
                 deal: data.deals[index],
-                cardType: cardType,
                 page: NavigationBranch.deals,
               );
             },

@@ -11,7 +11,6 @@ class SettingsState with _$SettingsState {
     required bool showHeaders,
     required bool waitlistNotifications,
     @Default(DealCategory.all) DealCategory dealsTab,
-    required DealCardType dealCardType,
     required WaitlistSorting waitlistSorting,
     required WaitlistSortingDirection waitlistSortingDirection,
     required bool crashlyticsEnabled,

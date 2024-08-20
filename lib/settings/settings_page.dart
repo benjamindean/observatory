@@ -14,7 +14,6 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/state/settings_state.dart';
-import 'package:observatory/settings/ui/deal_card_type_settings_tile.dart';
 import 'package:observatory/settings/ui/header_images_settings_tile.dart';
 import 'package:observatory/settings/ui/theme_mode_list_tile.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
@@ -72,7 +71,6 @@ class SettingsPage extends ConsumerWidget {
                   const CountrySettingsListTile(),
                   const StoresSettingsListTile(),
                   const ListHeading(title: 'Appearance'),
-                  const DealCardTypeSettingsTile(),
                   const HeaderImagesSettingsTile(),
                   const ThemeModeListTile(),
                   const ThemeListTile(),

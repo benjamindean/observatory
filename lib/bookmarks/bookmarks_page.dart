@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/providers/deal_card_size_provider.dart';
-import 'package:observatory/deal/ui/deal_card_compact.dart';
+import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/router.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/constants.dart';
@@ -35,46 +35,15 @@ class BookmarksPage extends ConsumerWidget {
       bottomNavigationBar: BottomAppBar(
         elevation: APPBAR_ELEVATION,
         surfaceTintColor: context.colors.scheme.surfaceTint,
-        child: Row(
+        child: const Row(
           children: <Widget>[
-            const Expanded(
+            Expanded(
+              flex: 40,
               child: ObservatoryBackButton(),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: Tooltip(
-                message: 'Remove All',
-                child: FilledButton.icon(
-                  onPressed: bookmarksIds.isEmpty
-                      ? null
-                      : () {
-                          showAdaptiveDialog(
-                            context: context,
-                            builder: (context) {
-                              return ObservatoryDialog(
-                                onApply: () async {
-                                  ref
-                                      .read(asyncBookmarksProvider.notifier)
-                                      .clearBookmarks()
-                                      .then(context.pop);
-                                },
-                                onDiscard: () {
-                                  context.pop();
-                                },
-                                title: 'Remove all pinned games?',
-                                body: 'This operation cannot be undone.',
-                                discardText: 'Cancel',
-                                applyText: 'Remove',
-                              );
-                            },
-                          );
-                        },
-                  label: const Text('Remove All'),
-                  icon: const Icon(
-                    Icons.cancel_rounded,
-                  ),
-                ),
-              ),
+            Expanded(
+              flex: 60,
+              child: SizedBox.expand(),
             ),
           ],
         ),
@@ -135,9 +104,49 @@ class BookmarksPage extends ConsumerWidget {
                 padding: const EdgeInsets.all(6.0),
                 sliver: SliverFixedExtentList.builder(
                   itemExtent: cardHeight,
-                  itemCount: bookmarks.length,
+                  itemCount: bookmarks.length + 1,
                   itemBuilder: (context, index) {
-                    return DealCardCompact(
+                    if (index == bookmarks.length) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(
+                          child: TextButton.icon(
+                            icon: const Icon(Icons.cancel_rounded),
+                            onPressed: () {
+                              showAdaptiveDialog(
+                                context: context,
+                                builder: (context) {
+                                  return ObservatoryDialog(
+                                    onApply: () {
+                                      ref
+                                          .read(asyncBookmarksProvider.notifier)
+                                          .clearBookmarks()
+                                          .then(
+                                        (value) {
+                                          if (context.mounted) {
+                                            context.pop();
+                                          }
+                                        },
+                                      );
+                                    },
+                                    onDiscard: () {
+                                      context.pop();
+                                    },
+                                    title: 'Remove all pinned games?',
+                                    body: 'This operation cannot be undone.',
+                                    discardText: 'Cancel',
+                                    applyText: 'Remove',
+                                  );
+                                },
+                              );
+                            },
+                            label: const Text('Remove All'),
+                          ),
+                        ),
+                      );
+                    }
+
+                    return DealCard(
                       deal: bookmarks[index],
                       page: NavigationBranch.waitlist,
                     );
