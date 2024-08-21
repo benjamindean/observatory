@@ -130,6 +130,10 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
       return false;
     }
   }
+
+  Future<PurchaseState> reset() async {
+    return build();
+  }
 }
 
 final asyncPurchaseProvider =
