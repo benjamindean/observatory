@@ -151,10 +151,11 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
                           );
                         }
                       }
-
-                      ref.watch(asyncPurchaseProvider.notifier).reset();
+                      
+                  ref.watch(asyncPurchaseProvider.notifier).reset();
                     },
                   );
+
                 },
                 label: Text(
                   'Restore Purchases',

@@ -131,8 +131,10 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     }
   }
 
-  Future<PurchaseState> reset() async {
-    return build();
+  Future<void> reset() async {
+    state = await AsyncValue.guard(() async {
+      return build();
+    });
   }
 }
 
