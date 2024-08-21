@@ -52,8 +52,9 @@ class RecentSearchesList extends ConsumerWidget {
                     child: TextButton.icon(
                       icon: const Icon(Icons.cancel),
                       onPressed: () {
-                        showAdaptiveDialog(
+                        showDialog(
                           context: context,
+                          barrierDismissible: true,
                           builder: (context) {
                             return ObservatoryDialog(
                               onApply: () {

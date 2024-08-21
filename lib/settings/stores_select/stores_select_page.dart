@@ -185,7 +185,7 @@ class StoreSelectPage extends ConsumerWidget {
             canPop: !hasChanged,
             onPopInvokedWithResult: (canPop, _) {
               if (!canPop) {
-                showAdaptiveDialog<void>(
+                showDialog<void>(
                   context: context,
                   barrierDismissible: true,
                   builder: (BuildContext context) {

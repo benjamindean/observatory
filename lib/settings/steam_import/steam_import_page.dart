@@ -148,7 +148,7 @@ class SteamImportPage extends ConsumerWidget {
                 return;
               }
 
-              showAdaptiveDialog<void>(
+              showDialog<void>(
                 context: context,
                 barrierDismissible: true,
                 builder: (BuildContext context) {

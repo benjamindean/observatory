@@ -108,8 +108,9 @@ class SettingsPage extends ConsumerWidget {
                         subtitle:
                             const Text('Clear all games from your waitlist.'),
                         onTap: () async {
-                          showAdaptiveDialog(
+                          showDialog(
                             context: context,
+                            barrierDismissible: true,
                             builder: (context) {
                               return ObservatoryDialog(
                                 onApply: () async {
@@ -138,8 +139,9 @@ class SettingsPage extends ConsumerWidget {
                           'Remove games imported from your Steam wishlist.',
                         ),
                         onTap: () async {
-                          showAdaptiveDialog(
+                          showDialog(
                             context: context,
+                            barrierDismissible: true,
                             builder: (context) {
                               return ObservatoryDialog(
                                 onApply: () async {
