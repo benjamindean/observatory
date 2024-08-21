@@ -151,6 +151,8 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
                           );
                         }
                       }
+
+                      ref.invalidate(asyncPurchaseProvider);
                     },
                   );
                 },

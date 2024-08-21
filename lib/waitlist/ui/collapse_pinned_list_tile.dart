@@ -18,7 +18,7 @@ class CollapsePinnedListTile extends ConsumerWidget {
     return SwitchListTile(
       title: const Text('Group Pinned'),
       subtitle: const Text(
-        'Collapse pinned games into a separate category',
+        'Collapse pinned games into a separate category.',
       ),
       value: collapse,
       onChanged: (value) {

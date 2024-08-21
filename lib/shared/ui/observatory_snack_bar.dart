@@ -17,7 +17,7 @@ class ObservatorySnackBar {
     BuildContext context, {
     void Function()? onAction,
     IconData? icon,
-    bool? dismissPrevious = true,
+    bool dismissPrevious = true,
     required Widget content,
   }) {
     if (dismissPrevious == true) {
