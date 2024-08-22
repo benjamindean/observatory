@@ -44,7 +44,7 @@ class DealFunctions {
     HapticFeedback.mediumImpact();
 
     await ref
-        .read(asyncWaitListProvider.notifier)
+        .watch(asyncWaitListProvider.notifier)
         .removeFromWaitList(updatedDeal)
         .then(
       (value) {
@@ -57,7 +57,7 @@ class DealFunctions {
             context,
             onAction: () {
               ref
-                  .read(asyncWaitListProvider.notifier)
+                  .watch(asyncWaitListProvider.notifier)
                   .addToWaitlist(updatedDeal);
             },
             icon: Icons.remove_circle,
@@ -97,7 +97,7 @@ class DealFunctions {
     HapticFeedback.mediumImpact();
 
     await ref
-        .read(asyncWaitListProvider.notifier)
+        .watch(asyncWaitListProvider.notifier)
         .addToWaitlist(updatedDeal)
         .then(
       (value) {
@@ -110,7 +110,7 @@ class DealFunctions {
             context,
             onAction: () {
               ref
-                  .read(asyncWaitListProvider.notifier)
+                  .watch(asyncWaitListProvider.notifier)
                   .removeFromWaitList(updatedDeal);
             },
             icon: Icons.add_circle_outlined,
@@ -150,7 +150,7 @@ class DealFunctions {
     HapticFeedback.mediumImpact();
 
     await ref
-        .read(asyncBookmarksProvider.notifier)
+        .watch(asyncBookmarksProvider.notifier)
         .addBookmark(updatedDeal)
         .then(
       (value) {
@@ -163,7 +163,7 @@ class DealFunctions {
             context,
             onAction: () {
               ref
-                  .read(asyncBookmarksProvider.notifier)
+                  .watch(asyncBookmarksProvider.notifier)
                   .removeBookmarks([updatedDeal]);
             },
             icon: Icons.push_pin_rounded,
@@ -203,7 +203,7 @@ class DealFunctions {
     HapticFeedback.mediumImpact();
 
     await ref
-        .read(asyncBookmarksProvider.notifier)
+        .watch(asyncBookmarksProvider.notifier)
         .removeBookmarks([updatedDeal]).then(
       (value) {
         if (!showToast) {
@@ -215,7 +215,7 @@ class DealFunctions {
             context,
             onAction: () {
               ref
-                  .read(asyncBookmarksProvider.notifier)
+                  .watch(asyncBookmarksProvider.notifier)
                   .addBookmark(updatedDeal);
             },
             icon: Icons.push_pin_outlined,
