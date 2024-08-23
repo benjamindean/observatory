@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +20,6 @@ import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:observatory/tasks/constants.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:uni_links/uni_links.dart';
 import 'package:workmanager/workmanager.dart';
 
 Future<void> initSettings() async {
@@ -56,18 +54,6 @@ Future<void> initSupabase() async {
     url: GetIt.I<Secret>().supabaseUrl,
     anonKey: GetIt.I<Secret>().supabaseAnonKey,
   );
-}
-
-Future<void> initUniLinks() async {
-  try {
-    final String? initialLink = await getInitialLink();
-
-    if (initialLink == null) {
-      return;
-    }
-  } on PlatformException {
-    return;
-  }
 }
 
 @pragma('vm:entry-point')
