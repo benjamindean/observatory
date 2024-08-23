@@ -26,7 +26,7 @@ class ScreenshotsTile extends ConsumerWidget {
     const double thumbDelimiter = 2.5;
 
     final AsyncValue<GameDetails?> infoState = ref.watch(
-      gameDetailsProvider(deal),
+      gameDetailsProvider(Deal(id: deal.id, title: deal.title)),
     );
 
     void openGallery(
@@ -141,7 +141,7 @@ class GalleryView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Expanded(
-              flex: 50,
+              flex: 40,
               child: BackButton(
                 color: Colors.white30,
                 key: const Key('observatory-back-button-screenshot'),
@@ -151,7 +151,7 @@ class GalleryView extends StatelessWidget {
               ),
             ),
             const Expanded(
-              flex: 50,
+              flex: 60,
               child: SizedBox.expand(),
             ),
           ],

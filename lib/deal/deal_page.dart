@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:observatory/deal/ui/history_chart.dart';
 import 'package:observatory/deal/ui/page_sections/bundles_tile.dart';
 import 'package:observatory/deal/ui/deal_app_bar.dart';
 import 'package:observatory/deal/ui/deal_page_bottom_appbar.dart';
@@ -17,6 +18,7 @@ import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/is_there_any_deal_info.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
+import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 
 class DealPage extends ConsumerWidget {
   final Deal deal;
@@ -34,11 +36,27 @@ class DealPage extends ConsumerWidget {
       color: context.elevatedBottomAppBarColor,
       child: SafeArea(
         child: Scaffold(
-          bottomNavigationBar: DealPageBottomAppBar(deal: dealState),
+          bottomNavigationBar: DealPageBottomAppBar(
+            deal: dealState,
+          ),
           body: CustomScrollView(
             key: const Key('deal-scroll-view'),
             slivers: [
               DealAppBar(deal: deal),
+              PinnedHeaderSliver(
+                child: ColoredBox(
+                  color: context.elevatedBottomAppBarColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      deal.titleParsed,
+                      style: context.textStyles.titleMedium.copyWith(
+                        color: context.colors.scheme.onSurface,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               SliverList.list(
                 key: Key('deal-${deal.id}-sliver-list'),
                 children: [
@@ -59,6 +77,17 @@ class DealPage extends ConsumerWidget {
               ),
               PriceListView(
                 prices: dealState.prices,
+              ),
+              const SliverToBoxAdapter(
+                child: ListHeading(
+                  title: 'Price History',
+                  subtitle: Text('Past 6 months'),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: HistoryChart(
+                  id: deal.id,
+                ),
               ),
               const SliverToBoxAdapter(
                 child: IsThereAnyDealInfo(),

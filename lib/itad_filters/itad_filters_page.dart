@@ -12,9 +12,11 @@ import 'package:observatory/itad_filters/ui/price_slider.dart';
 import 'package:observatory/itad_filters/ui/tags_filter_tile.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
+import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:observatory/shared/ui/close_bottom_sheet_button.dart';
 import 'package:observatory/shared/ui/ory_small_button.dart';
+import 'package:observatory/shared/ui/backdrop_container.dart';
 
 void showITADFilters(BuildContext context) {
   showModalBottomSheet(
@@ -22,7 +24,6 @@ void showITADFilters(BuildContext context) {
     useSafeArea: true,
     isScrollControlled: true,
     context: context,
-    barrierLabel: 'Close Filters Sheet',
     builder: (context) {
       return const ITADFiltersPage();
     },
@@ -44,7 +45,7 @@ class ITADFiltersPage extends ConsumerWidget {
     );
     final bool isUpdated = filters != currentFilters;
 
-    return SafeArea(
+    return BottomSheetContainer(
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -59,7 +60,7 @@ class ITADFiltersPage extends ConsumerWidget {
                   OrySmallButton(
                     onPressed: isUpdated
                         ? () {
-                            ref.watch(itadFiltersProvider.notifier).revert();
+                            ref.read(itadFiltersProvider.notifier).revert();
                           }
                         : null,
                     icon: Icons.restore_rounded,
@@ -73,9 +74,9 @@ class ITADFiltersPage extends ConsumerWidget {
                   OrySmallButton(
                     onPressed: isUpdated
                         ? () {
-                            ref.watch(itadFiltersProvider.notifier).save();
+                            ref.read(itadFiltersProvider.notifier).save();
                             ref
-                                .watch(asyncDealsProvider(DealCategory.all)
+                                .read(asyncDealsProvider(DealCategory.all)
                                     .notifier)
                                 .reset(withLoading: true);
 
@@ -89,12 +90,18 @@ class ITADFiltersPage extends ConsumerWidget {
                 ],
               ),
             ),
-            const TagsFilterTile(),
-            const PriceSlider(),
-            const DiscountSlider(),
-            const BundledOnlyTile(),
-            const DiscountedOnlyTile(),
-            const NSFWTile(),
+            const BackdropContainer(
+              child: Column(
+                children: [
+                  TagsFilterTile(),
+                  PriceSlider(),
+                  DiscountSlider(),
+                  BundledOnlyTile(),
+                  DiscountedOnlyTile(),
+                  NSFWTile(),
+                ],
+              ),
+            )
           ],
         ),
       ),

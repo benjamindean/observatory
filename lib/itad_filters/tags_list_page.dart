@@ -1,29 +1,22 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
+import 'package:observatory/itad_filters/ui/filtered_tags_list.dart';
 import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/steam_tags_list.dart';
 
-class TagsListPage extends ConsumerStatefulWidget {
+class TagsListPage extends HookConsumerWidget {
   const TagsListPage({super.key});
 
   @override
-  TagsListPageState createState() => TagsListPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final TextEditingController autocompleteController =
+        useTextEditingController();
+    final ValueNotifier<List<String>> filteredTags = useState(steamTags);
 
-class TagsListPageState extends ConsumerState<TagsListPage> {
-  List<String> filteredTags = steamTags;
-  final TextEditingController autocompleteController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     final List<String> tags = ref.watch(
           itadFiltersProvider.select((value) => value.cached.tags),
         ) ??
@@ -40,47 +33,16 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: ListView.builder(
-                itemCount: filteredTags.length,
-                itemBuilder: (context, index) {
-                  final bool isSelected = tags.contains(filteredTags[index]);
-
-                  return ListTile(
-                    selectedTileColor: context.colors.scheme.secondaryContainer,
-                    selectedColor: context.colors.scheme.onSecondaryContainer,
-                    trailing: index == 0
-                        ? const Icon(Icons.keyboard_return_rounded)
-                        : null,
-                    selected: isSelected,
-                    title: Text(filteredTags[index]),
-                    onTap: () async {
-                      if (isSelected) {
-                        ref
-                            .watch(itadFiltersProvider.notifier)
-                            .removeTag(filteredTags[index]);
-                      } else {
-                        ref
-                            .watch(itadFiltersProvider.notifier)
-                            .addTags([filteredTags[index]]);
-                      }
-
-                      autocompleteController.clear();
-                    },
-                  );
-                },
+              child: FilteredTagsList(
+                filteredTags: filteredTags.value,
+                autocompleteController: autocompleteController,
               ),
             ),
             Visibility(
               visible: tags.isNotEmpty,
               child: Container(
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  color: context.elevatedBottomAppBarColor,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                  ),
-                ),
+                color: context.midElevatedCanvasColor,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Wrap(
@@ -92,15 +54,15 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
                           label: Text(
                             tag,
                             style: context.textStyles.labelMedium.copyWith(
-                              color: context.colors.scheme.onPrimary,
+                              color: context.colors.scheme.onSecondary,
                             ),
                           ),
-                          deleteIconColor: context.colors.scheme.onPrimary,
+                          deleteIconColor: context.colors.scheme.onSecondary,
                           visualDensity: VisualDensity.compact,
-                          backgroundColor: context.colors.scheme.primary,
+                          backgroundColor: context.colors.scheme.secondary,
                           onDeleted: () {
                             ref
-                                .watch(itadFiltersProvider.notifier)
+                                .read(itadFiltersProvider.notifier)
                                 .removeTag(tag);
                           },
                         );
@@ -117,23 +79,23 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
               onEditingComplete: () {
                 autocompleteController.clear();
               },
-              onChanged: (value) => setState(() {
-                filteredTags = steamTags
+              onChanged: (value) {
+                filteredTags.value = steamTags
                     .where(
                       (tag) => tag.toLowerCase().contains(
                             value.toLowerCase(),
                           ),
                     )
                     .toList();
-              }),
-              onSubmitted: (_) {
-                ref
-                    .watch(itadFiltersProvider.notifier)
-                    .addTags([filteredTags.first]);
+              },
+              onSubmitted: (_) async {
+                final String? firstTag = filteredTags.value.firstOrNull;
 
-                setState(() {
-                  filteredTags = steamTags;
-                });
+                if (firstTag != null) {
+                  ref.read(itadFiltersProvider.notifier).addTags([firstTag]);
+
+                  filteredTags.value = steamTags;
+                }
               },
               decoration: InputDecoration(
                 suffixIcon: TextButton.icon(
@@ -155,7 +117,7 @@ class TagsListPageState extends ConsumerState<TagsListPage> {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.zero,
                 ),
-                hintText: 'Filter by name',
+                hintText: 'Filter by tag name',
               ),
             ),
           ],

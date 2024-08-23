@@ -31,7 +31,7 @@ class BundledOnlyTile extends ConsumerWidget {
       ),
       value: isEnabled,
       onChanged: (value) {
-        ref.watch(itadFiltersProvider.notifier).setBundled(value);
+        ref.read(itadFiltersProvider.notifier).setBundled(value);
       },
     );
   }

@@ -19,7 +19,7 @@ class ObservatorySnackBar {
     IconData? icon,
     required Widget content,
   }) {
-    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         elevation: CARD_ELEVATION,

@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/itad_filters/itad_filters_page.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
-import 'package:observatory/settings/providers/settings_provider.dart';
+import 'package:observatory/settings/providers/itad_config_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
@@ -25,7 +25,7 @@ class ITADFiltersInfoBar extends ConsumerWidget {
       itadFiltersProvider.select((value) => value.current),
     );
     final String currency = ref.watch(
-      asyncSettingsProvider.select(
+      itadConfigProvider.select(
         (value) => value.valueOrNull?.currency ?? 'USD',
       ),
     );
@@ -59,9 +59,9 @@ class ITADFiltersInfoBar extends ConsumerWidget {
               ),
               onPressed: filters != const ITADFilters()
                   ? () {
-                      ref.watch(itadFiltersProvider.notifier).reset();
+                      ref.read(itadFiltersProvider.notifier).reset();
                       ref
-                          .watch(asyncDealsProvider(DealCategory.all).notifier)
+                          .read(asyncDealsProvider(DealCategory.all).notifier)
                           .reset(withLoading: true);
                     }
                   : null,
@@ -91,7 +91,7 @@ class ITADFiltersInfoBar extends ConsumerWidget {
                       visible: filters.price != null,
                       child: Icon(
                         Icons.keyboard_arrow_left_rounded,
-                        size: 16,
+                        size: 14,
                         color: context.colors.scheme.onSurfaceVariant,
                       ),
                     ),
@@ -117,7 +117,7 @@ class ITADFiltersInfoBar extends ConsumerWidget {
                       visible: filters.cut != null,
                       child: Icon(
                         Icons.keyboard_arrow_right_rounded,
-                        size: 16,
+                        size: 14,
                         color: context.colors.scheme.onSurfaceVariant,
                       ),
                     ),

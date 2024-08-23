@@ -24,8 +24,12 @@ mixin _$ChartEntry {
   String get id => throw _privateConstructorUsedError;
   double get position => throw _privateConstructorUsedError;
 
+  /// Serializes this ChartEntry to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ChartEntry
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ChartEntryCopyWith<ChartEntry> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$ChartEntryCopyWithImpl<$Res, $Val extends ChartEntry>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ChartEntry
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +98,8 @@ class __$$ChartEntryImplCopyWithImpl<$Res>
       _$ChartEntryImpl _value, $Res Function(_$ChartEntryImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ChartEntry
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,11 +156,13 @@ class _$ChartEntryImpl implements _ChartEntry {
                 other.position == position));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, title, id, position);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ChartEntry
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChartEntryImplCopyWith<_$ChartEntryImpl> get copyWith =>
@@ -181,8 +191,11 @@ abstract class _ChartEntry implements ChartEntry {
   String get id;
   @override
   double get position;
+
+  /// Create a copy of ChartEntry
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChartEntryImplCopyWith<_$ChartEntryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

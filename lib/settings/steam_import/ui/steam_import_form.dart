@@ -71,7 +71,7 @@ class SteamImportForm extends ConsumerWidget {
             child: FilledButton.icon(
               icon: steamImportState.isLoading
                   ? const ObservatoryIconProgressIndicator()
-                  : const Icon(Icons.download),
+                  : const Icon(Icons.arrow_downward_rounded),
               onPressed: steamImportState.isLoading
                   ? null
                   : () async {
@@ -86,59 +86,61 @@ class SteamImportForm extends ConsumerWidget {
                                 return;
                               }
 
-                              return ObservatorySnackBar.show(
-                                context,
-                                content: RichText(
-                                  text: TextSpan(
-                                    style: context
-                                        .themes.snackBar.contentTextStyle
-                                        ?.copyWith(
-                                      color: context
-                                          .colors.scheme.onInverseSurface,
+                              if (context.mounted) {
+                                return ObservatorySnackBar.show(
+                                  context,
+                                  content: RichText(
+                                    text: TextSpan(
+                                      style: context
+                                          .themes.snackBar.contentTextStyle
+                                          ?.copyWith(
+                                        color: context
+                                            .colors.scheme.onInverseSurface,
+                                      ),
+                                      children: [
+                                        const TextSpan(text: 'Found '),
+                                        TextSpan(
+                                          text: result.length.toString(),
+                                          style: context
+                                              .themes.snackBar.contentTextStyle
+                                              ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: context
+                                                .colors.scheme.onInverseSurface,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' games in your wishlist. ',
+                                          style: context
+                                              .themes.snackBar.contentTextStyle
+                                              ?.copyWith(
+                                            color: context
+                                                .colors.scheme.onInverseSurface,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text:
+                                              'Please verify that everything is correct and then press ',
+                                          style: context
+                                              .themes.snackBar.contentTextStyle
+                                              ?.copyWith(
+                                            color: context
+                                                .colors.scheme.onInverseSurface,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'Import.',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: context
+                                                .colors.scheme.onInverseSurface,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    children: [
-                                      const TextSpan(text: 'Found '),
-                                      TextSpan(
-                                        text: result.length.toString(),
-                                        style: context
-                                            .themes.snackBar.contentTextStyle
-                                            ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: context
-                                              .colors.scheme.onInverseSurface,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: ' games in your wishlist. ',
-                                        style: context
-                                            .themes.snackBar.contentTextStyle
-                                            ?.copyWith(
-                                          color: context
-                                              .colors.scheme.onInverseSurface,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text:
-                                            'Please verify that everything is correct and then press ',
-                                        style: context
-                                            .themes.snackBar.contentTextStyle
-                                            ?.copyWith(
-                                          color: context
-                                              .colors.scheme.onInverseSurface,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: 'Import.',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: context
-                                              .colors.scheme.onInverseSurface,
-                                        ),
-                                      ),
-                                    ],
                                   ),
-                                ),
-                              );
+                                );
+                              }
                             },
                           );
                         }

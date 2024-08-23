@@ -10,49 +10,37 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
     _$SettingsStateImpl(
       showHeaders: json['showHeaders'] as bool,
       waitlistNotifications: json['waitlistNotifications'] as bool,
-      selectedCountry: json['selectedCountry'] as String,
-      currency: json['currency'] as String? ?? 'USD',
-      selectedStores: (json['selectedStores'] as List<dynamic>)
-          .map((e) => (e as num).toInt())
-          .toList(),
-      stores: (json['stores'] as List<dynamic>)
-          .map((e) => Store.fromJson(e as Map<String, dynamic>))
-          .toList(),
       dealsTab: $enumDecodeNullable(_$DealCategoryEnumMap, json['dealsTab']) ??
           DealCategory.all,
-      dealCardType: $enumDecode(_$DealCardTypeEnumMap, json['dealCardType']),
       waitlistSorting:
           $enumDecode(_$WaitlistSortingEnumMap, json['waitlistSorting']),
       waitlistSortingDirection: $enumDecode(
           _$WaitlistSortingDirectionEnumMap, json['waitlistSortingDirection']),
       crashlyticsEnabled: json['crashlyticsEnabled'] as bool,
+      purchasedProductIds: (json['purchasedProductIds'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      collapsePinned: json['collapsePinned'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
     <String, dynamic>{
       'showHeaders': instance.showHeaders,
       'waitlistNotifications': instance.waitlistNotifications,
-      'selectedCountry': instance.selectedCountry,
-      'currency': instance.currency,
-      'selectedStores': instance.selectedStores,
-      'stores': instance.stores,
       'dealsTab': _$DealCategoryEnumMap[instance.dealsTab]!,
-      'dealCardType': _$DealCardTypeEnumMap[instance.dealCardType]!,
       'waitlistSorting': _$WaitlistSortingEnumMap[instance.waitlistSorting]!,
       'waitlistSortingDirection':
           _$WaitlistSortingDirectionEnumMap[instance.waitlistSortingDirection]!,
       'crashlyticsEnabled': instance.crashlyticsEnabled,
+      'purchasedProductIds': instance.purchasedProductIds,
+      'collapsePinned': instance.collapsePinned,
     };
 
 const _$DealCategoryEnumMap = {
   DealCategory.all: 'all',
   DealCategory.steam_top_sellers: 'steam_top_sellers',
   DealCategory.steam_featured: 'steam_featured',
-};
-
-const _$DealCardTypeEnumMap = {
-  DealCardType.expanded: 'expanded',
-  DealCardType.compact: 'compact',
 };
 
 const _$WaitlistSortingEnumMap = {

@@ -22,19 +22,20 @@ SettingsState _$SettingsStateFromJson(Map<String, dynamic> json) {
 mixin _$SettingsState {
   bool get showHeaders => throw _privateConstructorUsedError;
   bool get waitlistNotifications => throw _privateConstructorUsedError;
-  String get selectedCountry => throw _privateConstructorUsedError;
-  String get currency => throw _privateConstructorUsedError;
-  List<int> get selectedStores => throw _privateConstructorUsedError;
-  List<Store> get stores => throw _privateConstructorUsedError;
   DealCategory get dealsTab => throw _privateConstructorUsedError;
-  DealCardType get dealCardType => throw _privateConstructorUsedError;
   WaitlistSorting get waitlistSorting => throw _privateConstructorUsedError;
   WaitlistSortingDirection get waitlistSortingDirection =>
       throw _privateConstructorUsedError;
   bool get crashlyticsEnabled => throw _privateConstructorUsedError;
+  List<String> get purchasedProductIds => throw _privateConstructorUsedError;
+  bool get collapsePinned => throw _privateConstructorUsedError;
 
+  /// Serializes this SettingsState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SettingsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SettingsStateCopyWith<SettingsState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,15 +49,12 @@ abstract class $SettingsStateCopyWith<$Res> {
   $Res call(
       {bool showHeaders,
       bool waitlistNotifications,
-      String selectedCountry,
-      String currency,
-      List<int> selectedStores,
-      List<Store> stores,
       DealCategory dealsTab,
-      DealCardType dealCardType,
       WaitlistSorting waitlistSorting,
       WaitlistSortingDirection waitlistSortingDirection,
-      bool crashlyticsEnabled});
+      bool crashlyticsEnabled,
+      List<String> purchasedProductIds,
+      bool collapsePinned});
 }
 
 /// @nodoc
@@ -69,20 +67,19 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SettingsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? showHeaders = null,
     Object? waitlistNotifications = null,
-    Object? selectedCountry = null,
-    Object? currency = null,
-    Object? selectedStores = null,
-    Object? stores = null,
     Object? dealsTab = null,
-    Object? dealCardType = null,
     Object? waitlistSorting = null,
     Object? waitlistSortingDirection = null,
     Object? crashlyticsEnabled = null,
+    Object? purchasedProductIds = null,
+    Object? collapsePinned = null,
   }) {
     return _then(_value.copyWith(
       showHeaders: null == showHeaders
@@ -93,30 +90,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.waitlistNotifications
           : waitlistNotifications // ignore: cast_nullable_to_non_nullable
               as bool,
-      selectedCountry: null == selectedCountry
-          ? _value.selectedCountry
-          : selectedCountry // ignore: cast_nullable_to_non_nullable
-              as String,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectedStores: null == selectedStores
-          ? _value.selectedStores
-          : selectedStores // ignore: cast_nullable_to_non_nullable
-              as List<int>,
-      stores: null == stores
-          ? _value.stores
-          : stores // ignore: cast_nullable_to_non_nullable
-              as List<Store>,
       dealsTab: null == dealsTab
           ? _value.dealsTab
           : dealsTab // ignore: cast_nullable_to_non_nullable
               as DealCategory,
-      dealCardType: null == dealCardType
-          ? _value.dealCardType
-          : dealCardType // ignore: cast_nullable_to_non_nullable
-              as DealCardType,
       waitlistSorting: null == waitlistSorting
           ? _value.waitlistSorting
           : waitlistSorting // ignore: cast_nullable_to_non_nullable
@@ -128,6 +105,14 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
       crashlyticsEnabled: null == crashlyticsEnabled
           ? _value.crashlyticsEnabled
           : crashlyticsEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      purchasedProductIds: null == purchasedProductIds
+          ? _value.purchasedProductIds
+          : purchasedProductIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      collapsePinned: null == collapsePinned
+          ? _value.collapsePinned
+          : collapsePinned // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -144,15 +129,12 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
   $Res call(
       {bool showHeaders,
       bool waitlistNotifications,
-      String selectedCountry,
-      String currency,
-      List<int> selectedStores,
-      List<Store> stores,
       DealCategory dealsTab,
-      DealCardType dealCardType,
       WaitlistSorting waitlistSorting,
       WaitlistSortingDirection waitlistSortingDirection,
-      bool crashlyticsEnabled});
+      bool crashlyticsEnabled,
+      List<String> purchasedProductIds,
+      bool collapsePinned});
 }
 
 /// @nodoc
@@ -163,20 +145,19 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
       _$SettingsStateImpl _value, $Res Function(_$SettingsStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SettingsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? showHeaders = null,
     Object? waitlistNotifications = null,
-    Object? selectedCountry = null,
-    Object? currency = null,
-    Object? selectedStores = null,
-    Object? stores = null,
     Object? dealsTab = null,
-    Object? dealCardType = null,
     Object? waitlistSorting = null,
     Object? waitlistSortingDirection = null,
     Object? crashlyticsEnabled = null,
+    Object? purchasedProductIds = null,
+    Object? collapsePinned = null,
   }) {
     return _then(_$SettingsStateImpl(
       showHeaders: null == showHeaders
@@ -187,30 +168,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.waitlistNotifications
           : waitlistNotifications // ignore: cast_nullable_to_non_nullable
               as bool,
-      selectedCountry: null == selectedCountry
-          ? _value.selectedCountry
-          : selectedCountry // ignore: cast_nullable_to_non_nullable
-              as String,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectedStores: null == selectedStores
-          ? _value._selectedStores
-          : selectedStores // ignore: cast_nullable_to_non_nullable
-              as List<int>,
-      stores: null == stores
-          ? _value._stores
-          : stores // ignore: cast_nullable_to_non_nullable
-              as List<Store>,
       dealsTab: null == dealsTab
           ? _value.dealsTab
           : dealsTab // ignore: cast_nullable_to_non_nullable
               as DealCategory,
-      dealCardType: null == dealCardType
-          ? _value.dealCardType
-          : dealCardType // ignore: cast_nullable_to_non_nullable
-              as DealCardType,
       waitlistSorting: null == waitlistSorting
           ? _value.waitlistSorting
           : waitlistSorting // ignore: cast_nullable_to_non_nullable
@@ -223,6 +184,14 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.crashlyticsEnabled
           : crashlyticsEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
+      purchasedProductIds: null == purchasedProductIds
+          ? _value._purchasedProductIds
+          : purchasedProductIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      collapsePinned: null == collapsePinned
+          ? _value.collapsePinned
+          : collapsePinned // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -233,17 +202,13 @@ class _$SettingsStateImpl implements _SettingsState {
   _$SettingsStateImpl(
       {required this.showHeaders,
       required this.waitlistNotifications,
-      required this.selectedCountry,
-      this.currency = 'USD',
-      required final List<int> selectedStores,
-      required final List<Store> stores,
       this.dealsTab = DealCategory.all,
-      required this.dealCardType,
       required this.waitlistSorting,
       required this.waitlistSortingDirection,
-      required this.crashlyticsEnabled})
-      : _selectedStores = selectedStores,
-        _stores = stores;
+      required this.crashlyticsEnabled,
+      final List<String> purchasedProductIds = const [],
+      this.collapsePinned = false})
+      : _purchasedProductIds = purchasedProductIds;
 
   factory _$SettingsStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$SettingsStateImplFromJson(json);
@@ -253,41 +218,31 @@ class _$SettingsStateImpl implements _SettingsState {
   @override
   final bool waitlistNotifications;
   @override
-  final String selectedCountry;
-  @override
-  @JsonKey()
-  final String currency;
-  final List<int> _selectedStores;
-  @override
-  List<int> get selectedStores {
-    if (_selectedStores is EqualUnmodifiableListView) return _selectedStores;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_selectedStores);
-  }
-
-  final List<Store> _stores;
-  @override
-  List<Store> get stores {
-    if (_stores is EqualUnmodifiableListView) return _stores;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_stores);
-  }
-
-  @override
   @JsonKey()
   final DealCategory dealsTab;
-  @override
-  final DealCardType dealCardType;
   @override
   final WaitlistSorting waitlistSorting;
   @override
   final WaitlistSortingDirection waitlistSortingDirection;
   @override
   final bool crashlyticsEnabled;
+  final List<String> _purchasedProductIds;
+  @override
+  @JsonKey()
+  List<String> get purchasedProductIds {
+    if (_purchasedProductIds is EqualUnmodifiableListView)
+      return _purchasedProductIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_purchasedProductIds);
+  }
+
+  @override
+  @JsonKey()
+  final bool collapsePinned;
 
   @override
   String toString() {
-    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, selectedCountry: $selectedCountry, currency: $currency, selectedStores: $selectedStores, stores: $stores, dealsTab: $dealsTab, dealCardType: $dealCardType, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, crashlyticsEnabled: $crashlyticsEnabled)';
+    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, dealsTab: $dealsTab, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, crashlyticsEnabled: $crashlyticsEnabled, purchasedProductIds: $purchasedProductIds, collapsePinned: $collapsePinned)';
   }
 
   @override
@@ -299,43 +254,37 @@ class _$SettingsStateImpl implements _SettingsState {
                 other.showHeaders == showHeaders) &&
             (identical(other.waitlistNotifications, waitlistNotifications) ||
                 other.waitlistNotifications == waitlistNotifications) &&
-            (identical(other.selectedCountry, selectedCountry) ||
-                other.selectedCountry == selectedCountry) &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
-            const DeepCollectionEquality()
-                .equals(other._selectedStores, _selectedStores) &&
-            const DeepCollectionEquality().equals(other._stores, _stores) &&
             (identical(other.dealsTab, dealsTab) ||
                 other.dealsTab == dealsTab) &&
-            (identical(other.dealCardType, dealCardType) ||
-                other.dealCardType == dealCardType) &&
             (identical(other.waitlistSorting, waitlistSorting) ||
                 other.waitlistSorting == waitlistSorting) &&
             (identical(
                     other.waitlistSortingDirection, waitlistSortingDirection) ||
                 other.waitlistSortingDirection == waitlistSortingDirection) &&
             (identical(other.crashlyticsEnabled, crashlyticsEnabled) ||
-                other.crashlyticsEnabled == crashlyticsEnabled));
+                other.crashlyticsEnabled == crashlyticsEnabled) &&
+            const DeepCollectionEquality()
+                .equals(other._purchasedProductIds, _purchasedProductIds) &&
+            (identical(other.collapsePinned, collapsePinned) ||
+                other.collapsePinned == collapsePinned));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       showHeaders,
       waitlistNotifications,
-      selectedCountry,
-      currency,
-      const DeepCollectionEquality().hash(_selectedStores),
-      const DeepCollectionEquality().hash(_stores),
       dealsTab,
-      dealCardType,
       waitlistSorting,
       waitlistSortingDirection,
-      crashlyticsEnabled);
+      crashlyticsEnabled,
+      const DeepCollectionEquality().hash(_purchasedProductIds),
+      collapsePinned);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SettingsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SettingsStateImplCopyWith<_$SettingsStateImpl> get copyWith =>
@@ -353,15 +302,12 @@ abstract class _SettingsState implements SettingsState {
   factory _SettingsState(
       {required final bool showHeaders,
       required final bool waitlistNotifications,
-      required final String selectedCountry,
-      final String currency,
-      required final List<int> selectedStores,
-      required final List<Store> stores,
       final DealCategory dealsTab,
-      required final DealCardType dealCardType,
       required final WaitlistSorting waitlistSorting,
       required final WaitlistSortingDirection waitlistSortingDirection,
-      required final bool crashlyticsEnabled}) = _$SettingsStateImpl;
+      required final bool crashlyticsEnabled,
+      final List<String> purchasedProductIds,
+      final bool collapsePinned}) = _$SettingsStateImpl;
 
   factory _SettingsState.fromJson(Map<String, dynamic> json) =
       _$SettingsStateImpl.fromJson;
@@ -371,17 +317,7 @@ abstract class _SettingsState implements SettingsState {
   @override
   bool get waitlistNotifications;
   @override
-  String get selectedCountry;
-  @override
-  String get currency;
-  @override
-  List<int> get selectedStores;
-  @override
-  List<Store> get stores;
-  @override
   DealCategory get dealsTab;
-  @override
-  DealCardType get dealCardType;
   @override
   WaitlistSorting get waitlistSorting;
   @override
@@ -389,7 +325,14 @@ abstract class _SettingsState implements SettingsState {
   @override
   bool get crashlyticsEnabled;
   @override
-  @JsonKey(ignore: true)
+  List<String> get purchasedProductIds;
+  @override
+  bool get collapsePinned;
+
+  /// Create a copy of SettingsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SettingsStateImplCopyWith<_$SettingsStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

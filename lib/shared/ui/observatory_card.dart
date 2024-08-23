@@ -4,9 +4,11 @@ import 'package:observatory/shared/ui/constants.dart';
 
 class ObservatoryCard extends StatelessWidget {
   final Widget child;
+  final double elevation;
 
   const ObservatoryCard({
     super.key,
+    this.elevation = CARD_ELEVATION,
     required this.child,
   });
 
@@ -15,7 +17,7 @@ class ObservatoryCard extends StatelessWidget {
     return Card(
       color: context.colors.scheme.surface,
       surfaceTintColor: context.colors.scheme.surfaceTint,
-      elevation: CARD_ELEVATION,
+      elevation: elevation,
       child: child,
     );
   }

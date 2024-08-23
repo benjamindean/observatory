@@ -30,7 +30,7 @@ class DiscountedOnlyTile extends ConsumerWidget {
       ),
       value: !isEnabled,
       onChanged: (value) {
-        ref.watch(itadFiltersProvider.notifier).setNonDeals(!value);
+        ref.read(itadFiltersProvider.notifier).setNonDeals(!value);
       },
     );
   }

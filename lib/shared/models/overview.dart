@@ -46,7 +46,7 @@ class Bundle with _$Bundle {
       return true;
     }
 
-    return DateTime.parse(expiry!).difference(DateTime.now()).inDays < 0;
+    return DateTime.parse(expiry ?? '').difference(DateTime.now()).inDays < 0;
   }
 
   factory Bundle.fromJson(Map<String, Object?> json) => _$BundleFromJson(json);

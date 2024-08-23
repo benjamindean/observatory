@@ -3,43 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
+import 'package:observatory/router.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/load_more.dart';
 
 class DealsList extends ConsumerWidget {
-  final AutoDisposeFamilyAsyncNotifierProvider<AsyncDealsNotifier, DealsState,
-      DealCategory> provider;
-
   const DealsList({
     super.key,
-    required this.provider,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<DealsState> deals = ref.watch(provider);
-    final AsyncDealsNotifier dealsNotifier = ref.watch(provider.notifier);
-    final bool showHeaders = ref.watch(
+    final DealCategory dealsCategory = ref.watch(
       asyncSettingsProvider.select(
-        (value) => value.valueOrNull?.showHeaders ?? false,
+        (value) => value.valueOrNull?.dealsTab ?? DealCategory.all,
       ),
     );
-    final DealCardType cardType = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.valueOrNull?.dealCardType ?? DealCardType.compact,
-      ),
+
+    final AsyncValue<DealsState> deals = ref.watch(
+      asyncDealsProvider(dealsCategory),
     );
-    final double? screenWidth = cardType == DealCardType.compact
-        ? null
-        : MediaQuery.of(context).size.width;
-    final double height = cardHeight(showHeaders, cardType, screenWidth);
+    final AsyncDealsNotifier dealsNotifier = ref.watch(
+      asyncDealsProvider(dealsCategory).notifier,
+    );
+
+    final double cardHeight = ref
+        .watch(dealCardSizeProvider.notifier)
+        .getHeight(MediaQuery.of(context).size.width);
 
     return deals.when(
       loading: () {
@@ -63,12 +60,12 @@ class DealsList extends ConsumerWidget {
             child: ErrorMessage(
               icon: FontAwesomeIcons.solidFaceDizzy,
               message:
-                  'Failed to fetch deals. IsThereAnyDeal might be down at the moment. Please try again later.',
+                  'Failed to fetch deals. The service might be down at the moment. Please try again later.',
               helper: TextButton.icon(
                 icon: const Icon(Icons.refresh),
                 label: const Text('Refresh'),
-                onPressed: () async {
-                  await dealsNotifier.reset(withLoading: true);
+                onPressed: () {
+                  dealsNotifier.reset(withLoading: true);
                 },
               ),
             ),
@@ -87,10 +84,8 @@ class DealsList extends ConsumerWidget {
                 helper: TextButton.icon(
                   icon: const Icon(Icons.refresh_rounded),
                   label: const Text('Refresh'),
-                  onPressed: () async {
-                    await dealsNotifier.reset(
-                      withLoading: true,
-                    );
+                  onPressed: () {
+                    dealsNotifier.reset(withLoading: true);
                   },
                 ),
               ),
@@ -98,21 +93,10 @@ class DealsList extends ConsumerWidget {
           );
         }
 
-        ref.read(asyncSettingsProvider.notifier).setCurrency(
-              data.deals
-                  .firstWhere(
-                    (deal) => (deal.prices ?? []).isNotEmpty,
-                  )
-                  .prices!
-                  .first
-                  .price
-                  .currency,
-            );
-
         return SliverPadding(
           padding: const EdgeInsets.all(6.0),
           sliver: SliverFixedExtentList.builder(
-            itemExtent: height,
+            itemExtent: cardHeight,
             itemCount: data.deals.length + 1,
             itemBuilder: (context, index) {
               if (index >= data.deals.length) {
@@ -124,7 +108,7 @@ class DealsList extends ConsumerWidget {
 
               return DealCard(
                 deal: data.deals[index],
-                cardType: cardType,
+                page: NavigationBranch.deals,
               );
             },
           ),

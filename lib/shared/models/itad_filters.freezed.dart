@@ -25,8 +25,12 @@ mixin _$MinMax {
   @HiveField(1)
   int get max => throw _privateConstructorUsedError;
 
+  /// Serializes this MinMax to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MinMax
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MinMaxCopyWith<MinMax> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -48,6 +52,8 @@ class _$MinMaxCopyWithImpl<$Res, $Val extends MinMax>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MinMax
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -85,6 +91,8 @@ class __$$MinMaxImplCopyWithImpl<$Res>
       _$MinMaxImpl _value, $Res Function(_$MinMaxImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MinMax
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -145,11 +153,13 @@ class _$MinMaxImpl with DiagnosticableTreeMixin implements _MinMax {
             (identical(other.max, max) || other.max == max));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, min, max);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MinMax
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MinMaxImplCopyWith<_$MinMaxImpl> get copyWith =>
@@ -176,8 +186,11 @@ abstract class _MinMax implements MinMax {
   @override
   @HiveField(1)
   int get max;
+
+  /// Create a copy of MinMax
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MinMaxImplCopyWith<_$MinMaxImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -201,8 +214,12 @@ mixin _$ITADFilters {
   @HiveField(5)
   bool get nondeals => throw _privateConstructorUsedError;
 
+  /// Serializes this ITADFilters to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ITADFilters
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ITADFiltersCopyWith<ITADFilters> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -235,6 +252,8 @@ class _$ITADFiltersCopyWithImpl<$Res, $Val extends ITADFilters>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ITADFilters
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -273,6 +292,8 @@ class _$ITADFiltersCopyWithImpl<$Res, $Val extends ITADFilters>
     ) as $Val);
   }
 
+  /// Create a copy of ITADFilters
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $MinMaxCopyWith<$Res>? get price {
@@ -285,6 +306,8 @@ class _$ITADFiltersCopyWithImpl<$Res, $Val extends ITADFilters>
     });
   }
 
+  /// Create a copy of ITADFilters
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $MinMaxCopyWith<$Res>? get cut {
@@ -328,6 +351,8 @@ class __$$ITADFiltersImplCopyWithImpl<$Res>
       _$ITADFiltersImpl _value, $Res Function(_$ITADFiltersImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ITADFilters
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -445,12 +470,14 @@ class _$ITADFiltersImpl extends _ITADFilters with DiagnosticableTreeMixin {
                 other.nondeals == nondeals));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, price, cut, bundled,
       const DeepCollectionEquality().hash(_tags), mature, nondeals);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ITADFilters
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ITADFiltersImplCopyWith<_$ITADFiltersImpl> get copyWith =>
@@ -495,8 +522,11 @@ abstract class _ITADFilters extends ITADFilters {
   @override
   @HiveField(5)
   bool get nondeals;
+
+  /// Create a copy of ITADFilters
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ITADFiltersImplCopyWith<_$ITADFiltersImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -510,8 +540,12 @@ mixin _$ITADFiltersConfig {
   ITADFilters get cached => throw _privateConstructorUsedError;
   ITADFilters get current => throw _privateConstructorUsedError;
 
+  /// Serializes this ITADFiltersConfig to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ITADFiltersConfig
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ITADFiltersConfigCopyWith<ITADFiltersConfig> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -538,6 +572,8 @@ class _$ITADFiltersConfigCopyWithImpl<$Res, $Val extends ITADFiltersConfig>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ITADFiltersConfig
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -556,6 +592,8 @@ class _$ITADFiltersConfigCopyWithImpl<$Res, $Val extends ITADFiltersConfig>
     ) as $Val);
   }
 
+  /// Create a copy of ITADFiltersConfig
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ITADFiltersCopyWith<$Res> get cached {
@@ -564,6 +602,8 @@ class _$ITADFiltersConfigCopyWithImpl<$Res, $Val extends ITADFiltersConfig>
     });
   }
 
+  /// Create a copy of ITADFiltersConfig
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ITADFiltersCopyWith<$Res> get current {
@@ -597,6 +637,8 @@ class __$$ITADFiltersConfigImplCopyWithImpl<$Res>
       $Res Function(_$ITADFiltersConfigImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ITADFiltersConfig
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -654,11 +696,13 @@ class _$ITADFiltersConfigImpl extends _ITADFiltersConfig
             (identical(other.current, current) || other.current == current));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, cached, current);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ITADFiltersConfig
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ITADFiltersConfigImplCopyWith<_$ITADFiltersConfigImpl> get copyWith =>
@@ -686,8 +730,11 @@ abstract class _ITADFiltersConfig extends ITADFiltersConfig {
   ITADFilters get cached;
   @override
   ITADFilters get current;
+
+  /// Create a copy of ITADFiltersConfig
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ITADFiltersConfigImplCopyWith<_$ITADFiltersConfigImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -106,7 +106,9 @@ class AsyncRecentsNotifier extends AsyncNotifier<List<String>> {
   }
 
   Future<List<String>> _initSearch() async {
-    return GetIt.I<SettingsRepository>().getRecentSearches();
+    return (await GetIt.I<SettingsRepository>().getRecentSearches())
+        .reversed
+        .toList();
   }
 
   Future<void> addRecent(String query) async {
@@ -115,7 +117,7 @@ class AsyncRecentsNotifier extends AsyncNotifier<List<String>> {
         await GetIt.I<SettingsRepository>().saveToRecents(query.trim());
 
         return Set<String>.of(
-          List.of(state.value ?? [])..add(query.trim()),
+          List.of(state.value ?? [])..insert(0, query.trim()),
         ).toList();
       },
     );

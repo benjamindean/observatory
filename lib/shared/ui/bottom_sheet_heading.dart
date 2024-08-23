@@ -18,7 +18,7 @@ class BottomSheetHeading extends StatelessWidget {
       contentPadding: const EdgeInsets.only(left: 16.0, right: 8.0),
       key: Key('bottom-sheet-heading-$text'),
       visualDensity: VisualDensity.compact,
-      tileColor: context.highElevatedCanvasColor,
+      tileColor: context.midElevatedCanvasColor,
       title: Text(
         text,
         style: context.textStyles.labelLarge.copyWith(

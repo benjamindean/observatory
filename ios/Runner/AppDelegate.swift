@@ -2,8 +2,9 @@ import UIKit
 import Flutter
 import awesome_notifications
 import workmanager
+import app_links
 
-@UIApplicationMain
+@main
 @objc class AppDelegate: FlutterAppDelegate {
   override func application(
     _ application: UIApplication,
@@ -21,6 +22,12 @@ import workmanager
     }
 
     WorkmanagerPlugin.registerPeriodicTask(withIdentifier: "observatory-waitlist-check", frequency: NSNumber(value: 6 * 60 * 60))
+
+    if let url = AppLinks.shared.getLink(launchOptions: launchOptions) {
+      AppLinks.shared.handleLink(url: url)
+
+      return true
+    }
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }

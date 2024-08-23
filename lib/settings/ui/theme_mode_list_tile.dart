@@ -23,7 +23,7 @@ class ThemeModeListTile extends ConsumerWidget {
       subtitle: const Text('Dark, Light or Auto.'),
       trailing: ToggleButtons(
         direction: Axis.horizontal,
-        onPressed: (int index) {
+        onPressed: (index) {
           ref
               .watch(themesProvider.notifier)
               .setThemeMode(themeModes[index].name);

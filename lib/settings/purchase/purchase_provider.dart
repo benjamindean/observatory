@@ -3,12 +3,25 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
+import 'package:observatory/settings/settings_repository.dart';
 
 class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
-  StreamSubscription<List<PurchaseDetails>>? subscription;
+  @override
+  Future<PurchaseState> build() async {
+    final List<String> purchasedProductIds =
+        await GetIt.I<SettingsRepository>().getPurchasedProductIds();
+    final List<ProductDetails> products = await _fetchPurchases();
+
+    return PurchaseState(
+      products: products,
+      status: PurchaseStatus.canceled,
+      purchasedProductIds: purchasedProductIds,
+    );
+  }
 
   Future<List<ProductDetails>> _fetchPurchases() async {
     final bool available = await InAppPurchase.instance.isAvailable();
@@ -32,83 +45,50 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     }
   }
 
-  @override
-  Future<PurchaseState> build() async {
-    ref.onDispose(() {
-      subscription?.cancel();
-    });
+  Future<void> handleEndPurchase(PurchaseDetails purchase) async {
+    await InAppPurchase.instance.completePurchase(purchase);
 
-    final Stream<List<PurchaseDetails>> purchaseUpdated =
-        InAppPurchase.instance.purchaseStream;
+    await GetIt.I<SettingsRepository>().setPurchasedProductIds(
+      purchase.productID,
+    );
 
-    subscription = purchaseUpdated.listen((purchaseDetailsList) async {
-      for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
-        state = await AsyncValue.guard(
-          () async => state.requireValue.copyWith(
-            status: purchaseDetails.status,
-          ),
-        );
-
-        switch (purchaseDetails.status) {
-          case PurchaseStatus.pending:
-            break;
-          case PurchaseStatus.error:
-            break;
-          case PurchaseStatus.purchased:
-            break;
-          case PurchaseStatus.restored:
-            break;
-          case PurchaseStatus.canceled:
-            await InAppPurchase.instance.completePurchase(purchaseDetails);
-
-            break;
-        }
-
-        if (purchaseDetails.pendingCompletePurchase) {
-          state = await AsyncValue.guard(
-            () async => state.requireValue.copyWith(
-              isPending: true,
-            ),
-          );
-
-          await InAppPurchase.instance.completePurchase(purchaseDetails);
-
-          state = await AsyncValue.guard(
-            () async => state.requireValue.copyWith(
-              isPending: false,
-            ),
-          );
-        }
-      }
-    }, onDone: () {
-      subscription?.cancel();
-    }, onError: (error) {
-      return;
-    });
-
-    return PurchaseState(
-      products: await _fetchPurchases(),
-      status: PurchaseStatus.canceled,
+    state = await AsyncValue.guard(
+      () async => state.requireValue.copyWith(
+        isPending: false,
+        purchasedProductIds: Set<String>.of(
+          (state.valueOrNull?.purchasedProductIds ?? [])
+            ..add(purchase.productID),
+        ).toList(),
+      ),
     );
   }
 
-  Future<void> reset() async {
-    subscription?.cancel();
+  void setIsPending(bool isPending) {
+    state = AsyncValue.data(
+      state.requireValue.copyWith(
+        isPending: isPending,
+      ),
+    );
+  }
 
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() => build());
+  bool get hasPlusFeatures {
+    return (state.valueOrNull?.purchasedProductIds ?? []).isNotEmpty;
   }
 
   Future<void> purchase(ProductDetails product) async {
     try {
-      final PurchaseParam purchaseParam = PurchaseParam(
-        productDetails: product,
-      );
+      setIsPending(true);
 
       await InAppPurchase.instance.buyNonConsumable(
-        purchaseParam: purchaseParam,
+        purchaseParam: PurchaseParam(
+          productDetails: product,
+        ),
       );
+
+      setIsPending(false);
     } catch (error, stackTrace) {
+      setIsPending(false);
+
       Logger().e(
         'Failed to purchase product',
         error: error,
@@ -122,6 +102,40 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
 
       return;
     }
+  }
+
+  Future<bool> restore() async {
+    try {
+      setIsPending(true);
+
+      await InAppPurchase.instance.restorePurchases();
+
+      setIsPending(false);
+
+      return true;
+    } catch (error, stackTrace) {
+      setIsPending(false);
+
+      Logger().e(
+        'Failed to restore purchases',
+        error: error,
+        stackTrace: stackTrace,
+      );
+
+      FirebaseCrashlytics.instance.recordError(
+        error,
+        stackTrace,
+      );
+
+      return false;
+    }
+  }
+
+  Future<void> reset() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      return build();
+    });
   }
 }
 

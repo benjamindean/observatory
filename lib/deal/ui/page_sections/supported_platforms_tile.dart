@@ -18,7 +18,7 @@ class SupportedPlatformsTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<GameDetails?> infoState = ref.watch(
-      gameDetailsProvider(deal),
+      gameDetailsProvider(Deal(id: deal.id, title: deal.title)),
     );
 
     return DealPageSectionAsync<GameDetails?>(

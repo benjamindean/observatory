@@ -39,7 +39,7 @@ class RecentSearchesList extends ConsumerWidget {
           );
         }
 
-        final List<String> recentsList = data.reversed.toList();
+        final List<String> recentsList = data.toList();
 
         return SliverPadding(
           padding: const EdgeInsets.all(6.0),
@@ -49,18 +49,25 @@ class RecentSearchesList extends ConsumerWidget {
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Center(
-                    child: OutlinedButton.icon(
-                      icon: const Icon(Icons.clear_all),
-                      onPressed: () async {
-                        showAdaptiveDialog(
+                    child: TextButton.icon(
+                      icon: const Icon(Icons.cancel),
+                      onPressed: () {
+                        showDialog(
                           context: context,
+                          barrierDismissible: true,
                           builder: (context) {
                             return ObservatoryDialog(
-                              onApply: () async {
+                              onApply: () {
                                 ref
                                     .read(asynRecentsProvider.notifier)
                                     .clearRecents()
-                                    .then((value) => context.pop());
+                                    .then(
+                                  (value) {
+                                    if (context.mounted) {
+                                      context.pop();
+                                    }
+                                  },
+                                );
                               },
                               onDiscard: () {
                                 context.pop();
@@ -80,6 +87,7 @@ class RecentSearchesList extends ConsumerWidget {
               }
 
               return ObservatoryCard(
+                elevation: 0,
                 child: InkWell(
                   onTap: () async {
                     await ref
@@ -90,10 +98,8 @@ class RecentSearchesList extends ConsumerWidget {
                     contentPadding: const EdgeInsets.fromLTRB(16.0, 0, 0, 0),
                     trailing: IconButton(
                       icon: const Icon(Icons.cancel),
-                      onPressed: () async {
-                        await ref
-                            .read(asynRecentsProvider.notifier)
-                            .removeRecent(
+                      onPressed: () {
+                        ref.read(asynRecentsProvider.notifier).removeRecent(
                               recentsList[index],
                             );
                       },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:observatory/bookmarks/bookmarks_page.dart';
 import 'package:observatory/deal/deal_page.dart';
 import 'package:observatory/deals/deals_page.dart';
 import 'package:observatory/home_page.dart';
@@ -11,12 +12,18 @@ import 'package:observatory/settings/stores_select/stores_select_page.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/waitlist_page.dart';
 
+enum NavigationBranch {
+  deals,
+  search,
+  waitlist,
+}
+
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final shellNavigatorKeyDeals = GlobalKey<NavigatorState>();
 final shellNavigatorKeySearch = GlobalKey<NavigatorState>();
 final shellNavigatorKeyWaitlist = GlobalKey<NavigatorState>();
 
-final router = GoRouter(
+final GoRouter router = GoRouter(
   initialLocation: '/deals',
   navigatorKey: rootNavigatorKey,
   routes: [
@@ -69,14 +76,11 @@ final router = GoRouter(
       name: 'settings',
       path: '/settings',
       builder: (context, state) => const SettingsPage(),
-      // routes: [
-      //   GoRoute(
-      //     name: 'log-in',
-      //     path: 'log-in',
-      //     parentNavigatorKey: rootNavigatorKey,
-      //     builder: (context, state) => const LogInPage(),
-      //   ),
-      // ],
+    ),
+    GoRoute(
+      name: 'bookmarks',
+      path: '/bookmarks',
+      builder: (context, state) => const BookmarksPage(),
     ),
     GoRoute(
       name: 'store-select',

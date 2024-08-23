@@ -2,8 +2,7 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:observatory/router.dart';
-import 'package:observatory/settings/providers/settings_provider.dart';
+import 'package:observatory/settings/providers/itad_config_provider.dart';
 import 'package:observatory/settings/stores_select/stores_list_provider.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:observatory/shared/ui/constants.dart';
@@ -16,13 +15,13 @@ class StoreSelectPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Store> stores = ref.watch(
-          asyncSettingsProvider.select(
+          itadConfigProvider.select(
             (value) => value.valueOrNull?.stores,
           ),
         ) ??
         [];
     final List<int> selectedStores = ref.watch(
-          asyncSettingsProvider.select(
+          itadConfigProvider.select(
             (value) => value.valueOrNull?.selectedStores,
           ),
         ) ??
@@ -59,7 +58,7 @@ class StoreSelectPage extends ConsumerWidget {
                       onPressed: () {
                         showModalBottomSheet(
                           useSafeArea: true,
-                          context: rootNavigatorKey.currentContext!,
+                          context: context,
                           builder: (BuildContext context) {
                             return SafeArea(
                               child: Wrap(
@@ -92,6 +91,38 @@ class StoreSelectPage extends ConsumerWidget {
                                   ),
                                   ListTile(
                                     title: Text(
+                                      'Only Steam Keys',
+                                      style: context.textStyles.titleMedium,
+                                    ),
+                                    subtitle: Text(
+                                      'Select only Steam key re-sellers',
+                                      style: context.textStyles.bodySmall,
+                                    ),
+                                    onTap: () async {
+                                      final List<int> steamKeyStores = stores
+                                          .where(
+                                            (element) => ![
+                                              'epic games store',
+                                              'ea store',
+                                              'gog',
+                                              'ubisoft store',
+                                              'microsoft store',
+                                            ].contains(
+                                              element.title.toLowerCase(),
+                                            ),
+                                          )
+                                          .map((e) => e.id)
+                                          .toList();
+
+                                      ref
+                                          .watch(listProvider.notifier)
+                                          .set(steamKeyStores);
+
+                                      context.pop();
+                                    },
+                                  ),
+                                  ListTile(
+                                    title: Text(
                                       'All Stores',
                                       style: context.textStyles.titleMedium,
                                     ),
@@ -100,7 +131,7 @@ class StoreSelectPage extends ConsumerWidget {
                                       style: context.textStyles.bodySmall,
                                     ),
                                     onTap: () async {
-                                      ref.watch(listProvider.notifier).set(
+                                      ref.read(listProvider.notifier).set(
                                             stores.map((e) => e.id).toList(),
                                           );
 
@@ -120,12 +151,18 @@ class StoreSelectPage extends ConsumerWidget {
                           ? null
                           : () async {
                               await ref
-                                  .read(asyncSettingsProvider.notifier)
+                                  .read(itadConfigProvider.notifier)
                                   .setSelectedStores(storeList)
-                                  .then((value) => context.pop());
+                                  .then(
+                                (value) {
+                                  if (context.mounted) {
+                                    context.pop();
+                                  }
+                                },
+                              );
                             },
-                      icon: const Icon(Icons.save),
-                      label: const Text('Save'),
+                      icon: const Icon(Icons.check),
+                      label: const Text('Apply'),
                     )
                   ],
                 ),
@@ -135,15 +172,20 @@ class StoreSelectPage extends ConsumerWidget {
         ),
       ),
       appBar: AppBar(
-        title: const Text('Select Stores'),
+        title: Text(
+          'Select Stores',
+          style: context.textStyles.titleMedium.copyWith(
+            color: context.colors.scheme.onSurfaceVariant,
+          ),
+        ),
       ),
       body: Column(
         children: [
           PopScope(
             canPop: !hasChanged,
-            onPopInvoked: (canPop) {
+            onPopInvokedWithResult: (canPop, _) {
               if (!canPop) {
-                showAdaptiveDialog<void>(
+                showDialog<void>(
                   context: context,
                   barrierDismissible: true,
                   builder: (BuildContext context) {
@@ -159,12 +201,14 @@ class StoreSelectPage extends ConsumerWidget {
                       },
                       onApply: () async {
                         await ref
-                            .read(asyncSettingsProvider.notifier)
+                            .read(itadConfigProvider.notifier)
                             .setSelectedStores(storeList)
                             .then(
                           (value) {
-                            context.pop();
-                            context.pop();
+                            if (context.mounted) {
+                              context.pop();
+                              context.pop();
+                            }
                           },
                         );
                       },

@@ -21,46 +21,62 @@ class ObservatoryDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog.adaptive(
-      actionsPadding: const EdgeInsets.fromLTRB(
-        16.0,
-        8.0,
-        16.0,
-        8.0,
-      ),
-      title: Text(
-        title,
-        style: context.textStyles.titleLarge.copyWith(
-          color: context.colors.scheme.onSurface,
-        ),
-      ),
-      content: Text(
-        body,
-        style: context.textStyles.bodyMedium.copyWith(
-          color: context.colors.scheme.onSurface,
-        ),
-      ),
-      actions: <Widget>[
-        TextButton(
-          onPressed: onDiscard,
-          child: Text(
-            discardText,
-            style: context.textStyles.titleSmall.copyWith(
-              color: context.colors.scheme.onSurface,
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: context.textStyles.titleLarge.copyWith(
+                color: context.colors.scheme.onSurface,
+              ),
+              textAlign: TextAlign.center,
             ),
-          ),
-        ),
-        TextButton(
-          onPressed: onApply,
-          child: Text(
-            applyText,
-            style: context.textStyles.titleSmall.copyWith(
-              color: context.colors.scheme.primary,
-              fontWeight: FontWeight.bold,
+            const SizedBox(height: 16.0),
+            Text(
+              body,
+              style: context.textStyles.bodyMedium.copyWith(
+                color: context.colors.scheme.onSurface,
+              ),
+              textAlign: TextAlign.center,
             ),
-          ),
+            const SizedBox(height: 32.0),
+            OverflowBar(
+              alignment: MainAxisAlignment.spaceBetween,
+              children: [
+                FilledButton(
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(
+                      context.colors.scheme.errorContainer,
+                    ),
+                  ),
+                  onPressed: onDiscard,
+                  child: Text(
+                    discardText,
+                    style: context.textStyles.labelLarge.copyWith(
+                      color: context.colors.scheme.onErrorContainer,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8.0),
+                FilledButton(
+                  onPressed: onApply,
+                  child: Text(
+                    applyText,
+                    style: context.textStyles.labelLarge.copyWith(
+                      color: context.colors.scheme.onPrimary,
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
         ),
-      ],
+      ),
     );
   }
 }

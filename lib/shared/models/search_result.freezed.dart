@@ -25,8 +25,12 @@ mixin _$SearchResult {
   String get title => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
 
+  /// Serializes this SearchResult to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SearchResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SearchResultCopyWith<SearchResult> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +54,8 @@ class _$SearchResultCopyWithImpl<$Res, $Val extends SearchResult>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SearchResult
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -98,6 +104,8 @@ class __$$SearchResultImplCopyWithImpl<$Res>
       _$SearchResultImpl _value, $Res Function(_$SearchResultImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SearchResult
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -165,11 +173,13 @@ class _$SearchResultImpl implements _SearchResult {
             (identical(other.type, type) || other.type == type));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, slug, title, type);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SearchResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SearchResultImplCopyWith<_$SearchResultImpl> get copyWith =>
@@ -201,8 +211,11 @@ abstract class _SearchResult implements SearchResult {
   String get title;
   @override
   String get type;
+
+  /// Create a copy of SearchResult
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SearchResultImplCopyWith<_$SearchResultImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

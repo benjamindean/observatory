@@ -73,7 +73,12 @@ class SteamImportNotifier extends AutoDisposeNotifier<SteamImportState> {
       );
 
       if (deals.isNotEmpty) {
-        await GetIt.I<SettingsRepository>().removeDealsFromSteam();
+        final List<Deal> steamDeals =
+            (ref.read(asyncWaitListProvider).valueOrNull ?? [])
+                .where((game) => game.source == DealSource.steam)
+                .toList();
+
+        await GetIt.I<SettingsRepository>().removeDeals(steamDeals);
         await GetIt.I<SettingsRepository>().saveDeals(deals.toList());
       }
 

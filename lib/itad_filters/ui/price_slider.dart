@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/itad_filters/ui/max_price_label.dart';
-import 'package:observatory/settings/providers/settings_provider.dart';
+import 'package:observatory/settings/providers/itad_config_provider.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 
 class PriceSlider extends ConsumerWidget {
@@ -17,7 +17,7 @@ class PriceSlider extends ConsumerWidget {
       itadFiltersProvider.select((value) => value.cached.price),
     );
     final String currency = ref.read(
-      asyncSettingsProvider.select(
+      itadConfigProvider.select(
         (value) => value.valueOrNull?.currency ?? 'USD',
       ),
     );
@@ -45,7 +45,7 @@ class PriceSlider extends ConsumerWidget {
             max: FilterBounds.price.max.toDouble(),
             divisions: 20,
             onChanged: (value) {
-              ref.watch(itadFiltersProvider.notifier).setMaxPrice(value);
+              ref.read(itadFiltersProvider.notifier).setMaxPrice(value);
             },
           ),
         ),

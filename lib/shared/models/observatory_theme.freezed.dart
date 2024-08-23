@@ -27,8 +27,12 @@ mixin _$ObservatoryTheme {
   @HiveField(2)
   String? get scheme => throw _privateConstructorUsedError;
 
+  /// Serializes this ObservatoryTheme to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ObservatoryTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ObservatoryThemeCopyWith<ObservatoryTheme> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -55,6 +59,8 @@ class _$ObservatoryThemeCopyWithImpl<$Res, $Val extends ObservatoryTheme>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ObservatoryTheme
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -101,6 +107,8 @@ class __$$ObservatoryThemeImplCopyWithImpl<$Res>
       $Res Function(_$ObservatoryThemeImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ObservatoryTheme
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -127,11 +135,12 @@ class __$$ObservatoryThemeImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ObservatoryThemeImpl implements _ObservatoryTheme {
+class _$ObservatoryThemeImpl extends _ObservatoryTheme {
   const _$ObservatoryThemeImpl(
       {@HiveField(0) required this.mode,
       @HiveField(1) required this.isTrueBlack,
-      @HiveField(2) this.scheme = 'mandyRed'});
+      @HiveField(2) this.scheme = 'mandyRed'})
+      : super._();
 
   factory _$ObservatoryThemeImpl.fromJson(Map<String, dynamic> json) =>
       _$$ObservatoryThemeImplFromJson(json);
@@ -163,11 +172,13 @@ class _$ObservatoryThemeImpl implements _ObservatoryTheme {
             (identical(other.scheme, scheme) || other.scheme == scheme));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, mode, isTrueBlack, scheme);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ObservatoryTheme
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ObservatoryThemeImplCopyWith<_$ObservatoryThemeImpl> get copyWith =>
@@ -182,11 +193,12 @@ class _$ObservatoryThemeImpl implements _ObservatoryTheme {
   }
 }
 
-abstract class _ObservatoryTheme implements ObservatoryTheme {
+abstract class _ObservatoryTheme extends ObservatoryTheme {
   const factory _ObservatoryTheme(
       {@HiveField(0) required final String mode,
       @HiveField(1) required final bool isTrueBlack,
       @HiveField(2) final String? scheme}) = _$ObservatoryThemeImpl;
+  const _ObservatoryTheme._() : super._();
 
   factory _ObservatoryTheme.fromJson(Map<String, dynamic> json) =
       _$ObservatoryThemeImpl.fromJson;
@@ -200,8 +212,11 @@ abstract class _ObservatoryTheme implements ObservatoryTheme {
   @override
   @HiveField(2)
   String? get scheme;
+
+  /// Create a copy of ObservatoryTheme
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ObservatoryThemeImplCopyWith<_$ObservatoryThemeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

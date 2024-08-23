@@ -18,9 +18,14 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PurchaseState {
   List<ProductDetails> get products => throw _privateConstructorUsedError;
   PurchaseStatus? get status => throw _privateConstructorUsedError;
-  bool? get isPending => throw _privateConstructorUsedError;
+  bool get isPending => throw _privateConstructorUsedError;
+  List<String> get purchasedProductIds => throw _privateConstructorUsedError;
+  StreamSubscription<List<PurchaseDetails>>? get subscription =>
+      throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PurchaseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PurchaseStateCopyWith<PurchaseState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -32,7 +37,11 @@ abstract class $PurchaseStateCopyWith<$Res> {
       _$PurchaseStateCopyWithImpl<$Res, PurchaseState>;
   @useResult
   $Res call(
-      {List<ProductDetails> products, PurchaseStatus? status, bool? isPending});
+      {List<ProductDetails> products,
+      PurchaseStatus? status,
+      bool isPending,
+      List<String> purchasedProductIds,
+      StreamSubscription<List<PurchaseDetails>>? subscription});
 }
 
 /// @nodoc
@@ -45,12 +54,16 @@ class _$PurchaseStateCopyWithImpl<$Res, $Val extends PurchaseState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PurchaseState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? products = null,
     Object? status = freezed,
-    Object? isPending = freezed,
+    Object? isPending = null,
+    Object? purchasedProductIds = null,
+    Object? subscription = freezed,
   }) {
     return _then(_value.copyWith(
       products: null == products
@@ -61,10 +74,18 @@ class _$PurchaseStateCopyWithImpl<$Res, $Val extends PurchaseState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as PurchaseStatus?,
-      isPending: freezed == isPending
+      isPending: null == isPending
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
+      purchasedProductIds: null == purchasedProductIds
+          ? _value.purchasedProductIds
+          : purchasedProductIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      subscription: freezed == subscription
+          ? _value.subscription
+          : subscription // ignore: cast_nullable_to_non_nullable
+              as StreamSubscription<List<PurchaseDetails>>?,
     ) as $Val);
   }
 }
@@ -78,7 +99,11 @@ abstract class _$$PurchaseStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<ProductDetails> products, PurchaseStatus? status, bool? isPending});
+      {List<ProductDetails> products,
+      PurchaseStatus? status,
+      bool isPending,
+      List<String> purchasedProductIds,
+      StreamSubscription<List<PurchaseDetails>>? subscription});
 }
 
 /// @nodoc
@@ -89,12 +114,16 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
       _$PurchaseStateImpl _value, $Res Function(_$PurchaseStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PurchaseState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? products = null,
     Object? status = freezed,
-    Object? isPending = freezed,
+    Object? isPending = null,
+    Object? purchasedProductIds = null,
+    Object? subscription = freezed,
   }) {
     return _then(_$PurchaseStateImpl(
       products: null == products
@@ -105,10 +134,18 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as PurchaseStatus?,
-      isPending: freezed == isPending
+      isPending: null == isPending
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
+      purchasedProductIds: null == purchasedProductIds
+          ? _value._purchasedProductIds
+          : purchasedProductIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      subscription: freezed == subscription
+          ? _value.subscription
+          : subscription // ignore: cast_nullable_to_non_nullable
+              as StreamSubscription<List<PurchaseDetails>>?,
     ));
   }
 }
@@ -119,8 +156,11 @@ class _$PurchaseStateImpl implements _PurchaseState {
   _$PurchaseStateImpl(
       {final List<ProductDetails> products = const [],
       this.status,
-      this.isPending = false})
-      : _products = products;
+      this.isPending = false,
+      final List<String> purchasedProductIds = const [],
+      this.subscription})
+      : _products = products,
+        _purchasedProductIds = purchasedProductIds;
 
   final List<ProductDetails> _products;
   @override
@@ -135,11 +175,23 @@ class _$PurchaseStateImpl implements _PurchaseState {
   final PurchaseStatus? status;
   @override
   @JsonKey()
-  final bool? isPending;
+  final bool isPending;
+  final List<String> _purchasedProductIds;
+  @override
+  @JsonKey()
+  List<String> get purchasedProductIds {
+    if (_purchasedProductIds is EqualUnmodifiableListView)
+      return _purchasedProductIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_purchasedProductIds);
+  }
+
+  @override
+  final StreamSubscription<List<PurchaseDetails>>? subscription;
 
   @override
   String toString() {
-    return 'PurchaseState(products: $products, status: $status, isPending: $isPending)';
+    return 'PurchaseState(products: $products, status: $status, isPending: $isPending, purchasedProductIds: $purchasedProductIds, subscription: $subscription)';
   }
 
   @override
@@ -150,14 +202,25 @@ class _$PurchaseStateImpl implements _PurchaseState {
             const DeepCollectionEquality().equals(other._products, _products) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.isPending, isPending) ||
-                other.isPending == isPending));
+                other.isPending == isPending) &&
+            const DeepCollectionEquality()
+                .equals(other._purchasedProductIds, _purchasedProductIds) &&
+            (identical(other.subscription, subscription) ||
+                other.subscription == subscription));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_products), status, isPending);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_products),
+      status,
+      isPending,
+      const DeepCollectionEquality().hash(_purchasedProductIds),
+      subscription);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PurchaseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PurchaseStateImplCopyWith<_$PurchaseStateImpl> get copyWith =>
@@ -166,18 +229,28 @@ class _$PurchaseStateImpl implements _PurchaseState {
 
 abstract class _PurchaseState implements PurchaseState {
   factory _PurchaseState(
-      {final List<ProductDetails> products,
-      final PurchaseStatus? status,
-      final bool? isPending}) = _$PurchaseStateImpl;
+          {final List<ProductDetails> products,
+          final PurchaseStatus? status,
+          final bool isPending,
+          final List<String> purchasedProductIds,
+          final StreamSubscription<List<PurchaseDetails>>? subscription}) =
+      _$PurchaseStateImpl;
 
   @override
   List<ProductDetails> get products;
   @override
   PurchaseStatus? get status;
   @override
-  bool? get isPending;
+  bool get isPending;
   @override
-  @JsonKey(ignore: true)
+  List<String> get purchasedProductIds;
+  @override
+  StreamSubscription<List<PurchaseDetails>>? get subscription;
+
+  /// Create a copy of PurchaseState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PurchaseStateImplCopyWith<_$PurchaseStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

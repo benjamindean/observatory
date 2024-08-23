@@ -8,7 +8,8 @@
 
 Observatory is the essential app for tracking PC game prices and discounts exclusively from legitimate resellers. Easily monitor the best deals for your favorite PC games, ensuring you never miss out on a sale.
 
-[<img src="https://benjamindean.github.io/observatory/assets/ios-badge.svg">](https://apps.apple.com/us/app/observatory-for-itad/id6479194330)
+[<img src="./assets/images/appstore-button.png" height="50px">](https://apps.apple.com/us/app/observatory-for-itad/id6479194330)
+[<img src="./assets/images/apk-button.png" height="50px">](https://github.com/benjamindean/observatory/releases/latest)
 
 ## Screenshots
 

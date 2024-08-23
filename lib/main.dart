@@ -2,12 +2,11 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:observatory/firebase_options.dart';
 import 'package:observatory/notifications/constants.dart';
 import 'package:observatory/router.dart';
@@ -21,7 +20,6 @@ import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:observatory/tasks/constants.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:uni_links/uni_links.dart';
 import 'package:workmanager/workmanager.dart';
 
 Future<void> initSettings() async {
@@ -58,18 +56,6 @@ Future<void> initSupabase() async {
   );
 }
 
-Future<void> initUniLinks() async {
-  try {
-    final String? initialLink = await getInitialLink();
-
-    if (initialLink == null) {
-      return;
-    }
-  } on PlatformException {
-    return;
-  }
-}
-
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
@@ -90,6 +76,13 @@ void callbackDispatcher() {
   });
 }
 
+@pragma('vm:entry-point')
+Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
+  if (rootNavigatorKey.currentContext != null) {
+    GoRouter.of(rootNavigatorKey.currentContext!).go('/waitlist');
+  }
+}
+
 class Observatory extends ConsumerWidget {
   const Observatory({
     super.key,
@@ -98,18 +91,15 @@ class Observatory extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ObservatoryTheme theme = ref.watch(themesProvider);
-    final FlexScheme? scheme = theme.scheme != null
-        ? FlexScheme.values.asNameMap()[theme.scheme]
-        : FlexScheme.mandyRed;
 
     return MaterialApp.router(
       title: 'Observatory',
       theme: lightTheme(
-        scheme: scheme,
+        scheme: theme.flexScheme,
       ),
       darkTheme: darkTheme(
         darkIsTrueBlack: theme.isTrueBlack,
-        scheme: scheme,
+        scheme: theme.flexScheme,
       ),
       themeMode: ThemeMode.values.asNameMap()[theme.mode],
       routerConfig: router,
@@ -130,6 +120,10 @@ void main() async {
     channelGroups: NOTIFICATION_GROUPS,
   );
 
+  await AwesomeNotifications().setListeners(
+    onActionReceivedMethod: onActionReceivedMethod,
+  );
+
   await Workmanager().initialize(
     callbackDispatcher,
   );
@@ -139,6 +133,8 @@ void main() async {
     await disableCheckWaitlistTask();
     await enableCheckWaitlistTask();
   }
+
+  GetIt.I<SettingsRepository>().incrementLaunchCounter();
 
   runApp(
     const ProviderScope(

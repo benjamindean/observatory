@@ -8,12 +8,12 @@ class CurrentPrice extends StatelessWidget {
     required this.price,
   });
 
-  final Price price;
+  final Price? price;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      price.price.formattedPrice,
+      price?.price.formattedPrice ?? '0',
       style: context.themes.text.titleLarge?.copyWith(
         fontSize: 20.0,
         color: context.colors.scheme.onSurface,

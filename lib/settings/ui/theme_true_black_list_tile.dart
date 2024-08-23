@@ -22,7 +22,7 @@ class ThemeTrueBlackListTile extends ConsumerWidget {
       onChanged: isLightTheme
           ? null
           : (value) {
-              ref.watch(themesProvider.notifier).setTrueBlack(value);
+              ref.read(themesProvider.notifier).setTrueBlack(value);
             },
     );
   }

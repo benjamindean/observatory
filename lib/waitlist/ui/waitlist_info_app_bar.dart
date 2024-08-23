@@ -19,9 +19,11 @@ class WaitlistInfoAppBar extends ConsumerWidget {
     }
 
     return ref.watch(asyncWaitListProvider).when(
-          data: (state) {
-            final int discounted = state.deals
-                .where((element) => element.bestPrice.cut > 0)
+          data: (deals) {
+            final int discounted = deals
+                .where(
+                  (element) => element.bestPrice.cut > 0,
+                )
                 .length;
 
             return Row(
@@ -57,7 +59,7 @@ class WaitlistInfoAppBar extends ConsumerWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: state.deals.length.toString(),
+                        text: deals.length.toString(),
                         style: context.themes.text.labelMedium?.copyWith(
                           color: context.colors.hint,
                           fontWeight: FontWeight.bold,

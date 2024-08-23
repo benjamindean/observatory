@@ -15,18 +15,14 @@ class WaitlistButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<String> waitlist = ref.watch(
-      asyncWaitListProvider.select(
-        (waitListState) => waitListState.valueOrNull?.ids ?? [],
-      ),
-    );
+    final List<String> waitlist = ref.watch(waitlistIdsProvider);
     final bool isInWaitlist = waitlist.contains(deal.id);
 
     return Tooltip(
       message: isInWaitlist ? 'Remove from Waitlist' : 'Add to Waitlist',
       child: IconButton(
         icon: Icon(
-          isInWaitlist ? Icons.favorite : Icons.favorite_border,
+          isInWaitlist ? Icons.favorite_rounded : Icons.favorite_border_rounded,
           color: context.colors.primary,
         ),
         onPressed: () => onPressed(isInWaitlist, ref, context),
@@ -40,14 +36,14 @@ class WaitlistButton extends ConsumerWidget {
     BuildContext context,
   ) async {
     if (isInWaitlist) {
-      return DealFunctions.addDealToWaitlist(
+      return DealFunctions.removeDealFromWaitlist(
         context: context,
         ref: ref,
         deal: deal,
       );
     }
 
-    return DealFunctions.removeDealFromWaitlist(
+    return DealFunctions.addDealToWaitlist(
       context: context,
       ref: ref,
       deal: deal,

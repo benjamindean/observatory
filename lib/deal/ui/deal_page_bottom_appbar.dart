@@ -2,6 +2,7 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deal/deal_functions.dart';
+import 'package:observatory/deal/ui/bookmark_button.dart';
 import 'package:observatory/deal/ui/waitlist_button.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/constants.dart';
@@ -25,11 +26,11 @@ class DealPageBottomAppBar extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           const Expanded(
-            flex: 50,
+            flex: 40,
             child: ObservatoryBackButton(),
           ),
           Expanded(
-            flex: 50,
+            flex: 60,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.min,
@@ -62,6 +63,7 @@ class DealPageBottomAppBar extends ConsumerWidget {
                     ),
                   ),
                 ),
+                BookmarkButton(deal: deal),
                 WaitlistButton(deal: deal),
               ],
             ),

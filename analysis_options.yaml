@@ -24,15 +24,15 @@ linter:
     constant_identifier_names: false
     non_constant_identifier_names: false
     use_key_in_widget_constructors: true
-    prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
+    prefer_single_quotes: true
+    null_check_on_nullable_type_parameter: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
 
 analyzer:
   plugins:
-      - custom_lint
+    - custom_lint
   errors:
     invalid_annotation_target: ignore
 

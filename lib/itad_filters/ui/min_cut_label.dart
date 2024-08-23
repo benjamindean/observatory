@@ -25,6 +25,13 @@ class MinCutLabel extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
+        const Padding(
+          padding: EdgeInsets.only(top: 1.0),
+          child: Icon(
+            Icons.keyboard_arrow_right_rounded,
+            size: 24,
+          ),
+        ),
         Text(
           minCut.toString(),
           style: context.textStyles.titleMedium.copyWith(
