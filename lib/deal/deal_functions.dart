@@ -39,50 +39,44 @@ class DealFunctions {
     required Deal deal,
     bool showToast = true,
   }) async {
+    final AsyncWaitListNotifier notifier = ref.watch(
+      asyncWaitListProvider.notifier,
+    );
     final Deal updatedDeal = deal.copyWith();
 
     HapticFeedback.mediumImpact();
 
-    await ref
-        .watch(asyncWaitListProvider.notifier)
-        .removeFromWaitList(updatedDeal)
-        .then(
-      (value) {
-        if (!showToast) {
-          return;
-        }
+    notifier.removeFromWaitList(updatedDeal);
 
-        if (context.mounted) {
-          return ObservatorySnackBar.show(
-            context,
-            onAction: () {
-              ref
-                  .watch(asyncWaitListProvider.notifier)
-                  .addToWaitlist(updatedDeal);
-            },
-            icon: Icons.remove_circle,
-            content: RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                    text: deal.titleParsed,
-                    style: context.themes.snackBar.contentTextStyle?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: context.colors.scheme.onInverseSurface,
-                    ),
-                  ),
-                  TextSpan(
-                    text: ' has been removed from your waitlist.',
-                    style: context.themes.snackBar.contentTextStyle?.copyWith(
-                      color: context.colors.scheme.onInverseSurface,
-                    ),
-                  ),
-                ],
+    if (!showToast) {
+      return;
+    }
+
+    return ObservatorySnackBar.show(
+      context,
+      onAction: () {
+        notifier.addToWaitlist(updatedDeal);
+      },
+      icon: Icons.remove_circle,
+      content: RichText(
+        text: TextSpan(
+          children: <TextSpan>[
+            TextSpan(
+              text: deal.titleParsed,
+              style: context.themes.snackBar.contentTextStyle?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.colors.scheme.onInverseSurface,
               ),
             ),
-          );
-        }
-      },
+            TextSpan(
+              text: ' has been removed from your waitlist.',
+              style: context.themes.snackBar.contentTextStyle?.copyWith(
+                color: context.colors.scheme.onInverseSurface,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -92,50 +86,44 @@ class DealFunctions {
     required Deal deal,
     bool showToast = true,
   }) async {
+    final AsyncWaitListNotifier notifier = ref.watch(
+      asyncWaitListProvider.notifier,
+    );
     final Deal updatedDeal = deal.copyWith();
 
     HapticFeedback.mediumImpact();
 
-    await ref
-        .watch(asyncWaitListProvider.notifier)
-        .addToWaitlist(updatedDeal)
-        .then(
-      (value) {
-        if (!showToast) {
-          return;
-        }
+    notifier.addToWaitlist(updatedDeal);
 
-        if (context.mounted) {
-          return ObservatorySnackBar.show(
-            context,
-            onAction: () {
-              ref
-                  .watch(asyncWaitListProvider.notifier)
-                  .removeFromWaitList(updatedDeal);
-            },
-            icon: Icons.add_circle_outlined,
-            content: RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                    text: deal.titleParsed,
-                    style: context.themes.snackBar.contentTextStyle?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: context.colors.scheme.onInverseSurface,
-                    ),
-                  ),
-                  TextSpan(
-                    text: ' has been added to your waitlist.',
-                    style: context.themes.snackBar.contentTextStyle?.copyWith(
-                      color: context.colors.scheme.onInverseSurface,
-                    ),
-                  ),
-                ],
+    if (!showToast) {
+      return;
+    }
+
+    return ObservatorySnackBar.show(
+      context,
+      onAction: () {
+        notifier.removeFromWaitList(updatedDeal);
+      },
+      icon: Icons.add_circle_outlined,
+      content: RichText(
+        text: TextSpan(
+          children: <TextSpan>[
+            TextSpan(
+              text: deal.titleParsed,
+              style: context.themes.snackBar.contentTextStyle?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.colors.scheme.onInverseSurface,
               ),
             ),
-          );
-        }
-      },
+            TextSpan(
+              text: ' has been added to your waitlist.',
+              style: context.themes.snackBar.contentTextStyle?.copyWith(
+                color: context.colors.scheme.onInverseSurface,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -145,50 +133,44 @@ class DealFunctions {
     required Deal deal,
     bool showToast = true,
   }) async {
+    final AsyncBookmarksNotifier notifier = ref.watch(
+      asyncBookmarksProvider.notifier,
+    );
     final Deal updatedDeal = deal.copyWith();
 
     HapticFeedback.mediumImpact();
 
-    await ref
-        .watch(asyncBookmarksProvider.notifier)
-        .addBookmark(updatedDeal)
-        .then(
-      (value) {
-        if (!showToast) {
-          return;
-        }
+    notifier.addBookmark(updatedDeal);
 
-        if (context.mounted) {
-          return ObservatorySnackBar.show(
-            context,
-            onAction: () {
-              ref
-                  .watch(asyncBookmarksProvider.notifier)
-                  .removeBookmarks([updatedDeal]);
-            },
-            icon: Icons.push_pin_rounded,
-            content: RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                    text: deal.titleParsed,
-                    style: context.themes.snackBar.contentTextStyle?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: context.colors.scheme.onInverseSurface,
-                    ),
-                  ),
-                  TextSpan(
-                    text: ' has been pinned to the top of the list.',
-                    style: context.themes.snackBar.contentTextStyle?.copyWith(
-                      color: context.colors.scheme.onInverseSurface,
-                    ),
-                  ),
-                ],
+    if (!showToast) {
+      return;
+    }
+
+    return ObservatorySnackBar.show(
+      context,
+      onAction: () {
+        notifier.removeBookmarks([updatedDeal]);
+      },
+      icon: Icons.push_pin_rounded,
+      content: RichText(
+        text: TextSpan(
+          children: <TextSpan>[
+            TextSpan(
+              text: deal.titleParsed,
+              style: context.themes.snackBar.contentTextStyle?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.colors.scheme.onInverseSurface,
               ),
             ),
-          );
-        }
-      },
+            TextSpan(
+              text: ' has been pinned to the top of the list.',
+              style: context.themes.snackBar.contentTextStyle?.copyWith(
+                color: context.colors.scheme.onInverseSurface,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -198,49 +180,44 @@ class DealFunctions {
     required Deal deal,
     bool showToast = true,
   }) async {
+    final AsyncBookmarksNotifier notifier = ref.watch(
+      asyncBookmarksProvider.notifier,
+    );
     final Deal updatedDeal = deal.copyWith();
 
     HapticFeedback.mediumImpact();
 
-    await ref
-        .watch(asyncBookmarksProvider.notifier)
-        .removeBookmarks([updatedDeal]).then(
-      (value) {
-        if (!showToast) {
-          return;
-        }
+    notifier.removeBookmarks([updatedDeal]);
 
-        if (context.mounted) {
-          return ObservatorySnackBar.show(
-            context,
-            onAction: () {
-              ref
-                  .watch(asyncBookmarksProvider.notifier)
-                  .addBookmark(updatedDeal);
-            },
-            icon: Icons.push_pin_outlined,
-            content: RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                    text: deal.titleParsed,
-                    style: context.themes.snackBar.contentTextStyle?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: context.colors.scheme.onInverseSurface,
-                    ),
-                  ),
-                  TextSpan(
-                    text: ' has been un-pinned from the top of the list.',
-                    style: context.themes.snackBar.contentTextStyle?.copyWith(
-                      color: context.colors.scheme.onInverseSurface,
-                    ),
-                  ),
-                ],
+    if (!showToast) {
+      return;
+    }
+
+    return ObservatorySnackBar.show(
+      context,
+      onAction: () {
+        notifier.addBookmark(updatedDeal);
+      },
+      icon: Icons.push_pin_outlined,
+      content: RichText(
+        text: TextSpan(
+          children: <TextSpan>[
+            TextSpan(
+              text: deal.titleParsed,
+              style: context.themes.snackBar.contentTextStyle?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.colors.scheme.onInverseSurface,
               ),
             ),
-          );
-        }
-      },
+            TextSpan(
+              text: ' has been un-pinned from the top of the list.',
+              style: context.themes.snackBar.contentTextStyle?.copyWith(
+                color: context.colors.scheme.onInverseSurface,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

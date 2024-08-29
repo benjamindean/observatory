@@ -8,6 +8,7 @@ import 'package:observatory/itad_filters/ui/bundled_only_tile.dart';
 import 'package:observatory/itad_filters/ui/discount_slider.dart';
 import 'package:observatory/itad_filters/ui/discounted_only_tile.dart';
 import 'package:observatory/itad_filters/ui/nsfw_tile.dart';
+import 'package:observatory/itad_filters/ui/platform_select_tile.dart';
 import 'package:observatory/itad_filters/ui/price_slider.dart';
 import 'package:observatory/itad_filters/ui/tags_filter_tile.dart';
 import 'package:observatory/settings/settings_repository.dart';
@@ -96,6 +97,8 @@ class ITADFiltersPage extends ConsumerWidget {
                   TagsFilterTile(),
                   PriceSlider(),
                   DiscountSlider(),
+                  PlatformSelectTile(),
+                  SizedBox(height: 8.0),
                   BundledOnlyTile(),
                   DiscountedOnlyTile(),
                   NSFWTile(),

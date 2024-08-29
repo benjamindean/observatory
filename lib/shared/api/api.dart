@@ -211,7 +211,13 @@ class API {
   Future<List<Deal>> gameIdsBySteamIds(
     List<Deal> deals,
   ) async {
-    final Uri url = Uri.https(BASE_URL, '/unstable/id-lookup/game/v1', {
+    final List<Store> allStores = await stores();
+    final int steamStoreId = allStores
+        .firstWhere(
+          (e) => e.title == 'Steam',
+        )
+        .id;
+    final Uri url = Uri.https(BASE_URL, '/lookup/id/shop/$steamStoreId/v1', {
       'key': API_KEY,
     });
     final List<String?> steamAppIds = deals

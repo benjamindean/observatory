@@ -78,6 +78,14 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
     );
   }
 
+  void setPlatforms(List<int> platforms) {
+    state = state.copyWith(
+      cached: state.cached.copyWith(
+        platform: platforms.length == 3 ? null : platforms,
+      ),
+    );
+  }
+
   Future<void> save() async {
     await GetIt.I<SettingsRepository>().setITADFilters(state.cached);
 
