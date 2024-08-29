@@ -81,7 +81,7 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
   void setPlatforms(List<int> platforms) {
     state = state.copyWith(
       cached: state.cached.copyWith(
-        platform: List.of(platforms),
+        platform: platforms.length == 3 ? null : platforms,
       ),
     );
   }

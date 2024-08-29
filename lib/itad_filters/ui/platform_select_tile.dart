@@ -9,6 +9,7 @@ const List<(int, String, IconData)> platforms = <(int, String, IconData)>[
   (2, 'Mac', FontAwesomeIcons.apple),
   (3, 'Linux', FontAwesomeIcons.linux),
 ];
+final List<int> defaultPlatforms = platforms.map((e) => e.$1).toList();
 
 class PlatformSelectTile extends ConsumerWidget {
   const PlatformSelectTile({
@@ -17,9 +18,10 @@ class PlatformSelectTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<int>? selectedPlatforms = ref.watch(
-      itadFiltersProvider.select((value) => value.cached.platform),
-    );
+    final List<int> selectedPlatforms = ref.watch(
+          itadFiltersProvider.select((value) => value.cached.platform),
+        ) ??
+        [];
 
     return Column(
       children: [
@@ -35,9 +37,11 @@ class PlatformSelectTile extends ConsumerWidget {
         SegmentedButton<int>(
           expandedInsets: const EdgeInsets.symmetric(horizontal: 16.0),
           multiSelectionEnabled: true,
-          emptySelectionAllowed: true,
+          emptySelectionAllowed: false,
           showSelectedIcon: false,
-          selected: Set.of(selectedPlatforms ?? []),
+          selected: Set.of(
+            selectedPlatforms.isEmpty ? defaultPlatforms : selectedPlatforms,
+          ),
           onSelectionChanged: (Set<int> newSelection) {
             ref
                 .read(itadFiltersProvider.notifier)
