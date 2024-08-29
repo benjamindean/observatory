@@ -37,6 +37,7 @@ class ITADFilters with _$ITADFilters {
     @HiveField(3) List<String>? tags,
     @HiveField(4) @Default(false) bool mature,
     @HiveField(5) @Default(true) bool nondeals,
+    @HiveField(6) List<int>? platform,
   }) = _ITADFilters;
 
   factory ITADFilters.fromJson(Map<String, Object?> json) =>
@@ -50,6 +51,7 @@ class ITADFilters with _$ITADFilters {
           'cut': cut,
           'price': price,
           'tags': tags,
+          'platform': platform,
         },
       ),
     );

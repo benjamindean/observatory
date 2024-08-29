@@ -60,13 +60,14 @@ class ITADFiltersAdapter extends TypeAdapter<ITADFilters> {
       tags: (fields[3] as List?)?.cast<String>(),
       mature: fields[4] as bool,
       nondeals: fields[5] as bool,
+      platform: (fields[6] as List?)?.cast<int>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, ITADFilters obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.price)
       ..writeByte(1)
@@ -78,7 +79,9 @@ class ITADFiltersAdapter extends TypeAdapter<ITADFilters> {
       ..writeByte(4)
       ..write(obj.mature)
       ..writeByte(5)
-      ..write(obj.nondeals);
+      ..write(obj.nondeals)
+      ..writeByte(6)
+      ..write(obj.platform);
   }
 
   @override
@@ -119,6 +122,9 @@ _$ITADFiltersImpl _$$ITADFiltersImplFromJson(Map<String, dynamic> json) =>
       tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
       mature: json['mature'] as bool? ?? false,
       nondeals: json['nondeals'] as bool? ?? true,
+      platform: (json['platform'] as List<dynamic>?)
+          ?.map((e) => (e as num).toInt())
+          .toList(),
     );
 
 Map<String, dynamic> _$$ITADFiltersImplToJson(_$ITADFiltersImpl instance) =>
@@ -129,6 +135,7 @@ Map<String, dynamic> _$$ITADFiltersImplToJson(_$ITADFiltersImpl instance) =>
       'tags': instance.tags,
       'mature': instance.mature,
       'nondeals': instance.nondeals,
+      'platform': instance.platform,
     };
 
 _$ITADFiltersConfigImpl _$$ITADFiltersConfigImplFromJson(
