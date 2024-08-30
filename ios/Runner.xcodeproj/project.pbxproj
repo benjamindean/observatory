@@ -203,7 +203,7 @@
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				2FF08016DD5F67EC640678E2 /* [CP] Embed Pods Frameworks */,
-				52644DCEF770F66CB62C7F37 /* FlutterFire: "flutterfire upload-crashlytics-symbols" */,
+				781D71D5CADFC1584C4DE79C /* FlutterFire: "flutterfire upload-crashlytics-symbols" */,
 			);
 			buildRules = (
 			);
@@ -312,7 +312,7 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
 		};
-		52644DCEF770F66CB62C7F37 /* FlutterFire: "flutterfire upload-crashlytics-symbols" */ = {
+		781D71D5CADFC1584C4DE79C /* FlutterFire: "flutterfire upload-crashlytics-symbols" */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -502,7 +502,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/RunnerProfile.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: ROMAN KHAZIZOV (3ZX4FWS39V)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 110;
+				CURRENT_PROJECT_VERSION = 124;
 				DEVELOPMENT_TEAM = 3ZX4FWS39V;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -533,7 +533,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Distribution: ROMAN KHAZIZOV (3ZX4FWS39V)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 110;
+				CURRENT_PROJECT_VERSION = 124;
 				DEVELOPMENT_TEAM = 3ZX4FWS39V;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -553,7 +553,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Distribution: ROMAN KHAZIZOV (3ZX4FWS39V)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 110;
+				CURRENT_PROJECT_VERSION = 124;
 				DEVELOPMENT_TEAM = 3ZX4FWS39V;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -571,7 +571,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Distribution: ROMAN KHAZIZOV (3ZX4FWS39V)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 110;
+				CURRENT_PROJECT_VERSION = 124;
 				DEVELOPMENT_TEAM = 3ZX4FWS39V;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -704,7 +704,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/RunnerDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: ROMAN KHAZIZOV (3ZX4FWS39V)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 110;
+				CURRENT_PROJECT_VERSION = 124;
 				DEVELOPMENT_TEAM = 3ZX4FWS39V;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -740,7 +740,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: ROMAN KHAZIZOV (3ZX4FWS39V)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 110;
+				CURRENT_PROJECT_VERSION = 124;
 				DEVELOPMENT_TEAM = 3ZX4FWS39V;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;

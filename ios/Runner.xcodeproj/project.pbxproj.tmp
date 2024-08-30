@@ -216,7 +216,7 @@
 				<key>CODE_SIGN_STYLE</key>
 				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>110</string>
+				<string>124</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>ENABLE_BITCODE</key>
@@ -440,7 +440,7 @@
 				<key>CODE_SIGN_STYLE</key>
 				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>110</string>
+				<string>124</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>GENERATE_INFOPLIST_FILE</key>
@@ -478,7 +478,7 @@
 				<key>CODE_SIGN_STYLE</key>
 				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>110</string>
+				<string>124</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>GENERATE_INFOPLIST_FILE</key>
@@ -512,7 +512,7 @@
 				<key>CODE_SIGN_STYLE</key>
 				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>110</string>
+				<string>124</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>GENERATE_INFOPLIST_FILE</key>
@@ -587,35 +587,6 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>52644DCEF770F66CB62C7F37</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputFileListPaths</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>FlutterFire: "flutterfire upload-crashlytics-symbols"</string>
-			<key>outputFileListPaths</key>
-			<array/>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>
-#!/bin/bash
-PATH="${PATH}:$FLUTTER_ROOT/bin:$HOME/.pub-cache/bin"
-flutterfire upload-crashlytics-symbols --upload-symbols-script-path="$PODS_ROOT/FirebaseCrashlytics/upload-symbols" --platform=ios --apple-project-path="${SRCROOT}" --env-platform-name="${PLATFORM_NAME}" --env-configuration="${CONFIGURATION}" --env-project-dir="${PROJECT_DIR}" --env-built-products-dir="${BUILT_PRODUCTS_DIR}" --env-dwarf-dsym-folder-path="${DWARF_DSYM_FOLDER_PATH}" --env-dwarf-dsym-file-name="${DWARF_DSYM_FILE_NAME}" --env-infoplist-path="${INFOPLIST_PATH}" --default-config=default
-</string>
-		</dict>
 		<key>53FCEBEC1BB95FE82A595A4E</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -689,6 +660,35 @@ flutterfire upload-crashlytics-symbols --upload-symbols-script-path="$PODS_ROOT/
 			<string>74858FAE1ED2DC5600515810</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>781D71D5CADFC1584C4DE79C</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputFileListPaths</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>FlutterFire: "flutterfire upload-crashlytics-symbols"</string>
+			<key>outputFileListPaths</key>
+			<array/>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>
+#!/bin/bash
+PATH="${PATH}:$FLUTTER_ROOT/bin:$HOME/.pub-cache/bin"
+flutterfire upload-crashlytics-symbols --upload-symbols-script-path="$PODS_ROOT/FirebaseCrashlytics/upload-symbols" --platform=ios --apple-project-path="${SRCROOT}" --env-platform-name="${PLATFORM_NAME}" --env-configuration="${CONFIGURATION}" --env-project-dir="${PROJECT_DIR}" --env-built-products-dir="${BUILT_PRODUCTS_DIR}" --env-dwarf-dsym-folder-path="${DWARF_DSYM_FOLDER_PATH}" --env-dwarf-dsym-file-name="${DWARF_DSYM_FILE_NAME}" --env-infoplist-path="${INFOPLIST_PATH}" --default-config=default
+</string>
 		</dict>
 		<key>7AFA3C8E1D35360C0083082E</key>
 		<dict>
@@ -957,7 +957,7 @@ flutterfire upload-crashlytics-symbols --upload-symbols-script-path="$PODS_ROOT/
 				<string>9705A1C41CF9048500538489</string>
 				<string>3B06AD1E1E4923F5004D2608</string>
 				<string>2FF08016DD5F67EC640678E2</string>
-				<string>52644DCEF770F66CB62C7F37</string>
+				<string>781D71D5CADFC1584C4DE79C</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -1368,7 +1368,7 @@ flutterfire upload-crashlytics-symbols --upload-symbols-script-path="$PODS_ROOT/
 				<key>CODE_SIGN_STYLE</key>
 				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>110</string>
+				<string>124</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>ENABLE_BITCODE</key>
@@ -1435,7 +1435,7 @@ flutterfire upload-crashlytics-symbols --upload-symbols-script-path="$PODS_ROOT/
 				<key>CODE_SIGN_STYLE</key>
 				<string>Manual</string>
 				<key>CURRENT_PROJECT_VERSION</key>
-				<string>110</string>
+				<string>124</string>
 				<key>DEVELOPMENT_TEAM</key>
 				<string>3ZX4FWS39V</string>
 				<key>ENABLE_BITCODE</key>
