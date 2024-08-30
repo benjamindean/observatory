@@ -107,7 +107,6 @@ build/
 # If you don't generate documentation locally you can remove this line.
 doc/api/
 
-
 ### https://raw.github.com/github/gitignore/80a8803b004013d17291196825a327b9e871f009/Global/Linux.gitignore
 
 *~
@@ -123,7 +122,6 @@ doc/api/
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
-
 
 ### https://raw.github.com/github/gitignore/80a8803b004013d17291196825a327b9e871f009/Global/JetBrains.gitignore
 
@@ -180,14 +178,12 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 
-
 ### https://raw.github.com/github/gitignore/80a8803b004013d17291196825a327b9e871f009/Global/macOS.gitignore
 
 # General
 .DS_Store
 .AppleDouble
 .LSOverride
-
 
 # Thumbnails
 ._*
@@ -207,7 +203,6 @@ fabric.properties
 Network Trash Folder
 Temporary Items
 .apdisk
-
 
 ### https://raw.github.com/github/gitignore/80a8803b004013d17291196825a327b9e871f009/Global/Vim.gitignore
 
@@ -257,3 +252,5 @@ supabase/
 linux/
 windows/
 macos/
+
+key.properties
