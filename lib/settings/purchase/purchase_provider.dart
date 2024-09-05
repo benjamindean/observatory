@@ -18,7 +18,6 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
 
     return PurchaseState(
       products: products,
-      status: PurchaseStatus.canceled,
       purchasedProductIds: purchasedProductIds,
     );
   }
