@@ -415,11 +415,13 @@ class API {
   }) async {
     try {
       final List<int> stores = await settingsReporsitory.getSelectedStores();
+      final String country = await settingsReporsitory.getCountry();
 
       final Uri url = Uri.https(BASE_URL, '/games/history/v2', {
         'key': API_KEY,
         'id': id,
         'shops': stores.join(','),
+        'country': country,
       });
 
       return Parsers.history(await dio.get(url.toString()));

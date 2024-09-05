@@ -37,6 +37,9 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
 
   @override
   Widget build(BuildContext context) {
+    final AsyncPurchaseNotifier notifier = ref.watch(
+      asyncPurchaseProvider.notifier,
+    );
     final AsyncValue<PurchaseState> purchases = ref.watch(
       asyncPurchaseProvider,
     );
@@ -46,41 +49,35 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
         for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
           switch (purchaseDetails.status) {
             case PurchaseStatus.pending:
-              ref.watch(asyncPurchaseProvider.notifier).setIsPending(true);
+              notifier.setIsPending(true);
 
               break;
             case PurchaseStatus.error:
-              ref.watch(asyncPurchaseProvider.notifier).setIsPending(false);
+              notifier.setIsPending(false);
 
               break;
             case PurchaseStatus.purchased:
-              await ref
-                  .watch(asyncPurchaseProvider.notifier)
-                  .handleEndPurchase(purchaseDetails);
+              await notifier.handleEndPurchase(purchaseDetails);
 
               break;
             case PurchaseStatus.restored:
-              await ref
-                  .watch(asyncPurchaseProvider.notifier)
-                  .handleEndPurchase(purchaseDetails);
+              await notifier.handleEndPurchase(purchaseDetails);
 
               break;
             case PurchaseStatus.canceled:
               await InAppPurchase.instance.completePurchase(purchaseDetails);
 
-              ref.watch(asyncPurchaseProvider.notifier).setIsPending(false);
+              notifier.setIsPending(false);
 
               break;
           }
 
           if (purchaseDetails.pendingCompletePurchase) {
-            ref.watch(asyncPurchaseProvider.notifier).setIsPending(true);
+            notifier.setIsPending(true);
 
-            await ref
-                .watch(asyncPurchaseProvider.notifier)
-                .handleEndPurchase(purchaseDetails);
+            await notifier.handleEndPurchase(purchaseDetails);
 
-            ref.watch(asyncPurchaseProvider.notifier).setIsPending(false);
+            notifier.setIsPending(false);
           }
         }
       },
@@ -134,7 +131,7 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
                     content: const Text('Restoring purchases...'),
                   );
 
-                  ref.watch(asyncPurchaseProvider.notifier).restore().then(
+                  notifier.restore().then(
                     (value) {
                       if (context.mounted) {
                         if (value) {
@@ -150,12 +147,11 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
                             content: const Text('No purchases to restore.'),
                           );
                         }
+
+                        ref.watch(asyncPurchaseProvider.notifier).reset();
                       }
-                      
-                  ref.watch(asyncPurchaseProvider.notifier).reset();
                     },
                   );
-
                 },
                 label: Text(
                   'Restore Purchases',

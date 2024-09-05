@@ -35,7 +35,7 @@ class IGDBAPI {
       allowPostMethod: true,
       keyBuilder: (request) {
         return const Uuid().v5(
-          Uuid.NAMESPACE_URL,
+          Namespace.url.uuidValue.uuid,
           request.uri.toString() + request.data.toString(),
         );
       },

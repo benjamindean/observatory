@@ -9,7 +9,6 @@ part 'purchase_state.freezed.dart';
 class PurchaseState with _$PurchaseState {
   factory PurchaseState({
     @Default([]) List<ProductDetails> products,
-    PurchaseStatus? status,
     @Default(false) bool isPending,
     @Default([]) List<String> purchasedProductIds,
     StreamSubscription<List<PurchaseDetails>>? subscription,
