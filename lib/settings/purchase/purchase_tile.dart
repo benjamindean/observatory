@@ -27,23 +27,8 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
 
   @override
   void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _purchaseStream?.cancel();
-
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     final AsyncPurchaseNotifier notifier = ref.watch(
       asyncPurchaseProvider.notifier,
-    );
-    final AsyncValue<PurchaseState> purchases = ref.watch(
-      asyncPurchaseProvider,
     );
 
     _purchaseStream = InAppPurchase.instance.purchaseStream.listen(
@@ -73,6 +58,22 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
           }
         }
       },
+    );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _purchaseStream?.cancel();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AsyncValue<PurchaseState> purchases = ref.watch(
+      asyncPurchaseProvider,
     );
 
     return purchases.when(
@@ -123,7 +124,7 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
                     content: const Text('Restoring purchases...'),
                   );
 
-                  notifier.restore().then(
+                  ref.watch(asyncPurchaseProvider.notifier).restore().then(
                     (value) {
                       if (context.mounted) {
                         if (value) {
