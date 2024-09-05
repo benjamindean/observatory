@@ -5,11 +5,13 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/products_list.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
+import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
 
@@ -47,37 +49,27 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
     _purchaseStream = InAppPurchase.instance.purchaseStream.listen(
       (purchaseDetailsList) async {
         for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
-          switch (purchaseDetails.status) {
-            case PurchaseStatus.pending:
-              notifier.setIsPending(true);
+          final PurchaseStatus status = purchaseDetails.status;
 
-              break;
-            case PurchaseStatus.error:
-              notifier.setIsPending(false);
-
-              break;
-            case PurchaseStatus.purchased:
-              await notifier.handleEndPurchase(purchaseDetails);
-
-              break;
-            case PurchaseStatus.restored:
-              await notifier.handleEndPurchase(purchaseDetails);
-
-              break;
-            case PurchaseStatus.canceled:
-              await InAppPurchase.instance.completePurchase(purchaseDetails);
-
-              notifier.setIsPending(false);
-
-              break;
-          }
-
-          if (purchaseDetails.pendingCompletePurchase) {
+          if (status == PurchaseStatus.pending) {
             notifier.setIsPending(true);
+          } else {
+            if (status == PurchaseStatus.error) {
+              notifier.setIsPending(false);
+            } else if (status == PurchaseStatus.purchased ||
+                status == PurchaseStatus.restored) {
+              GetIt.I<SettingsRepository>().setPurchasedProductIds(
+                purchaseDetails.productID,
+              );
 
-            await notifier.handleEndPurchase(purchaseDetails);
+              notifier.reset();
+            }
 
-            notifier.setIsPending(false);
+            if (purchaseDetails.pendingCompletePurchase) {
+              await notifier.handleEndPurchase(purchaseDetails);
+
+              notifier.reset();
+            }
           }
         }
       },
@@ -147,8 +139,6 @@ class PurchaseTileState extends ConsumerState<PurchaseTile> {
                             content: const Text('No purchases to restore.'),
                           );
                         }
-
-                        ref.watch(asyncPurchaseProvider.notifier).reset();
                       }
                     },
                   );
