@@ -9,6 +9,25 @@ import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
 
+final List<ProductDetails> debugList = [
+  ProductDetails(
+    id: '1',
+    title: 'Test',
+    description: 'Desc',
+    price: '22',
+    rawPrice: 22,
+    currencyCode: 'USD',
+  ),
+  ProductDetails(
+    id: '2',
+    title: 'Test',
+    description: 'Desc',
+    price: '233',
+    rawPrice: 223,
+    currencyCode: 'USD',
+  ),
+];
+
 class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
   @override
   Future<PurchaseState> build() async {
@@ -26,24 +45,7 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     final bool available = await InAppPurchase.instance.isAvailable();
 
     if (!available) {
-      return [
-        ProductDetails(
-          id: '1',
-          title: 'Test',
-          description: 'Desc',
-          price: '22',
-          rawPrice: 22,
-          currencyCode: 'USD',
-        ),
-        ProductDetails(
-          id: '2',
-          title: 'Test',
-          description: 'Desc',
-          price: '233',
-          rawPrice: 223,
-          currencyCode: 'USD',
-        ),
-      ];
+      return [];
     } else {
       const Set<String> purchaseIds = <String>{
         'development_support_tier_1',

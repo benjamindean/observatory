@@ -1,9 +1,11 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/shared/ui/observatory_shimmer.dart';
+import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class ProductsList extends ConsumerStatefulWidget {
@@ -17,11 +19,6 @@ class ProductsListState extends ConsumerState<ProductsList> {
   String? selectedProduct;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final AsyncValue<PurchaseState> purchases = ref.watch(
       asyncPurchaseProvider,
@@ -30,7 +27,9 @@ class ProductsListState extends ConsumerState<ProductsList> {
     return purchases.when(
       data: (state) {
         if (selectedProduct == null && state.products.isNotEmpty) {
-          selectedProduct = state.products.first.id;
+          setState(() {
+            selectedProduct = state.products.first.id;
+          });
         }
 
         if (state.purchasedProductIds.isNotEmpty) {
@@ -40,13 +39,6 @@ class ProductsListState extends ConsumerState<ProductsList> {
               color: context.colors.scheme.onSurface,
               fontWeight: FontWeight.bold,
             ),
-          );
-        }
-
-        if (state.isPending) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(vertical: 22.0, horizontal: 4.0),
-            child: ObservatoryShimmer(),
           );
         }
 
@@ -65,7 +57,7 @@ class ProductsListState extends ConsumerState<ProductsList> {
                           color: context.colors.scheme.primary,
                           width: 1,
                         ),
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(12.0),
                       ),
                       value: e.id,
                       groupValue: selectedProduct,
@@ -91,7 +83,7 @@ class ProductsListState extends ConsumerState<ProductsList> {
                     ),
                   ),
                   onPressed: () {
-                    ref.read(asyncPurchaseProvider.notifier).purchase(
+                    ref.watch(asyncPurchaseProvider.notifier).purchase(
                           state.products.firstWhere(
                             (element) => element.id == selectedProduct,
                           ),
@@ -115,13 +107,19 @@ class ProductsListState extends ConsumerState<ProductsList> {
         );
       },
       loading: () {
-        return const Padding(
-          padding: EdgeInsets.symmetric(vertical: 22.0),
-          child: ObservatoryShimmer(),
+        return const Center(
+          child: ObservatoryProgressIndicator(),
         );
       },
       error: (error, stackTrace) {
-        return const SizedBox.shrink();
+        FirebaseCrashlytics.instance.recordError(
+          error,
+          stackTrace,
+        );
+
+        return const ErrorMessage(
+          message: 'Failed to load purchases',
+        );
       },
     );
   }
