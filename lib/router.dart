@@ -6,6 +6,7 @@ import 'package:observatory/deals/deals_page.dart';
 import 'package:observatory/home_page.dart';
 import 'package:observatory/itad_filters/tags_list_page.dart';
 import 'package:observatory/search/search_page.dart';
+import 'package:observatory/settings/purchase/purchase_page.dart';
 import 'package:observatory/settings/settings_page.dart';
 import 'package:observatory/settings/steam_import/steam_import_page.dart';
 import 'package:observatory/settings/stores_select/stores_select_page.dart';
@@ -101,6 +102,11 @@ final GoRouter router = GoRouter(
       name: 'tags-select',
       path: '/tags-select',
       builder: (context, state) => const TagsListPage(),
+    ),
+    GoRoute(
+      name: 'observatory-plus',
+      path: '/observatory-plus',
+      builder: (context, state) => const PurchasePage(),
     ),
   ],
 );

@@ -26,7 +26,24 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     final bool available = await InAppPurchase.instance.isAvailable();
 
     if (!available) {
-      return [];
+      return [
+        ProductDetails(
+          id: '1',
+          title: 'Test',
+          description: 'Desc',
+          price: '22',
+          rawPrice: 22,
+          currencyCode: 'USD',
+        ),
+        ProductDetails(
+          id: '2',
+          title: 'Test',
+          description: 'Desc',
+          price: '233',
+          rawPrice: 223,
+          currencyCode: 'USD',
+        ),
+      ];
     } else {
       const Set<String> purchaseIds = <String>{
         'development_support_tier_1',
@@ -44,34 +61,12 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     }
   }
 
-  Future<void> handleEndPurchase(PurchaseDetails purchase) async {
-    await InAppPurchase.instance.completePurchase(purchase);
-
-    await GetIt.I<SettingsRepository>().setPurchasedProductIds(
-      purchase.productID,
-    );
-
-    state = await AsyncValue.guard(
-      () async => state.requireValue.copyWith(
-        isPending: false,
-        purchasedProductIds: Set<String>.of(
-          (state.valueOrNull?.purchasedProductIds ?? [])
-            ..add(purchase.productID),
-        ).toList(),
-      ),
-    );
-  }
-
   void setIsPending(bool isPending) {
     state = AsyncValue.data(
       state.requireValue.copyWith(
         isPending: isPending,
       ),
     );
-  }
-
-  bool get hasPlusFeatures {
-    return (state.valueOrNull?.purchasedProductIds ?? []).isNotEmpty;
   }
 
   Future<void> purchase(ProductDetails product) async {

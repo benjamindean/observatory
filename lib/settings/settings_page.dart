@@ -1,4 +1,4 @@
-import 'package:observatory/settings/purchase/purchase_tile.dart';
+import 'package:observatory/settings/purchase/purchase_botton.dart';
 import 'package:observatory/settings/ui/about_links.dart';
 import 'package:observatory/settings/ui/country_settings_list_tile.dart';
 import 'package:observatory/settings/ui/stores_settings_list_tile.dart';
@@ -67,6 +67,7 @@ class SettingsPage extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  const PurchaseButton(),
                   const ListHeading(title: 'General'),
                   const CountrySettingsListTile(),
                   const StoresSettingsListTile(),
@@ -252,7 +253,6 @@ class SettingsPage extends ConsumerWidget {
                   //     icon: const Icon(Icons.backup),
                   //   ),
                   // ),
-                  const PurchaseTile(),
                   const ListHeading(title: 'About'),
                   const AboutLinks()
                 ],
