@@ -94,7 +94,7 @@ class ProductsListState extends ConsumerState<ProductsList> {
                           size: 30,
                         )
                       : Text(
-                          'Purchase Now',
+                          'Purchase Now for ${state.products.firstWhere((element) => element.id == selectedProduct).price}',
                           style: context.textStyles.bodyLarge.copyWith(
                             color: context.colors.scheme.onSecondary,
                           ),
