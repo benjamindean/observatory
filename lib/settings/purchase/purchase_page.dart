@@ -28,33 +28,25 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
   void initState() {
     super.initState();
 
-    final AsyncPurchaseNotifier notifier = ref.read(
-      asyncPurchaseProvider.notifier,
-    );
-
     _purchaseStream = InAppPurchase.instance.purchaseStream.listen(
       (purchaseDetailsList) async {
         for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
           final PurchaseStatus status = purchaseDetails.status;
 
           if (status == PurchaseStatus.pending) {
-            notifier.setIsPending(true);
+            await setIsPending(true);
           } else {
             if (status == PurchaseStatus.error) {
-              notifier.setIsPending(false);
+              await setIsPending(false);
             } else if (status == PurchaseStatus.purchased ||
                 status == PurchaseStatus.restored) {
-              await GetIt.I<SettingsRepository>().setPurchasedProductIds(
-                purchaseDetails.productID,
-              );
-
-              return notifier.setIsPending(false);
+              return deliverPurchase(purchaseDetails.productID);
             }
 
             if (purchaseDetails.pendingCompletePurchase) {
               await InAppPurchase.instance.completePurchase(purchaseDetails);
 
-              notifier.setIsPending(false);
+              await deliverPurchase(purchaseDetails.productID);
             }
           }
         }
@@ -67,6 +59,18 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
     _purchaseStream?.cancel();
 
     super.dispose();
+  }
+
+  Future<void> deliverPurchase(String productId) async {
+    await GetIt.I<SettingsRepository>().setPurchasedProductIds(
+      productId,
+    );
+
+    return setIsPending(false);
+  }
+
+  Future<void> setIsPending(bool isPending) async {
+    return ref.watch(asyncPurchaseProvider.notifier).setIsPending(isPending);
   }
 
   @override
