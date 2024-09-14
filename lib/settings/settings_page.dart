@@ -5,7 +5,6 @@ import 'package:observatory/settings/ui/stores_settings_list_tile.dart';
 import 'package:observatory/settings/ui/theme_list_tile.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
 import 'package:observatory/settings/ui/waitlist_alerts_settings_tile.dart';
-import 'package:observatory/shared/helpers/steam_openid.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -21,7 +20,6 @@ import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:observatory/waitlist/ui/collapse_pinned_list_tile.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({
@@ -70,14 +68,6 @@ class SettingsPage extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   const PurchaseButton(),
-                  FilledButton(
-                    onPressed: () async {
-                      OpenId openId = const OpenId();
-
-                      launchUrl(openId.authUrl());
-                    },
-                    child: const Text('Log In With Steam'),
-                  ),
                   const ListHeading(title: 'General'),
                   const CountrySettingsListTile(),
                   const StoresSettingsListTile(),

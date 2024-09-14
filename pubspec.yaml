@@ -59,6 +59,7 @@ dependencies:
   app_links: ^6.2.0
   fl_chart: ^0.69.0
   supabase_auth_ui: ^0.5.1
+  http: ^1.2.2
 
 dependency_overrides:
   win32: ^5.5.4
