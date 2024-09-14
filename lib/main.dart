@@ -166,6 +166,14 @@ void main() async {
 
   GetIt.I<SettingsRepository>().incrementLaunchCounter();
 
+  const OpenId openId = OpenId();
+
+  await openId.validate(
+    Uri.parse(
+            'https://getobservatory.app/app/auth/steam?openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.mode=id_res&openid.op_endpoint=https%3A%2F%2Fsteamcommunity.com%2Fopenid%2Flogin&openid.claimed_id=https%3A%2F%2Fsteamcommunity.com%2Fopenid%2Fid%2F76561198116454515&openid.identity=https%3A%2F%2Fsteamcommunity.com%2Fopenid%2Fid%2F76561198116454515&openid.return_to=https%3A%2F%2Fgetobservatory.app%2Fapp%2Fauth%2Fsteam&openid.response_nonce=2024-09-14T15%3A26%3A15ZiftiZaLtHJV0jf8Rw1vy0qdGPPY%3D&openid.assoc_handle=1234567890&openid.signed=signed%2Cop_endpoint%2Cclaimed_id%2Cidentity%2Creturn_to%2Cresponse_nonce%2Cassoc_handle&openid.sig=1e6Ymtm5qksrVu6j9CSFuzgDhXc%3D')
+        .queryParameters,
+  );
+
   runApp(
     const ProviderScope(
       child: Observatory(),
