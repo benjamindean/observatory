@@ -1,5 +1,5 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:http/http.dart' as http;
 
 class OpenId {
   final _steam_login = 'https://steamcommunity.com/openid/login';
@@ -49,12 +49,16 @@ class OpenId {
 
     params['openid.mode'] = 'check_authentication';
 
-    final resp = await http.post(
-      Uri.parse(_steam_login),
-      body: params,
+    final resp = await Dio(
+      BaseOptions(
+        validateStatus: (status) => status != null && status < 400,
+      ),
+    ).post(
+      _steam_login,
+      data: data,
     );
 
-    split = resp.body.split('\n');
+    split = resp.data.body.split('\n');
 
     if (split[0] != 'ns:$_openIdNs') {
       FirebaseCrashlytics.instance.recordError(

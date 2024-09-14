@@ -14,6 +14,7 @@ import 'package:observatory/router.dart';
 import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/settings/steam_import/steam_import_provider.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/helpers/steam_openid.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
@@ -107,6 +108,9 @@ class Observatory extends ConsumerWidget {
         );
 
         await GetIt.I<SettingsRepository>().setSteamUsername(steamId);
+
+        await ref.read(steamImportProvider.notifier).fetch();
+        await ref.read(steamImportProvider.notifier).import();
       }
     });
 

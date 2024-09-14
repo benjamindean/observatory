@@ -1,3 +1,4 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:observatory/settings/purchase/purchase_botton.dart';
 import 'package:observatory/settings/ui/about_links.dart';
 import 'package:observatory/settings/ui/country_settings_list_tile.dart';
@@ -5,6 +6,7 @@ import 'package:observatory/settings/ui/stores_settings_list_tile.dart';
 import 'package:observatory/settings/ui/theme_list_tile.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
 import 'package:observatory/settings/ui/waitlist_alerts_settings_tile.dart';
+import 'package:observatory/shared/helpers/steam_openid.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -20,6 +22,7 @@ import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:observatory/waitlist/ui/collapse_pinned_list_tile.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({
@@ -80,12 +83,17 @@ class SettingsPage extends ConsumerWidget {
                   ListTile(
                     title: const Text('Import from Steam'),
                     subtitle: const Text('Import your wishlist from Steam.'),
-                    trailing: OutlinedButton.icon(
-                      icon: const Icon(Icons.import_export_outlined),
-                      label: const Text('Import'),
-                      onPressed: () {
-                        context.push('/steam-import');
+                    trailing: FilledButton.icon(
+                      onPressed: () async {
+                        OpenId openId = const OpenId();
+
+                        launchUrl(
+                          openId.authUrl(),
+                          mode: LaunchMode.externalApplication,
+                        );
                       },
+                      label: const Text('Log In With Steam'),
+                      icon: const FaIcon(FontAwesomeIcons.steam),
                     ),
                   ),
                   const CollapsePinnedListTile(),

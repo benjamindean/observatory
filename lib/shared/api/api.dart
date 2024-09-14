@@ -250,13 +250,13 @@ class API {
     );
   }
 
-  Future<List<Deal>> fetchSteamWishlist(String username) async {
+  Future<List<Deal>> fetchSteamWishlist(String steamId) async {
     final Map<String, dynamic> results = {};
 
     for (int i = 0; i < MAX_STEAM_WISHLIST_PAGES; i++) {
       final Uri steamAPI = Uri.https(
         'store.steampowered.com',
-        '/wishlist/id/$username/wishlistdata',
+        '/wishlist/profiles/$steamId/wishlistdata/',
         {'p': '$i'},
       );
       final steamResponse = await dio.get(steamAPI.toString());

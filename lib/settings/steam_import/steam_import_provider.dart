@@ -22,7 +22,11 @@ class SteamImportNotifier extends AutoDisposeNotifier<SteamImportState> {
   }
 
   Future<List<Deal>?> fetch() async {
-    final String username = state.usernameInputController.value.text.trim();
+    final String? username = GetIt.I<SettingsRepository>().getSteamUsername();
+
+    if (username == null) {
+      return null;
+    }
 
     state = state.copyWith(
       isLoading: true,

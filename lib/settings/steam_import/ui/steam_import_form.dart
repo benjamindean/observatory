@@ -5,10 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
 import 'package:observatory/settings/steam_import/steam_import_state.dart';
-import 'package:observatory/shared/helpers/steam_openid.dart';
 import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SteamImportForm extends ConsumerWidget {
   const SteamImportForm({
@@ -150,17 +148,6 @@ class SteamImportForm extends ConsumerWidget {
                     },
               label: const Text('Load Wishlist'),
             ),
-          ),
-          FilledButton(
-            onPressed: () async {
-              OpenId openId = const OpenId();
-
-              launchUrl(
-                openId.authUrl(),
-                mode: LaunchMode.externalApplication,
-              );
-            },
-            child: const Text('Log In With Steam'),
           ),
         ],
       ),
