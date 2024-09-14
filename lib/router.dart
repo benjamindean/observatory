@@ -8,7 +8,6 @@ import 'package:observatory/itad_filters/tags_list_page.dart';
 import 'package:observatory/search/search_page.dart';
 import 'package:observatory/settings/purchase/purchase_page.dart';
 import 'package:observatory/settings/settings_page.dart';
-import 'package:observatory/settings/steam_import/steam_import_page.dart';
 import 'package:observatory/settings/stores_select/stores_select_page.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/waitlist_page.dart';
@@ -87,11 +86,6 @@ final GoRouter router = GoRouter(
       name: 'store-select',
       path: '/store-select',
       builder: (context, state) => const StoreSelectPage(),
-    ),
-    GoRoute(
-      name: 'steam-import',
-      path: '/steam-import',
-      builder: (context, state) => const SteamImportPage(),
     ),
     GoRoute(
       name: 'deal',

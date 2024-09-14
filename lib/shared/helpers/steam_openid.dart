@@ -59,7 +59,7 @@ class OpenId {
       data: data,
     );
 
-    split = resp.data.body.split('\n');
+    split = resp.toString().split('\n');
 
     if (split[0] != 'ns:$_openIdNs') {
       FirebaseCrashlytics.instance.recordError(
