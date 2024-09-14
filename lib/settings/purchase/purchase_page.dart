@@ -26,18 +26,16 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
 
   @override
   void initState() {
-    super.initState();
-
     _purchaseStream = InAppPurchase.instance.purchaseStream.listen(
       (purchaseDetailsList) async {
         for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
           final PurchaseStatus status = purchaseDetails.status;
 
           if (status == PurchaseStatus.pending) {
-            await setIsPending(true);
+            setIsPending(true);
           } else {
             if (status == PurchaseStatus.error) {
-              await setIsPending(false);
+              setIsPending(false);
             } else if (status == PurchaseStatus.purchased ||
                 status == PurchaseStatus.restored) {
               return deliverPurchase(purchaseDetails.productID);
@@ -46,12 +44,14 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
             if (purchaseDetails.pendingCompletePurchase) {
               await InAppPurchase.instance.completePurchase(purchaseDetails);
 
-              await deliverPurchase(purchaseDetails.productID);
+              deliverPurchase(purchaseDetails.productID);
             }
           }
         }
       },
     );
+
+    super.initState();
   }
 
   @override

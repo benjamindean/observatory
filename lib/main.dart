@@ -1,3 +1,4 @@
+import 'package:app_links/app_links.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,6 +15,7 @@ import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
+import 'package:observatory/shared/helpers/steam_openid.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/ui/theme.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
@@ -91,6 +93,20 @@ class Observatory extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ObservatoryTheme theme = ref.watch(themesProvider);
+
+    AppLinks().uriLinkStream.listen((uri) async {
+      await GetIt.I<SettingsRepository>().setSteamUsername(uri.path);
+
+      if (uri.path.contains('app/auth/steam')) {
+        OpenId openId = const OpenId();
+
+        final String steamId = await openId.validate(
+          uri.queryParameters,
+        );
+
+        await GetIt.I<SettingsRepository>().setSteamUsername(steamId);
+      }
+    });
 
     return MaterialApp.router(
       title: 'Observatory',
