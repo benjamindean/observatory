@@ -95,24 +95,32 @@ class Observatory extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ObservatoryTheme theme = ref.watch(themesProvider);
 
-    AppLinks().uriLinkStream.listen((uri) async {
-      await GetIt.I<SettingsRepository>().setSteamUsername(
-        uri.queryParameters.toString(),
-      );
-
-      if (uri.path == '/app/auth/steam') {
-        OpenId openId = const OpenId();
-
-        final String steamId = await openId.validate(
-          uri.queryParameters,
+    AppLinks().uriLinkStream.listen(
+      (uri) async {
+        await GetIt.I<SettingsRepository>().setSteamUsername(
+          uri.path.toString(),
         );
 
-        await GetIt.I<SettingsRepository>().setSteamUsername(steamId);
+        if (uri.path == '/app/auth/steam') {
+          OpenId openId = const OpenId();
 
-        await ref.read(steamImportProvider.notifier).fetch();
-        await ref.read(steamImportProvider.notifier).import();
-      }
-    });
+          final String steamId = await openId.validate(
+            uri.queryParameters,
+          );
+
+          await GetIt.I<SettingsRepository>().setSteamUsername(steamId);
+
+          await ref.read(steamImportProvider.notifier).fetch();
+          await ref.read(steamImportProvider.notifier).import();
+        }
+      },
+      onError: (error) {
+        FirebaseCrashlytics.instance.recordError(
+          error,
+          StackTrace.current,
+        );
+      },
+    );
 
     return MaterialApp.router(
       title: 'Observatory',

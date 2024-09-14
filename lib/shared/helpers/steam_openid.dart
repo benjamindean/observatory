@@ -51,6 +51,7 @@ class OpenId {
 
     final resp = await Dio(
       BaseOptions(
+        followRedirects: false,
         validateStatus: (status) => status != null && status < 400,
       ),
     ).post(
