@@ -5,7 +5,9 @@ import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_stor
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/api/utils.dart';
@@ -280,6 +282,20 @@ class API {
           ),
         )
         .toList();
+  }
+
+  Future<SteamUser> fetchSteamUser(String steamId) async {
+    final Uri steamAPI = Uri.https(
+      'api.steampowered.com',
+      '/ISteamUser/GetPlayerSummaries/v0002/',
+      {
+        'key': GetIt.I<Secret>().steamAPIKey,
+        'steamids': steamId,
+      },
+    );
+    final steamResponse = await dio.get(steamAPI.toString());
+
+    return SteamUser.fromJson(json.decode(steamResponse.toString()));
   }
 
   Future<List<Deal>> fetchSteamFeatured() async {

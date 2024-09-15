@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:observatory/settings/steam_import/steam_import_provider.dart';
+import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/shared/helpers/steam_openid.dart';
+import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 
-class SteamLogInButton extends StatelessWidget {
+class SteamLogInButton extends ConsumerWidget {
   const SteamLogInButton({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final SteamImportState steamState = ref.watch(steamImportProvider);
+
     return FilledButton.icon(
       onPressed: () async {
+        if (steamState.steamUser != null) {
+          ref.read(steamImportProvider.notifier).import();
+
+          return;
+        }
+
         OpenId openId = const OpenId();
 
         launchUrl(
@@ -19,8 +32,15 @@ class SteamLogInButton extends StatelessWidget {
           mode: LaunchMode.externalApplication,
         );
       },
-      label: const Text('Log In With Steam'),
-      icon: const FaIcon(FontAwesomeIcons.steam),
+      label: steamState.steamUser != null
+          ? Text('Sync With ${steamState.steamUser!.personaname}')
+          : const Text('Log In With Steam'),
+      icon: steamState.isLoading
+          ? ObservatoryProgressIndicator(
+              color: context.colors.scheme.onPrimary,
+              size: 20.0,
+            )
+          : const FaIcon(FontAwesomeIcons.steam),
     );
   }
 }

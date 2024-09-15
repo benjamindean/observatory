@@ -5,6 +5,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/game/game.dart';
@@ -82,6 +83,7 @@ class SettingsRepository {
   final String PREF_WAITLIST_SORTING_DIRECTION =
       'observatory_waitlist_sorting_direction';
   final String PREF_STEAM_USERNAME = 'observatory_steam_username';
+  final String PREF_STEAM_USER = 'observatory_steam_user';
   final String PREF_IGDB_ACCESS_TOKEN = 'observatory_igdb_access_token';
   final String PREF_ITAD_FILTERS = 'observatory_itad_filters';
   final String PREF_LAUNCH_COUNTER = 'observatory_launch_counter';
@@ -105,6 +107,7 @@ class SettingsRepository {
     Hive.registerAdapter(IGDBAccessTokenAdapter());
     Hive.registerAdapter(MinMaxAdapter());
     Hive.registerAdapter(ITADFiltersAdapter());
+    Hive.registerAdapter(SteamUserAdapter());
 
     await Hive.openBox(SETTINGS_BOX_NAME);
     await Hive.openBox<Deal>(SAVED_DEALS_BOX_NAME);
@@ -345,18 +348,18 @@ class SettingsRepository {
     );
   }
 
-  String? getSteamUsername() {
-    return settingsBox.get(PREF_STEAM_USERNAME);
+  SteamUser? getSteamUser() {
+    return settingsBox.get(PREF_STEAM_USER);
   }
 
-  Future<void> setSteamUsername(String? username) async {
-    if (username == null) {
+  Future<void> setSteamUser(SteamUser? user) async {
+    if (user == null) {
       return;
     }
 
     return settingsBox.put(
-      PREF_STEAM_USERNAME,
-      username,
+      PREF_STEAM_USER,
+      user,
     );
   }
 

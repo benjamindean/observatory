@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/settings/ui/steam_log_in_button.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:observatory/shared/ui/close_bottom_sheet_button.dart';
 import 'package:observatory/waitlist/ui/collapse_pinned_list_tile.dart';
-import 'package:observatory/waitlist/ui/steam_import_list_tile.dart';
 import 'package:observatory/waitlist/ui/waitlist_sorting_strings.dart';
 
 void showWaitlistSorting(BuildContext context) {
@@ -110,7 +110,13 @@ class WaitlistSortingPage extends ConsumerWidget {
               },
             ),
             const BottomSheetHeading(text: 'Settings'),
-            const SteamImportListTile(),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: SteamLogInButton(),
+              ),
+            ),
             const CollapsePinnedListTile(),
           ],
         ),

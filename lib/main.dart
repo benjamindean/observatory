@@ -15,6 +15,7 @@ import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
+import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/helpers/steam_openid.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
@@ -91,27 +92,46 @@ class Observatory extends ConsumerWidget {
     super.key,
   });
 
+  Future<SteamUser> logInWithSteam(
+    Uri uri,
+  ) async {
+    OpenId openId = const OpenId();
+
+    final String steamId = await openId.validate(
+      uri.queryParameters,
+    );
+
+    final SteamUser steamUser = await GetIt.I<API>().fetchSteamUser(steamId);
+
+    await GetIt.I<SettingsRepository>().setSteamUser(steamUser);
+
+    return steamUser;
+  }
+
+  Future<void> importSteamWaitlist(
+    BuildContext context,
+    WidgetRef ref,
+    Uri uri,
+  ) async {
+    await logInWithSteam(uri);
+
+    await ref.read(steamImportProvider.notifier).import();
+
+    if (context.mounted) {
+      context.go('/waitlist');
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ObservatoryTheme theme = ref.watch(themesProvider);
 
     AppLinks().uriLinkStream.listen(
       (uri) async {
-        await GetIt.I<SettingsRepository>().setSteamUsername(
-          uri.path.toString(),
-        );
-
         if (uri.path == '/app/auth/steam') {
-          OpenId openId = const OpenId();
-
-          final String steamId = await openId.validate(
-            uri.queryParameters,
-          );
-
-          await GetIt.I<SettingsRepository>().setSteamUsername(steamId);
-
-          await ref.read(steamImportProvider.notifier).fetch();
-          await ref.read(steamImportProvider.notifier).import();
+          if (context.mounted) {
+            await importSteamWaitlist(context, ref, uri);
+          }
         }
       },
       onError: (error) {
@@ -165,14 +185,6 @@ void main() async {
   }
 
   GetIt.I<SettingsRepository>().incrementLaunchCounter();
-
-  const OpenId openId = OpenId();
-
-  await openId.validate(
-    Uri.parse(
-            'https://getobservatory.app/app/auth/steam?openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.mode=id_res&openid.op_endpoint=https%3A%2F%2Fsteamcommunity.com%2Fopenid%2Flogin&openid.claimed_id=https%3A%2F%2Fsteamcommunity.com%2Fopenid%2Fid%2F76561198116454515&openid.identity=https%3A%2F%2Fsteamcommunity.com%2Fopenid%2Fid%2F76561198116454515&openid.return_to=https%3A%2F%2Fgetobservatory.app%2Fapp%2Fauth%2Fsteam&openid.response_nonce=2024-09-14T15%3A26%3A15ZiftiZaLtHJV0jf8Rw1vy0qdGPPY%3D&openid.assoc_handle=1234567890&openid.signed=signed%2Cop_endpoint%2Cclaimed_id%2Cidentity%2Creturn_to%2Cresponse_nonce%2Cassoc_handle&openid.sig=1e6Ymtm5qksrVu6j9CSFuzgDhXc%3D')
-        .queryParameters,
-  );
 
   runApp(
     const ProviderScope(

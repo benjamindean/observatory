@@ -1,19 +1,30 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:observatory/shared/models/deal.dart';
 
 part 'steam_import_state.freezed.dart';
+part 'steam_import_state.g.dart';
+
+@freezed
+@HiveType(typeId: 10)
+class SteamUser with _$SteamUser {
+  const factory SteamUser({
+    @HiveField(0) String? steamid,
+    @HiveField(1) String? personaname,
+    @HiveField(2) String? profileurl,
+    @HiveField(3) String? avatar,
+  }) = _SteamUser;
+
+  factory SteamUser.fromJson(Map<String, Object?> json) =>
+      _$SteamUserFromJson(json);
+}
 
 @freezed
 class SteamImportState with _$SteamImportState {
   const factory SteamImportState({
-    String? username,
+    SteamUser? steamUser,
     List<Deal>? deals,
-    @Default([]) List<Deal> selectedDeals,
-    String? error,
     @Default(false) bool isLoading,
-    @Default(false) bool isImporting,
-    required FocusNode focusNode,
-    required TextEditingController usernameInputController,
+    String? error,
   }) = _SteamImportState;
 }

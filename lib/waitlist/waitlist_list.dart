@@ -29,7 +29,7 @@ class WaitListList extends ConsumerWidget {
     );
     final bool isSteamImportLoading = ref.watch(
       steamImportProvider.select(
-        (value) => value.isImporting || value.isLoading,
+        (value) => value.isLoading,
       ),
     );
     final double cardHeight = ref

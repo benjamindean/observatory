@@ -80,8 +80,7 @@ class SettingsPage extends ConsumerWidget {
                   const ListHeading(title: 'Waitlist'),
                   const ListTile(
                     title: Text('Import from Steam'),
-                    subtitle: Text('Import your wishlist from Steam.'),
-                    trailing: SteamLogInButton(),
+                    subtitle: SteamLogInButton(),
                   ),
                   const CollapsePinnedListTile(),
                   const WaitlistAlertsSettingsTile(),

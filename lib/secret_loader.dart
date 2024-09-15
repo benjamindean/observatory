@@ -7,6 +7,7 @@ class Secret {
   final String itadApiSecret;
   final String itadApiIdentifier;
   final String igdbClientId;
+  final String steamAPIKey;
   final String supabaseUrl;
   final String supabaseAnonKey;
 
@@ -15,6 +16,7 @@ class Secret {
     required this.itadApiSecret,
     required this.itadApiIdentifier,
     required this.igdbClientId,
+    required this.steamAPIKey,
     required this.supabaseUrl,
     required this.supabaseAnonKey,
   });
@@ -25,6 +27,7 @@ class Secret {
       itadApiSecret: jsonMap['itad_api_secret'],
       itadApiIdentifier: jsonMap['itad_api_identifier'],
       igdbClientId: jsonMap['igdb_client_id'],
+      steamAPIKey: jsonMap['steam_api_key'],
       supabaseUrl: jsonMap['supabase_url'],
       supabaseAnonKey: jsonMap['supabase_anon_key'],
     );
