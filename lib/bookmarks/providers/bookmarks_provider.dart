@@ -12,8 +12,12 @@ class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
   @override
   Future<List<Deal>> build() async {
     final List<String> wailtistIds = ref.watch(waitlistIdsProvider);
-    final List<Deal> bookmarks = await _fetchBookmarks();
 
+    if (wailtistIds.isEmpty) {
+      return [];
+    }
+
+    final List<Deal> bookmarks = await _fetchBookmarks();
     final List<Deal> filteredBookmarks = bookmarks
         .where(
           (deal) => wailtistIds.contains(deal.id),
