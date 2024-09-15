@@ -17,30 +17,56 @@ class SteamLogInButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final SteamImportState steamState = ref.watch(steamImportProvider);
 
-    return FilledButton.icon(
-      onPressed: () async {
-        if (steamState.steamUser != null) {
-          ref.read(steamImportProvider.notifier).import();
+    final List<Widget> widgets = [
+      Expanded(
+        child: SizedBox(
+          height: 50,
+          child: FilledButton.icon(
+            onPressed: () async {
+              if (steamState.steamUser != null) {
+                ref.read(steamImportProvider.notifier).import();
 
-          return;
-        }
+                return;
+              }
 
-        OpenId openId = const OpenId();
+              OpenId openId = const OpenId();
 
-        launchUrl(
-          openId.authUrl(),
-          mode: LaunchMode.externalApplication,
-        );
-      },
-      label: steamState.steamUser != null
-          ? Text('Sync With ${steamState.steamUser!.personaname}')
-          : const Text('Log In With Steam'),
-      icon: steamState.isLoading
-          ? ObservatoryProgressIndicator(
-              color: context.colors.scheme.onPrimary,
-              size: 20.0,
-            )
-          : const FaIcon(FontAwesomeIcons.steam),
+              launchUrl(
+                openId.authUrl(),
+                mode: LaunchMode.externalApplication,
+              );
+            },
+            label: steamState.steamUser != null
+                ? Text('Sync With ${steamState.steamUser!.personaname}')
+                : const Text('Log In With Steam'),
+            icon: steamState.isLoading
+                ? ObservatoryProgressIndicator(
+                    color: context.colors.scheme.onPrimary,
+                    size: 23.0,
+                  )
+                : const FaIcon(FontAwesomeIcons.steam),
+          ),
+        ),
+      ),
+    ];
+
+    if (steamState.steamUser != null) {
+      widgets.addAll(
+        <Widget>[
+          const SizedBox(width: 8),
+          TextButton(
+            onPressed: () {
+              ref.read(steamImportProvider.notifier).unlinkSteamAccount();
+            },
+            child: const Text('Unlink Account'),
+          )
+        ].toList(),
+      );
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: widgets,
     );
   }
 }

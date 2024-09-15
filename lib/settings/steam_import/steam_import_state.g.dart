@@ -20,7 +20,7 @@ class SteamUserAdapter extends TypeAdapter<SteamUser> {
       steamid: fields[0] as String?,
       personaname: fields[1] as String?,
       profileurl: fields[2] as String?,
-      avatar: fields[3] as String?,
+      avatarfull: fields[3] as String?,
     );
   }
 
@@ -35,7 +35,7 @@ class SteamUserAdapter extends TypeAdapter<SteamUser> {
       ..writeByte(2)
       ..write(obj.profileurl)
       ..writeByte(3)
-      ..write(obj.avatar);
+      ..write(obj.avatarfull);
   }
 
   @override
@@ -58,7 +58,7 @@ _$SteamUserImpl _$$SteamUserImplFromJson(Map<String, dynamic> json) =>
       steamid: json['steamid'] as String?,
       personaname: json['personaname'] as String?,
       profileurl: json['profileurl'] as String?,
-      avatar: json['avatar'] as String?,
+      avatarfull: json['avatarfull'] as String?,
     );
 
 Map<String, dynamic> _$$SteamUserImplToJson(_$SteamUserImpl instance) =>
@@ -66,5 +66,5 @@ Map<String, dynamic> _$$SteamUserImplToJson(_$SteamUserImpl instance) =>
       'steamid': instance.steamid,
       'personaname': instance.personaname,
       'profileurl': instance.profileurl,
-      'avatar': instance.avatar,
+      'avatarfull': instance.avatarfull,
     };

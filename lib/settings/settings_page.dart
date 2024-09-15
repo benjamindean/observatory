@@ -78,9 +78,9 @@ class SettingsPage extends ConsumerWidget {
                   const ThemeListTile(),
                   const ThemeTrueBlackListTile(),
                   const ListHeading(title: 'Waitlist'),
-                  const ListTile(
-                    title: Text('Import from Steam'),
-                    subtitle: SteamLogInButton(),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                    child: SteamLogInButton(),
                   ),
                   const CollapsePinnedListTile(),
                   const WaitlistAlertsSettingsTile(),

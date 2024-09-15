@@ -353,10 +353,6 @@ class SettingsRepository {
   }
 
   Future<void> setSteamUser(SteamUser? user) async {
-    if (user == null) {
-      return;
-    }
-
     return settingsBox.put(
       PREF_STEAM_USER,
       user,

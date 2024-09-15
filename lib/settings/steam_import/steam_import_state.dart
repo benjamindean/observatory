@@ -12,7 +12,7 @@ class SteamUser with _$SteamUser {
     @HiveField(0) String? steamid,
     @HiveField(1) String? personaname,
     @HiveField(2) String? profileurl,
-    @HiveField(3) String? avatar,
+    @HiveField(3) String? avatarfull,
   }) = _SteamUser;
 
   factory SteamUser.fromJson(Map<String, Object?> json) =>
@@ -20,11 +20,11 @@ class SteamUser with _$SteamUser {
 }
 
 @freezed
-class SteamImportState with _$SteamImportState {
-  const factory SteamImportState({
+class SteamState with _$SteamState {
+  const factory SteamState({
     SteamUser? steamUser,
     List<Deal>? deals,
     @Default(false) bool isLoading,
     String? error,
-  }) = _SteamImportState;
+  }) = _SteamState;
 }

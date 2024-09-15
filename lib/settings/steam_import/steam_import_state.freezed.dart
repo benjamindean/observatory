@@ -27,7 +27,7 @@ mixin _$SteamUser {
   @HiveField(2)
   String? get profileurl => throw _privateConstructorUsedError;
   @HiveField(3)
-  String? get avatar => throw _privateConstructorUsedError;
+  String? get avatarfull => throw _privateConstructorUsedError;
 
   /// Serializes this SteamUser to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $SteamUserCopyWith<$Res> {
       {@HiveField(0) String? steamid,
       @HiveField(1) String? personaname,
       @HiveField(2) String? profileurl,
-      @HiveField(3) String? avatar});
+      @HiveField(3) String? avatarfull});
 }
 
 /// @nodoc
@@ -69,7 +69,7 @@ class _$SteamUserCopyWithImpl<$Res, $Val extends SteamUser>
     Object? steamid = freezed,
     Object? personaname = freezed,
     Object? profileurl = freezed,
-    Object? avatar = freezed,
+    Object? avatarfull = freezed,
   }) {
     return _then(_value.copyWith(
       steamid: freezed == steamid
@@ -84,9 +84,9 @@ class _$SteamUserCopyWithImpl<$Res, $Val extends SteamUser>
           ? _value.profileurl
           : profileurl // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatar: freezed == avatar
-          ? _value.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
+      avatarfull: freezed == avatarfull
+          ? _value.avatarfull
+          : avatarfull // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -104,7 +104,7 @@ abstract class _$$SteamUserImplCopyWith<$Res>
       {@HiveField(0) String? steamid,
       @HiveField(1) String? personaname,
       @HiveField(2) String? profileurl,
-      @HiveField(3) String? avatar});
+      @HiveField(3) String? avatarfull});
 }
 
 /// @nodoc
@@ -123,7 +123,7 @@ class __$$SteamUserImplCopyWithImpl<$Res>
     Object? steamid = freezed,
     Object? personaname = freezed,
     Object? profileurl = freezed,
-    Object? avatar = freezed,
+    Object? avatarfull = freezed,
   }) {
     return _then(_$SteamUserImpl(
       steamid: freezed == steamid
@@ -138,9 +138,9 @@ class __$$SteamUserImplCopyWithImpl<$Res>
           ? _value.profileurl
           : profileurl // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatar: freezed == avatar
-          ? _value.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
+      avatarfull: freezed == avatarfull
+          ? _value.avatarfull
+          : avatarfull // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -153,7 +153,7 @@ class _$SteamUserImpl implements _SteamUser {
       {@HiveField(0) this.steamid,
       @HiveField(1) this.personaname,
       @HiveField(2) this.profileurl,
-      @HiveField(3) this.avatar});
+      @HiveField(3) this.avatarfull});
 
   factory _$SteamUserImpl.fromJson(Map<String, dynamic> json) =>
       _$$SteamUserImplFromJson(json);
@@ -169,11 +169,11 @@ class _$SteamUserImpl implements _SteamUser {
   final String? profileurl;
   @override
   @HiveField(3)
-  final String? avatar;
+  final String? avatarfull;
 
   @override
   String toString() {
-    return 'SteamUser(steamid: $steamid, personaname: $personaname, profileurl: $profileurl, avatar: $avatar)';
+    return 'SteamUser(steamid: $steamid, personaname: $personaname, profileurl: $profileurl, avatarfull: $avatarfull)';
   }
 
   @override
@@ -186,13 +186,14 @@ class _$SteamUserImpl implements _SteamUser {
                 other.personaname == personaname) &&
             (identical(other.profileurl, profileurl) ||
                 other.profileurl == profileurl) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar));
+            (identical(other.avatarfull, avatarfull) ||
+                other.avatarfull == avatarfull));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, steamid, personaname, profileurl, avatar);
+      Object.hash(runtimeType, steamid, personaname, profileurl, avatarfull);
 
   /// Create a copy of SteamUser
   /// with the given fields replaced by the non-null parameter values.
@@ -215,7 +216,7 @@ abstract class _SteamUser implements SteamUser {
       {@HiveField(0) final String? steamid,
       @HiveField(1) final String? personaname,
       @HiveField(2) final String? profileurl,
-      @HiveField(3) final String? avatar}) = _$SteamUserImpl;
+      @HiveField(3) final String? avatarfull}) = _$SteamUserImpl;
 
   factory _SteamUser.fromJson(Map<String, dynamic> json) =
       _$SteamUserImpl.fromJson;
@@ -231,7 +232,7 @@ abstract class _SteamUser implements SteamUser {
   String? get profileurl;
   @override
   @HiveField(3)
-  String? get avatar;
+  String? get avatarfull;
 
   /// Create a copy of SteamUser
   /// with the given fields replaced by the non-null parameter values.
@@ -242,24 +243,24 @@ abstract class _SteamUser implements SteamUser {
 }
 
 /// @nodoc
-mixin _$SteamImportState {
+mixin _$SteamState {
   SteamUser? get steamUser => throw _privateConstructorUsedError;
   List<Deal>? get deals => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
-  /// Create a copy of SteamImportState
+  /// Create a copy of SteamState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SteamImportStateCopyWith<SteamImportState> get copyWith =>
+  $SteamStateCopyWith<SteamState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SteamImportStateCopyWith<$Res> {
-  factory $SteamImportStateCopyWith(
-          SteamImportState value, $Res Function(SteamImportState) then) =
-      _$SteamImportStateCopyWithImpl<$Res, SteamImportState>;
+abstract class $SteamStateCopyWith<$Res> {
+  factory $SteamStateCopyWith(
+          SteamState value, $Res Function(SteamState) then) =
+      _$SteamStateCopyWithImpl<$Res, SteamState>;
   @useResult
   $Res call(
       {SteamUser? steamUser, List<Deal>? deals, bool isLoading, String? error});
@@ -268,16 +269,16 @@ abstract class $SteamImportStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SteamImportStateCopyWithImpl<$Res, $Val extends SteamImportState>
-    implements $SteamImportStateCopyWith<$Res> {
-  _$SteamImportStateCopyWithImpl(this._value, this._then);
+class _$SteamStateCopyWithImpl<$Res, $Val extends SteamState>
+    implements $SteamStateCopyWith<$Res> {
+  _$SteamStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SteamImportState
+  /// Create a copy of SteamState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -307,7 +308,7 @@ class _$SteamImportStateCopyWithImpl<$Res, $Val extends SteamImportState>
     ) as $Val);
   }
 
-  /// Create a copy of SteamImportState
+  /// Create a copy of SteamState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -323,11 +324,11 @@ class _$SteamImportStateCopyWithImpl<$Res, $Val extends SteamImportState>
 }
 
 /// @nodoc
-abstract class _$$SteamImportStateImplCopyWith<$Res>
-    implements $SteamImportStateCopyWith<$Res> {
-  factory _$$SteamImportStateImplCopyWith(_$SteamImportStateImpl value,
-          $Res Function(_$SteamImportStateImpl) then) =
-      __$$SteamImportStateImplCopyWithImpl<$Res>;
+abstract class _$$SteamStateImplCopyWith<$Res>
+    implements $SteamStateCopyWith<$Res> {
+  factory _$$SteamStateImplCopyWith(
+          _$SteamStateImpl value, $Res Function(_$SteamStateImpl) then) =
+      __$$SteamStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -338,14 +339,14 @@ abstract class _$$SteamImportStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$SteamImportStateImplCopyWithImpl<$Res>
-    extends _$SteamImportStateCopyWithImpl<$Res, _$SteamImportStateImpl>
-    implements _$$SteamImportStateImplCopyWith<$Res> {
-  __$$SteamImportStateImplCopyWithImpl(_$SteamImportStateImpl _value,
-      $Res Function(_$SteamImportStateImpl) _then)
+class __$$SteamStateImplCopyWithImpl<$Res>
+    extends _$SteamStateCopyWithImpl<$Res, _$SteamStateImpl>
+    implements _$$SteamStateImplCopyWith<$Res> {
+  __$$SteamStateImplCopyWithImpl(
+      _$SteamStateImpl _value, $Res Function(_$SteamStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SteamImportState
+  /// Create a copy of SteamState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -355,7 +356,7 @@ class __$$SteamImportStateImplCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? error = freezed,
   }) {
-    return _then(_$SteamImportStateImpl(
+    return _then(_$SteamStateImpl(
       steamUser: freezed == steamUser
           ? _value.steamUser
           : steamUser // ignore: cast_nullable_to_non_nullable
@@ -378,8 +379,8 @@ class __$$SteamImportStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SteamImportStateImpl implements _SteamImportState {
-  const _$SteamImportStateImpl(
+class _$SteamStateImpl implements _SteamState {
+  const _$SteamStateImpl(
       {this.steamUser,
       final List<Deal>? deals,
       this.isLoading = false,
@@ -406,14 +407,14 @@ class _$SteamImportStateImpl implements _SteamImportState {
 
   @override
   String toString() {
-    return 'SteamImportState(steamUser: $steamUser, deals: $deals, isLoading: $isLoading, error: $error)';
+    return 'SteamState(steamUser: $steamUser, deals: $deals, isLoading: $isLoading, error: $error)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SteamImportStateImpl &&
+            other is _$SteamStateImpl &&
             (identical(other.steamUser, steamUser) ||
                 other.steamUser == steamUser) &&
             const DeepCollectionEquality().equals(other._deals, _deals) &&
@@ -426,22 +427,21 @@ class _$SteamImportStateImpl implements _SteamImportState {
   int get hashCode => Object.hash(runtimeType, steamUser,
       const DeepCollectionEquality().hash(_deals), isLoading, error);
 
-  /// Create a copy of SteamImportState
+  /// Create a copy of SteamState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SteamImportStateImplCopyWith<_$SteamImportStateImpl> get copyWith =>
-      __$$SteamImportStateImplCopyWithImpl<_$SteamImportStateImpl>(
-          this, _$identity);
+  _$$SteamStateImplCopyWith<_$SteamStateImpl> get copyWith =>
+      __$$SteamStateImplCopyWithImpl<_$SteamStateImpl>(this, _$identity);
 }
 
-abstract class _SteamImportState implements SteamImportState {
-  const factory _SteamImportState(
+abstract class _SteamState implements SteamState {
+  const factory _SteamState(
       {final SteamUser? steamUser,
       final List<Deal>? deals,
       final bool isLoading,
-      final String? error}) = _$SteamImportStateImpl;
+      final String? error}) = _$SteamStateImpl;
 
   @override
   SteamUser? get steamUser;
@@ -452,10 +452,10 @@ abstract class _SteamImportState implements SteamImportState {
   @override
   String? get error;
 
-  /// Create a copy of SteamImportState
+  /// Create a copy of SteamState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SteamImportStateImplCopyWith<_$SteamImportStateImpl> get copyWith =>
+  _$$SteamStateImplCopyWith<_$SteamStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

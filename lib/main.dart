@@ -15,9 +15,7 @@ import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
-import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/shared/api/api.dart';
-import 'package:observatory/shared/helpers/steam_openid.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/ui/theme.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
@@ -92,36 +90,6 @@ class Observatory extends ConsumerWidget {
     super.key,
   });
 
-  Future<SteamUser> logInWithSteam(
-    Uri uri,
-  ) async {
-    OpenId openId = const OpenId();
-
-    final String steamId = await openId.validate(
-      uri.queryParameters,
-    );
-
-    final SteamUser steamUser = await GetIt.I<API>().fetchSteamUser(steamId);
-
-    await GetIt.I<SettingsRepository>().setSteamUser(steamUser);
-
-    return steamUser;
-  }
-
-  Future<void> importSteamWaitlist(
-    BuildContext context,
-    WidgetRef ref,
-    Uri uri,
-  ) async {
-    await logInWithSteam(uri);
-
-    await ref.read(steamImportProvider.notifier).import();
-
-    if (context.mounted) {
-      context.go('/waitlist');
-    }
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ObservatoryTheme theme = ref.watch(themesProvider);
@@ -130,7 +98,12 @@ class Observatory extends ConsumerWidget {
       (uri) async {
         if (uri.path == '/app/auth/steam') {
           if (context.mounted) {
-            await importSteamWaitlist(context, ref, uri);
+            await ref.read(steamImportProvider.notifier).logIn(uri);
+            await ref.read(steamImportProvider.notifier).import();
+
+            if (context.mounted) {
+              context.go('/waitlist');
+            }
           }
         }
       },

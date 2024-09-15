@@ -5,15 +5,46 @@ import 'package:logger/logger.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/steam_import/steam_import_state.dart';
 import 'package:observatory/shared/api/api.dart';
+import 'package:observatory/shared/helpers/steam_openid.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
-class SteamImportNotifier extends AutoDisposeNotifier<SteamImportState> {
+class SteamImportNotifier extends AutoDisposeNotifier<SteamState> {
   @override
-  SteamImportState build() {
-    return SteamImportState(
+  SteamState build() {
+    return SteamState(
       steamUser: GetIt.I<SettingsRepository>().getSteamUser(),
     );
+  }
+
+  Future<void> unlinkSteamAccount() async {
+    await GetIt.I<SettingsRepository>().setSteamUser(null);
+
+    state = state.copyWith(
+      steamUser: null,
+      isLoading: false,
+      error: null,
+    );
+  }
+
+  Future<SteamUser> logIn(
+    Uri uri,
+  ) async {
+    OpenId openId = const OpenId();
+
+    final String steamId = await openId.validate(
+      uri.queryParameters,
+    );
+
+    final SteamUser steamUser = await GetIt.I<API>().fetchSteamUser(steamId);
+
+    await GetIt.I<SettingsRepository>().setSteamUser(steamUser);
+
+    state = state.copyWith(
+      steamUser: steamUser,
+    );
+
+    return steamUser;
   }
 
   Future<List<Deal>?> import() async {
@@ -79,6 +110,6 @@ class SteamImportNotifier extends AutoDisposeNotifier<SteamImportState> {
 }
 
 final steamImportProvider =
-    NotifierProvider.autoDispose<SteamImportNotifier, SteamImportState>(
+    NotifierProvider.autoDispose<SteamImportNotifier, SteamState>(
   SteamImportNotifier.new,
 );
