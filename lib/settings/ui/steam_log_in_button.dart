@@ -40,7 +40,7 @@ class SteamLogInButton extends ConsumerWidget {
                 ? Text.rich(
                     TextSpan(
                       children: <TextSpan>[
-                        const TextSpan(text: 'Sync With '),
+                        const TextSpan(text: 'Sync from '),
                         TextSpan(
                           text: steamState.steamUser!.personaname,
                           style: const TextStyle(fontWeight: FontWeight.bold),
