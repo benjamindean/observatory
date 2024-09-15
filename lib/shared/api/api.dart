@@ -7,7 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/settings/steam_import/steam_import_state.dart';
+import 'package:observatory/settings/steam_import/steam_state.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/api/utils.dart';

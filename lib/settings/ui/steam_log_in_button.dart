@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:observatory/settings/steam_import/steam_import_provider.dart';
-import 'package:observatory/settings/steam_import/steam_import_state.dart';
+import 'package:observatory/settings/steam_import/steam_state.dart';
 import 'package:observatory/shared/helpers/steam_openid.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,7 +15,7 @@ class SteamLogInButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final SteamImportState steamState = ref.watch(steamImportProvider);
+    final SteamState steamState = ref.watch(steamImportProvider);
 
     final List<Widget> widgets = [
       Expanded(

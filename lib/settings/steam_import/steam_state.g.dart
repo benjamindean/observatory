@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'steam_import_state.dart';
+part of 'steam_state.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator

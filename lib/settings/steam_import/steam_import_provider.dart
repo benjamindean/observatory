@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/settings/steam_import/steam_import_state.dart';
+import 'package:observatory/settings/steam_import/steam_state.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/helpers/steam_openid.dart';
 import 'package:observatory/shared/models/deal.dart';

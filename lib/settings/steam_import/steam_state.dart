@@ -2,8 +2,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:observatory/shared/models/deal.dart';
 
-part 'steam_import_state.freezed.dart';
-part 'steam_import_state.g.dart';
+part 'steam_state.freezed.dart';
+part 'steam_state.g.dart';
 
 @freezed
 @HiveType(typeId: 10)
