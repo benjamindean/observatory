@@ -452,8 +452,8 @@ class SettingsRepository {
         id: deal.id,
         slug: deal.slug,
         title: deal.title,
-        added: DateTime.now().millisecondsSinceEpoch,
-        source: DealSource.itad,
+        added: deal.added,
+        source: deal.source,
       ),
     );
   }

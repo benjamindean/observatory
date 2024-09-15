@@ -22,10 +22,10 @@ class PurchaseButton extends ConsumerWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+      padding: const EdgeInsets.all(8.0),
       child: SizedBox(
         width: double.infinity,
-        height: 60,
+        height: 48,
         child: FilledButton(
           style: ButtonStyle(
             backgroundColor: WidgetStatePropertyAll(
@@ -40,7 +40,7 @@ class PurchaseButton extends ConsumerWidget {
           child: purchases.isLoading
               ? ObservatoryProgressIndicator(
                   color: context.colors.scheme.onSecondary,
-                  size: 30,
+                  size: 26,
                 )
               : Text(
                   'Get Observatory Plus',

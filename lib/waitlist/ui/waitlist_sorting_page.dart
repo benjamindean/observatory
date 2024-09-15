@@ -111,7 +111,7 @@ class WaitlistSortingPage extends ConsumerWidget {
             ),
             const BottomSheetHeading(text: 'Settings'),
             const Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
               child: SizedBox(
                 width: double.infinity,
                 child: SteamLogInButton(),

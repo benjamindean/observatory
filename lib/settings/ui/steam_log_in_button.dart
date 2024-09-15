@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,27 +22,20 @@ class SteamLogInButton extends ConsumerWidget {
       if (steamState.isLoading) {
         return ObservatoryProgressIndicator(
           color: context.colors.scheme.onPrimary,
-          size: 26.0,
+          size: 26,
         );
       }
 
       if (steamState.steamUser != null &&
           steamState.steamUser!.avatarfull != null) {
-        return SizedBox(
-          width: 26,
-          height: 26,
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(
-              steamState.steamUser!.avatarfull!,
-            ),
+        return CircleAvatar(
+          backgroundImage: CachedNetworkImageProvider(
+            steamState.steamUser!.avatarfull!,
           ),
         );
       }
 
-      return const FaIcon(
-        FontAwesomeIcons.steam,
-        size: 26,
-      );
+      return const FaIcon(FontAwesomeIcons.steam);
     }
 
     return Row(
@@ -49,10 +43,10 @@ class SteamLogInButton extends ConsumerWidget {
       children: [
         Expanded(
           child: SizedBox(
-            height: 50,
+            height: 48,
             child: FilledButton.icon(
               style: FilledButton.styleFrom(
-                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 8.0),
+                padding: const EdgeInsets.all(8.0),
               ),
               onPressed: () async {
                 if (steamState.steamUser != null) {
@@ -75,7 +69,7 @@ class SteamLogInButton extends ConsumerWidget {
                       children: [
                         Flexible(
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
+                            padding: const EdgeInsets.only(left: 4.0),
                             child: Text.rich(
                               TextSpan(
                                 children: <TextSpan>[
@@ -115,10 +109,16 @@ class SteamLogInButton extends ConsumerWidget {
                       ],
                     )
                   : const Padding(
-                      padding: EdgeInsets.only(left: 8.0),
+                      padding: EdgeInsets.only(left: 4.0),
                       child: Text('Log In With Steam'),
                     ),
-              icon: getIcon(),
+              icon: SizedBox(
+                width: 32,
+                height: 32,
+                child: Center(
+                  child: getIcon(),
+                ),
+              ),
             ),
           ),
         ),

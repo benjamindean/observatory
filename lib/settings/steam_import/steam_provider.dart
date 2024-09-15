@@ -36,10 +36,7 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
 
     OpenId openId = const OpenId();
 
-    final String steamId = await openId.validate(
-      uri.queryParameters,
-    );
-
+    final String steamId = await openId.validate(uri.queryParameters);
     final SteamUser steamUser = await GetIt.I<API>().fetchSteamUser(steamId);
 
     await GetIt.I<SettingsRepository>().setSteamUser(steamUser);

@@ -6,7 +6,7 @@ import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
   Future<List<Deal>> _fetchBookmarks() async {
-    return await GetIt.I<SettingsRepository>().getBookmarks();
+    return GetIt.I<SettingsRepository>().getBookmarks();
   }
 
   @override
@@ -66,7 +66,7 @@ class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
       () async {
         await GetIt.I<SettingsRepository>().removeAllBookmarks();
 
-        return build();
+        return [];
       },
     );
   }
