@@ -30,6 +30,10 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
   Future<SteamUser> logIn(
     Uri uri,
   ) async {
+    state = state.copyWith(
+      isLoading: true,
+    );
+
     OpenId openId = const OpenId();
 
     final String steamId = await openId.validate(
@@ -42,6 +46,7 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
 
     state = state.copyWith(
       steamUser: steamUser,
+      isLoading: false,
     );
 
     return steamUser;

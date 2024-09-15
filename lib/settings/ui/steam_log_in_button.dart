@@ -17,77 +17,109 @@ class SteamLogInButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final SteamState steamState = ref.watch(steamProvider);
 
+    Widget getIcon() {
+      if (steamState.isLoading) {
+        return ObservatoryProgressIndicator(
+          color: context.colors.scheme.onPrimary,
+          size: 26.0,
+        );
+      }
+
+      if (steamState.steamUser != null &&
+          steamState.steamUser!.avatarfull != null) {
+        return SizedBox(
+          width: 26,
+          height: 26,
+          child: CircleAvatar(
+            backgroundImage: NetworkImage(
+              steamState.steamUser!.avatarfull!,
+            ),
+          ),
+        );
+      }
+
+      return const FaIcon(
+        FontAwesomeIcons.steam,
+        size: 26,
+      );
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          child: FilledButton.icon(
-            style: FilledButton.styleFrom(
-              padding: const EdgeInsets.fromLTRB(16.0, 4.0, 8.0, 4.0),
-            ),
-            onPressed: () async {
-              if (steamState.steamUser != null) {
-                ref.read(steamProvider.notifier).import();
+          child: SizedBox(
+            height: 50,
+            child: FilledButton.icon(
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 8.0, 8.0),
+              ),
+              onPressed: () async {
+                if (steamState.steamUser != null) {
+                  ref.read(steamProvider.notifier).import();
 
-                return;
-              }
+                  return;
+                }
 
-              OpenId openId = const OpenId();
+                OpenId openId = const OpenId();
 
-              launchUrl(
-                openId.authUrl(),
-                mode: LaunchMode.externalApplication,
-              );
-            },
-            label: steamState.steamUser != null
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text.rich(
-                            TextSpan(
-                              children: <TextSpan>[
-                                const TextSpan(
-                                  text: 'Sync from ',
-                                ),
-                                TextSpan(
-                                  text: steamState.steamUser!.personaname,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
+                launchUrl(
+                  openId.authUrl(),
+                  mode: LaunchMode.externalApplication,
+                );
+              },
+              label: steamState.steamUser != null
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text.rich(
+                              TextSpan(
+                                children: <TextSpan>[
+                                  const TextSpan(
+                                    text: 'Sync from ',
                                   ),
-                                ),
-                              ],
+                                  TextSpan(
+                                    text: steamState.steamUser!.personaname,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 8.0),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: context.colors.scheme.errorContainer,
-                        ),
-                        onPressed: () {
-                          ref.read(steamProvider.notifier).unlinkSteamAccount();
-                        },
-                        child: Text(
-                          'Log Out',
-                          style: TextStyle(
-                            color: context.colors.scheme.onErrorContainer,
+                        const SizedBox(width: 8.0),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor:
+                                context.colors.scheme.errorContainer,
+                            visualDensity: VisualDensity.compact,
                           ),
-                        ),
-                      )
-                    ],
-                  )
-                : const Text('Log In With Steam'),
-            icon: steamState.isLoading
-                ? ObservatoryProgressIndicator(
-                    color: context.colors.scheme.onPrimary,
-                    size: 23.0,
-                  )
-                : const FaIcon(FontAwesomeIcons.steam),
+                          onPressed: () {
+                            ref
+                                .read(steamProvider.notifier)
+                                .unlinkSteamAccount();
+                          },
+                          child: Text(
+                            'Log Out',
+                            style: TextStyle(
+                              color: context.colors.scheme.onErrorContainer,
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  : const Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Text('Log In With Steam'),
+                    ),
+              icon: getIcon(),
+            ),
           ),
         ),
       ],
