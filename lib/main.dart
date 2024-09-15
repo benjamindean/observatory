@@ -14,7 +14,7 @@ import 'package:observatory/router.dart';
 import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/settings/steam_import/steam_import_provider.dart';
+import 'package:observatory/settings/steam_import/steam_provider.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/ui/theme.dart';
@@ -97,14 +97,8 @@ class Observatory extends ConsumerWidget {
     AppLinks().uriLinkStream.listen(
       (uri) async {
         if (uri.path == '/app/auth/steam') {
-          if (context.mounted) {
-            await ref.read(steamImportProvider.notifier).logIn(uri);
-            await ref.read(steamImportProvider.notifier).import();
-
-            if (context.mounted) {
-              context.go('/waitlist');
-            }
-          }
+          await ref.read(steamProvider.notifier).logIn(uri);
+          await ref.read(steamProvider.notifier).import();
         }
       },
       onError: (error) {

@@ -9,7 +9,7 @@ import 'package:observatory/shared/helpers/steam_openid.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
-class SteamImportNotifier extends AutoDisposeNotifier<SteamState> {
+class SteamNotifier extends AutoDisposeNotifier<SteamState> {
   @override
   SteamState build() {
     return SteamState(
@@ -116,7 +116,6 @@ class SteamImportNotifier extends AutoDisposeNotifier<SteamState> {
   }
 }
 
-final steamImportProvider =
-    NotifierProvider.autoDispose<SteamImportNotifier, SteamState>(
-  SteamImportNotifier.new,
+final steamProvider = NotifierProvider.autoDispose<SteamNotifier, SteamState>(
+  SteamNotifier.new,
 );
