@@ -66,6 +66,7 @@ class SteamImportNotifier extends AutoDisposeNotifier<SteamState> {
       final List<Deal> deals = await GetIt.I<API>().gameIdsBySteamIds(
         wishlist,
       );
+      final List<String> dealIds = deals.map((deal) => deal.id).toList();
 
       if (deals.isNotEmpty) {
         final List<Deal> steamDeals =
@@ -73,7 +74,13 @@ class SteamImportNotifier extends AutoDisposeNotifier<SteamState> {
                 .where((game) => game.source == DealSource.steam)
                 .toList();
 
-        await GetIt.I<SettingsRepository>().removeDeals(steamDeals);
+        final List<Deal> removedDeals = steamDeals.where(
+          (deal) {
+            return !dealIds.contains(deal.id);
+          },
+        ).toList();
+
+        await GetIt.I<SettingsRepository>().removeDeals(removedDeals);
         await GetIt.I<SettingsRepository>().saveDeals(deals.toList());
       }
 
