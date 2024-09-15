@@ -295,7 +295,9 @@ class API {
     );
     final steamResponse = await dio.get(steamAPI.toString());
 
-    return SteamUser.fromJson(json.decode(steamResponse.toString()));
+    return SteamUser.fromJson(
+      json.decode(steamResponse.toString())['response']['players'][0],
+    );
   }
 
   Future<List<Deal>> fetchSteamFeatured() async {
