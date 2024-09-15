@@ -37,7 +37,17 @@ class SteamLogInButton extends ConsumerWidget {
               );
             },
             label: steamState.steamUser != null
-                ? Text('Sync With ${steamState.steamUser!.personaname}')
+                ? Text.rich(
+                    TextSpan(
+                      children: <TextSpan>[
+                        const TextSpan(text: 'Sync With '),
+                        TextSpan(
+                          text: steamState.steamUser!.personaname,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  )
                 : const Text('Log In With Steam'),
             icon: steamState.isLoading
                 ? ObservatoryProgressIndicator(
