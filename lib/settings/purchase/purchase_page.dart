@@ -38,13 +38,11 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
               setIsPending(false);
             } else if (status == PurchaseStatus.purchased ||
                 status == PurchaseStatus.restored) {
-              return deliverPurchase(purchaseDetails.productID);
+              return unawaited(deliverPurchase(purchaseDetails.productID));
             }
 
             if (purchaseDetails.pendingCompletePurchase) {
               await InAppPurchase.instance.completePurchase(purchaseDetails);
-
-              deliverPurchase(purchaseDetails.productID);
             }
           }
         }

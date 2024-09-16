@@ -26,29 +26,43 @@ class PurchaseButton extends ConsumerWidget {
       child: SizedBox(
         width: double.infinity,
         height: 48,
-        child: FilledButton(
-          style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(
-              context.colors.scheme.secondary,
-            ),
+        child: FilledButton.icon(
+          style: FilledButton.styleFrom(
+            backgroundColor: context.colors.scheme.secondary,
+            padding: const EdgeInsets.all(8.0),
+          ),
+          icon: SizedBox(
+            width: 32,
+            height: 32,
+            child: purchases.isLoading
+                ? ObservatoryProgressIndicator(
+                    color: context.colors.scheme.onSecondary,
+                    size: 26,
+                  )
+                : CircleAvatar(
+                    backgroundColor: context.colors.scheme.onSecondary,
+                    child: Image.asset(
+                      'assets/icon/observatory.png',
+                      width: 32,
+                      height: 32,
+                    ),
+                  ),
           ),
           onPressed: purchases.hasValue
               ? () {
                   context.push('/observatory-plus');
                 }
               : null,
-          child: purchases.isLoading
-              ? ObservatoryProgressIndicator(
-                  color: context.colors.scheme.onSecondary,
-                  size: 26,
-                )
-              : Text(
-                  'Get Observatory Plus',
-                  style: context.textStyles.bodyLarge.copyWith(
-                    color: context.colors.scheme.onSecondary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+          label: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(
+              'Get Observatory Plus',
+              style: context.textStyles.bodyLarge.copyWith(
+                color: context.colors.scheme.onSecondary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ),
       ),
     );
