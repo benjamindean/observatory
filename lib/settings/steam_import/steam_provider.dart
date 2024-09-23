@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/settings/steam_import/steam_state.dart';
+import 'package:observatory/auth/steam_state.dart';
 import 'package:observatory/shared/api/api.dart';
-import 'package:observatory/shared/helpers/steam_openid.dart';
+import 'package:observatory/auth/steam_openid.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
@@ -27,7 +27,7 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
     );
   }
 
-  Future<SteamUser> logIn(
+  Future<SteamUser> handleRedirect(
     Uri uri,
   ) async {
     state = state.copyWith(

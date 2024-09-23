@@ -58,8 +58,9 @@ dependencies:
   hooks_riverpod: ^2.5.2
   app_links: ^6.2.0
   fl_chart: ^0.69.0
-  supabase_auth_ui: ^0.5.1
   http: ^1.2.2
+  oauth2: ^2.0.3
+  flutter_secure_storage: ^4.2.1
 
 dependency_overrides:
   win32: ^5.5.4
@@ -98,5 +99,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icon/observatory.png
+    - assets/images/itad-logo.jpg
     - assets/secrets.json
     - assets/google_fonts/

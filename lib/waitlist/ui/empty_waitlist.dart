@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:observatory/settings/ui/steam_log_in_button.dart';
+import 'package:observatory/auth/ui/steam_log_in_button.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 
 class EmptyWaitlist extends StatelessWidget {

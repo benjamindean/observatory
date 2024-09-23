@@ -1,7 +1,9 @@
+import 'package:observatory/auth/ui/itad_log_in_button.dart';
+import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/settings/purchase/purchase_botton.dart';
 import 'package:observatory/settings/ui/about_links.dart';
 import 'package:observatory/settings/ui/country_settings_list_tile.dart';
-import 'package:observatory/settings/ui/steam_log_in_button.dart';
+import 'package:observatory/auth/ui/steam_log_in_button.dart';
 import 'package:observatory/settings/ui/stores_settings_list_tile.dart';
 import 'package:observatory/settings/ui/theme_list_tile.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
@@ -82,6 +84,10 @@ class SettingsPage extends ConsumerWidget {
                     padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
                     child: SteamLogInButton(),
                   ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                    child: ITADLogInButton(),
+                  ),
                   const CollapsePinnedListTile(),
                   const WaitlistAlertsSettingsTile(),
                   const ListHeading(title: 'Internal'),
@@ -108,7 +114,7 @@ class SettingsPage extends ConsumerWidget {
                             barrierDismissible: true,
                             builder: (context) {
                               return ObservatoryDialog(
-                                onApply: () async {
+                                onApply: () {
                                   ref
                                       .watch(asyncWaitListProvider.notifier)
                                       .clearWaitlist();
@@ -118,9 +124,9 @@ class SettingsPage extends ConsumerWidget {
                                 onDiscard: () {
                                   context.pop();
                                 },
-                                title: 'Confirm Waitlist Clearing',
+                                title: 'Confirm waitlist clearing',
                                 body:
-                                    'Are you sure you want to clear your waitlist?',
+                                    'Are you sure you want to clear all games from your waitlist?',
                                 discardText: 'Cancel',
                                 applyText: 'Yes',
                               );
@@ -129,7 +135,7 @@ class SettingsPage extends ConsumerWidget {
                         },
                       ),
                       ListTile(
-                        title: const Text('Remove Steam imports'),
+                        title: const Text('Remove Steam Imports'),
                         subtitle: const Text(
                           'Remove games imported from your Steam wishlist.',
                         ),
@@ -139,7 +145,7 @@ class SettingsPage extends ConsumerWidget {
                             barrierDismissible: true,
                             builder: (context) {
                               return ObservatoryDialog(
-                                onApply: () async {
+                                onApply: () {
                                   ref
                                       .watch(asyncWaitListProvider.notifier)
                                       .removeSteamImports();
@@ -151,7 +157,38 @@ class SettingsPage extends ConsumerWidget {
                                 },
                                 title: 'Confirm Steam imports removal',
                                 body:
-                                    'Are you sure you want to remove games imported from Steam?',
+                                    'Are you sure you want to remove games imported from your Steam wishlist?',
+                                discardText: 'Cancel',
+                                applyText: 'Yes',
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      ListTile(
+                        title: const Text('Clear Pinned Games'),
+                        subtitle: const Text(
+                          'Clear all games pinned to the top of your waitlist.',
+                        ),
+                        onTap: () async {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (context) {
+                              return ObservatoryDialog(
+                                onApply: () {
+                                  ref
+                                      .watch(asyncBookmarksProvider.notifier)
+                                      .clearBookmarks();
+
+                                  context.pop();
+                                },
+                                onDiscard: () {
+                                  context.pop();
+                                },
+                                title: 'Confirm clearing pinned games',
+                                body:
+                                    'Are you sure you want to clear all games pinned to the top of your waitlist?',
                                 discardText: 'Cancel',
                                 applyText: 'Yes',
                               );

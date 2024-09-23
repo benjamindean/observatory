@@ -1,9 +1,10 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:observatory/auth/ui/itad_log_in_button.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/settings/ui/steam_log_in_button.dart';
+import 'package:observatory/auth/ui/steam_log_in_button.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:observatory/shared/ui/close_bottom_sheet_button.dart';
 import 'package:observatory/waitlist/ui/collapse_pinned_list_tile.dart';
@@ -115,6 +116,13 @@ class WaitlistSortingPage extends ConsumerWidget {
               child: SizedBox(
                 width: double.infinity,
                 child: SteamLogInButton(),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: ITADLogInButton(),
               ),
             ),
             const CollapsePinnedListTile(),

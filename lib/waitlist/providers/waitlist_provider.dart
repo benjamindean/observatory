@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
+import 'package:observatory/auth/providers/itad_provider.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/search/state/search_state.dart';
@@ -28,6 +29,8 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   }
 
   Future<void> addToWaitlist(Deal deal) async {
+    ref.read(itadProvider.notifier).addToWaitlist([deal.id]);
+
     state = await AsyncValue.guard(
       () async {
         await GetIt.I<SettingsRepository>().saveDeal(deal);
@@ -45,6 +48,8 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   }
 
   Future<void> removeFromWaitList(Deal deal) async {
+    ref.read(itadProvider.notifier).removeFromWaitlist([deal.id]);
+
     state = await AsyncValue.guard(
       () async {
         await GetIt.I<SettingsRepository>().removeDeal(deal);

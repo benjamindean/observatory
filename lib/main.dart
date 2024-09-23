@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:observatory/auth/providers/itad_provider.dart';
 import 'package:observatory/firebase_options.dart';
 import 'package:observatory/notifications/constants.dart';
 import 'package:observatory/router.dart';
@@ -29,9 +30,9 @@ Future<void> initSettings() async {
 
   final String cache = (await getApplicationDocumentsDirectory()).path;
 
+  GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
   GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
   GetIt.I.registerSingleton<API>(API.create(cache));
-  GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
 }
 
 Future<void> initFirebase() async {
@@ -55,6 +56,9 @@ Future<void> initSupabase() async {
   await Supabase.initialize(
     url: GetIt.I<Secret>().supabaseUrl,
     anonKey: GetIt.I<Secret>().supabaseAnonKey,
+    authOptions: const FlutterAuthClientOptions(
+      detectSessionInUri: false,
+    ),
   );
 }
 
@@ -97,8 +101,13 @@ class Observatory extends ConsumerWidget {
     AppLinks().uriLinkStream.listen(
       (uri) async {
         if (uri.path == '/app/auth/steam') {
-          await ref.read(steamProvider.notifier).logIn(uri);
+          await ref.read(steamProvider.notifier).handleRedirect(uri);
           await ref.read(steamProvider.notifier).import();
+        }
+
+        if (uri.path == '/app/auth/itad') {
+          await ref.watch(itadProvider.notifier).handleRedirect(uri);
+          await ref.watch(itadProvider.notifier).import();
         }
       },
       onError: (error) {

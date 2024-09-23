@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/auth/providers/itad_provider.dart';
 import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/router.dart';
@@ -32,11 +33,16 @@ class WaitListList extends ConsumerWidget {
         (value) => value.isLoading,
       ),
     );
+    final bool isITADImportLoading = ref.watch(
+      itadProvider.select(
+        (value) => value.isLoading,
+      ),
+    );
     final double cardHeight = ref
         .watch(dealCardSizeProvider.notifier)
         .getHeight(MediaQuery.of(context).size.width);
 
-    if (isSteamImportLoading) {
+    if (isSteamImportLoading || isITADImportLoading) {
       return const OryFullScreenSpinner();
     }
 
