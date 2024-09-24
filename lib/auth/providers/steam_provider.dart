@@ -2,6 +2,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/auth/providers/itad_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/auth/state/steam_state.dart';
 import 'package:observatory/shared/api/api.dart';
@@ -82,6 +83,14 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
 
         await GetIt.I<SettingsRepository>().removeDeals(removedDeals);
         await GetIt.I<SettingsRepository>().saveDeals(deals.toList());
+
+        ref
+            .read(itadProvider.notifier)
+            .addToWaitlist(deals.map((deal) => deal.id).toList());
+
+        ref
+            .read(itadProvider.notifier)
+            .removeFromWaitlist(removedDeals.map((deal) => deal.id).toList());
       }
 
       await ref.watch(asyncWaitListProvider.notifier).reset();
