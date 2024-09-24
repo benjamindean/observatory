@@ -113,13 +113,11 @@ class LogInButton extends StatelessWidget {
                         )
                       ],
                     )
-                  : const Row(
+                  : Row(
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: 4.0),
-                          child: Text(
-                            'Log In With Steam',
-                          ),
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Text(text),
                         ),
                       ],
                     ),
