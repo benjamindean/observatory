@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/auth/itad_state.dart';
+import 'package:observatory/auth/state/itad_state.dart';
 import 'package:observatory/auth/providers/itad_provider.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,46 +34,67 @@ class ITADLogInButton extends ConsumerWidget {
       children: [
         Expanded(
           child: SizedBox(
-            height: 48,
+            height: 54,
             child: FilledButton.icon(
               style: FilledButton.styleFrom(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
                 backgroundColor: const Color(0xFF1592e6),
               ),
               onPressed: () async {
-                if (itadState.itadUser != null) {
+                if (itadState.user != null) {
                   ref.read(itadProvider.notifier).import();
 
                   return;
                 }
+
+                ref.read(itadProvider.notifier).reset();
 
                 launchUrl(
                   ref.read(itadProvider.notifier).getAuthURL(),
                   mode: LaunchMode.externalApplication,
                 );
               },
-              label: itadState.itadUser != null
+              label: itadState.user != null
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Flexible(
                           child: Padding(
                             padding: const EdgeInsets.only(left: 4.0),
-                            child: Text.rich(
-                              TextSpan(
-                                children: <TextSpan>[
-                                  const TextSpan(
-                                    text: 'Sync from ',
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'IsThereAnyDeal',
+                                  style: TextStyle(
+                                    fontSize:
+                                        context.textStyles.labelSmall.fontSize,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text.rich(
+                                  style: TextStyle(
+                                    fontSize:
+                                        context.textStyles.labelLarge.fontSize,
                                   ),
                                   TextSpan(
-                                    text: itadState.itadUser!.username,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    children: <TextSpan>[
+                                      const TextSpan(
+                                        text: 'Sync from ',
+                                      ),
+                                      TextSpan(
+                                        text: itadState.user!.username,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -96,9 +117,13 @@ class ITADLogInButton extends ConsumerWidget {
                         )
                       ],
                     )
-                  : const Padding(
-                      padding: EdgeInsets.only(left: 4.0),
-                      child: Text('Log In With IsThereAnyDeal'),
+                  : const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 4.0),
+                          child: Text('Log In With IsThereAnyDeal'),
+                        ),
+                      ],
                     ),
               icon: SizedBox(
                 width: 32,

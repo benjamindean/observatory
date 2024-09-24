@@ -244,7 +244,7 @@ abstract class _SteamUser implements SteamUser {
 
 /// @nodoc
 mixin _$SteamState {
-  SteamUser? get steamUser => throw _privateConstructorUsedError;
+  SteamUser? get user => throw _privateConstructorUsedError;
   List<Deal>? get deals => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
@@ -263,9 +263,9 @@ abstract class $SteamStateCopyWith<$Res> {
       _$SteamStateCopyWithImpl<$Res, SteamState>;
   @useResult
   $Res call(
-      {SteamUser? steamUser, List<Deal>? deals, bool isLoading, String? error});
+      {SteamUser? user, List<Deal>? deals, bool isLoading, String? error});
 
-  $SteamUserCopyWith<$Res>? get steamUser;
+  $SteamUserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -283,15 +283,15 @@ class _$SteamStateCopyWithImpl<$Res, $Val extends SteamState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? steamUser = freezed,
+    Object? user = freezed,
     Object? deals = freezed,
     Object? isLoading = null,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
-      steamUser: freezed == steamUser
-          ? _value.steamUser
-          : steamUser // ignore: cast_nullable_to_non_nullable
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
               as SteamUser?,
       deals: freezed == deals
           ? _value.deals
@@ -312,13 +312,13 @@ class _$SteamStateCopyWithImpl<$Res, $Val extends SteamState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $SteamUserCopyWith<$Res>? get steamUser {
-    if (_value.steamUser == null) {
+  $SteamUserCopyWith<$Res>? get user {
+    if (_value.user == null) {
       return null;
     }
 
-    return $SteamUserCopyWith<$Res>(_value.steamUser!, (value) {
-      return _then(_value.copyWith(steamUser: value) as $Val);
+    return $SteamUserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
     });
   }
 }
@@ -332,10 +332,10 @@ abstract class _$$SteamStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {SteamUser? steamUser, List<Deal>? deals, bool isLoading, String? error});
+      {SteamUser? user, List<Deal>? deals, bool isLoading, String? error});
 
   @override
-  $SteamUserCopyWith<$Res>? get steamUser;
+  $SteamUserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -351,15 +351,15 @@ class __$$SteamStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? steamUser = freezed,
+    Object? user = freezed,
     Object? deals = freezed,
     Object? isLoading = null,
     Object? error = freezed,
   }) {
     return _then(_$SteamStateImpl(
-      steamUser: freezed == steamUser
-          ? _value.steamUser
-          : steamUser // ignore: cast_nullable_to_non_nullable
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
               as SteamUser?,
       deals: freezed == deals
           ? _value._deals
@@ -381,14 +381,11 @@ class __$$SteamStateImplCopyWithImpl<$Res>
 
 class _$SteamStateImpl implements _SteamState {
   const _$SteamStateImpl(
-      {this.steamUser,
-      final List<Deal>? deals,
-      this.isLoading = false,
-      this.error})
+      {this.user, final List<Deal>? deals, this.isLoading = false, this.error})
       : _deals = deals;
 
   @override
-  final SteamUser? steamUser;
+  final SteamUser? user;
   final List<Deal>? _deals;
   @override
   List<Deal>? get deals {
@@ -407,7 +404,7 @@ class _$SteamStateImpl implements _SteamState {
 
   @override
   String toString() {
-    return 'SteamState(steamUser: $steamUser, deals: $deals, isLoading: $isLoading, error: $error)';
+    return 'SteamState(user: $user, deals: $deals, isLoading: $isLoading, error: $error)';
   }
 
   @override
@@ -415,8 +412,7 @@ class _$SteamStateImpl implements _SteamState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SteamStateImpl &&
-            (identical(other.steamUser, steamUser) ||
-                other.steamUser == steamUser) &&
+            (identical(other.user, user) || other.user == user) &&
             const DeepCollectionEquality().equals(other._deals, _deals) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
@@ -424,7 +420,7 @@ class _$SteamStateImpl implements _SteamState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, steamUser,
+  int get hashCode => Object.hash(runtimeType, user,
       const DeepCollectionEquality().hash(_deals), isLoading, error);
 
   /// Create a copy of SteamState
@@ -438,13 +434,13 @@ class _$SteamStateImpl implements _SteamState {
 
 abstract class _SteamState implements SteamState {
   const factory _SteamState(
-      {final SteamUser? steamUser,
+      {final SteamUser? user,
       final List<Deal>? deals,
       final bool isLoading,
       final String? error}) = _$SteamStateImpl;
 
   @override
-  SteamUser? get steamUser;
+  SteamUser? get user;
   @override
   List<Deal>? get deals;
   @override

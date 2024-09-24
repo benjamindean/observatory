@@ -20,7 +20,7 @@ class ITADUser with _$ITADUser {
 @freezed
 class ITADState with _$ITADState {
   const factory ITADState({
-    ITADUser? itadUser,
+    ITADUser? user,
     @Default(false) bool isLoading,
     String? error,
     Client? client,

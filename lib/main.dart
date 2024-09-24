@@ -15,7 +15,7 @@ import 'package:observatory/router.dart';
 import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/settings/steam_import/steam_provider.dart';
+import 'package:observatory/auth/providers/steam_provider.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/ui/theme.dart';

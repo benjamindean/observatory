@@ -8,7 +8,7 @@ import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/router.dart';
 import 'package:observatory/search/providers/search_provider.dart';
-import 'package:observatory/settings/steam_import/steam_provider.dart';
+import 'package:observatory/auth/providers/steam_provider.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';

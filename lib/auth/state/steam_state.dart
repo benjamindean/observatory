@@ -22,7 +22,7 @@ class SteamUser with _$SteamUser {
 @freezed
 class SteamState with _$SteamState {
   const factory SteamState({
-    SteamUser? steamUser,
+    SteamUser? user,
     List<Deal>? deals,
     @Default(false) bool isLoading,
     String? error,

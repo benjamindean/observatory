@@ -4,7 +4,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:observatory/auth/itad_state.dart';
+import 'package:observatory/auth/state/itad_state.dart';
 import 'package:oauth2/oauth2.dart';
 import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
@@ -14,9 +14,26 @@ import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 final String identifier = GetIt.I<Secret>().itadApiIdentifier;
 final String secret = GetIt.I<Secret>().itadApiSecret;
 
+final Uri authroizationUrl = Uri.parse(
+  'https://isthereanydeal.com/oauth/authorize/',
+);
+final Uri tokenUrl = Uri.parse(
+  'https://isthereanydeal.com/oauth/token/',
+);
 final Uri redirectUrl = Uri.parse(
   'https://getobservatory.app/app/auth/itad',
 );
+
+const List<String> authScopes = [
+  'user_info',
+  'notes_read',
+  'notes_write',
+  'profiles',
+  'wait_read',
+  'wait_write',
+  'coll_read',
+  'coll_write',
+];
 
 class ITADNotifier extends Notifier<ITADState> {
   @override
@@ -25,7 +42,7 @@ class ITADNotifier extends Notifier<ITADState> {
 
     if (user != null && user.credentials != null) {
       return ITADState(
-        itadUser: user,
+        user: user,
         client: Client(
           Credentials.fromJson(
             user.credentials!,
@@ -47,12 +64,8 @@ class ITADNotifier extends Notifier<ITADState> {
 
     final AuthorizationCodeGrant grant = AuthorizationCodeGrant(
       identifier,
-      Uri.parse(
-        'https://isthereanydeal.com/oauth/authorize/',
-      ),
-      Uri.parse(
-        'https://isthereanydeal.com/oauth/token/',
-      ),
+      authroizationUrl,
+      tokenUrl,
       secret: secret,
     );
 
@@ -61,6 +74,13 @@ class ITADNotifier extends Notifier<ITADState> {
     );
 
     return grant;
+  }
+
+  void reset() {
+    state.grant?.close();
+    state.client?.close();
+
+    ref.invalidateSelf();
   }
 
   Uri getAuthURL() {
@@ -75,16 +95,7 @@ class ITADNotifier extends Notifier<ITADState> {
     final AuthorizationCodeGrant grant = getGrant();
     final Uri authUrl = grant.getAuthorizationUrl(
       redirectUrl,
-      scopes: [
-        'user_info',
-        'notes_read',
-        'notes_write',
-        'profiles',
-        'wait_read',
-        'wait_write',
-        'coll_read',
-        'coll_write',
-      ],
+      scopes: authScopes,
     );
 
     state = state.copyWith(
@@ -106,42 +117,37 @@ class ITADNotifier extends Notifier<ITADState> {
         uri.queryParameters,
       );
 
-      final String userResponse = await client.read(
+      final userResponse = await client.get(
         Uri.parse('https://api.isthereanydeal.com/user/info/v2'),
       );
 
       final ITADUser user = ITADUser(
-        username: json.decode(userResponse)['username'],
+        username: json.decode(userResponse.body)['username'],
         credentials: client.credentials.toJson(),
       );
 
       await GetIt.I<SettingsRepository>().setITADUser(user);
 
       state = ITADState(
-        itadUser: user,
+        user: user,
         client: client,
         isLoading: false,
-        grant: null,
       );
     } catch (error, stackTrace) {
-      Logger().e(error, stackTrace: stackTrace);
-
-      state = state.copyWith(
-        isLoading: false,
-        error: 'Failed to authenticate with ITAD',
-        grant: null,
+      Logger().e(
+        'Failed to authenticate with ITAD',
+        error: error,
+        stackTrace: stackTrace,
       );
+
+      reset();
     }
   }
 
   Future<void> unlinkAccount() async {
-    final AuthorizationCodeGrant grant = getGrant();
-
-    grant.close();
-
     await GetIt.I<SettingsRepository>().setITADUser(null);
 
-    state = const ITADState();
+    reset();
   }
 
   Future<void> addToWaitlist(List<String> dealIds) async {
@@ -213,7 +219,7 @@ class ITADNotifier extends Notifier<ITADState> {
       return deals;
     } catch (error, stackTrace) {
       Logger().e(
-        'Failed to import IsThereAnyDeal wishlist',
+        'Failed to import IsThereAnyDeal waitlist',
         error: error,
         stackTrace: stackTrace,
       );
@@ -225,8 +231,7 @@ class ITADNotifier extends Notifier<ITADState> {
 
       state = state.copyWith(
         isLoading: false,
-        error:
-            'User not found or your wishlist is empty. Please make sure that your profile is public.',
+        error: 'User not found or your wishlist is empty.',
       );
 
       return null;

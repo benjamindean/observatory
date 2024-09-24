@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:observatory/settings/steam_import/steam_provider.dart';
-import 'package:observatory/auth/steam_state.dart';
-import 'package:observatory/auth/steam_openid.dart';
+import 'package:observatory/auth/providers/steam_provider.dart';
+import 'package:observatory/auth/state/steam_state.dart';
+import 'package:observatory/auth/providers/steam_openid.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
@@ -26,11 +26,10 @@ class SteamLogInButton extends ConsumerWidget {
         );
       }
 
-      if (steamState.steamUser != null &&
-          steamState.steamUser!.avatarfull != null) {
+      if (steamState.user != null && steamState.user!.avatarfull != null) {
         return CircleAvatar(
           backgroundImage: CachedNetworkImageProvider(
-            steamState.steamUser!.avatarfull!,
+            steamState.user!.avatarfull!,
           ),
         );
       }
@@ -46,13 +45,14 @@ class SteamLogInButton extends ConsumerWidget {
       children: [
         Expanded(
           child: SizedBox(
-            height: 48,
+            height: 54,
             child: FilledButton.icon(
               style: FilledButton.styleFrom(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
+                backgroundColor: const Color(0xFF66c0f4),
               ),
               onPressed: () async {
-                if (steamState.steamUser != null) {
+                if (steamState.user != null) {
                   ref.read(steamProvider.notifier).import();
 
                   return;
@@ -65,28 +65,48 @@ class SteamLogInButton extends ConsumerWidget {
                   mode: LaunchMode.externalApplication,
                 );
               },
-              label: steamState.steamUser != null
+              label: steamState.user != null
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Flexible(
                           child: Padding(
                             padding: const EdgeInsets.only(left: 4.0),
-                            child: Text.rich(
-                              TextSpan(
-                                children: <TextSpan>[
-                                  const TextSpan(
-                                    text: 'Sync from ',
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Steam',
+                                  style: TextStyle(
+                                    fontSize:
+                                        context.textStyles.labelSmall.fontSize,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text.rich(
+                                  style: context.textStyles.labelLarge.copyWith(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: context.colors.scheme.onPrimary,
                                   ),
                                   TextSpan(
-                                    text: steamState.steamUser!.personaname,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    children: <TextSpan>[
+                                      const TextSpan(
+                                        text: 'Sync from ',
+                                      ),
+                                      TextSpan(
+                                        text: steamState.user!.personaname,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                )
+                              ],
                             ),
                           ),
                         ),
@@ -111,9 +131,15 @@ class SteamLogInButton extends ConsumerWidget {
                         )
                       ],
                     )
-                  : const Padding(
-                      padding: EdgeInsets.only(left: 4.0),
-                      child: Text('Log In With Steam'),
+                  : const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 4.0),
+                          child: Text(
+                            'Log In With Steam',
+                          ),
+                        ),
+                      ],
                     ),
               icon: SizedBox(
                 width: 32,

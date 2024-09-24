@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/auth/steam_state.dart';
+import 'package:observatory/auth/state/steam_state.dart';
 import 'package:observatory/shared/api/api.dart';
-import 'package:observatory/auth/steam_openid.dart';
+import 'package:observatory/auth/providers/steam_openid.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
@@ -13,7 +13,7 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
   @override
   SteamState build() {
     return SteamState(
-      steamUser: GetIt.I<SettingsRepository>().getSteamUser(),
+      user: GetIt.I<SettingsRepository>().getSteamUser(),
     );
   }
 
@@ -21,15 +21,13 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
     await GetIt.I<SettingsRepository>().setSteamUser(null);
 
     state = state.copyWith(
-      steamUser: null,
+      user: null,
       isLoading: false,
       error: null,
     );
   }
 
-  Future<SteamUser> handleRedirect(
-    Uri uri,
-  ) async {
+  Future<SteamUser> handleRedirect(Uri uri) async {
     state = state.copyWith(
       isLoading: true,
     );
@@ -42,7 +40,7 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
     await GetIt.I<SettingsRepository>().setSteamUser(steamUser);
 
     state = state.copyWith(
-      steamUser: steamUser,
+      user: steamUser,
       isLoading: false,
     );
 
@@ -58,7 +56,7 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
 
     state = state.copyWith(
       isLoading: true,
-      steamUser: steamUser,
+      user: steamUser,
     );
 
     try {

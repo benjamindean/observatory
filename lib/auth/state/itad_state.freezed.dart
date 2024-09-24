@@ -193,7 +193,7 @@ abstract class _ITADUser implements ITADUser {
 
 /// @nodoc
 mixin _$ITADState {
-  ITADUser? get itadUser => throw _privateConstructorUsedError;
+  ITADUser? get user => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
   Client? get client => throw _privateConstructorUsedError;
@@ -214,7 +214,7 @@ abstract class $ITADStateCopyWith<$Res> {
       _$ITADStateCopyWithImpl<$Res, ITADState>;
   @useResult
   $Res call(
-      {ITADUser? itadUser,
+      {ITADUser? user,
       bool isLoading,
       String? error,
       Client? client,
@@ -222,7 +222,7 @@ abstract class $ITADStateCopyWith<$Res> {
       AuthorizationCodeGrant? grant,
       Uri? autorizationUrl});
 
-  $ITADUserCopyWith<$Res>? get itadUser;
+  $ITADUserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -240,7 +240,7 @@ class _$ITADStateCopyWithImpl<$Res, $Val extends ITADState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? itadUser = freezed,
+    Object? user = freezed,
     Object? isLoading = null,
     Object? error = freezed,
     Object? client = freezed,
@@ -249,9 +249,9 @@ class _$ITADStateCopyWithImpl<$Res, $Val extends ITADState>
     Object? autorizationUrl = freezed,
   }) {
     return _then(_value.copyWith(
-      itadUser: freezed == itadUser
-          ? _value.itadUser
-          : itadUser // ignore: cast_nullable_to_non_nullable
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
               as ITADUser?,
       isLoading: null == isLoading
           ? _value.isLoading
@@ -284,13 +284,13 @@ class _$ITADStateCopyWithImpl<$Res, $Val extends ITADState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ITADUserCopyWith<$Res>? get itadUser {
-    if (_value.itadUser == null) {
+  $ITADUserCopyWith<$Res>? get user {
+    if (_value.user == null) {
       return null;
     }
 
-    return $ITADUserCopyWith<$Res>(_value.itadUser!, (value) {
-      return _then(_value.copyWith(itadUser: value) as $Val);
+    return $ITADUserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
     });
   }
 }
@@ -304,7 +304,7 @@ abstract class _$$ITADStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ITADUser? itadUser,
+      {ITADUser? user,
       bool isLoading,
       String? error,
       Client? client,
@@ -313,7 +313,7 @@ abstract class _$$ITADStateImplCopyWith<$Res>
       Uri? autorizationUrl});
 
   @override
-  $ITADUserCopyWith<$Res>? get itadUser;
+  $ITADUserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -329,7 +329,7 @@ class __$$ITADStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? itadUser = freezed,
+    Object? user = freezed,
     Object? isLoading = null,
     Object? error = freezed,
     Object? client = freezed,
@@ -338,9 +338,9 @@ class __$$ITADStateImplCopyWithImpl<$Res>
     Object? autorizationUrl = freezed,
   }) {
     return _then(_$ITADStateImpl(
-      itadUser: freezed == itadUser
-          ? _value.itadUser
-          : itadUser // ignore: cast_nullable_to_non_nullable
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
               as ITADUser?,
       isLoading: null == isLoading
           ? _value.isLoading
@@ -374,7 +374,7 @@ class __$$ITADStateImplCopyWithImpl<$Res>
 
 class _$ITADStateImpl implements _ITADState {
   const _$ITADStateImpl(
-      {this.itadUser,
+      {this.user,
       this.isLoading = false,
       this.error,
       this.client,
@@ -383,7 +383,7 @@ class _$ITADStateImpl implements _ITADState {
       this.autorizationUrl});
 
   @override
-  final ITADUser? itadUser;
+  final ITADUser? user;
   @override
   @JsonKey()
   final bool isLoading;
@@ -400,7 +400,7 @@ class _$ITADStateImpl implements _ITADState {
 
   @override
   String toString() {
-    return 'ITADState(itadUser: $itadUser, isLoading: $isLoading, error: $error, client: $client, lastSyncDate: $lastSyncDate, grant: $grant, autorizationUrl: $autorizationUrl)';
+    return 'ITADState(user: $user, isLoading: $isLoading, error: $error, client: $client, lastSyncDate: $lastSyncDate, grant: $grant, autorizationUrl: $autorizationUrl)';
   }
 
   @override
@@ -408,8 +408,7 @@ class _$ITADStateImpl implements _ITADState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ITADStateImpl &&
-            (identical(other.itadUser, itadUser) ||
-                other.itadUser == itadUser) &&
+            (identical(other.user, user) || other.user == user) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.error, error) || other.error == error) &&
@@ -422,8 +421,8 @@ class _$ITADStateImpl implements _ITADState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, itadUser, isLoading, error,
-      client, lastSyncDate, grant, autorizationUrl);
+  int get hashCode => Object.hash(runtimeType, user, isLoading, error, client,
+      lastSyncDate, grant, autorizationUrl);
 
   /// Create a copy of ITADState
   /// with the given fields replaced by the non-null parameter values.
@@ -436,7 +435,7 @@ class _$ITADStateImpl implements _ITADState {
 
 abstract class _ITADState implements ITADState {
   const factory _ITADState(
-      {final ITADUser? itadUser,
+      {final ITADUser? user,
       final bool isLoading,
       final String? error,
       final Client? client,
@@ -445,7 +444,7 @@ abstract class _ITADState implements ITADState {
       final Uri? autorizationUrl}) = _$ITADStateImpl;
 
   @override
-  ITADUser? get itadUser;
+  ITADUser? get user;
   @override
   bool get isLoading;
   @override
