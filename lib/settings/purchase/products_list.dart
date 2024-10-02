@@ -2,8 +2,11 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
+import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 
@@ -82,11 +85,25 @@ class ProductsListState extends ConsumerState<ProductsList> {
                     ),
                   ),
                   onPressed: () {
-                    ref.watch(asyncPurchaseProvider.notifier).purchase(
-                          state.products.firstWhere(
-                            (element) => element.id == selectedProduct,
-                          ),
-                        );
+                    final ProductDetails product = state.products.firstWhere(
+                      (element) => element.id == selectedProduct,
+                    );
+
+                    InAppPurchase.instance
+                        .buyNonConsumable(
+                      purchaseParam: PurchaseParam(
+                        productDetails: product,
+                      ),
+                    )
+                        .then(
+                      (value) {
+                        if (value) {
+                          GetIt.I<SettingsRepository>().setPurchasedProductIds(
+                            product.id,
+                          );
+                        }
+                      },
+                    );
                   },
                   child: state.isPending
                       ? ObservatoryProgressIndicator(

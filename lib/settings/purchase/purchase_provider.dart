@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
 
@@ -69,58 +67,6 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
         isPending: isPending,
       ),
     );
-  }
-
-  void purchase(ProductDetails product) {
-    try {
-      InAppPurchase.instance
-          .buyNonConsumable(
-        purchaseParam: PurchaseParam(
-          productDetails: product,
-        ),
-      )
-          .then(
-        (value) {
-          if (value) {
-            GetIt.I<SettingsRepository>().setPurchasedProductIds(product.id);
-          }
-        },
-      );
-    } catch (error, stackTrace) {
-      Logger().e(
-        'Failed to purchase product',
-        error: error,
-        stackTrace: stackTrace,
-      );
-
-      FirebaseCrashlytics.instance.recordError(
-        error,
-        stackTrace,
-      );
-
-      return;
-    }
-  }
-
-  bool restore() {
-    try {
-      InAppPurchase.instance.restorePurchases();
-
-      return true;
-    } catch (error, stackTrace) {
-      Logger().e(
-        'Failed to restore purchases',
-        error: error,
-        stackTrace: stackTrace,
-      );
-
-      FirebaseCrashlytics.instance.recordError(
-        error,
-        stackTrace,
-      );
-
-      return false;
-    }
   }
 
   Future<void> reset() async {

@@ -144,7 +144,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
                           content: const Text('Restoring purchases...'),
                         );
 
-                        ref.watch(asyncPurchaseProvider.notifier).restore();
+                        InAppPurchase.instance.restorePurchases();
                       },
                       label: Text(
                         'Restore Purchases',
