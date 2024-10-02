@@ -23,6 +23,8 @@ class PurchasePage extends ConsumerStatefulWidget {
 
 class PurchasePageState extends ConsumerState<PurchasePage> {
   StreamSubscription<List<PurchaseDetails>>? _purchaseStream;
+  bool isPending = false;
+  List<String> purchasedProductIds = [];
 
   @override
   void initState() {
@@ -60,14 +62,20 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
   }
 
   Future<void> deliverPurchase(String productId) async {
-    await GetIt.I<SettingsRepository>().setPurchasedProductIds(
-      productId,
-    );
+    setState(() {
+      purchasedProductIds = {...purchasedProductIds, productId}.toList();
+    });
+
+    await GetIt.I<SettingsRepository>().setPurchasedProductIds(productId);
 
     return setIsPending(false);
   }
 
   Future<void> setIsPending(bool isPending) async {
+    setState(() {
+      isPending = isPending;
+    });
+
     return ref.watch(asyncPurchaseProvider.notifier).setIsPending(isPending);
   }
 

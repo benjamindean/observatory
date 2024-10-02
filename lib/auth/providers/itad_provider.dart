@@ -76,9 +76,13 @@ class ITADNotifier extends Notifier<ITADState> {
     return grant;
   }
 
-  void reset() {
+  Future<void> reset() async {
+    await GetIt.I<SettingsRepository>().setITADUser(null);
+
     state.grant?.close();
     state.client?.close();
+
+    state = const ITADState();
 
     ref.invalidateSelf();
   }
@@ -140,14 +144,12 @@ class ITADNotifier extends Notifier<ITADState> {
         stackTrace: stackTrace,
       );
 
-      reset();
+      return reset();
     }
   }
 
   Future<void> unlinkAccount() async {
-    await GetIt.I<SettingsRepository>().setITADUser(null);
-
-    reset();
+    return reset();
   }
 
   Future<void> addToWaitlist(List<String> dealIds) async {
@@ -189,6 +191,27 @@ class ITADNotifier extends Notifier<ITADState> {
         .decode(itadWaitlistResponse.body)
         .map<Deal>((deal) => Deal.fromJson(deal))
         .toList();
+  }
+
+  Future<void> clearWaitlist() async {
+    if (state.client == null) {
+      return;
+    }
+
+    final itadWaitlistResponse = await state.client?.get(
+      Uri.parse('https://api.isthereanydeal.com/waitlist/games/v1'),
+    );
+
+    if (itadWaitlistResponse == null) {
+      return;
+    }
+
+    final List<String> waitlistIds = ref.read(waitlistIdsProvider);
+
+    await state.client?.delete(
+      Uri.parse('https://api.isthereanydeal.com/waitlist/games/v1'),
+      body: json.encode(waitlistIds),
+    );
   }
 
   Future<List<Deal>?> import() async {

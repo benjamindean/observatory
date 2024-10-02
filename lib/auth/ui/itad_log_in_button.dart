@@ -23,19 +23,19 @@ class ITADLogInButton extends ConsumerWidget {
           backgroundImage: Image.asset('assets/images/itad-logo.jpg').image,
         );
       },
-      onPressed: () async {
+      onPressed: () {
         if (itadState.user != null) {
           ref.read(itadProvider.notifier).import();
 
           return;
         }
 
-        ref.read(itadProvider.notifier).reset();
-
-        launchUrl(
-          ref.read(itadProvider.notifier).getAuthURL(),
-          mode: LaunchMode.externalApplication,
-        );
+        ref.read(itadProvider.notifier).reset().then((_) {
+          launchUrl(
+            ref.read(itadProvider.notifier).getAuthURL(),
+            mode: LaunchMode.externalApplication,
+          );
+        });
       },
       onLogOut: () {
         ref.read(itadProvider.notifier).unlinkAccount();

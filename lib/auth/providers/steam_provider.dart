@@ -64,6 +64,17 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
       final List<Deal> wishlist = await GetIt.I<API>().fetchSteamWishlist(
         steamUser.steamid!,
       );
+
+      if (wishlist.isEmpty) {
+        state = state.copyWith(
+          isLoading: false,
+          error:
+              'User not found or your wishlist is empty. Please make sure that your profile and library are public.',
+        );
+
+        return [];
+      }
+
       final List<Deal> deals = await GetIt.I<API>().gameIdsBySteamIds(
         wishlist,
       );
@@ -117,7 +128,7 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
       state = state.copyWith(
         isLoading: false,
         error:
-            'User not found or your wishlist is empty. Please make sure that your profile is public.',
+            'User not found or your wishlist is empty. Please make sure that your profile and library are public.',
       );
 
       return null;

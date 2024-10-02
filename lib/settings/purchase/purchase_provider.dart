@@ -73,18 +73,12 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
 
   Future<void> purchase(ProductDetails product) async {
     try {
-      setIsPending(true);
-
       await InAppPurchase.instance.buyNonConsumable(
         purchaseParam: PurchaseParam(
           productDetails: product,
         ),
       );
-
-      setIsPending(false);
     } catch (error, stackTrace) {
-      setIsPending(false);
-
       Logger().e(
         'Failed to purchase product',
         error: error,
@@ -102,16 +96,10 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
 
   Future<bool> restore() async {
     try {
-      setIsPending(true);
-
       await InAppPurchase.instance.restorePurchases();
-
-      setIsPending(false);
 
       return true;
     } catch (error, stackTrace) {
-      setIsPending(false);
-
       Logger().e(
         'Failed to restore purchases',
         error: error,
