@@ -71,12 +71,20 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     );
   }
 
-  Future<void> purchase(ProductDetails product) async {
+  void purchase(ProductDetails product) {
     try {
-      await InAppPurchase.instance.buyNonConsumable(
+      InAppPurchase.instance
+          .buyNonConsumable(
         purchaseParam: PurchaseParam(
           productDetails: product,
         ),
+      )
+          .then(
+        (value) {
+          if (value) {
+            GetIt.I<SettingsRepository>().setPurchasedProductIds(product.id);
+          }
+        },
       );
     } catch (error, stackTrace) {
       Logger().e(
@@ -94,9 +102,9 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     }
   }
 
-  Future<bool> restore() async {
+  bool restore() {
     try {
-      await InAppPurchase.instance.restorePurchases();
+      InAppPurchase.instance.restorePurchases();
 
       return true;
     } catch (error, stackTrace) {

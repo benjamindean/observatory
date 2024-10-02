@@ -144,29 +144,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
                           content: const Text('Restoring purchases...'),
                         );
 
-                        ref
-                            .watch(asyncPurchaseProvider.notifier)
-                            .restore()
-                            .then(
-                          (value) {
-                            if (context.mounted) {
-                              if (value) {
-                                ObservatorySnackBar.show(
-                                  context,
-                                  icon: Icons.check,
-                                  content: const Text('Purchases restored!'),
-                                );
-                              } else {
-                                ObservatorySnackBar.show(
-                                  context,
-                                  icon: Icons.info,
-                                  content:
-                                      const Text('No purchases to restore.'),
-                                );
-                              }
-                            }
-                          },
-                        );
+                        ref.watch(asyncPurchaseProvider.notifier).restore();
                       },
                       label: Text(
                         'Restore Purchases',

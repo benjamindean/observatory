@@ -108,7 +108,7 @@ class SettingsPage extends ConsumerWidget {
                         title: const Text('Clear Waitlist'),
                         subtitle:
                             const Text('Clear all games from your waitlist.'),
-                        onTap: () async {
+                        onTap: () {
                           showDialog(
                             context: context,
                             barrierDismissible: true,
@@ -139,7 +139,7 @@ class SettingsPage extends ConsumerWidget {
                         subtitle: const Text(
                           'Remove games imported from your Steam wishlist.',
                         ),
-                        onTap: () async {
+                        onTap: () {
                           showDialog(
                             context: context,
                             barrierDismissible: true,
@@ -170,7 +170,7 @@ class SettingsPage extends ConsumerWidget {
                         subtitle: const Text(
                           'Clear all games pinned to the top of your waitlist.',
                         ),
-                        onTap: () async {
+                        onTap: () {
                           showDialog(
                             context: context,
                             barrierDismissible: true,
