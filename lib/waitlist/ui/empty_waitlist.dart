@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:observatory/auth/ui/itad_log_in_button.dart';
 import 'package:observatory/auth/ui/steam_log_in_button.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 
@@ -44,7 +45,14 @@ class EmptyWaitlist extends StatelessWidget {
                     icon: const Icon(Icons.search),
                     label: const Text('Search'),
                   ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
                   const SteamLogInButton(),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  const ITADLogInButton(),
                 ],
               ),
             )

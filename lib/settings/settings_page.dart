@@ -92,16 +92,6 @@ class SettingsPage extends ConsumerWidget {
                   const CollapsePinnedListTile(),
                   const WaitlistAlertsSettingsTile(),
                   const ListHeading(title: 'Internal'),
-                  SwitchListTile(
-                    value: settings.valueOrNull?.crashlyticsEnabled ?? false,
-                    title: const Text('Crashlytics'),
-                    subtitle: const Text('Send anonymouse crash reports.'),
-                    onChanged: (value) {
-                      ref
-                          .read(asyncSettingsProvider.notifier)
-                          .setCrashlyticsEnabled(value);
-                    },
-                  ),
                   ExpansionTile(
                     title: const Text('Danger Zone'),
                     children: [
