@@ -595,10 +595,6 @@
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
 			<string>text.plist.xml</string>
-			<key>name</key>
-			<string>GoogleService-Info.plist</string>
-			<key>path</key>
-			<string>Runner/GoogleService-Info.plist</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
