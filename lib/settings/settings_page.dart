@@ -10,7 +10,7 @@ import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
 import 'package:observatory/settings/ui/waitlist_alerts_settings_tile.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -23,6 +23,7 @@ import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:observatory/waitlist/ui/collapse_pinned_list_tile.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({
@@ -49,9 +50,9 @@ class SettingsPage extends ConsumerWidget {
               stackTrace: stackTrace,
             );
 
-            FirebaseCrashlytics.instance.recordError(
+            Sentry.captureException(
               error,
-              stackTrace,
+              stackTrace: stackTrace,
             );
 
             return ErrorMessage(

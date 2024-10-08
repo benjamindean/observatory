@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
@@ -10,6 +9,7 @@ import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 final String identifier = GetIt.I<Secret>().itadApiIdentifier;
 final String secret = GetIt.I<Secret>().itadApiSecret;
@@ -257,9 +257,9 @@ class ITADNotifier extends Notifier<ITADState> {
         stackTrace: stackTrace,
       );
 
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         error,
-        stackTrace,
+        stackTrace: stackTrace,
       );
 
       state = state.copyWith(

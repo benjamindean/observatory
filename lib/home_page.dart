@@ -1,5 +1,5 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,6 +16,7 @@ import 'package:observatory/shared/ui/discounted_badge.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:observatory/waitlist/ui/waitlist_sorting_page.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class HomePage extends ConsumerWidget {
   final StatefulNavigationShell child;
@@ -92,9 +93,9 @@ class HomePage extends ConsumerWidget {
             stackTrace: stackTrace,
           );
 
-          FirebaseCrashlytics.instance.recordError(
+          Sentry.captureException(
             error,
-            stackTrace,
+            stackTrace: stackTrace,
           );
 
           return ErrorMessage(

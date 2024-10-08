@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,6 +13,7 @@ import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/observatory_snack_bar.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class PurchasePage extends ConsumerStatefulWidget {
   const PurchasePage({super.key});
@@ -171,9 +172,9 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
             stackTrace: stackTrace,
           );
 
-          FirebaseCrashlytics.instance.recordError(
+          Sentry.captureException(
             error,
-            stackTrace,
+            stackTrace: stackTrace,
           );
 
           return const SizedBox.shrink();

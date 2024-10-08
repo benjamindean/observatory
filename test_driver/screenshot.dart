@@ -5,10 +5,7 @@ import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/main.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
-import 'package:firebase_app_check/firebase_app_check.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
-import 'package:observatory/firebase_options.dart';
 import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
@@ -31,12 +28,6 @@ void main() async {
   GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
   GetIt.I.registerSingleton<API>(API.create(cache));
   GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
-
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  await FirebaseAppCheck.instance.activate();
 
   await Supabase.initialize(
     url: GetIt.I<Secret>().supabaseUrl,

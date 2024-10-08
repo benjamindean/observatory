@@ -1,5 +1,5 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
@@ -9,6 +9,7 @@ import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class ProductsList extends ConsumerStatefulWidget {
   const ProductsList({super.key});
@@ -128,9 +129,9 @@ class ProductsListState extends ConsumerState<ProductsList> {
         );
       },
       error: (error, stackTrace) {
-        FirebaseCrashlytics.instance.recordError(
+        Sentry.captureException(
           error,
-          stackTrace,
+          stackTrace: stackTrace,
         );
 
         return const ErrorMessage(

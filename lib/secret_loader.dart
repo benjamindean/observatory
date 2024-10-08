@@ -10,6 +10,7 @@ class Secret {
   final String steamAPIKey;
   final String supabaseUrl;
   final String supabaseAnonKey;
+  final String sentryDsn;
 
   Secret({
     required this.itadApiKey,
@@ -19,6 +20,7 @@ class Secret {
     required this.steamAPIKey,
     required this.supabaseUrl,
     required this.supabaseAnonKey,
+    required this.sentryDsn,
   });
 
   factory Secret.fromJson(Map<String, dynamic> jsonMap) {
@@ -30,6 +32,7 @@ class Secret {
       steamAPIKey: jsonMap['steam_api_key'],
       supabaseUrl: jsonMap['supabase_url'],
       supabaseAnonKey: jsonMap['supabase_anon_key'],
+      sentryDsn: jsonMap['sentry_dsn'],
     );
   }
 }

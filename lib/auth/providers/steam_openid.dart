@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class OpenId {
   final _steam_login = 'https://steamcommunity.com/openid/login';
@@ -57,18 +57,18 @@ class OpenId {
     split = resp.body.split('\n');
 
     if (split[0] != 'ns:$_openIdNs') {
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         Exception('Wrong ns in the response'),
-        StackTrace.current,
+        stackTrace: StackTrace.current,
       );
 
       throw Exception('Wrong ns in the response');
     }
 
     if (split[1].endsWith('false')) {
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         Exception('Unable to validate openId'),
-        StackTrace.current,
+        stackTrace: StackTrace.current,
       );
 
       throw Exception('Unable to validate openId');
@@ -77,9 +77,9 @@ class OpenId {
     final String openIdUrl = data['openid.claimed_id']!;
 
     if (!_validation_regexp.hasMatch(openIdUrl)) {
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         Exception('Invalid steam id pattern'),
-        StackTrace.current,
+        stackTrace: StackTrace.current,
       );
 
       throw Exception('Invalid steam id pattern');

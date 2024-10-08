@@ -1,4 +1,3 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
@@ -9,6 +8,7 @@ import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/auth/providers/steam_openid.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class SteamNotifier extends AutoDisposeNotifier<SteamState> {
   @override
@@ -120,9 +120,9 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
         stackTrace: stackTrace,
       );
 
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         error,
-        stackTrace,
+        stackTrace: stackTrace,
       );
 
       state = state.copyWith(

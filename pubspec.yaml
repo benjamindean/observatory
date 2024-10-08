@@ -31,14 +31,11 @@ dependencies:
   intl: ^0.19.0
   get_it: ^7.7.0
   font_awesome_flutter: ^10.7.0
-  firebase_crashlytics: ^4.0.4
-  firebase_core: ^3.3.0
   flutter_form_builder: ^9.4.1
   form_builder_validators: ^11.0.0
   flutter_slidable: ^3.1.0
   collection: ^1.18.0
   awesome_flutter_extensions: ^1.2.0
-  firebase_app_check: ^0.3.0+4
   in_app_purchase: ^3.2.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
@@ -61,6 +58,7 @@ dependencies:
   http: ^1.2.2
   oauth2: ^2.0.3
   flutter_secure_storage: ^4.2.1
+  sentry_flutter: ^8.9.0
 
 dependency_overrides:
   win32: ^5.5.4

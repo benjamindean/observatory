@@ -57,15 +57,7 @@ Observatory is the essential app for tracking PC game prices and discounts exclu
 }
 ```
 3. Follow [Flutter Docs](https://docs.flutter.dev/) to set up the environment and run the app on an emulator or physical device.
-4. Create a new [Firebase](https://firebase.google.com/) project and [add it to the app](https://firebase.google.com/docs/flutter/setup). 
-
-```bash
-firebase login
-dart pub global activate flutterfire_cli
-flutterfire configure
-```
-
-5. Create a Pull Request describing your changes.
+4. Create a Pull Request describing your changes.
 
 ## Disclaimer 
 

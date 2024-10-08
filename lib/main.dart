@@ -1,15 +1,11 @@
 import 'package:app_links/app_links.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:firebase_app_check/firebase_app_check.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/auth/providers/itad_provider.dart';
-import 'package:observatory/firebase_options.dart';
 import 'package:observatory/notifications/constants.dart';
 import 'package:observatory/router.dart';
 import 'package:observatory/secret_loader.dart';
@@ -22,6 +18,7 @@ import 'package:observatory/shared/ui/theme.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:observatory/tasks/constants.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workmanager/workmanager.dart';
 
@@ -33,23 +30,6 @@ Future<void> initSettings() async {
   GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
   GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
   GetIt.I.registerSingleton<API>(API.create(cache));
-}
-
-Future<void> initFirebase() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  await FirebaseAppCheck.instance.activate();
-
-  FlutterError.onError = (errorDetails) {
-    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  };
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-
-    return true;
-  };
 }
 
 Future<void> initSupabase() async {
@@ -68,14 +48,16 @@ void callbackDispatcher() {
     try {
       if (task == TASK_CHECK_WAITLIST) {
         await initSettings();
-        await initFirebase();
 
         return await checkWaitlistTask();
       }
 
       return false;
     } catch (error, stackTrace) {
-      FirebaseCrashlytics.instance.recordError(error, stackTrace);
+      Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+      );
 
       return false;
     }
@@ -111,9 +93,9 @@ class Observatory extends ConsumerWidget {
         }
       },
       onError: (error) {
-        FirebaseCrashlytics.instance.recordError(
+        Sentry.captureException(
           error,
-          StackTrace.current,
+          stackTrace: StackTrace.current,
         );
       },
     );
@@ -137,7 +119,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await initSettings();
-  await initFirebase();
   await initSupabase();
 
   await AwesomeNotifications().initialize(
@@ -162,9 +143,14 @@ void main() async {
 
   GetIt.I<SettingsRepository>().incrementLaunchCounter();
 
-  runApp(
-    const ProviderScope(
-      child: Observatory(),
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = GetIt.I<Secret>().sentryDsn;
+    },
+    appRunner: () => runApp(
+      const ProviderScope(
+        child: Observatory(),
+      ),
     ),
   );
 }
