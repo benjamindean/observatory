@@ -189,7 +189,17 @@ class ITADNotifier extends Notifier<ITADState> {
 
     return json
         .decode(itadWaitlistResponse.body)
-        .map<Deal>((deal) => Deal.fromJson(deal))
+        .map<Deal>(
+          (deal) => Deal(
+            id: deal['id'],
+            title: deal['title'],
+            source: DealSource.itad,
+            type: deal['type'] ?? 'game',
+            added: deal['added'] != null
+                ? DateTime.parse(deal['added']).millisecondsSinceEpoch
+                : 0,
+          ),
+        )
         .toList();
   }
 

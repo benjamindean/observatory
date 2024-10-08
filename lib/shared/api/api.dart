@@ -113,12 +113,13 @@ class API {
 
     for (List<String> list in listOfIds) {
       try {
-        final Uri url = Uri.https(BASE_URL, '/games/prices/v2', {
+        final Uri url = Uri.https(BASE_URL, '/games/prices/v3', {
           'key': API_KEY,
           'country': country,
           'shops': stores.join(','),
-          'nondeals': 'true',
+          'deals': 'false',
           'vouchers': 'true',
+          'capacity': '0',
         });
 
         final response = await dio.post(
