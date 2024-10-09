@@ -10,7 +10,6 @@ import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
 import 'package:observatory/settings/ui/waitlist_alerts_settings_tile.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

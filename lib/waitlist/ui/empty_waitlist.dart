@@ -45,14 +45,16 @@ class EmptyWaitlist extends StatelessWidget {
                     icon: const Icon(Icons.search),
                     label: const Text('Search'),
                   ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  const SteamLogInButton(),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  const ITADLogInButton(),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(children: [
+                      SteamLogInButton(),
+                      SizedBox(
+                        height: 8.0,
+                      ),
+                      ITADLogInButton(),
+                    ]),
+                  )
                 ],
               ),
             )

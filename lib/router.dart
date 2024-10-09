@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:observatory/bookmarks/bookmarks_page.dart';
+import 'package:observatory/bookmarks/ui/bookmarks_page.dart';
 import 'package:observatory/deal/deal_page.dart';
 import 'package:observatory/deals/deals_page.dart';
 import 'package:observatory/home_page.dart';
