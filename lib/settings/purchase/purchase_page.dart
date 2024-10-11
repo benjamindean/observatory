@@ -161,13 +161,27 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: TextButton.icon(
                       onPressed: () {
+                        setIsPending(true);
+
                         ObservatorySnackBar.show(
                           context,
                           icon: Icons.refresh,
                           content: const Text('Restoring purchases...'),
                         );
 
-                        InAppPurchase.instance.restorePurchases();
+                        InAppPurchase.instance.restorePurchases().then(
+                          (value) {
+                            setIsPending(false);
+
+                            if (context.mounted) {
+                              ObservatorySnackBar.show(
+                                context,
+                                icon: Icons.check,
+                                content: const Text('Purchases restored!'),
+                              );
+                            }
+                          },
+                        );
                       },
                       label: Text(
                         'Restore Purchases',
