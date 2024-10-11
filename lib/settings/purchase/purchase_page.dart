@@ -82,6 +82,8 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
 
     await GetIt.I<SettingsRepository>().setPurchasedProductIds(productId);
 
+    ref.invalidate(asyncPurchaseProvider);
+
     return setIsPending(false);
   }
 
