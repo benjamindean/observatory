@@ -23,14 +23,18 @@ class PurchasePage extends ConsumerStatefulWidget {
 }
 
 class PurchasePageState extends ConsumerState<PurchasePage> {
-  StreamSubscription<List<PurchaseDetails>>? _purchaseStream;
+  final InAppPurchase _inAppPurchase = InAppPurchase.instance;
+  late StreamSubscription<List<PurchaseDetails>> subscription;
   bool isPending = false;
   List<String> purchasedProductIds = [];
 
   @override
   void initState() {
-    _purchaseStream = InAppPurchase.instance.purchaseStream.listen(
-      (purchaseDetailsList) async {
+    final Stream<List<PurchaseDetails>> purchaseUpdated =
+        _inAppPurchase.purchaseStream;
+
+    subscription = purchaseUpdated.listen(
+      (List<PurchaseDetails> purchaseDetailsList) {
         for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
           final PurchaseStatus status = purchaseDetails.status;
 
@@ -45,10 +49,19 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
             }
 
             if (purchaseDetails.pendingCompletePurchase) {
-              await InAppPurchase.instance.completePurchase(purchaseDetails);
+              InAppPurchase.instance.completePurchase(purchaseDetails);
             }
           }
         }
+      },
+      onDone: () {
+        subscription.cancel();
+      },
+      onError: (error, stackTrace) {
+        Sentry.captureException(
+          error,
+          stackTrace: stackTrace,
+        );
       },
     );
 
@@ -57,7 +70,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
 
   @override
   void dispose() {
-    _purchaseStream?.cancel();
+    subscription.cancel();
 
     super.dispose();
   }
@@ -125,14 +138,16 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
                     ],
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.fromLTRB(
                     16.0,
                     8.0,
                     16.0,
                     8.0,
                   ),
-                  child: ProductsList(),
+                  child: ProductsList(
+                    isPending: isPending,
+                  ),
                 ),
                 Center(
                   child: Padding(

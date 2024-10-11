@@ -2,17 +2,20 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_it/get_it.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
-import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class ProductsList extends ConsumerStatefulWidget {
-  const ProductsList({super.key});
+  final bool isPending;
+
+  const ProductsList({
+    super.key,
+    required this.isPending,
+  });
 
   @override
   ConsumerState<ProductsList> createState() => ProductsListState();
@@ -90,23 +93,13 @@ class ProductsListState extends ConsumerState<ProductsList> {
                       (element) => element.id == selectedProduct,
                     );
 
-                    InAppPurchase.instance
-                        .buyNonConsumable(
+                    InAppPurchase.instance.buyNonConsumable(
                       purchaseParam: PurchaseParam(
                         productDetails: product,
                       ),
-                    )
-                        .then(
-                      (value) {
-                        if (value) {
-                          GetIt.I<SettingsRepository>().setPurchasedProductIds(
-                            product.id,
-                          );
-                        }
-                      },
                     );
                   },
-                  child: state.isPending
+                  child: widget.isPending
                       ? ObservatoryProgressIndicator(
                           color: context.colors.scheme.onSecondary,
                           size: 30,
