@@ -7,6 +7,25 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
 
+final List<ProductDetails> debugList = [
+  ProductDetails(
+    id: '1',
+    title: 'Test',
+    description: 'Desc',
+    price: '22',
+    rawPrice: 22,
+    currencyCode: 'USD',
+  ),
+  ProductDetails(
+    id: '2',
+    title: 'Test',
+    description: 'Desc',
+    price: '233',
+    rawPrice: 223,
+    currencyCode: 'USD',
+  ),
+];
+
 class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
   @override
   Future<PurchaseState> build() async {

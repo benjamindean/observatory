@@ -49,7 +49,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
             }
 
             if (purchaseDetails.pendingCompletePurchase) {
-              InAppPurchase.instance.completePurchase(purchaseDetails);
+              _inAppPurchase.completePurchase(purchaseDetails);
             }
           }
         }
@@ -85,12 +85,10 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
     return setIsPending(false);
   }
 
-  Future<void> setIsPending(bool isPending) async {
+  Future<void> setIsPending(bool isPendingValue) async {
     setState(() {
-      isPending = isPending;
+      isPending = isPendingValue;
     });
-
-    return ref.watch(asyncPurchaseProvider.notifier).setIsPending(isPending);
   }
 
   @override
@@ -147,6 +145,13 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
                   ),
                   child: ProductsList(
                     isPending: isPending,
+                    onPurchase: (product) async {
+                      _inAppPurchase.buyNonConsumable(
+                        purchaseParam: PurchaseParam(
+                          productDetails: product,
+                        ),
+                      );
+                    },
                   ),
                 ),
                 Center(
