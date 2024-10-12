@@ -46,7 +46,12 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
               setIsPending(false);
             } else if (status == PurchaseStatus.purchased ||
                 status == PurchaseStatus.restored) {
-              return unawaited(deliverPurchase(purchaseDetails.productID));
+              return unawaited(
+                deliverPurchase(
+                  purchaseDetails.productID,
+                  status == PurchaseStatus.restored,
+                ),
+              );
             }
 
             if (purchaseDetails.pendingCompletePurchase) {
@@ -76,7 +81,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
     super.dispose();
   }
 
-  Future<void> deliverPurchase(String productId) async {
+  Future<void> deliverPurchase(String productId, bool isRestored) async {
     setIsPending(true);
 
     setState(() {
@@ -86,7 +91,11 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
     ObservatorySnackBar.show(
       context,
       icon: Icons.favorite,
-      content: const Text('Thank you for your support!'),
+      content: isRestored
+          ? const Text(
+              'You\'re purchases have been restored. Thank you for your support!',
+            )
+          : const Text('Thank you for your support!'),
     );
 
     await GetIt.I<SettingsRepository>().setPurchasedProductIds(
@@ -111,131 +120,133 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
     );
 
     return Scaffold(
-      appBar: AppBar(),
-      body: purchases.when(
-        data: (state) {
-          if (state.products.isEmpty) {
-            return const SizedBox.shrink();
-          }
+      appBar: AppBar(
+        actions: [
+          TextButton.icon(
+            onPressed: () {
+              setIsPending(true);
 
-          return SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-                  child: Text(
-                    'Observatory Plus',
-                    style: context.textStyles.headlineMedium.copyWith(
-                      color: context.colors.scheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const ListTile(
-                  subtitle: Column(
-                    children: [
-                      Text(
-                        'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it. ',
-                      ),
-                      SizedBox(height: 8.0),
-                      Text(
-                        'Please note that there are currently no additional features or benefits for supporters, but it might change in the near future.',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    16.0,
-                    8.0,
-                    16.0,
-                    8.0,
-                  ),
-                  child: ProductsList(
-                    isPending: isPending,
-                    onPurchase: (product) async {
-                      inAppPurchase.buyNonConsumable(
-                        purchaseParam: PurchaseParam(
-                          productDetails: product,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                Center(
+              ObservatorySnackBar.show(
+                context,
+                icon: Icons.refresh,
+                content: const Text('Restoring purchases...'),
+              );
+
+              InAppPurchase.instance.restorePurchases().then(
+                (value) {
+                  setIsPending(false);
+
+                  if (context.mounted) {
+                    ObservatorySnackBar.show(
+                      context,
+                      icon: Icons.check,
+                      content: const Text('Purchases restored!'),
+                    );
+                  }
+                },
+              );
+            },
+            label: Text(
+              'Restore Purchases',
+              style: context.textStyles.labelMedium.copyWith(
+                color: context.colors.scheme.primary,
+              ),
+            ),
+            icon: Icon(
+              FontAwesomeIcons.arrowsRotate,
+              color: context.colors.scheme.primary,
+              size: 16.0,
+            ),
+          )
+        ],
+      ),
+      body: SafeArea(
+        child: purchases.when(
+          data: (state) {
+            if (state.products.isEmpty) {
+              return const SizedBox.shrink();
+            }
+
+            return CustomScrollView(
+              slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: false,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: TextButton.icon(
-                      onPressed: () {
-                        setIsPending(true);
-
-                        ObservatorySnackBar.show(
-                          context,
-                          icon: Icons.refresh,
-                          content: const Text('Restoring purchases...'),
-                        );
-
-                        InAppPurchase.instance.restorePurchases().then(
-                          (value) {
-                            setIsPending(false);
-
-                            if (context.mounted) {
-                              ObservatorySnackBar.show(
-                                context,
-                                icon: Icons.check,
-                                content: const Text('Purchases restored!'),
-                              );
-                            }
-                          },
-                        );
-                      },
-                      label: Text(
-                        'Restore Purchases',
-                        style: context.textStyles.labelMedium.copyWith(
-                          color: context.colors.scheme.primary,
+                    padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Observatory Plus',
+                              style: context.textStyles.headlineMedium.copyWith(
+                                color: context.colors.scheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 16.0),
+                            Text(
+                              'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it. ',
+                            ),
+                            SizedBox(height: 8.0),
+                            Text(
+                              'Please note that there are currently no additional features or benefits for supporters, but it might change in the near future.',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      icon: Icon(
-                        FontAwesomeIcons.arrowsRotate,
-                        color: context.colors.scheme.primary,
-                        size: 16.0,
-                      ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ProductsList(
+                            isPending: isPending,
+                            onPurchase: (product) async {
+                              inAppPurchase.buyNonConsumable(
+                                purchaseParam: PurchaseParam(
+                                  productDetails: product,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
+                )
               ],
-            ),
-          );
-        },
-        error: (error, stackTrace) {
-          Logger().e(
-            'Failed to load purchases',
-            error: error,
-            stackTrace: stackTrace,
-          );
+            );
+          },
+          error: (error, stackTrace) {
+            Logger().e(
+              'Failed to load purchases',
+              error: error,
+              stackTrace: stackTrace,
+            );
 
-          Sentry.captureException(
-            error,
-            stackTrace: stackTrace,
-          );
+            Sentry.captureException(
+              error,
+              stackTrace: stackTrace,
+            );
 
-          return const SizedBox.shrink();
-        },
-        loading: () {
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: LinearProgressIndicator(
-              borderRadius: BorderRadius.circular(12.0),
-              minHeight: 2,
-              color: context.colors.scheme.onSurfaceVariant,
-            ),
-          );
-        },
+            return const SizedBox.shrink();
+          },
+          loading: () {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: LinearProgressIndicator(
+                borderRadius: BorderRadius.circular(12.0),
+                minHeight: 2,
+                color: context.colors.scheme.onSurfaceVariant,
+              ),
+            );
+          },
+        ),
       ),
     );
   }
