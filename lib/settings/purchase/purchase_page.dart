@@ -46,6 +46,8 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
               setIsPending(false);
             } else if (status == PurchaseStatus.purchased ||
                 status == PurchaseStatus.restored) {
+              setIsPending(false);
+
               return unawaited(
                 deliverPurchase(
                   purchaseDetails.productID,
@@ -56,6 +58,8 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
 
             if (purchaseDetails.pendingCompletePurchase) {
               inAppPurchase.completePurchase(purchaseDetails);
+
+              setIsPending(false);
             }
           }
         }
@@ -101,6 +105,8 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
     await GetIt.I<SettingsRepository>().setPurchasedProductIds(
       purchasedProductIds,
     );
+
+    setIsPending(false);
 
     ref.invalidate(asyncPurchaseProvider);
 

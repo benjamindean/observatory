@@ -45,11 +45,19 @@ class ProductsListState extends ConsumerState<ProductsList> {
             Column(
               children: state.products.map<Widget>(
                 (e) {
+                  final bool didPurchase = state.purchasedProductIds.contains(
+                    e.id,
+                  );
+
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: RadioListTile<ProductDetails>(
                       title: Text(e.price),
-                      subtitle: Text(e.title),
+                      subtitle: Text(
+                        didPurchase
+                            ? 'You have purchased this already'
+                            : e.title,
+                      ),
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           color: context.colors.scheme.primary,
@@ -59,7 +67,7 @@ class ProductsListState extends ConsumerState<ProductsList> {
                       ),
                       value: e,
                       groupValue: selectedProduct,
-                      onChanged: !widget.isPending
+                      onChanged: !(widget.isPending)
                           ? (ProductDetails? value) {
                               setState(() {
                                 selectedProduct = value;
