@@ -458,16 +458,14 @@ class SettingsRepository {
     );
   }
 
-  Future<void> setPurchasedProductIds(String? id) async {
-    if (id == null) {
+  Future<void> setPurchasedProductIds(List<String>? ids) async {
+    if (ids == null) {
       return;
     }
 
-    final List<String> purchasedProducts = await getPurchasedProductIds();
-
     return settingsBox.put(
       PREF_PURCHASED_PRODUCTS,
-      {...purchasedProducts, id}.toList(),
+      {...ids}.toList(),
     );
   }
 

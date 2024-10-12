@@ -61,14 +61,6 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     }
   }
 
-  void setIsPending(bool isPending) {
-    state = AsyncValue.data(
-      state.requireValue.copyWith(
-        isPending: isPending,
-      ),
-    );
-  }
-
   Future<void> reset() async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {

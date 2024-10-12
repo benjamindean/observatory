@@ -23,15 +23,16 @@ class PurchasePage extends ConsumerStatefulWidget {
 }
 
 class PurchasePageState extends ConsumerState<PurchasePage> {
-  final InAppPurchase _inAppPurchase = InAppPurchase.instance;
+  final InAppPurchase inAppPurchase = InAppPurchase.instance;
   late StreamSubscription<List<PurchaseDetails>> subscription;
+
   bool isPending = false;
   List<String> purchasedProductIds = [];
 
   @override
   void initState() {
     final Stream<List<PurchaseDetails>> purchaseUpdated =
-        _inAppPurchase.purchaseStream;
+        inAppPurchase.purchaseStream;
 
     subscription = purchaseUpdated.listen(
       (List<PurchaseDetails> purchaseDetailsList) {
@@ -49,7 +50,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
             }
 
             if (purchaseDetails.pendingCompletePurchase) {
-              _inAppPurchase.completePurchase(purchaseDetails);
+              inAppPurchase.completePurchase(purchaseDetails);
             }
           }
         }
@@ -76,15 +77,25 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
   }
 
   Future<void> deliverPurchase(String productId) async {
+    setIsPending(true);
+
     setState(() {
       purchasedProductIds = {...purchasedProductIds, productId}.toList();
     });
 
-    await GetIt.I<SettingsRepository>().setPurchasedProductIds(productId);
+    ObservatorySnackBar.show(
+      context,
+      icon: Icons.favorite,
+      content: const Text('Thank you for your support!'),
+    );
+
+    await GetIt.I<SettingsRepository>().setPurchasedProductIds(
+      purchasedProductIds,
+    );
 
     ref.invalidate(asyncPurchaseProvider);
 
-    return setIsPending(false);
+    return;
   }
 
   Future<void> setIsPending(bool isPendingValue) async {
@@ -148,7 +159,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
                   child: ProductsList(
                     isPending: isPending,
                     onPurchase: (product) async {
-                      _inAppPurchase.buyNonConsumable(
+                      inAppPurchase.buyNonConsumable(
                         purchaseParam: PurchaseParam(
                           productDetails: product,
                         ),
