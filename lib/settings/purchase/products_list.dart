@@ -12,11 +12,13 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 class ProductsList extends ConsumerStatefulWidget {
   final bool isPending;
   final Function(ProductDetails) onPurchase;
+  final List<ProductDetails> products;
 
   const ProductsList({
     super.key,
     required this.isPending,
     required this.onPurchase,
+    required this.products,
   });
 
   @override
@@ -24,7 +26,21 @@ class ProductsList extends ConsumerStatefulWidget {
 }
 
 class ProductsListState extends ConsumerState<ProductsList> {
-  ProductDetails? selectedProduct;
+  ProductDetails selectedProduct = ProductDetails(
+    id: '0',
+    title: 'Unknown',
+    description: 'Unknown',
+    price: 0.toString(),
+    rawPrice: 0,
+    currencyCode: 'USD',
+  );
+
+  @override
+  void initState() {
+    super.initState();
+
+    selectedProduct = widget.products.first;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +50,10 @@ class ProductsListState extends ConsumerState<ProductsList> {
 
     return purchases.when(
       data: (state) {
-        if (selectedProduct == null && state.products.isNotEmpty) {
-          setState(() {
-            selectedProduct = state.products.first;
-          });
-        }
-
         return Column(
           children: [
             Column(
-              children: state.products.map<Widget>(
+              children: widget.products.map<Widget>(
                 (e) {
                   final bool didPurchase = state.purchasedProductIds.contains(
                     e.id,
@@ -53,11 +63,7 @@ class ProductsListState extends ConsumerState<ProductsList> {
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: RadioListTile<ProductDetails>(
                       title: Text(e.price),
-                      subtitle: Text(
-                        didPurchase
-                            ? 'You have purchased this already'
-                            : e.title,
-                      ),
+                      subtitle: Text(e.title),
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           color: context.colors.scheme.primary,
@@ -67,10 +73,10 @@ class ProductsListState extends ConsumerState<ProductsList> {
                       ),
                       value: e,
                       groupValue: selectedProduct,
-                      onChanged: !(widget.isPending)
+                      onChanged: !(widget.isPending && didPurchase)
                           ? (ProductDetails? value) {
                               setState(() {
-                                selectedProduct = value;
+                                selectedProduct = value!;
                               });
                             }
                           : null,
@@ -91,11 +97,7 @@ class ProductsListState extends ConsumerState<ProductsList> {
                     ),
                   ),
                   onPressed: () {
-                    if (selectedProduct == null) {
-                      return;
-                    }
-
-                    widget.onPurchase(selectedProduct!);
+                    widget.onPurchase(selectedProduct);
                   },
                   child: widget.isPending
                       ? ObservatoryProgressIndicator(

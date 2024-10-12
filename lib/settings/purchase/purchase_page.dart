@@ -206,6 +206,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
                           alignment: Alignment.bottomCenter,
                           child: ProductsList(
                             isPending: isPending,
+                            products: state.products,
                             onPurchase: (product) async {
                               inAppPurchase.buyNonConsumable(
                                 purchaseParam: PurchaseParam(
