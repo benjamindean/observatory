@@ -40,16 +40,6 @@ class ProductsListState extends ConsumerState<ProductsList> {
           });
         }
 
-        if (state.purchasedProductIds.isNotEmpty) {
-          return Text(
-            'Thank you for your support!',
-            style: context.themes.text.titleMedium?.copyWith(
-              color: context.colors.scheme.onSurface,
-              fontWeight: FontWeight.bold,
-            ),
-          );
-        }
-
         return Column(
           children: [
             Column(
