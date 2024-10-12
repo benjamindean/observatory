@@ -4,7 +4,6 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:logger/logger.dart';
@@ -35,7 +34,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
         inAppPurchase.purchaseStream;
 
     subscription = purchaseUpdated.listen(
-      (List<PurchaseDetails> purchaseDetailsList) {
+      (List<PurchaseDetails> purchaseDetailsList) async {
         for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
           final PurchaseStatus status = purchaseDetails.status;
 
@@ -48,7 +47,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
                 status == PurchaseStatus.restored) {
               setIsPending(false);
 
-              return unawaited(
+              unawaited(
                 deliverPurchase(
                   purchaseDetails.productID,
                   status == PurchaseStatus.restored,
@@ -57,7 +56,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
             }
 
             if (purchaseDetails.pendingCompletePurchase) {
-              inAppPurchase.completePurchase(purchaseDetails);
+              await inAppPurchase.completePurchase(purchaseDetails);
 
               setIsPending(false);
             }
@@ -128,7 +127,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          TextButton.icon(
+          TextButton(
             onPressed: () {
               setIsPending(true);
 
@@ -152,16 +151,11 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
                 },
               );
             },
-            label: Text(
+            child: Text(
               'Restore Purchases',
               style: context.textStyles.labelMedium.copyWith(
                 color: context.colors.scheme.primary,
               ),
-            ),
-            icon: Icon(
-              FontAwesomeIcons.arrowsRotate,
-              color: context.colors.scheme.primary,
-              size: 16.0,
             ),
           )
         ],
