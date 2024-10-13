@@ -146,7 +146,7 @@ void main() async {
 
   await SentryFlutter.init(
     (options) {
-      options.dsn = kDebugMode ? GetIt.I<Secret>().sentryDsn : '';
+      options.dsn = kDebugMode ? '' : GetIt.I<Secret>().sentryDsn;
     },
     appRunner: () => runApp(
       const ProviderScope(

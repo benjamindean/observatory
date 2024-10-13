@@ -2,6 +2,7 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:collection/collection.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 
 class ProductsList extends StatefulWidget {
@@ -47,15 +48,15 @@ class ProductsListState extends State<ProductsList> {
       );
     }
 
+    final ProductDetails? currentProduct = widget.products.firstWhereOrNull(
+      (e) => e == selectedProduct,
+    );
+
     return Column(
       children: [
         Column(
           children: widget.products.map<Widget>(
             (e) {
-              final bool didPurchase = widget.purchasedProductIds.contains(
-                e.id,
-              );
-
               return Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: RadioListTile<ProductDetails>(
@@ -70,7 +71,7 @@ class ProductsListState extends State<ProductsList> {
                   ),
                   value: e,
                   groupValue: selectedProduct,
-                  onChanged: !(widget.isPending && didPurchase)
+                  onChanged: !widget.isPending
                       ? (ProductDetails? value) {
                           setState(() {
                             selectedProduct = value!;
@@ -111,9 +112,9 @@ class ProductsListState extends State<ProductsList> {
                             ),
                           ),
                           TextSpan(
-                            text: widget.products
-                                .firstWhere((e) => e == selectedProduct)
-                                .price,
+                            text: currentProduct != null
+                                ? currentProduct.price
+                                : '',
                             style: context.textStyles.bodyLarge.copyWith(
                               color: context.colors.scheme.onSecondary,
                               fontWeight: FontWeight.bold,
