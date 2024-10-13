@@ -14,7 +14,7 @@ class PurchaseButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (Platform.isAndroid) {
-      return const SizedBox.shrink();
+      return SizedBox.shrink();
     }
 
     final AsyncValue<PurchaseState> purchases = ref.watch(

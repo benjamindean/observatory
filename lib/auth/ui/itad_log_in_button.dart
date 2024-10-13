@@ -40,7 +40,21 @@ class ITADLogInButton extends ConsumerWidget {
       onLogOut: () {
         ref.read(itadProvider.notifier).unlinkAccount();
       },
-      text: 'Log In With IsThereAnyDeal',
+      text: Text.rich(
+        TextSpan(
+          children: [
+            const TextSpan(
+              text: 'Log In With ',
+            ),
+            TextSpan(
+              text: 'IsThereAnyDeal',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
       username: itadState.user?.username,
       isLoading: itadState.isLoading,
     );

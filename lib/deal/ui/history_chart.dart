@@ -161,7 +161,10 @@ class HistoryChart extends ConsumerWidget {
         );
       },
       loading: () {
-        return const ObservatoryShimmer();
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 16.0),
+          child: const ObservatoryShimmer(),
+        );
       },
       error: (error, stackTrace) {
         return const HistoryEmptyMessage();

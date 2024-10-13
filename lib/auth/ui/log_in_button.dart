@@ -9,7 +9,7 @@ class LogInButton extends StatelessWidget {
   final VoidCallback onPressed;
   final VoidCallback onLogOut;
   final String? username;
-  final String text;
+  final Widget text;
   final String label;
 
   const LogInButton({
@@ -117,7 +117,7 @@ class LogInButton extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 4.0),
-                          child: Text(text),
+                          child: text,
                         ),
                       ],
                     ),

@@ -104,10 +104,26 @@ class ProductsListState extends ConsumerState<ProductsList> {
                           color: context.colors.scheme.onSecondary,
                           size: 30,
                         )
-                      : Text(
-                          'Purchase Now for ${state.products.firstWhere((element) => element == selectedProduct).price}',
-                          style: context.textStyles.bodyLarge.copyWith(
-                            color: context.colors.scheme.onSecondary,
+                      : Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Purchase Now for ',
+                                style: context.textStyles.bodyLarge.copyWith(
+                                  color: context.colors.scheme.onSecondary,
+                                ),
+                              ),
+                              TextSpan(
+                                text: widget.products
+                                    .firstWhere(
+                                        (element) => element == selectedProduct)
+                                    .price,
+                                style: context.textStyles.bodyLarge.copyWith(
+                                  color: context.colors.scheme.onSecondary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                 ),

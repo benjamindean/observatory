@@ -83,9 +83,10 @@ class WaitlistSortingPage extends ConsumerWidget {
                   title: Text(
                     waitlistSortingStrings[sorting]?['title'] ?? 'Price',
                     style: context.textStyles.titleMedium.copyWith(
-                        color: isSelected
-                            ? context.colors.scheme.onSecondary
-                            : context.colors.scheme.onSurface),
+                      color: isSelected
+                          ? context.colors.scheme.onSecondary
+                          : context.colors.scheme.onSurface,
+                    ),
                   ),
                   trailing: Builder(
                     builder: (context) {
@@ -113,16 +114,12 @@ class WaitlistSortingPage extends ConsumerWidget {
             const BottomSheetHeading(text: 'Settings'),
             const Padding(
               padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: SteamLogInButton(),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: ITADLogInButton(),
+              child: Column(
+                children: [
+                  SteamLogInButton(),
+                  SizedBox(height: 8.0),
+                  ITADLogInButton(),
+                ],
               ),
             ),
             const CollapsePinnedListTile(),

@@ -53,7 +53,21 @@ class SteamLogInButton extends ConsumerWidget {
       onLogOut: () {
         ref.read(steamProvider.notifier).unlinkSteamAccount();
       },
-      text: 'Log In With Steam',
+      text: Text.rich(
+        TextSpan(
+          children: [
+            const TextSpan(
+              text: 'Log In With ',
+            ),
+            TextSpan(
+              text: 'Steam',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

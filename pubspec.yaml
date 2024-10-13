@@ -1,7 +1,7 @@
 name: observatory
 description: Game price tracker.
 publish_to: "none"
-version: 1.3.2
+version: 1.4.0
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
@@ -98,6 +98,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icon/observatory.png
+    - assets/images/bmc-button.png
     - assets/images/itad-logo.jpg
     - assets/secrets.json
     - assets/google_fonts/

@@ -50,7 +50,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
               unawaited(
                 deliverPurchase(
                   purchaseDetails.productID,
-                  status == PurchaseStatus.restored,
+                  PurchaseStatus.restored == status,
                 ),
               );
             }
@@ -91,15 +91,13 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
       purchasedProductIds = {...purchasedProductIds, productId}.toList();
     });
 
-    ObservatorySnackBar.show(
-      context,
-      icon: Icons.favorite,
-      content: isRestored
-          ? const Text(
-              'You\'re purchases have been restored. Thank you for your support!',
-            )
-          : const Text('Thank you for your support!'),
-    );
+    if (!isRestored) {
+      ObservatorySnackBar.show(
+        context,
+        icon: Icons.favorite,
+        content: const Text('Thank you for your support!'),
+      );
+    }
 
     await GetIt.I<SettingsRepository>().setPurchasedProductIds(
       purchasedProductIds,

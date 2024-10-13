@@ -58,6 +58,11 @@ class SearchList extends ConsumerWidget {
               return DealCard(
                 deal: deals[index],
                 page: NavigationBranch.search,
+                onCardTapCallback: () {
+                  ref.read(asynRecentsProvider.notifier).addRecent(
+                        deals[index].title,
+                      );
+                },
               );
             },
           ),
