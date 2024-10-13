@@ -57,6 +57,10 @@ class ProductsListState extends State<ProductsList> {
         Column(
           children: widget.products.map<Widget>(
             (e) {
+              final bool isPurchased = widget.purchasedProductIds.contains(
+                e.id,
+              );
+
               return Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: RadioListTile<ProductDetails>(
@@ -71,7 +75,7 @@ class ProductsListState extends State<ProductsList> {
                   ),
                   value: e,
                   groupValue: selectedProduct,
-                  onChanged: !widget.isPending
+                  onChanged: !(widget.isPending || isPurchased)
                       ? (ProductDetails? value) {
                           setState(() {
                             selectedProduct = value!;

@@ -103,9 +103,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
       purchasedProductIds,
     );
 
-    setIsPending(false);
-
-    ref.invalidate(asyncPurchaseProvider);
+    ref.watch(asyncPurchaseProvider.notifier).reset();
 
     return;
   }
