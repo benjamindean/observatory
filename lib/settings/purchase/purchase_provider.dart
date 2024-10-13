@@ -43,7 +43,7 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     final bool available = await InAppPurchase.instance.isAvailable();
 
     if (!available) {
-      return debugList;
+      return [];
     } else {
       const Set<String> purchaseIds = <String>{
         'development_support_tier_1',

@@ -205,6 +205,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
                           child: ProductsList(
                             isPending: isPending,
                             products: state.products,
+                            purchasedProductIds: purchasedProductIds,
                             onPurchase: (product) async {
                               inAppPurchase.buyNonConsumable(
                                 purchaseParam: PurchaseParam(
