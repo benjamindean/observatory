@@ -1,120 +1,19 @@
-import 'dart:async';
-
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_it/get_it.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/products_list.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
-import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/observatory_snack_bar.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-class PurchasePage extends ConsumerStatefulWidget {
+class PurchasePage extends ConsumerWidget {
   const PurchasePage({super.key});
 
   @override
-  PurchasePageState createState() => PurchasePageState();
-}
-
-class PurchasePageState extends ConsumerState<PurchasePage> {
-  final InAppPurchase inAppPurchase = InAppPurchase.instance;
-  late StreamSubscription<List<PurchaseDetails>> subscription;
-
-  bool isPending = false;
-
-  @override
-  void initState() {
-    final Stream<List<PurchaseDetails>> purchaseUpdated =
-        inAppPurchase.purchaseStream;
-
-    subscription = purchaseUpdated.listen(
-      (List<PurchaseDetails> purchaseDetailsList) async {
-        for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
-          final PurchaseStatus status = purchaseDetails.status;
-
-          if (status == PurchaseStatus.pending) {
-            setIsPending(true);
-          } else {
-            if (status == PurchaseStatus.error) {
-              setIsPending(false);
-            } else if (status == PurchaseStatus.purchased ||
-                status == PurchaseStatus.restored) {
-              setIsPending(false);
-
-              unawaited(
-                deliverPurchase(
-                  purchaseDetails.productID,
-                  PurchaseStatus.restored == status,
-                ),
-              );
-            }
-
-            if (purchaseDetails.pendingCompletePurchase) {
-              await inAppPurchase.completePurchase(purchaseDetails);
-
-              setIsPending(false);
-            }
-          }
-        }
-      },
-      onDone: () {
-        subscription.cancel();
-      },
-      onError: (error, stackTrace) {
-        Sentry.captureException(
-          error,
-          stackTrace: stackTrace,
-        );
-      },
-    );
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    subscription.cancel();
-
-    super.dispose();
-  }
-
-  Future<void> deliverPurchase(String productId, bool isRestored) async {
-    setIsPending(true);
-
-    final List<String> purchasedProductIds = ref.read(
-      asyncPurchaseProvider.select(
-        (state) => state.valueOrNull?.purchasedProductIds ?? [],
-      ),
-    );
-
-    if (!isRestored) {
-      ObservatorySnackBar.show(
-        context,
-        icon: Icons.favorite,
-        content: const Text('Thank you for your support!'),
-      );
-    }
-
-    await GetIt.I<SettingsRepository>().setPurchasedProductIds(
-      {...purchasedProductIds, productId}.toList(),
-    );
-
-    return ref.read(asyncPurchaseProvider.notifier).reset();
-  }
-
-  Future<void> setIsPending(bool isPendingValue) async {
-    setState(() {
-      isPending = isPendingValue;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<PurchaseState> purchases = ref.watch(
       asyncPurchaseProvider,
     );
@@ -124,7 +23,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
         actions: [
           TextButton(
             onPressed: () {
-              setIsPending(true);
+              ref.read(asyncPurchaseProvider.notifier).setIsPending(true);
 
               ObservatorySnackBar.show(
                 context,
@@ -134,7 +33,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
 
               InAppPurchase.instance.restorePurchases().then(
                 (value) {
-                  setIsPending(false);
+                  ref.read(asyncPurchaseProvider.notifier).setIsPending(false);
 
                   if (context.mounted) {
                     ObservatorySnackBar.show(
@@ -200,14 +99,28 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: ProductsList(
-                            isPending: isPending,
+                            isPending: state.isPending,
                             products: state.products,
                             purchasedProductIds: state.purchasedProductIds,
                             onPurchase: (product) async {
-                              inAppPurchase.buyNonConsumable(
+                              InAppPurchase.instance
+                                  .buyNonConsumable(
                                 purchaseParam: PurchaseParam(
                                   productDetails: product,
                                 ),
+                              )
+                                  .then(
+                                (value) {
+                                  if (context.mounted) {
+                                    ObservatorySnackBar.show(
+                                      context,
+                                      icon: Icons.favorite,
+                                      content: const Text(
+                                        'Thank you for your support!',
+                                      ),
+                                    );
+                                  }
+                                },
                               );
                             },
                           ),

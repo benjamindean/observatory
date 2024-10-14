@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 final List<ProductDetails> debugList = [
   ProductDetails(
@@ -29,14 +30,75 @@ final List<ProductDetails> debugList = [
 class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
   @override
   Future<PurchaseState> build() async {
-    final List<String> purchasedProductIds =
-        await GetIt.I<SettingsRepository>().getPurchasedProductIds();
-    final List<ProductDetails> products = await _fetchPurchases();
-
     return PurchaseState(
-      products: products,
-      purchasedProductIds: purchasedProductIds,
+      products: await _fetchPurchases(),
+      purchasedProductIds:
+          await GetIt.I<SettingsRepository>().getPurchasedProductIds(),
+      subscription: InAppPurchase.instance.purchaseStream.listen(
+        (List<PurchaseDetails> purchaseDetailsList) async {
+          for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
+            final PurchaseStatus status = purchaseDetails.status;
+
+            if (status == PurchaseStatus.pending) {
+              setIsPending(true);
+            } else {
+              if (status == PurchaseStatus.error) {
+                setIsPending(false);
+              } else if (status == PurchaseStatus.purchased ||
+                  status == PurchaseStatus.restored) {
+                setIsPending(false);
+
+                unawaited(
+                  deliverPurchase(purchaseDetails.productID),
+                );
+              }
+
+              if (purchaseDetails.pendingCompletePurchase) {
+                await InAppPurchase.instance.completePurchase(purchaseDetails);
+
+                setIsPending(false);
+              }
+            }
+          }
+        },
+        onError: (error, stackTrace) {
+          Sentry.captureException(
+            error,
+            stackTrace: stackTrace,
+          );
+        },
+      ),
     );
+  }
+
+  Future<void> deliverPurchase(String productId) async {
+    setIsPending(true);
+
+    final List<String> purchasedProductIds = ref.read(
+      asyncPurchaseProvider.select(
+        (state) => state.valueOrNull?.purchasedProductIds ?? [],
+      ),
+    );
+    final List<String> newList = {...purchasedProductIds, productId}.toList();
+
+    await GetIt.I<SettingsRepository>().setPurchasedProductIds(
+      newList,
+    );
+
+    state = await AsyncValue.guard(() async {
+      return state.value!.copyWith(
+        isPending: false,
+        purchasedProductIds: newList,
+      );
+    });
+  }
+
+  Future<void> setIsPending(bool isPending) async {
+    state = await AsyncValue.guard(() async {
+      return state.value!.copyWith(
+        isPending: isPending,
+      );
+    });
   }
 
   Future<List<ProductDetails>> _fetchPurchases() async {
