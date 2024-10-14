@@ -26,7 +26,6 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
   late StreamSubscription<List<PurchaseDetails>> subscription;
 
   bool isPending = false;
-  List<String> purchasedProductIds = [];
 
   @override
   void initState() {
@@ -87,9 +86,11 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
   Future<void> deliverPurchase(String productId, bool isRestored) async {
     setIsPending(true);
 
-    setState(() {
-      purchasedProductIds = {...purchasedProductIds, productId}.toList();
-    });
+    final List<String> purchasedProductIds = ref.read(
+      asyncPurchaseProvider.select(
+        (state) => state.valueOrNull?.purchasedProductIds ?? [],
+      ),
+    );
 
     if (!isRestored) {
       ObservatorySnackBar.show(
@@ -100,12 +101,10 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
     }
 
     await GetIt.I<SettingsRepository>().setPurchasedProductIds(
-      purchasedProductIds,
+      {...purchasedProductIds, productId}.toList(),
     );
 
-    ref.watch(asyncPurchaseProvider.notifier).reset();
-
-    return;
+    return ref.read(asyncPurchaseProvider.notifier).reset();
   }
 
   Future<void> setIsPending(bool isPendingValue) async {
@@ -203,7 +202,7 @@ class PurchasePageState extends ConsumerState<PurchasePage> {
                           child: ProductsList(
                             isPending: isPending,
                             products: state.products,
-                            purchasedProductIds: purchasedProductIds,
+                            purchasedProductIds: state.purchasedProductIds,
                             onPurchase: (product) async {
                               inAppPurchase.buyNonConsumable(
                                 purchaseParam: PurchaseParam(

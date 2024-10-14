@@ -40,6 +40,42 @@ class ProductsListState extends State<ProductsList> {
     selectedProduct = widget.products.first;
   }
 
+  Widget purchaseButton(
+    ProductDetails? currentProduct,
+    List<ProductDetails> leftoverProducts,
+  ) {
+    if (widget.isPending) {
+      return ObservatoryProgressIndicator(
+        color: context.colors.scheme.onSecondary,
+        size: 30,
+      );
+    }
+
+    if (leftoverProducts.isEmpty) {
+      return const Text('Thank you for your support!');
+    }
+
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: 'Purchase Now for ',
+            style: context.textStyles.bodyLarge.copyWith(
+              color: context.colors.scheme.onSecondary,
+            ),
+          ),
+          TextSpan(
+            text: currentProduct != null ? currentProduct.price : '',
+            style: context.textStyles.bodyLarge.copyWith(
+              color: context.colors.scheme.onSecondary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.products.isEmpty) {
@@ -48,7 +84,13 @@ class ProductsListState extends State<ProductsList> {
       );
     }
 
-    final ProductDetails? currentProduct = widget.products.firstWhereOrNull(
+    final List<ProductDetails> leftoverProducts = widget.products
+        .where(
+          (e) => !widget.purchasedProductIds.contains(e.id),
+        )
+        .toList();
+
+    final ProductDetails? currentProduct = leftoverProducts.firstWhereOrNull(
       (e) => e == selectedProduct,
     );
 
@@ -65,7 +107,9 @@ class ProductsListState extends State<ProductsList> {
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: RadioListTile<ProductDetails>(
                   title: Text(e.price),
-                  subtitle: Text(e.title),
+                  subtitle: isPurchased
+                      ? Text('You have already purchased this item')
+                      : Text(e.title),
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
                       color: context.colors.scheme.primary,
@@ -98,35 +142,15 @@ class ProductsListState extends State<ProductsList> {
                   context.colors.scheme.secondary,
                 ),
               ),
-              onPressed: () {
-                widget.onPurchase(selectedProduct);
-              },
-              child: widget.isPending
-                  ? ObservatoryProgressIndicator(
-                      color: context.colors.scheme.onSecondary,
-                      size: 30,
-                    )
-                  : Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Purchase Now for ',
-                            style: context.textStyles.bodyLarge.copyWith(
-                              color: context.colors.scheme.onSecondary,
-                            ),
-                          ),
-                          TextSpan(
-                            text: currentProduct != null
-                                ? currentProduct.price
-                                : '',
-                            style: context.textStyles.bodyLarge.copyWith(
-                              color: context.colors.scheme.onSecondary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+              onPressed: leftoverProducts.isEmpty
+                  ? null
+                  : () {
+                      widget.onPurchase(selectedProduct);
+                    },
+              child: purchaseButton(
+                currentProduct,
+                leftoverProducts,
+              ),
             ),
           ),
         ),
