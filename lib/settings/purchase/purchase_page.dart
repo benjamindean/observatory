@@ -18,6 +18,21 @@ class PurchasePage extends ConsumerWidget {
       asyncPurchaseProvider,
     );
 
+    ref.listen(
+      asyncPurchaseProvider.select(
+        (state) => state.requireValue.purchasedProductIds,
+      ),
+      (prev, next) {
+        if (prev != null && next.length > prev.length) {
+          ObservatorySnackBar.show(
+            context,
+            icon: Icons.favorite,
+            content: const Text('Thank you for your support!'),
+          );
+        }
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -102,25 +117,11 @@ class PurchasePage extends ConsumerWidget {
                             isPending: state.isPending,
                             products: state.products,
                             purchasedProductIds: state.purchasedProductIds,
-                            onPurchase: (product) async {
-                              InAppPurchase.instance
-                                  .buyNonConsumable(
+                            onPurchase: (product) {
+                              InAppPurchase.instance.buyNonConsumable(
                                 purchaseParam: PurchaseParam(
                                   productDetails: product,
                                 ),
-                              )
-                                  .then(
-                                (value) {
-                                  if (context.mounted) {
-                                    ObservatorySnackBar.show(
-                                      context,
-                                      icon: Icons.favorite,
-                                      content: const Text(
-                                        'Thank you for your support!',
-                                      ),
-                                    );
-                                  }
-                                },
                               );
                             },
                           ),

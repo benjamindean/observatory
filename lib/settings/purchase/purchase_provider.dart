@@ -34,40 +34,7 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
       products: await _fetchPurchases(),
       purchasedProductIds:
           await GetIt.I<SettingsRepository>().getPurchasedProductIds(),
-      subscription: InAppPurchase.instance.purchaseStream.listen(
-        (List<PurchaseDetails> purchaseDetailsList) async {
-          for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
-            final PurchaseStatus status = purchaseDetails.status;
-
-            if (status == PurchaseStatus.pending) {
-              setIsPending(true);
-            } else {
-              if (status == PurchaseStatus.error) {
-                setIsPending(false);
-              } else if (status == PurchaseStatus.purchased ||
-                  status == PurchaseStatus.restored) {
-                setIsPending(false);
-
-                unawaited(
-                  deliverPurchase(purchaseDetails.productID),
-                );
-              }
-
-              if (purchaseDetails.pendingCompletePurchase) {
-                await InAppPurchase.instance.completePurchase(purchaseDetails);
-
-                setIsPending(false);
-              }
-            }
-          }
-        },
-        onError: (error, stackTrace) {
-          Sentry.captureException(
-            error,
-            stackTrace: stackTrace,
-          );
-        },
-      ),
+      subscription: ref.read(purchaseStreamProvider),
     );
   }
 
@@ -81,12 +48,10 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     );
     final List<String> newList = {...purchasedProductIds, productId}.toList();
 
-    await GetIt.I<SettingsRepository>().setPurchasedProductIds(
-      newList,
-    );
+    await GetIt.I<SettingsRepository>().setPurchasedProductIds(newList);
 
     state = await AsyncValue.guard(() async {
-      return state.value!.copyWith(
+      return state.requireValue.copyWith(
         isPending: false,
         purchasedProductIds: newList,
       );
@@ -95,7 +60,7 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
 
   Future<void> setIsPending(bool isPending) async {
     state = await AsyncValue.guard(() async {
-      return state.value!.copyWith(
+      return state.requireValue.copyWith(
         isPending: isPending,
       );
     });
@@ -134,4 +99,49 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
 final asyncPurchaseProvider =
     AsyncNotifierProvider<AsyncPurchaseNotifier, PurchaseState>(() {
   return AsyncPurchaseNotifier();
+});
+
+class PurchaseStreamNotifier
+    extends Notifier<StreamSubscription<List<PurchaseDetails>>> {
+  @override
+  StreamSubscription<List<PurchaseDetails>> build() {
+    return InAppPurchase.instance.purchaseStream.listen(
+      (List<PurchaseDetails> purchaseDetailsList) async {
+        for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
+          final PurchaseStatus status = purchaseDetails.status;
+
+          if (status == PurchaseStatus.pending) {
+            ref.read(asyncPurchaseProvider.notifier).setIsPending(true);
+          } else {
+            if (status == PurchaseStatus.error) {
+              ref.read(asyncPurchaseProvider.notifier).setIsPending(false);
+            } else if (status == PurchaseStatus.purchased ||
+                status == PurchaseStatus.restored) {
+              ref.read(asyncPurchaseProvider.notifier).setIsPending(false);
+              ref.read(asyncPurchaseProvider.notifier).deliverPurchase(
+                    purchaseDetails.productID,
+                  );
+            }
+
+            if (purchaseDetails.pendingCompletePurchase) {
+              await InAppPurchase.instance.completePurchase(purchaseDetails);
+
+              ref.read(asyncPurchaseProvider.notifier).setIsPending(false);
+            }
+          }
+        }
+      },
+      onError: (error, stackTrace) {
+        Sentry.captureException(
+          error,
+          stackTrace: stackTrace,
+        );
+      },
+    );
+  }
+}
+
+final purchaseStreamProvider = NotifierProvider<PurchaseStreamNotifier,
+    StreamSubscription<List<PurchaseDetails>>>(() {
+  return PurchaseStreamNotifier();
 });

@@ -52,7 +52,12 @@ class ProductsListState extends State<ProductsList> {
     }
 
     if (leftoverProducts.isEmpty) {
-      return const Text('Thank you for your support!');
+      return Text(
+        'Thank you for your support!',
+        style: context.textStyles.bodyLarge.copyWith(
+          color: context.colors.scheme.onSecondary,
+        ),
+      );
     }
 
     return Text.rich(
