@@ -95,9 +95,10 @@ class ProductsListState extends State<ProductsList> {
         )
         .toList();
 
-    final ProductDetails? currentProduct = leftoverProducts.firstWhereOrNull(
-      (e) => e == selectedProduct,
-    );
+    final ProductDetails currentProduct = leftoverProducts.firstWhereOrNull(
+          (e) => e == selectedProduct,
+        ) ??
+        leftoverProducts.first;
 
     return Column(
       children: [
@@ -123,7 +124,7 @@ class ProductsListState extends State<ProductsList> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   value: e,
-                  groupValue: selectedProduct,
+                  groupValue: currentProduct,
                   onChanged: !(widget.isPending || isPurchased)
                       ? (ProductDetails? value) {
                           setState(() {

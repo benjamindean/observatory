@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,7 +42,7 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
   Future<void> deliverPurchase(String productId) async {
     setIsPending(true);
 
-    final List<String> purchasedProductIds = ref.read(
+    final List<String> purchasedProductIds = ref.watch(
       asyncPurchaseProvider.select(
         (state) => state.valueOrNull?.purchasedProductIds ?? [],
       ),
@@ -118,9 +119,12 @@ class PurchaseStreamNotifier
             } else if (status == PurchaseStatus.purchased ||
                 status == PurchaseStatus.restored) {
               ref.read(asyncPurchaseProvider.notifier).setIsPending(false);
-              ref.read(asyncPurchaseProvider.notifier).deliverPurchase(
-                    purchaseDetails.productID,
-                  );
+
+              unawaited(
+                ref.watch(asyncPurchaseProvider.notifier).deliverPurchase(
+                      purchaseDetails.productID,
+                    ),
+              );
             }
 
             if (purchaseDetails.pendingCompletePurchase) {
@@ -144,4 +148,25 @@ class PurchaseStreamNotifier
 final purchaseStreamProvider = NotifierProvider<PurchaseStreamNotifier,
     StreamSubscription<List<PurchaseDetails>>>(() {
   return PurchaseStreamNotifier();
+});
+
+class PlusFeaturesNotifier extends Notifier<bool> {
+  @override
+  bool build() {
+    if (Platform.isAndroid) {
+      return true;
+    }
+
+    final List<String> purchasedProductIds = ref.watch(
+      asyncPurchaseProvider.select(
+        (state) => state.valueOrNull?.purchasedProductIds ?? [],
+      ),
+    );
+
+    return purchasedProductIds.isNotEmpty;
+  }
+}
+
+final plusFeaturesProvider = NotifierProvider<PlusFeaturesNotifier, bool>(() {
+  return PlusFeaturesNotifier();
 });
