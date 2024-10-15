@@ -46,22 +46,13 @@ Future<void> initSupabase() async {
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
-    try {
-      if (task == TASK_CHECK_WAITLIST) {
-        await initSettings();
+    if (task == TASK_CHECK_WAITLIST) {
+      await initSettings();
 
-        return await checkWaitlistTask();
-      }
-
-      return false;
-    } catch (error, stackTrace) {
-      Sentry.captureException(
-        error,
-        stackTrace: stackTrace,
-      );
-
-      return false;
+      return await checkWaitlistTask();
     }
+
+    return false;
   });
 }
 
