@@ -98,7 +98,8 @@ class ProductsListState extends State<ProductsList> {
     final ProductDetails currentProduct = leftoverProducts.firstWhereOrNull(
           (e) => e == selectedProduct,
         ) ??
-        leftoverProducts.first;
+        leftoverProducts.firstOrNull ??
+        selectedProduct;
 
     return Column(
       children: [
