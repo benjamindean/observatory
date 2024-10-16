@@ -3,6 +3,7 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/deals/ui/deals_filter.dart';
@@ -13,6 +14,7 @@ import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/state/settings_state.dart';
 import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/discounted_badge.dart';
+import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:observatory/waitlist/ui/waitlist_sorting_page.dart';
@@ -34,6 +36,32 @@ class HomePage extends ConsumerWidget {
         (value) => value.valueOrNull?.dealsTab ?? DealCategory.all,
       ),
     );
+
+    GetIt.I<SettingsRepository>().getLaunchCounter().then((value) {
+      if (value % 5 == 0) {
+        if (context.mounted) {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) {
+              return ObservatoryDialog(
+                onApply: () {
+                  context.push('/observatory-plus');
+                },
+                onDiscard: () {
+                  context.pop();
+                },
+                title: 'Support Observatory',
+                body:
+                    'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it.',
+                discardText: 'Not Now',
+                applyText: 'Support',
+              );
+            },
+          );
+        }
+      }
+    });
 
     return Scaffold(
       key: const Key('home-page'),
