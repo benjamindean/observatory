@@ -41,7 +41,7 @@ dependencies:
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.1
   easy_refresh: ^3.4.0
-  awesome_notifications: ^0.9.3+1
+  awesome_notifications: ^0.10.0
   workmanager:
     git:
       url: https://github.com/fluttercommunity/flutter_workmanager.git
@@ -57,7 +57,7 @@ dependencies:
   fl_chart: ^0.69.0
   http: ^1.2.2
   oauth2: ^2.0.3
-  flutter_secure_storage: ^4.2.1
+  flutter_secure_storage: ^9.2.2
   sentry_flutter: ^8.9.0
 
 dependency_overrides:

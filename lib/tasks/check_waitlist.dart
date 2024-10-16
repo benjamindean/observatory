@@ -74,7 +74,7 @@ Future<void> enableCheckWaitlistTask({
     TASK_CHECK_WAITLIST,
     TASK_CHECK_WAITLIST,
     frequency: frequency,
-    initialDelay: const Duration(hours: 6),
+    initialDelay: const Duration(minutes: 20),
     constraints: Constraints(
       networkType: NetworkType.connected,
     ),

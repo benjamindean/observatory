@@ -125,6 +125,7 @@ void main() async {
 
   await Workmanager().initialize(
     callbackDispatcher,
+    isInDebugMode: kDebugMode,
   );
 
   // Re-enable check waitlist task if notifications are enabled
