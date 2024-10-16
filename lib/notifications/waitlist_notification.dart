@@ -25,7 +25,7 @@ Future<bool> showWaitlistNotification({
   required List<Deal> deals,
 }) {
   if (deals.isEmpty) {
-    return Future.value(false);
+    return Future.value(true);
   }
 
   final String notificationTitle = Intl.plural(

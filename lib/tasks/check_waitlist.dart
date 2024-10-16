@@ -55,7 +55,7 @@ Future<bool> checkWaitlistTask() async {
       await GetIt.I.get<SettingsRepository>().getWaitlistNotifications();
 
   if (!isEnabled) {
-    return false;
+    return true;
   }
 
   final List<Deal> deals = await getNewDiscountedDeals();
@@ -74,7 +74,8 @@ Future<void> enableCheckWaitlistTask({
     TASK_CHECK_WAITLIST,
     TASK_CHECK_WAITLIST,
     frequency: frequency,
-    initialDelay: const Duration(minutes: 20),
+    initialDelay: const Duration(minutes: 5),
+    backoffPolicy: BackoffPolicy.exponential,
     constraints: Constraints(
       networkType: NetworkType.connected,
     ),

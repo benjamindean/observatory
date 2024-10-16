@@ -15,6 +15,7 @@ import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/auth/providers/steam_provider.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
+import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/shared/ui/theme.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:observatory/tasks/constants.dart';
@@ -71,6 +72,32 @@ class Observatory extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ObservatoryTheme theme = ref.watch(themesProvider);
+
+    GetIt.I<SettingsRepository>().getLaunchCounter().then((value) {
+      if (value % 5 == 0) {
+        if (context.mounted) {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) {
+              return ObservatoryDialog(
+                onApply: () {
+                  context.push('/observatory-plus');
+                },
+                onDiscard: () {
+                  context.pop();
+                },
+                title: 'Support Observatory',
+                body:
+                    'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it.',
+                discardText: 'Not Now',
+                applyText: 'Support',
+              );
+            },
+          );
+        }
+      }
+    });
 
     AppLinks().uriLinkStream.listen(
       (uri) async {
