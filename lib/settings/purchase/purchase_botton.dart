@@ -17,7 +17,6 @@ class PurchaseButton extends ConsumerWidget {
       return SizedBox.shrink();
     }
 
-    final bool hasPlus = ref.watch(plusFeaturesProvider);
     final AsyncValue<PurchaseState> purchases = ref.watch(
       asyncPurchaseProvider,
     );
@@ -57,7 +56,7 @@ class PurchaseButton extends ConsumerWidget {
           label: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
-              hasPlus ? 'Observatory Plus' : 'Get Observatory Plus',
+              'Observatory Plus',
               style: context.textStyles.bodyLarge.copyWith(
                 color: context.colors.scheme.onSecondary,
                 fontWeight: FontWeight.bold,

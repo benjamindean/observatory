@@ -60,9 +60,6 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   sentry_flutter: ^8.9.0
 
-dependency_overrides:
-  win32: ^5.5.4
-
 flutter_launcher_icons:
   android:
     generate: true

@@ -82,10 +82,10 @@ packages:
     dependency: transitive
     description:
       name: args
-      sha256: "7cf60b9f0cc88203c5a190b4cd62a99feea42759a7fa695010eb5de1c0b2252a"
+      sha256: bf9f5caeea8d8fe6721a9c358dd8a5c1947b27f1cfaa18b39c301273594919e6
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.0"
+    version: "2.6.0"
   async:
     dependency: transitive
     description:
@@ -266,10 +266,10 @@ packages:
     dependency: transitive
     description:
       name: convert
-      sha256: "0f08b14755d163f6e2134cb58222dd25ea2a2ee8a195e53983d57c075324d592"
+      sha256: b30acd5944035672bc15c6b7a8b47d773e41e2f17de064350988c5d02adb1c68
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   country_picker:
     dependency: "direct main"
     description:
@@ -282,10 +282,10 @@ packages:
     dependency: transitive
     description:
       name: coverage
-      sha256: c1fb2dce3c0085f39dc72668e85f8e0210ec7de05345821ff58530567df345a5
+      sha256: "88b0fddbe4c92910fefc09cc0248f5e7f0cd23e450ded4c28f16ab8ee8f83268"
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.2"
+    version: "1.10.0"
   cross_file:
     dependency: transitive
     description:
@@ -298,10 +298,10 @@ packages:
     dependency: transitive
     description:
       name: crypto
-      sha256: ec30d999af904f33454ba22ed9a86162b35e52b44ac4807d1d93c288041d7d27
+      sha256: "1e445881f28f22d6140f181e07737b22f1e099a5e1ff94b0af2f9e4a463f4855"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.5"
+    version: "3.0.6"
   csslib:
     dependency: transitive
     description:
@@ -450,10 +450,10 @@ packages:
     dependency: transitive
     description:
       name: fixnum
-      sha256: "25517a4deb0c03aa0f32fd12db525856438902d9c16536311e76cdc57b31d7d1"
+      sha256: b6dc7065e46c974bc7c5f143080a6764ec7a4be6da1285ececdc37be96de53be
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   fl_chart:
     dependency: "direct main"
     description:
@@ -545,10 +545,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_riverpod
-      sha256: "0f1974eff5bbe774bf1d870e406fc6f29e3d6f1c46bd9c58e7172ff68a785d7d"
+      sha256: "711d916456563f715bde1e139d7cfdca009f8264befab3ac9f8ded8b6ec26405"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.1"
+    version: "2.5.3"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -768,10 +768,10 @@ packages:
     dependency: "direct main"
     description:
       name: hooks_riverpod
-      sha256: "97266a91c994951a06ef0ff3a1c7fb261e52ec7f74e87f0614ea0b7411b859b2"
+      sha256: "534ca8af331235f700f3916a74e4579cdfdd708e2fbed342fc8aa969d41a7af0"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.2"
+    version: "2.5.4"
   hotreloader:
     dependency: transitive
     description:
@@ -824,10 +824,10 @@ packages:
     dependency: transitive
     description:
       name: image
-      sha256: "2237616a36c0d69aef7549ab439b833fb7f9fb9fc861af2cc9ac3eedddd69ca8"
+      sha256: f31d52537dc417fdcde36088fdf11d191026fd5e4fae742491ebd40e5a8bea7d
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.0"
+    version: "4.3.0"
   in_app_purchase:
     dependency: "direct main"
     description:
@@ -1253,10 +1253,10 @@ packages:
     dependency: transitive
     description:
       name: riverpod
-      sha256: f21b32ffd26a36555e501b04f4a5dca43ed59e16343f1a30c13632b2351dfa4d
+      sha256: c86fedfb45dd1da98ee6493dd9374325cdf494e7d523ebfb0c387eecc5f7b5c9
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.1"
+    version: "2.5.3"
   riverpod_analyzer_utils:
     dependency: transitive
     description:
@@ -1783,13 +1783,13 @@ packages:
     source: hosted
     version: "1.2.1"
   win32:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: win32
-      sha256: "4d45dc9069dba4619dc0ebd93c7cec5e66d8482cb625a370ac806dcc8165f2ec"
+      sha256: e5c39a90447e7c81cfec14b041cdbd0d0916bd9ebbc7fe02ab69568be703b9bd
       url: "https://pub.dev"
     source: hosted
-    version: "5.5.5"
+    version: "5.6.0"
   workmanager:
     dependency: "direct main"
     description:
