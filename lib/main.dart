@@ -3,7 +3,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -24,7 +24,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workmanager/workmanager.dart';
 
 Future<void> initSettings() async {
-  await FlutterConfig.loadEnvVariables();
+  await dotenv.load(fileName: 'secrets.env');
   await SettingsRepository.init();
 
   final String cache = (await getApplicationDocumentsDirectory()).path;
@@ -35,8 +35,8 @@ Future<void> initSettings() async {
 
 Future<void> initSupabase() async {
   await Supabase.initialize(
-    url: FlutterConfig.get('SUPABASE_URL'),
-    anonKey: FlutterConfig.get('SUPABASE_ANON_KEY'),
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
     authOptions: const FlutterAuthClientOptions(
       detectSessionInUri: false,
     ),
@@ -138,7 +138,7 @@ void main() async {
 
   await SentryFlutter.init(
     (options) {
-      options.dsn = kDebugMode ? '' : FlutterConfig.get('SENTRY_DSN');
+      options.dsn = kDebugMode ? '' : dotenv.env['SENTRY_DSN'];
       options.autoInitializeNativeSdk = false;
     },
     appRunner: () => runApp(

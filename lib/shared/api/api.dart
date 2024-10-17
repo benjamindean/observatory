@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
@@ -291,7 +291,7 @@ class API {
       'api.steampowered.com',
       '/ISteamUser/GetPlayerSummaries/v0002/',
       {
-        'key': FlutterConfig.get('STEAM_API_KEY'),
+        'key': dotenv.env['STEAM_API_KEY'],
         'steamids': steamId,
       },
     );

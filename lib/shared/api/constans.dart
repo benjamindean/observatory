@@ -1,8 +1,8 @@
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-final String API_IDENTIFIER = FlutterConfig.get('ITAD_API_IDENTIFIER');
-final String API_KEY = FlutterConfig.get('ITAD_API_KEY');
-final String API_SECRET = FlutterConfig.get('ITAD_API_SECRET');
+final String API_IDENTIFIER = dotenv.env['ITAD_API_IDENTIFIER']!;
+final String API_KEY = dotenv.env['ITAD_API_KEY']!;
+final String API_SECRET = dotenv.env['ITAD_API_SECRET']!;
 
 const List<String> API_SCOPES = [
   'user_info',
