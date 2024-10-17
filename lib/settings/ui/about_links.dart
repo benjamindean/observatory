@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +90,32 @@ class AboutLinks extends StatelessWidget {
               ),
             ),
           ),
+          if (Platform.isAndroid)
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: GestureDetector(
+                child: Container(
+                  clipBehavior: Clip.antiAlias,
+                  height: 50,
+                  width: 175,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: ExactAssetImage('assets/images/bmc-button.png'),
+                      fit: BoxFit.fitWidth,
+                      alignment: Alignment.centerLeft,
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  launchUrl(
+                    Uri.parse(
+                      'https://buymeacoffee.com/benjaminabel',
+                    ),
+                    mode: LaunchMode.externalApplication,
+                  );
+                },
+              ),
+            )
         ],
       ),
     );

@@ -1,4 +1,3 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,6 +8,7 @@ import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class RecentSearchesList extends ConsumerWidget {
   const RecentSearchesList({
@@ -120,9 +120,9 @@ class RecentSearchesList extends ConsumerWidget {
           stackTrace: stackTrace,
         );
 
-        FirebaseCrashlytics.instance.recordError(
+        Sentry.captureException(
           error,
-          stackTrace,
+          stackTrace: stackTrace,
         );
 
         return const SliverFillRemaining(

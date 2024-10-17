@@ -1,78 +1,58 @@
+import 'package:app_links/app_links.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:firebase_app_check/firebase_app_check.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:observatory/firebase_options.dart';
+import 'package:observatory/auth/providers/itad_provider.dart';
 import 'package:observatory/notifications/constants.dart';
 import 'package:observatory/router.dart';
-import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/auth/providers/steam_provider.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/ui/theme.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:observatory/tasks/constants.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workmanager/workmanager.dart';
 
 Future<void> initSettings() async {
+  await dotenv.load(fileName: 'secrets.env');
   await SettingsRepository.init();
 
   final String cache = (await getApplicationDocumentsDirectory()).path;
 
   GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
   GetIt.I.registerSingleton<API>(API.create(cache));
-  GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
-}
-
-Future<void> initFirebase() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  await FirebaseAppCheck.instance.activate();
-
-  FlutterError.onError = (errorDetails) {
-    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  };
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-
-    return true;
-  };
 }
 
 Future<void> initSupabase() async {
   await Supabase.initialize(
-    url: GetIt.I<Secret>().supabaseUrl,
-    anonKey: GetIt.I<Secret>().supabaseAnonKey,
+    url: dotenv.get('SUPABASE_URL'),
+    anonKey: dotenv.get('SUPABASE_ANON_KEY'),
+    authOptions: const FlutterAuthClientOptions(
+      detectSessionInUri: false,
+    ),
   );
 }
 
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
-    try {
-      if (task == TASK_CHECK_WAITLIST) {
-        await initSettings();
-        await initFirebase();
+    if (task == TASK_CHECK_WAITLIST) {
+      await initSettings();
 
-        return await checkWaitlistTask();
-      }
-
-      return false;
-    } catch (error, stackTrace) {
-      FirebaseCrashlytics.instance.recordError(error, stackTrace);
-
-      return false;
+      return await checkWaitlistTask();
     }
+
+    return Future.value(true);
   });
 }
 
@@ -91,6 +71,26 @@ class Observatory extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ObservatoryTheme theme = ref.watch(themesProvider);
+
+    AppLinks().uriLinkStream.listen(
+      (uri) async {
+        if (uri.path == '/app/auth/steam') {
+          await ref.read(steamProvider.notifier).handleRedirect(uri);
+          await ref.read(steamProvider.notifier).import();
+        }
+
+        if (uri.path == '/app/auth/itad') {
+          await ref.watch(itadProvider.notifier).handleRedirect(uri);
+          await ref.watch(itadProvider.notifier).import();
+        }
+      },
+      onError: (error) {
+        Sentry.captureException(
+          error,
+          stackTrace: StackTrace.current,
+        );
+      },
+    );
 
     return MaterialApp.router(
       title: 'Observatory',
@@ -111,7 +111,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await initSettings();
-  await initFirebase();
   await initSupabase();
 
   await AwesomeNotifications().initialize(
@@ -126,15 +125,23 @@ void main() async {
 
   await Workmanager().initialize(
     callbackDispatcher,
+    isInDebugMode: kDebugMode,
   );
 
   // Re-enable check waitlist task if notifications are enabled
-  if (await GetIt.I<SettingsRepository>().getWaitlistNotifications()) {
-    await disableCheckWaitlistTask();
-    await enableCheckWaitlistTask();
-  }
+  GetIt.I<SettingsRepository>().getWaitlistNotifications().then((enabled) {
+    if (enabled) {
+      disableCheckWaitlistTask().then((_) {
+        enableCheckWaitlistTask();
+      });
+    }
+  });
 
   GetIt.I<SettingsRepository>().incrementLaunchCounter();
+
+  await SentryFlutter.init((options) {
+    options.dsn = kDebugMode ? '' : dotenv.get('SENTRY_DSN');
+  });
 
   runApp(
     const ProviderScope(

@@ -1,67 +1,167 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:observatory/settings/purchase/purchase_provider.dart';
-import 'package:observatory/settings/purchase/purchase_state.dart';
-import 'package:observatory/shared/ui/observatory_shimmer.dart';
 
-class ProductsList extends ConsumerWidget {
+import 'package:flutter/material.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:collection/collection.dart';
+import 'package:observatory/shared/widgets/progress_indicator.dart';
+
+class ProductsList extends StatefulWidget {
+  final bool isPending;
+  final Function(ProductDetails) onPurchase;
+  final List<ProductDetails> products;
+  final List<String> purchasedProductIds;
+
   const ProductsList({
     super.key,
+    required this.isPending,
+    required this.onPurchase,
+    required this.products,
+    required this.purchasedProductIds,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<PurchaseState> purchases = ref.watch(
-      asyncPurchaseProvider,
-    );
+  State<ProductsList> createState() => ProductsListState();
+}
 
-    return purchases.when(
-      data: (state) {
-        if (state.purchasedProductIds.isNotEmpty) {
-          return Text(
-            'Thank you for your support!',
-            style: context.themes.text.titleMedium?.copyWith(
-              color: context.colors.scheme.onSurface,
+class ProductsListState extends State<ProductsList> {
+  ProductDetails selectedProduct = ProductDetails(
+    id: '0',
+    title: 'Unknown',
+    description: 'Unknown',
+    price: 0.toString(),
+    rawPrice: 0,
+    currencyCode: 'USD',
+  );
+
+  @override
+  void initState() {
+    super.initState();
+
+    selectedProduct = widget.products.first;
+  }
+
+  Widget purchaseButton(
+    ProductDetails? currentProduct,
+    List<ProductDetails> leftoverProducts,
+  ) {
+    if (widget.isPending) {
+      return ObservatoryProgressIndicator(
+        color: context.colors.scheme.onSecondary,
+        size: 30,
+      );
+    }
+
+    if (leftoverProducts.isEmpty) {
+      return Text(
+        'Thank you for your support!',
+        style: context.textStyles.bodyLarge.copyWith(
+          color: context.colors.scheme.onSecondary,
+        ),
+      );
+    }
+
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: 'Purchase Now for ',
+            style: context.textStyles.bodyLarge.copyWith(
+              color: context.colors.scheme.onSecondary,
+            ),
+          ),
+          TextSpan(
+            text: currentProduct != null ? currentProduct.price : '',
+            style: context.textStyles.bodyLarge.copyWith(
+              color: context.colors.scheme.onSecondary,
               fontWeight: FontWeight.bold,
             ),
-          );
-        }
+          ),
+        ],
+      ),
+    );
+  }
 
-        if (state.isPending) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(vertical: 22.0, horizontal: 4.0),
-            child: ObservatoryShimmer(),
-          );
-        }
+  @override
+  Widget build(BuildContext context) {
+    if (widget.products.isEmpty) {
+      return const Center(
+        child: ObservatoryProgressIndicator(),
+      );
+    }
 
-        return Wrap(
-          spacing: 12.0,
-          children: state.products.map((e) {
-            return FilledButton(
-              onPressed: () {
-                ref.read(asyncPurchaseProvider.notifier).purchase(e);
-              },
-              child: Text(
-                e.price,
-                style: context.themes.text.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: context.colors.scheme.onPrimary,
+    final List<ProductDetails> leftoverProducts = widget.products
+        .where(
+          (e) => !widget.purchasedProductIds.contains(e.id),
+        )
+        .toList();
+
+    final ProductDetails currentProduct = leftoverProducts.firstWhereOrNull(
+          (e) => e == selectedProduct,
+        ) ??
+        leftoverProducts.firstOrNull ??
+        selectedProduct;
+
+    return Column(
+      children: [
+        Column(
+          children: widget.products.map<Widget>(
+            (e) {
+              final bool isPurchased = widget.purchasedProductIds.contains(
+                e.id,
+              );
+
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: RadioListTile<ProductDetails>(
+                  title: Text(e.price),
+                  subtitle: isPurchased
+                      ? Text('You have already purchased this item')
+                      : Text(e.title),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: context.colors.scheme.primary,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  value: e,
+                  groupValue: currentProduct,
+                  onChanged: !(widget.isPending || isPurchased)
+                      ? (ProductDetails? value) {
+                          setState(() {
+                            selectedProduct = value!;
+                          });
+                        }
+                      : null,
+                ),
+              );
+            },
+          ).toList(),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: SizedBox(
+            width: double.infinity,
+            height: 60,
+            child: FilledButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                  context.colors.scheme.secondary,
                 ),
               ),
-            );
-          }).toList(),
-        );
-      },
-      loading: () {
-        return const Padding(
-          padding: EdgeInsets.symmetric(vertical: 22.0),
-          child: ObservatoryShimmer(),
-        );
-      },
-      error: (error, stackTrace) {
-        return const SizedBox.shrink();
-      },
+              onPressed: leftoverProducts.isEmpty
+                  ? null
+                  : () {
+                      widget.onPurchase(selectedProduct);
+                    },
+              child: purchaseButton(
+                currentProduct,
+                leftoverProducts,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

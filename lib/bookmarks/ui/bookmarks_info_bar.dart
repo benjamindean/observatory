@@ -27,6 +27,7 @@ class BookmarksInfoBar extends ConsumerWidget {
     }
 
     return bookmarks.when(
+      skipLoadingOnReload: true,
       data: (deals) {
         if (deals.isEmpty) {
           return const SizedBox.shrink();

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:observatory/bookmarks/bookmarks_page.dart';
+import 'package:observatory/bookmarks/ui/bookmarks_page.dart';
 import 'package:observatory/deal/deal_page.dart';
 import 'package:observatory/deals/deals_page.dart';
 import 'package:observatory/home_page.dart';
 import 'package:observatory/itad_filters/tags_list_page.dart';
 import 'package:observatory/search/search_page.dart';
+import 'package:observatory/settings/purchase/purchase_page.dart';
 import 'package:observatory/settings/settings_page.dart';
-import 'package:observatory/settings/steam_import/steam_import_page.dart';
 import 'package:observatory/settings/stores_select/stores_select_page.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/waitlist_page.dart';
+// import 'package:sentry_flutter/sentry_flutter.dart';
 
 enum NavigationBranch {
   deals,
@@ -24,6 +25,9 @@ final shellNavigatorKeySearch = GlobalKey<NavigatorState>();
 final shellNavigatorKeyWaitlist = GlobalKey<NavigatorState>();
 
 final GoRouter router = GoRouter(
+  // observers: [
+  //   SentryNavigatorObserver(),
+  // ],
   initialLocation: '/deals',
   navigatorKey: rootNavigatorKey,
   routes: [
@@ -88,11 +92,6 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const StoreSelectPage(),
     ),
     GoRoute(
-      name: 'steam-import',
-      path: '/steam-import',
-      builder: (context, state) => const SteamImportPage(),
-    ),
-    GoRoute(
       name: 'deal',
       path: '/deal',
       builder: (context, state) => DealPage(deal: state.extra as Deal),
@@ -101,6 +100,11 @@ final GoRouter router = GoRouter(
       name: 'tags-select',
       path: '/tags-select',
       builder: (context, state) => const TagsListPage(),
+    ),
+    GoRoute(
+      name: 'observatory-plus',
+      path: '/observatory-plus',
+      builder: (context, state) => const PurchasePage(),
     ),
   ],
 );

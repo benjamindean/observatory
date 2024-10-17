@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/auth/state/steam_state.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/api/utils.dart';
@@ -18,6 +20,7 @@ import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/steam_featured_item.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class API {
   final Dio dio;
@@ -59,9 +62,9 @@ class API {
         error: error,
       );
 
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         error,
-        stackTrace,
+        stackTrace: stackTrace,
       );
 
       return null;
@@ -91,9 +94,9 @@ class API {
         error: error,
       );
 
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         error,
-        stackTrace,
+        stackTrace: stackTrace,
       );
 
       return null;
@@ -111,12 +114,13 @@ class API {
 
     for (List<String> list in listOfIds) {
       try {
-        final Uri url = Uri.https(BASE_URL, '/games/prices/v2', {
+        final Uri url = Uri.https(BASE_URL, '/games/prices/v3', {
           'key': API_KEY,
           'country': country,
           'shops': stores.join(','),
-          'nondeals': 'true',
+          'deals': 'false',
           'vouchers': 'true',
+          'capacity': '0',
         });
 
         final response = await dio.post(
@@ -131,9 +135,9 @@ class API {
           error: error,
         );
 
-        FirebaseCrashlytics.instance.recordError(
+        Sentry.captureException(
           error,
-          stackTrace,
+          stackTrace: stackTrace,
         );
       }
     }
@@ -250,13 +254,13 @@ class API {
     );
   }
 
-  Future<List<Deal>> fetchSteamWishlist(String username) async {
+  Future<List<Deal>> fetchSteamWishlist(String steamId) async {
     final Map<String, dynamic> results = {};
 
     for (int i = 0; i < MAX_STEAM_WISHLIST_PAGES; i++) {
       final Uri steamAPI = Uri.https(
         'store.steampowered.com',
-        '/wishlist/id/$username/wishlistdata',
+        '/wishlist/profiles/$steamId/wishlistdata/',
         {'p': '$i'},
       );
       final steamResponse = await dio.get(steamAPI.toString());
@@ -280,6 +284,22 @@ class API {
           ),
         )
         .toList();
+  }
+
+  Future<SteamUser> fetchSteamUser(String steamId) async {
+    final Uri steamAPI = Uri.https(
+      'api.steampowered.com',
+      '/ISteamUser/GetPlayerSummaries/v0002/',
+      {
+        'key': dotenv.get('STEAM_API_KEY'),
+        'steamids': steamId,
+      },
+    );
+    final steamResponse = await dio.get(steamAPI.toString());
+
+    return SteamUser.fromJson(
+      json.decode(steamResponse.toString())['response']['players'][0],
+    );
   }
 
   Future<List<Deal>> fetchSteamFeatured() async {
@@ -401,9 +421,9 @@ class API {
         error: error,
       );
 
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         error,
-        stackTrace,
+        stackTrace: stackTrace,
       );
 
       return null;
@@ -415,11 +435,13 @@ class API {
   }) async {
     try {
       final List<int> stores = await settingsReporsitory.getSelectedStores();
+      final String country = await settingsReporsitory.getCountry();
 
       final Uri url = Uri.https(BASE_URL, '/games/history/v2', {
         'key': API_KEY,
         'id': id,
         'shops': stores.join(','),
+        'country': country,
       });
 
       return Parsers.history(await dio.get(url.toString()));
@@ -429,9 +451,9 @@ class API {
         error: error,
       );
 
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         error,
-        stackTrace,
+        stackTrace: stackTrace,
       );
 
       return null;

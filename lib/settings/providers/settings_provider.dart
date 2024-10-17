@@ -1,4 +1,3 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:observatory/settings/settings_repository.dart';
@@ -27,8 +26,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
       waitlistSorting: await repository.getWaitlistSorting(),
       waitlistSortingDirection: await repository.getWaitlistSortingDirection(),
       collapsePinned: await repository.getCollapsePinned(),
-      crashlyticsEnabled:
-          FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled,
     );
   }
 
@@ -100,23 +97,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
         return state.requireValue.copyWith(
           waitlistSortingDirection: direction,
-        );
-      },
-    );
-  }
-
-  Future<void> setCrashlyticsEnabled(
-    bool isEnabled,
-  ) async {
-    state = await AsyncValue.guard(
-      () async {
-        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
-          isEnabled,
-        );
-
-        return state.requireValue.copyWith(
-          crashlyticsEnabled:
-              FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled,
         );
       },
     );
