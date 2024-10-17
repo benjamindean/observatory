@@ -98,5 +98,5 @@ flutter:
     - assets/icon/observatory.png
     - assets/images/bmc-button.png
     - assets/images/itad-logo.jpg
-    - assets/secrets.json
+    - secrets.env
     - assets/google_fonts/
