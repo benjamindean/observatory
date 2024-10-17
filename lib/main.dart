@@ -52,7 +52,7 @@ void callbackDispatcher() {
       return await checkWaitlistTask();
     }
 
-    return true;
+    return Future.value(true);
   });
 }
 
