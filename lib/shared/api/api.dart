@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/auth/state/steam_state.dart';
 import 'package:observatory/shared/api/constans.dart';
@@ -291,7 +291,7 @@ class API {
       'api.steampowered.com',
       '/ISteamUser/GetPlayerSummaries/v0002/',
       {
-        'key': GetIt.I<Secret>().steamAPIKey,
+        'key': FlutterConfig.get('STEAM_API_KEY'),
         'steamids': steamId,
       },
     );

@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/api/utils.dart';
@@ -65,7 +65,7 @@ class IGDBAPI {
       final response = await dio.post(
           options: cacheOptions.toOptions().copyWith(
             headers: {
-              'Client-ID': GetIt.I<Secret>().igdbClientId,
+              'Client-ID': FlutterConfig.get('IGDB_CLIENT_ID'),
               'Authorization': 'Bearer ${token?.token}',
             },
           ),

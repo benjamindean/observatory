@@ -3,13 +3,13 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/auth/providers/itad_provider.dart';
 import 'package:observatory/notifications/constants.dart';
 import 'package:observatory/router.dart';
-import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/providers/themes_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/auth/providers/steam_provider.dart';
@@ -24,19 +24,19 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workmanager/workmanager.dart';
 
 Future<void> initSettings() async {
+  await FlutterConfig.loadEnvVariables();
   await SettingsRepository.init();
 
   final String cache = (await getApplicationDocumentsDirectory()).path;
 
-  GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
   GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
   GetIt.I.registerSingleton<API>(API.create(cache));
 }
 
 Future<void> initSupabase() async {
   await Supabase.initialize(
-    url: GetIt.I<Secret>().supabaseUrl,
-    anonKey: GetIt.I<Secret>().supabaseAnonKey,
+    url: FlutterConfig.get('SUPABASE_URL'),
+    anonKey: FlutterConfig.get('SUPABASE_ANON_KEY'),
     authOptions: const FlutterAuthClientOptions(
       detectSessionInUri: false,
     ),
@@ -138,7 +138,7 @@ void main() async {
 
   await SentryFlutter.init(
     (options) {
-      options.dsn = kDebugMode ? '' : GetIt.I<Secret>().sentryDsn;
+      options.dsn = kDebugMode ? '' : FlutterConfig.get('SENTRY_DSN');
       options.autoInitializeNativeSdk = false;
     },
     appRunner: () => runApp(

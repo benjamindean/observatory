@@ -1,9 +1,8 @@
-import 'package:get_it/get_it.dart';
-import 'package:observatory/secret_loader.dart';
+import 'package:flutter_config/flutter_config.dart';
 
-final String API_IDENTIFIER = GetIt.I<Secret>().itadApiIdentifier;
-final String API_KEY = GetIt.I<Secret>().itadApiKey;
-final String API_SECRET = GetIt.I<Secret>().itadApiSecret;
+final String API_IDENTIFIER = FlutterConfig.get('ITAD_API_IDENTIFIER');
+final String API_KEY = FlutterConfig.get('ITAD_API_KEY');
+final String API_SECRET = FlutterConfig.get('ITAD_API_SECRET');
 
 const List<String> API_SCOPES = [
   'user_info',

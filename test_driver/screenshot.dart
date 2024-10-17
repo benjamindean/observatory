@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
@@ -6,7 +7,6 @@ import 'package:observatory/main.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:get_it/get_it.dart';
-import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:path_provider/path_provider.dart';
@@ -27,11 +27,10 @@ void main() async {
 
   GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
   GetIt.I.registerSingleton<API>(API.create(cache));
-  GetIt.I.registerSingleton<Secret>(await SecretLoader.load());
 
   await Supabase.initialize(
-    url: GetIt.I<Secret>().supabaseUrl,
-    anonKey: GetIt.I<Secret>().supabaseAnonKey,
+    url: FlutterConfig.get('SUPABASE_URL'),
+    anonKey: FlutterConfig.get('SUPABASE_ANON_KEY'),
   );
 
   await GetIt.I<SettingsRepository>().setITADFilters(filtersMock);

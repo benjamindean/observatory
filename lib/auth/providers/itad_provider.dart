@@ -5,14 +5,11 @@ import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/auth/state/itad_state.dart';
 import 'package:oauth2/oauth2.dart';
-import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-
-final String identifier = GetIt.I<Secret>().itadApiIdentifier;
-final String secret = GetIt.I<Secret>().itadApiSecret;
 
 final Uri authroizationUrl = Uri.parse(
   'https://isthereanydeal.com/oauth/authorize/',
@@ -47,8 +44,8 @@ class ITADNotifier extends Notifier<ITADState> {
           Credentials.fromJson(
             user.credentials!,
           ),
-          identifier: identifier,
-          secret: secret,
+          identifier: API_IDENTIFIER,
+          secret: API_SECRET,
         ),
         isLoading: false,
       );
@@ -63,10 +60,10 @@ class ITADNotifier extends Notifier<ITADState> {
     }
 
     final AuthorizationCodeGrant grant = AuthorizationCodeGrant(
-      identifier,
+      API_IDENTIFIER,
       authroizationUrl,
       tokenUrl,
-      secret: secret,
+      secret: API_SECRET,
     );
 
     state = state.copyWith(

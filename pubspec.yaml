@@ -59,6 +59,7 @@ dependencies:
   oauth2: ^2.0.3
   flutter_secure_storage: ^9.2.2
   sentry_flutter: ^8.9.0
+  flutter_config: ^2.0.2
 
 flutter_launcher_icons:
   android:
