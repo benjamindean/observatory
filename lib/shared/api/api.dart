@@ -291,7 +291,7 @@ class API {
       'api.steampowered.com',
       '/ISteamUser/GetPlayerSummaries/v0002/',
       {
-        'key': dotenv.env['STEAM_API_KEY'],
+        'key': dotenv.get('STEAM_API_KEY'),
         'steamids': steamId,
       },
     );

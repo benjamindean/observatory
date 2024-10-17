@@ -65,7 +65,7 @@ class IGDBAPI {
       final response = await dio.post(
           options: cacheOptions.toOptions().copyWith(
             headers: {
-              'Client-ID': dotenv.env['IGDB_CLIENT_ID'],
+              'Client-ID': dotenv.get('IGDB_CLIENT_ID'),
               'Authorization': 'Bearer ${token?.token}',
             },
           ),

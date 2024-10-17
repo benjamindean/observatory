@@ -29,8 +29,8 @@ void main() async {
   GetIt.I.registerSingleton<API>(API.create(cache));
 
   await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
+    url: dotenv.get('SUPABASE_URL'),
+    anonKey: dotenv.get('SUPABASE_ANON_KEY'),
   );
 
   await GetIt.I<SettingsRepository>().setITADFilters(filtersMock);

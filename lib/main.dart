@@ -35,8 +35,8 @@ Future<void> initSettings() async {
 
 Future<void> initSupabase() async {
   await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
+    url: dotenv.get('SUPABASE_URL'),
+    anonKey: dotenv.get('SUPABASE_ANON_KEY'),
     authOptions: const FlutterAuthClientOptions(
       detectSessionInUri: false,
     ),
@@ -138,7 +138,7 @@ void main() async {
 
   await SentryFlutter.init(
     (options) {
-      options.dsn = kDebugMode ? '' : dotenv.env['SENTRY_DSN'];
+      options.dsn = kDebugMode ? '' : dotenv.get('SENTRY_DSN);
       options.autoInitializeNativeSdk = false;
     },
     appRunner: () => runApp(
