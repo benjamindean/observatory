@@ -129,17 +129,20 @@ void main() async {
   );
 
   // Re-enable check waitlist task if notifications are enabled
-  if (await GetIt.I<SettingsRepository>().getWaitlistNotifications()) {
-    await disableCheckWaitlistTask();
-    await enableCheckWaitlistTask();
-  }
+  GetIt.I<SettingsRepository>().getWaitlistNotifications().then((enabled) {
+    if (enabled) {
+      disableCheckWaitlistTask().then((_) {
+        enableCheckWaitlistTask();
+      });
+    }
+  });
 
   GetIt.I<SettingsRepository>().incrementLaunchCounter();
 
   await SentryFlutter.init(
     (options) {
       options.dsn = kDebugMode ? '' : dotenv.get('SENTRY_DSN');
-      options.autoInitializeNativeSdk = false;
+      // options.autoInitializeNativeSdk = false;
     },
     appRunner: () => runApp(
       const ProviderScope(

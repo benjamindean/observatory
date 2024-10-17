@@ -11,7 +11,7 @@ import 'package:observatory/settings/settings_page.dart';
 import 'package:observatory/settings/stores_select/stores_select_page.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/waitlist_page.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
+// import 'package:sentry_flutter/sentry_flutter.dart';
 
 enum NavigationBranch {
   deals,
@@ -25,9 +25,9 @@ final shellNavigatorKeySearch = GlobalKey<NavigatorState>();
 final shellNavigatorKeyWaitlist = GlobalKey<NavigatorState>();
 
 final GoRouter router = GoRouter(
-  observers: [
-    SentryNavigatorObserver(),
-  ],
+  // observers: [
+  //   SentryNavigatorObserver(),
+  // ],
   initialLocation: '/deals',
   navigatorKey: rootNavigatorKey,
   routes: [

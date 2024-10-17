@@ -105,18 +105,6 @@ class SettingsRepository {
       WaitlistSortingDirection.asc;
 
   static Future<void> init() async {
-    const FlutterSecureStorage secureStorage = FlutterSecureStorage();
-    final bool containsEncryptionKey = await secureStorage.containsKey(
-      key: ITAD_SECURE_KEY,
-    );
-
-    if (!containsEncryptionKey) {
-      await secureStorage.write(
-        key: ITAD_SECURE_KEY,
-        value: base64UrlEncode(Hive.generateSecureKey()),
-      );
-    }
-
     await Hive.initFlutter();
 
     Hive.registerAdapter(ShopAdapter());
@@ -136,6 +124,18 @@ class SettingsRepository {
     await Hive.openBox<Deal>(BOOKMARKED_DEALS_BOX_NAME);
     await Hive.openBox<Deal>(PAST_SAVED_DEALS_BOX_NAME);
     await Hive.openBox<String>(RECENT_SEARCHES_BOX_NAME);
+
+    const FlutterSecureStorage secureStorage = FlutterSecureStorage();
+    final bool containsEncryptionKey = await secureStorage.containsKey(
+      key: ITAD_SECURE_KEY,
+    );
+
+    if (!containsEncryptionKey) {
+      await secureStorage.write(
+        key: ITAD_SECURE_KEY,
+        value: base64UrlEncode(Hive.generateSecureKey()),
+      );
+    }
 
     await Hive.openBox<ITADUser?>(
       ITAD_USER_BOX_NAME,

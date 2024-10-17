@@ -34,57 +34,51 @@ class OpenId {
   }
 
   Future<String> validate(Map<String, String> data) async {
-    Map<String, String?> params = {
-      'openid.assoc_handle': data['openid.assoc_handle'],
-      'openid.signed': data['openid.signed'],
-      'openid.sig': data['openid.sig'],
-      'openid.ns': data['openid.ns']
-    };
+    try {
+      Map<String, String?> params = {
+        'openid.assoc_handle': data['openid.assoc_handle'],
+        'openid.signed': data['openid.signed'],
+        'openid.sig': data['openid.sig'],
+        'openid.ns': data['openid.ns']
+      };
 
-    List<String> split = data['openid.signed']!.split(',');
+      List<String> split = data['openid.signed']!.split(',');
 
-    for (final part in split) {
-      params['openid.$part'] = data['openid.$part'];
-    }
+      for (final part in split) {
+        params['openid.$part'] = data['openid.$part'];
+      }
 
-    params['openid.mode'] = 'check_authentication';
+      params['openid.mode'] = 'check_authentication';
 
-    final resp = await http.post(
-      Uri.parse(_steam_login),
-      body: params,
-    );
-
-    split = resp.body.split('\n');
-
-    if (split[0] != 'ns:$_openIdNs') {
-      Sentry.captureException(
-        Exception('Wrong ns in the response'),
-        stackTrace: StackTrace.current,
+      final resp = await http.post(
+        Uri.parse(_steam_login),
+        body: params,
       );
 
-      throw Exception('Wrong ns in the response');
-    }
+      split = resp.body.split('\n');
 
-    if (split[1].endsWith('false')) {
+      if (split[0] != 'ns:$_openIdNs') {
+        throw Exception('Wrong ns in the response');
+      }
+
+      if (split[1].endsWith('false')) {
+        throw Exception('Unable to validate openId');
+      }
+
+      final String openIdUrl = data['openid.claimed_id']!;
+
+      if (!_validation_regexp.hasMatch(openIdUrl)) {
+        throw Exception('Invalid steam id pattern');
+      }
+
+      return _validation_regexp.firstMatch(openIdUrl)!.group(1)!;
+    } catch (error, stackTrace) {
       Sentry.captureException(
-        Exception('Unable to validate openId'),
-        stackTrace: StackTrace.current,
+        error,
+        stackTrace: stackTrace,
       );
 
-      throw Exception('Unable to validate openId');
+      return '';
     }
-
-    final String openIdUrl = data['openid.claimed_id']!;
-
-    if (!_validation_regexp.hasMatch(openIdUrl)) {
-      Sentry.captureException(
-        Exception('Invalid steam id pattern'),
-        stackTrace: StackTrace.current,
-      );
-
-      throw Exception('Invalid steam id pattern');
-    }
-
-    return _validation_regexp.firstMatch(openIdUrl)!.group(1)!;
   }
 }
