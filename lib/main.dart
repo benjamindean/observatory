@@ -139,13 +139,14 @@ void main() async {
 
   GetIt.I<SettingsRepository>().incrementLaunchCounter();
 
-  await SentryFlutter.init((options) {
-    options.dsn = kDebugMode ? '' : dotenv.get('SENTRY_DSN');
-  });
-
-  runApp(
-    const ProviderScope(
-      child: Observatory(),
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = kDebugMode ? '' : dotenv.get('SENTRY_DSN');
+    },
+    appRunner: () => runApp(
+      const ProviderScope(
+        child: Observatory(),
+      ),
     ),
   );
 }
