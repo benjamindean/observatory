@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,11 +21,13 @@ import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 class DealCard extends ConsumerWidget {
   final Deal deal;
   final NavigationBranch page;
+  final Function? onCardTapCallback;
 
   const DealCard({
     super.key,
     required this.deal,
     required this.page,
+    this.onCardTapCallback,
   });
 
   @override
@@ -181,5 +185,9 @@ class DealCard extends ConsumerWidget {
 
   void onCardTap(BuildContext context) {
     context.push('/deal', extra: deal);
+
+    if (onCardTapCallback != null) {
+      unawaited(onCardTapCallback!());
+    }
   }
 }

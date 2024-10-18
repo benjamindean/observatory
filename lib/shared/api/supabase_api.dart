@@ -1,6 +1,6 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/shared/models/game/game.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseAPI {
@@ -57,9 +57,9 @@ class SupabaseAPI {
         error: error,
       );
 
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         error,
-        stackTrace,
+        stackTrace: stackTrace,
       );
 
       return null;

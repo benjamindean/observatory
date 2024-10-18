@@ -77,8 +77,9 @@ class ITADFiltersPage extends ConsumerWidget {
                         ? () {
                             ref.read(itadFiltersProvider.notifier).save();
                             ref
-                                .read(asyncDealsProvider(DealCategory.all)
-                                    .notifier)
+                                .read(
+                                  asyncDealsProvider(DealCategory.all).notifier,
+                                )
                                 .reset(withLoading: true);
 
                             context.pop();

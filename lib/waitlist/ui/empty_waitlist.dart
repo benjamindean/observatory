@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:observatory/auth/ui/itad_log_in_button.dart';
+import 'package:observatory/auth/ui/steam_log_in_button.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 
 class EmptyWaitlist extends StatelessWidget {
@@ -39,18 +40,21 @@ class EmptyWaitlist extends StatelessWidget {
                   ),
                   TextButton.icon(
                     onPressed: () {
-                      context.push('/steam-import');
-                    },
-                    icon: const Icon(FontAwesomeIcons.steam),
-                    label: const Text('Import from Steam'),
-                  ),
-                  TextButton.icon(
-                    onPressed: () {
                       context.go('/search');
                     },
                     icon: const Icon(Icons.search),
                     label: const Text('Search'),
                   ),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(children: [
+                      SteamLogInButton(),
+                      SizedBox(
+                        height: 8.0,
+                      ),
+                      ITADLogInButton(),
+                    ]),
+                  )
                 ],
               ),
             )

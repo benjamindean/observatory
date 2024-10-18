@@ -13,7 +13,6 @@ class SettingsState with _$SettingsState {
     @Default(DealCategory.all) DealCategory dealsTab,
     required WaitlistSorting waitlistSorting,
     required WaitlistSortingDirection waitlistSortingDirection,
-    required bool crashlyticsEnabled,
     @Default([]) List<String> purchasedProductIds,
     @Default(false) bool collapsePinned,
   }) = _SettingsState;

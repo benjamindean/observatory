@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/auth/state/itad_state.dart';
+import 'package:observatory/auth/state/steam_state.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/game/game.dart';
@@ -18,6 +22,9 @@ const SAVED_DEALS_BOX_NAME = 'observatory_saved_deals';
 const BOOKMARKED_DEALS_BOX_NAME = 'observatory_bookmarked_deals';
 const PAST_SAVED_DEALS_BOX_NAME = 'observatory_past_saved_deals';
 const RECENT_SEARCHES_BOX_NAME = 'observatory_recent_searches';
+const ITAD_USER_BOX_NAME = 'itad_user';
+
+const ITAD_SECURE_KEY = 'itadSecureKey';
 
 const int IMAGE_WIDTH = 600;
 const int IMAGE_HEIGHT = 344;
@@ -68,6 +75,9 @@ class SettingsRepository {
   final Box<String> recentSearchesBox = Hive.box<String>(
     RECENT_SEARCHES_BOX_NAME,
   );
+  final Box<ITADUser?> itadUserBox = Hive.box<ITADUser?>(
+    ITAD_USER_BOX_NAME,
+  );
 
   final String PREF_COUNTRY = 'observatory_default_country';
   final String PREF_CURRENCY = 'observatory_default_currency';
@@ -82,6 +92,7 @@ class SettingsRepository {
   final String PREF_WAITLIST_SORTING_DIRECTION =
       'observatory_waitlist_sorting_direction';
   final String PREF_STEAM_USERNAME = 'observatory_steam_username';
+  final String PREF_STEAM_USER = 'observatory_steam_user';
   final String PREF_IGDB_ACCESS_TOKEN = 'observatory_igdb_access_token';
   final String PREF_ITAD_FILTERS = 'observatory_itad_filters';
   final String PREF_LAUNCH_COUNTER = 'observatory_launch_counter';
@@ -105,12 +116,33 @@ class SettingsRepository {
     Hive.registerAdapter(IGDBAccessTokenAdapter());
     Hive.registerAdapter(MinMaxAdapter());
     Hive.registerAdapter(ITADFiltersAdapter());
+    Hive.registerAdapter(SteamUserAdapter());
+    Hive.registerAdapter(ITADUserAdapter());
 
     await Hive.openBox(SETTINGS_BOX_NAME);
     await Hive.openBox<Deal>(SAVED_DEALS_BOX_NAME);
     await Hive.openBox<Deal>(BOOKMARKED_DEALS_BOX_NAME);
     await Hive.openBox<Deal>(PAST_SAVED_DEALS_BOX_NAME);
     await Hive.openBox<String>(RECENT_SEARCHES_BOX_NAME);
+
+    const FlutterSecureStorage secureStorage = FlutterSecureStorage();
+    final bool containsEncryptionKey = await secureStorage.containsKey(
+      key: ITAD_SECURE_KEY,
+    );
+
+    if (!containsEncryptionKey) {
+      await secureStorage.write(
+        key: ITAD_SECURE_KEY,
+        value: base64UrlEncode(Hive.generateSecureKey()),
+      );
+    }
+
+    await Hive.openBox<ITADUser?>(
+      ITAD_USER_BOX_NAME,
+      encryptionCipher: HiveAesCipher(
+        base64Url.decode((await secureStorage.read(key: ITAD_SECURE_KEY))!),
+      ),
+    );
   }
 
   Future<String> getCountry() async {
@@ -345,19 +377,23 @@ class SettingsRepository {
     );
   }
 
-  String? getSteamUsername() {
-    return settingsBox.get(PREF_STEAM_USERNAME);
+  SteamUser? getSteamUser() {
+    return settingsBox.get(PREF_STEAM_USER);
   }
 
-  Future<void> setSteamUsername(String? username) async {
-    if (username == null) {
-      return;
-    }
-
+  Future<void> setSteamUser(SteamUser? user) async {
     return settingsBox.put(
-      PREF_STEAM_USERNAME,
-      username,
+      PREF_STEAM_USER,
+      user,
     );
+  }
+
+  ITADUser? getITADUser() {
+    return itadUserBox.get(ITAD_USER_BOX_NAME);
+  }
+
+  Future<void> setITADUser(ITADUser? user) async {
+    return itadUserBox.put(ITAD_USER_BOX_NAME, user);
   }
 
   Future<List<String>> getRecentSearches() async {
@@ -422,16 +458,14 @@ class SettingsRepository {
     );
   }
 
-  Future<void> setPurchasedProductIds(String? id) async {
-    if (id == null) {
+  Future<void> setPurchasedProductIds(List<String>? ids) async {
+    if (ids == null) {
       return;
     }
 
-    final List<String> purchasedProducts = await getPurchasedProductIds();
-
     return settingsBox.put(
       PREF_PURCHASED_PRODUCTS,
-      Set<String>.of(purchasedProducts..add(id)).toList(),
+      {...ids}.toList(),
     );
   }
 
@@ -453,8 +487,8 @@ class SettingsRepository {
         id: deal.id,
         slug: deal.slug,
         title: deal.title,
-        added: DateTime.now().millisecondsSinceEpoch,
-        source: DealSource.itad,
+        added: deal.added,
+        source: deal.source,
       ),
     );
   }
@@ -481,14 +515,5 @@ class SettingsRepository {
       PREF_COLLAPSE_PINNED,
       collapse,
     );
-  }
-
-  List<Box> get boxes {
-    return [
-      settingsBox,
-      savedDealsBox,
-      bookmarkedDealsBox,
-      recentSearchesBox,
-    ];
   }
 }

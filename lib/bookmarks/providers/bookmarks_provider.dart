@@ -6,14 +6,18 @@ import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
   Future<List<Deal>> _fetchBookmarks() async {
-    return await GetIt.I<SettingsRepository>().getBookmarks();
+    return GetIt.I<SettingsRepository>().getBookmarks();
   }
 
   @override
   Future<List<Deal>> build() async {
     final List<String> wailtistIds = ref.watch(waitlistIdsProvider);
-    final List<Deal> bookmarks = await _fetchBookmarks();
 
+    if (wailtistIds.isEmpty) {
+      return [];
+    }
+
+    final List<Deal> bookmarks = await _fetchBookmarks();
     final List<Deal> filteredBookmarks = bookmarks
         .where(
           (deal) => wailtistIds.contains(deal.id),
@@ -66,7 +70,7 @@ class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
       () async {
         await GetIt.I<SettingsRepository>().removeAllBookmarks();
 
-        return build();
+        return [];
       },
     );
   }

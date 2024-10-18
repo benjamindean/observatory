@@ -26,7 +26,6 @@ mixin _$SettingsState {
   WaitlistSorting get waitlistSorting => throw _privateConstructorUsedError;
   WaitlistSortingDirection get waitlistSortingDirection =>
       throw _privateConstructorUsedError;
-  bool get crashlyticsEnabled => throw _privateConstructorUsedError;
   List<String> get purchasedProductIds => throw _privateConstructorUsedError;
   bool get collapsePinned => throw _privateConstructorUsedError;
 
@@ -52,7 +51,6 @@ abstract class $SettingsStateCopyWith<$Res> {
       DealCategory dealsTab,
       WaitlistSorting waitlistSorting,
       WaitlistSortingDirection waitlistSortingDirection,
-      bool crashlyticsEnabled,
       List<String> purchasedProductIds,
       bool collapsePinned});
 }
@@ -77,7 +75,6 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? dealsTab = null,
     Object? waitlistSorting = null,
     Object? waitlistSortingDirection = null,
-    Object? crashlyticsEnabled = null,
     Object? purchasedProductIds = null,
     Object? collapsePinned = null,
   }) {
@@ -102,10 +99,6 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.waitlistSortingDirection
           : waitlistSortingDirection // ignore: cast_nullable_to_non_nullable
               as WaitlistSortingDirection,
-      crashlyticsEnabled: null == crashlyticsEnabled
-          ? _value.crashlyticsEnabled
-          : crashlyticsEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
       purchasedProductIds: null == purchasedProductIds
           ? _value.purchasedProductIds
           : purchasedProductIds // ignore: cast_nullable_to_non_nullable
@@ -132,7 +125,6 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       DealCategory dealsTab,
       WaitlistSorting waitlistSorting,
       WaitlistSortingDirection waitlistSortingDirection,
-      bool crashlyticsEnabled,
       List<String> purchasedProductIds,
       bool collapsePinned});
 }
@@ -155,7 +147,6 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? dealsTab = null,
     Object? waitlistSorting = null,
     Object? waitlistSortingDirection = null,
-    Object? crashlyticsEnabled = null,
     Object? purchasedProductIds = null,
     Object? collapsePinned = null,
   }) {
@@ -180,10 +171,6 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.waitlistSortingDirection
           : waitlistSortingDirection // ignore: cast_nullable_to_non_nullable
               as WaitlistSortingDirection,
-      crashlyticsEnabled: null == crashlyticsEnabled
-          ? _value.crashlyticsEnabled
-          : crashlyticsEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
       purchasedProductIds: null == purchasedProductIds
           ? _value._purchasedProductIds
           : purchasedProductIds // ignore: cast_nullable_to_non_nullable
@@ -205,7 +192,6 @@ class _$SettingsStateImpl implements _SettingsState {
       this.dealsTab = DealCategory.all,
       required this.waitlistSorting,
       required this.waitlistSortingDirection,
-      required this.crashlyticsEnabled,
       final List<String> purchasedProductIds = const [],
       this.collapsePinned = false})
       : _purchasedProductIds = purchasedProductIds;
@@ -224,8 +210,6 @@ class _$SettingsStateImpl implements _SettingsState {
   final WaitlistSorting waitlistSorting;
   @override
   final WaitlistSortingDirection waitlistSortingDirection;
-  @override
-  final bool crashlyticsEnabled;
   final List<String> _purchasedProductIds;
   @override
   @JsonKey()
@@ -242,7 +226,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, dealsTab: $dealsTab, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, crashlyticsEnabled: $crashlyticsEnabled, purchasedProductIds: $purchasedProductIds, collapsePinned: $collapsePinned)';
+    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, dealsTab: $dealsTab, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, purchasedProductIds: $purchasedProductIds, collapsePinned: $collapsePinned)';
   }
 
   @override
@@ -261,8 +245,6 @@ class _$SettingsStateImpl implements _SettingsState {
             (identical(
                     other.waitlistSortingDirection, waitlistSortingDirection) ||
                 other.waitlistSortingDirection == waitlistSortingDirection) &&
-            (identical(other.crashlyticsEnabled, crashlyticsEnabled) ||
-                other.crashlyticsEnabled == crashlyticsEnabled) &&
             const DeepCollectionEquality()
                 .equals(other._purchasedProductIds, _purchasedProductIds) &&
             (identical(other.collapsePinned, collapsePinned) ||
@@ -278,7 +260,6 @@ class _$SettingsStateImpl implements _SettingsState {
       dealsTab,
       waitlistSorting,
       waitlistSortingDirection,
-      crashlyticsEnabled,
       const DeepCollectionEquality().hash(_purchasedProductIds),
       collapsePinned);
 
@@ -305,7 +286,6 @@ abstract class _SettingsState implements SettingsState {
       final DealCategory dealsTab,
       required final WaitlistSorting waitlistSorting,
       required final WaitlistSortingDirection waitlistSortingDirection,
-      required final bool crashlyticsEnabled,
       final List<String> purchasedProductIds,
       final bool collapsePinned}) = _$SettingsStateImpl;
 
@@ -322,8 +302,6 @@ abstract class _SettingsState implements SettingsState {
   WaitlistSorting get waitlistSorting;
   @override
   WaitlistSortingDirection get waitlistSortingDirection;
-  @override
-  bool get crashlyticsEnabled;
   @override
   List<String> get purchasedProductIds;
   @override

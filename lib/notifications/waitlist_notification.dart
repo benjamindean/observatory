@@ -25,7 +25,7 @@ Future<bool> showWaitlistNotification({
   required List<Deal> deals,
 }) {
   if (deals.isEmpty) {
-    return Future.value(false);
+    return Future.value(true);
   }
 
   final String notificationTitle = Intl.plural(
@@ -36,7 +36,7 @@ Future<bool> showWaitlistNotification({
 
   return AwesomeNotifications().createNotification(
     content: NotificationContent(
-      id: 10,
+      id: 1024,
       channelKey: 'observatory_channel',
       title: notificationTitle,
       body: getNotificationBody(deals),
