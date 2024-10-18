@@ -36,7 +36,7 @@ Future<bool> showWaitlistNotification({
 
   return AwesomeNotifications().createNotification(
     content: NotificationContent(
-      id: DateTime.now().millisecondsSinceEpoch,
+      id: 1024,
       channelKey: 'observatory_channel',
       title: notificationTitle,
       body: getNotificationBody(deals),
