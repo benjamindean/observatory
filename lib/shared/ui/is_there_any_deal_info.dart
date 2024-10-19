@@ -13,8 +13,8 @@ class IsThereAnyDealInfo extends StatelessWidget {
     return Padding(
       key: const Key('is_there_any_deal_info'),
       padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
-      child: RichText(
-        text: TextSpan(
+      child: Text.rich(
+        TextSpan(
           style: context.themes.text.labelMedium?.copyWith(
             color: context.colors.disabled,
           ),

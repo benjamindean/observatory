@@ -62,13 +62,11 @@ class PriceCut extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Padding(
+        Container(
+          width: 6.0,
+          height: 1.8,
           padding: const EdgeInsets.fromLTRB(0, 2.0, 2.0, 0),
-          child: Container(
-            width: 6.0,
-            height: 1.8,
-            color: highlightColor,
-          ),
+          color: highlightColor,
         ),
         Text(
           priceCutInt.toString(),

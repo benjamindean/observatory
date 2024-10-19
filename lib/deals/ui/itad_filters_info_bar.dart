@@ -42,7 +42,7 @@ class ITADFiltersInfoBar extends ConsumerWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: context.colors.scheme.surfaceContainer,
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
           ),
           child: ListTile(
             dense: true,

@@ -31,8 +31,6 @@ dependencies:
   intl: ^0.19.0
   get_it: ^8.0.0
   font_awesome_flutter: ^10.7.0
-  flutter_form_builder: ^9.4.1
-  form_builder_validators: ^11.0.0
   flutter_slidable: ^3.1.0
   collection: ^1.18.0
   awesome_flutter_extensions: ^1.2.0
@@ -91,6 +89,7 @@ dev_dependencies:
   test:
   flutter_native_splash: ^2.4.0
   sentry_dart_plugin: ^2.1.0
+  dart_code_metrics_presets: ^2.17.0
 
 flutter:
   uses-material-design: true

@@ -151,7 +151,7 @@ class PurchasePage extends ConsumerWidget {
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: LinearProgressIndicator(
-                borderRadius: BorderRadius.circular(12.0),
+                borderRadius: BorderRadius.all(Radius.circular(12.0)),
                 minHeight: 2,
                 color: context.colors.scheme.onSurfaceVariant,
               ),

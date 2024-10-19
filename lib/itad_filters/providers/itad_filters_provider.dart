@@ -53,7 +53,7 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
   }
 
   void setBundled(bool isBundled) {
-    if (isBundled == false) {
+    if (!isBundled) {
       state = state.copyWith(
         cached: state.cached.copyWith(bundled: null),
       );

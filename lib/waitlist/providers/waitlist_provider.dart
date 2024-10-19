@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
@@ -29,26 +31,30 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   }
 
   Future<void> addToWaitlist(List<Deal> deals) async {
-    final List<String> newDealIds = deals.map((deal) => deal.id).toList();
-
     state = await AsyncValue.guard(
       () async {
-        final List<Deal> newDeals = deals.map((deal) {
-          return deal.copyWith(
-            added: deal.added == 0
-                ? DateTime.now().millisecondsSinceEpoch
-                : deal.added,
-          );
-        }).toList();
+        final List<Deal> newDeals = deals.map(
+          (deal) {
+            return deal.copyWith(
+              added: deal.added == 0
+                  ? DateTime.now().millisecondsSinceEpoch
+                  : deal.added,
+            );
+          },
+        ).toList();
 
         await GetIt.I<SettingsRepository>().saveDeals(newDeals);
-
-        ref.read(itadProvider.notifier).addToWaitlist(newDealIds);
 
         return Set<Deal>.of(
           List.of(state.valueOrNull ?? [])..addAll(newDeals),
         ).toList();
       },
+    );
+
+    unawaited(
+      ref
+          .read(itadProvider.notifier)
+          .addToWaitlist(deals.map((deal) => deal.id).toList()),
     );
   }
 
@@ -140,8 +146,7 @@ class SortedWailistNotifier extends Notifier<List<Deal>> {
       return groupedList[false] ?? [];
     }
 
-    return groupedList[true] ?? []
-      ..addAll(groupedList[false] ?? []);
+    return (groupedList[true] ?? [])..addAll(groupedList[false] ?? []);
   }
 
   List<Deal> getSortedWaitlist(

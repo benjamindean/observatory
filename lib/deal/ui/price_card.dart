@@ -25,7 +25,7 @@ class PriceCard extends StatelessWidget {
     return InkWell(
       splashColor: context.colors.scheme.primaryContainer,
       splashFactory: InkSparkle.splashFactory,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.all(Radius.circular(16.0)),
       onTap: () {
         launchUrl(
           Uri.parse(price.url),
@@ -62,9 +62,8 @@ class PriceCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RichText(
-                    maxLines: 2,
-                    text: TextSpan(
+                  Text.rich(
+                    TextSpan(
                       children: <TextSpan>[
                         TextSpan(
                           text: 'DRM: ',
@@ -82,6 +81,7 @@ class PriceCard extends StatelessWidget {
                         ),
                       ],
                     ),
+                    maxLines: 2,
                   ),
                 ],
               ),

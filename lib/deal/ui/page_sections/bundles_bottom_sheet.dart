@@ -38,34 +38,39 @@ class BundlesBottomSheet extends StatelessWidget {
           children: [
             const BottomSheetHeading(text: 'Bundles'),
             BackdropContainer(
-              child: ListView.builder(
+              child: CustomScrollView(
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: bundles.length,
-                itemBuilder: (context, index) {
-                  final Bundle bundle = bundles[index];
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final Bundle bundle = bundles[index];
 
-                  return ListTile(
-                    onTap: () async {
-                      launchUrl(
-                        Uri.parse(bundle.url),
-                        mode: LaunchMode.externalApplication,
-                      );
-                    },
-                    title: Text(
-                      bundle.title,
-                      style: context.textStyles.titleMedium.copyWith(
-                        color: context.colors.scheme.onSurface,
-                      ),
+                        return ListTile(
+                          onTap: () async {
+                            launchUrl(
+                              Uri.parse(bundle.url),
+                              mode: LaunchMode.externalApplication,
+                            );
+                          },
+                          title: Text(
+                            bundle.title,
+                            style: context.textStyles.titleMedium.copyWith(
+                              color: context.colors.scheme.onSurface,
+                            ),
+                          ),
+                          subtitle: Text(
+                            bundle.page.name,
+                            style: context.textStyles.bodySmall.copyWith(
+                              color: context.colors.scheme.onSurface,
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: bundles.length,
                     ),
-                    subtitle: Text(
-                      bundle.page.name,
-                      style: context.textStyles.bodySmall.copyWith(
-                        color: context.colors.scheme.onSurface,
-                      ),
-                    ),
-                  );
-                },
+                  ),
+                ],
               ),
             ),
           ],

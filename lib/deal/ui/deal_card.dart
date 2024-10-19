@@ -51,7 +51,7 @@ class DealCard extends ConsumerWidget {
         children: [
           SlidableAction(
             padding: EdgeInsets.zero,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
             backgroundColor: Colors.transparent,
             onPressed: (_) {
               if (isInWaitlist) {
@@ -75,7 +75,7 @@ class DealCard extends ConsumerWidget {
           ),
           SlidableAction(
             padding: EdgeInsets.zero,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
             onPressed: (_) {
               if (!isInWaitlist) {
                 DealFunctions.addDealToWaitlist(
@@ -110,7 +110,7 @@ class DealCard extends ConsumerWidget {
       child: InkWell(
         splashColor: context.colors.scheme.primaryContainer,
         splashFactory: InkSparkle.splashFactory,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.all(Radius.circular(16.0)),
         onTap: () => onCardTap(context),
         onLongPress: () {
           HapticFeedback.mediumImpact();

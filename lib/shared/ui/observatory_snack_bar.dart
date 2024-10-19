@@ -24,7 +24,7 @@ class ObservatorySnackBar {
         margin: const EdgeInsets.all(12.0),
         backgroundColor: context.colors.scheme.inverseSurface,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
         ),
         behavior: SnackBarBehavior.floating,
         action: onAction != null

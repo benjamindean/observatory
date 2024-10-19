@@ -212,7 +212,7 @@ class API {
     return getByAppIDs(steamDeals);
   }
 
-  Future<List<Deal>> gameIdsBySteamIds(
+  Future<List<Deal>> getDealsBySteamIds(
     List<Deal> deals,
   ) async {
     final List<Store> allStores = await stores();
@@ -247,7 +247,7 @@ class API {
   }
 
   Future<List<Deal>> getByAppIDs(List<Deal> deals) async {
-    final List<Deal> foundDeals = await gameIdsBySteamIds(deals);
+    final List<Deal> foundDeals = await getDealsBySteamIds(deals);
 
     return fetchDealData(
       deals: foundDeals,

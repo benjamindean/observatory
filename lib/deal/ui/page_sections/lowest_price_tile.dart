@@ -45,8 +45,8 @@ class LowestPriceTile extends ConsumerWidget {
             .format(DateTime.parse(lowestPrice.timestamp).toLocal())
             .toString();
 
-        return RichText(
-          text: TextSpan(
+        return Text.rich(
+          TextSpan(
             style: context.themes.text.labelLarge?.copyWith(
               color: context.colors.scheme.onSurface,
             ),

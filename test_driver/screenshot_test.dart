@@ -2,13 +2,13 @@ import 'package:emulators/emulators.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-final List<String> testColorSchemes = [
-  'color-scheme-blue',
-  'color-scheme-sakura',
-  'color-scheme-gold'
-];
-
 void main() async {
+  final List<String> testColorSchemes = [
+    'color-scheme-blue',
+    'color-scheme-sakura',
+    'color-scheme-gold'
+  ];
+
   final FlutterDriver driver = await FlutterDriver.connect();
   final Emulators emulators = await Emulators.build();
   final ScreenshotHelper screenshot = emulators.screenshotHelper(

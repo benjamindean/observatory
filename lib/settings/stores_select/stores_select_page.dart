@@ -215,27 +215,32 @@ class StoreSelectPage extends ConsumerWidget {
               }
             },
             child: Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: stores.length,
-                itemBuilder: (context, index) {
-                  final String storeTitle = stores[index].title;
-                  final int storeId = stores[index].id;
+              child: CustomScrollView(
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final String storeTitle = stores[index].title;
+                        final int storeId = stores[index].id;
 
-                  return CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    title: Text(storeTitle),
-                    value: storeList.contains(storeId),
-                    enabled: storeId != 61,
-                    onChanged: (value) async {
-                      if (value != null) {
-                        return ref
-                            .read(listProvider.notifier)
-                            .toggle(storeId, value);
-                      }
-                    },
-                  );
-                },
+                        return CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: Text(storeTitle),
+                          value: storeList.contains(storeId),
+                          enabled: storeId != 61,
+                          onChanged: (value) async {
+                            if (value != null) {
+                              return ref
+                                  .read(listProvider.notifier)
+                                  .toggle(storeId, value);
+                            }
+                          },
+                        );
+                      },
+                      childCount: stores.length,
+                    ),
+                  ),
+                ],
               ),
             ),
           )

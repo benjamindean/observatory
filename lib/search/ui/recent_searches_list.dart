@@ -49,8 +49,7 @@ class RecentSearchesList extends ConsumerWidget {
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Center(
-                    child: TextButton.icon(
-                      icon: const Icon(Icons.cancel),
+                    child: TextButton(
                       onPressed: () {
                         showDialog(
                           context: context,
@@ -80,14 +79,13 @@ class RecentSearchesList extends ConsumerWidget {
                           },
                         );
                       },
-                      label: const Text('Clear All'),
+                      child: const Text('Clear All'),
                     ),
                   ),
                 );
               }
 
               return ObservatoryCard(
-                elevation: 0,
                 child: InkWell(
                   onTap: () async {
                     await ref

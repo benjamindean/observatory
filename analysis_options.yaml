@@ -9,6 +9,19 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+dart_code_metrics:
+  extends:
+    - package:dart_code_metrics_presets/all.yaml
+  rules:
+    prefer-match-file-name: false
+    avoid-dynamic: false
+    no-magic-number: false
+    prefer-correct-edge-insets-constructor: false
+    member-ordering: false
+    avoid-top-level-members-in-tests: false 
+    avoid-non-null-assertion:
+      - skip-checked-fields: true
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`

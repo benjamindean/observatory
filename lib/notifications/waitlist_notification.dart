@@ -4,11 +4,11 @@ import 'package:observatory/shared/models/deal.dart';
 
 String getNotificationBody(List<Deal> deals) {
   if (deals.length == 1) {
-    return '${deals[0].titleParsed} is ${deals[0].bestPrice.cut.toInt()}% off.';
+    return '${deals.firstOrNull?.titleParsed} is ${deals.firstOrNull?.bestPrice.cut.toInt()}% off.';
   }
 
   if (deals.length == 2) {
-    return '${deals[0].titleParsed} is ${deals[0].bestPrice.cut.toInt()}% off and ${deals[1].titleParsed} is ${deals[1].bestPrice.cut.toInt()}% off.';
+    return '${deals.firstOrNull?.titleParsed} is ${deals.firstOrNull?.bestPrice.cut.toInt()}% off and ${deals[1].titleParsed} is ${deals[1].bestPrice.cut.toInt()}% off.';
   }
 
   final int leftoverDeals = deals.length - 2;
@@ -18,7 +18,7 @@ String getNotificationBody(List<Deal> deals) {
     other: 'games are',
   );
 
-  return '${deals[0].titleParsed} is ${deals[0].bestPrice.cut.toInt()}% off, ${deals[1].titleParsed} is ${deals[1].bestPrice.cut.toInt()}% off and $leftoverDeals other $restText on sale.';
+  return '${deals.firstOrNull?.titleParsed} is ${deals.firstOrNull?.bestPrice.cut.toInt()}% off, ${deals[1].titleParsed} is ${deals[1].bestPrice.cut.toInt()}% off and $leftoverDeals other $restText on sale.';
 }
 
 Future<bool> showWaitlistNotification({

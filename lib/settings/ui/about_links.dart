@@ -20,8 +20,8 @@ class AboutLinks extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: RichText(
-              text: TextSpan(
+            child: Text.rich(
+              TextSpan(
                 children: [
                   TextSpan(
                     text: 'Official Website',
@@ -44,8 +44,8 @@ class AboutLinks extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: RichText(
-              text: TextSpan(
+            child: Text.rich(
+              TextSpan(
                 children: [
                   TextSpan(
                     text: 'Privacy Policy',
@@ -68,8 +68,8 @@ class AboutLinks extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: RichText(
-              text: TextSpan(
+            child: Text.rich(
+              TextSpan(
                 children: [
                   TextSpan(
                     text: 'Terms & Conditions',

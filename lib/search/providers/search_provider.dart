@@ -66,7 +66,7 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
     final List<Deal> results = await GetIt.I<API>().getSearchResults(
       query: query,
     );
-    final List<Deal> deals = Set<Deal>.from(results).toList();
+    final List<Deal> deals = Set<Deal>.of(results).toList();
 
     state = state.copyWith(
       deals: deals,

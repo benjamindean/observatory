@@ -5,6 +5,58 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:collection/collection.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 
+class PurchaseButton extends StatelessWidget {
+  final bool isPending;
+  final ProductDetails? currentProduct;
+  final List<ProductDetails> leftoverProducts;
+
+  const PurchaseButton({
+    super.key,
+    this.currentProduct,
+    this.isPending = false,
+    required this.leftoverProducts,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (isPending) {
+      return ObservatoryProgressIndicator(
+        color: context.colors.scheme.onSecondary,
+        size: 30,
+      );
+    }
+
+    if (leftoverProducts.isEmpty) {
+      return Text(
+        'Thank you for your support!',
+        style: context.textStyles.bodyLarge.copyWith(
+          color: context.colors.scheme.onSecondary,
+        ),
+      );
+    }
+
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: 'Purchase Now for ',
+            style: context.textStyles.bodyLarge.copyWith(
+              color: context.colors.scheme.onSecondary,
+            ),
+          ),
+          TextSpan(
+            text: currentProduct != null ? currentProduct?.price : '',
+            style: context.textStyles.bodyLarge.copyWith(
+              color: context.colors.scheme.onSecondary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class ProductsList extends StatefulWidget {
   final bool isPending;
   final Function(ProductDetails) onPurchase;
@@ -38,47 +90,6 @@ class ProductsListState extends State<ProductsList> {
     super.initState();
 
     selectedProduct = widget.products.first;
-  }
-
-  Widget purchaseButton(
-    ProductDetails? currentProduct,
-    List<ProductDetails> leftoverProducts,
-  ) {
-    if (widget.isPending) {
-      return ObservatoryProgressIndicator(
-        color: context.colors.scheme.onSecondary,
-        size: 30,
-      );
-    }
-
-    if (leftoverProducts.isEmpty) {
-      return Text(
-        'Thank you for your support!',
-        style: context.textStyles.bodyLarge.copyWith(
-          color: context.colors.scheme.onSecondary,
-        ),
-      );
-    }
-
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(
-            text: 'Purchase Now for ',
-            style: context.textStyles.bodyLarge.copyWith(
-              color: context.colors.scheme.onSecondary,
-            ),
-          ),
-          TextSpan(
-            text: currentProduct != null ? currentProduct.price : '',
-            style: context.textStyles.bodyLarge.copyWith(
-              color: context.colors.scheme.onSecondary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -122,7 +133,7 @@ class ProductsListState extends State<ProductsList> {
                       color: context.colors.scheme.primary,
                       width: 1,
                     ),
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
                   ),
                   value: e,
                   groupValue: currentProduct,
@@ -154,9 +165,10 @@ class ProductsListState extends State<ProductsList> {
                   : () {
                       widget.onPurchase(selectedProduct);
                     },
-              child: purchaseButton(
-                currentProduct,
-                leftoverProducts,
+              child: PurchaseButton(
+                isPending: widget.isPending,
+                currentProduct: currentProduct,
+                leftoverProducts: leftoverProducts,
               ),
             ),
           ),

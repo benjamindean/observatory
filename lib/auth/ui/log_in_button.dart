@@ -26,17 +26,6 @@ class LogInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget getIcon() {
-      if (isLoading) {
-        return ObservatoryProgressIndicator(
-          color: context.colors.scheme.onPrimary,
-          size: 26,
-        );
-      }
-
-      return iconBuilder();
-    }
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -125,7 +114,12 @@ class LogInButton extends StatelessWidget {
                 width: 32,
                 height: 32,
                 child: Center(
-                  child: getIcon(),
+                  child: isLoading
+                      ? ObservatoryProgressIndicator(
+                          color: context.colors.scheme.onPrimary,
+                          size: 26,
+                        )
+                      : iconBuilder(),
                 ),
               ),
             ),

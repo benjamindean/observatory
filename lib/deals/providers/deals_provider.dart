@@ -11,7 +11,7 @@ class AsyncDealsNotifier
     extends AutoDisposeFamilyAsyncNotifier<DealsState, DealCategory> {
   Future<DealsState> _initDeals() async {
     final List<Deal> results = await fetchDeals();
-    final List<Deal> deals = Set<Deal>.from(results).toList();
+    final List<Deal> deals = Set<Deal>.of(results).toList();
 
     ref.read(itadConfigProvider.notifier).setCurrency(
           results

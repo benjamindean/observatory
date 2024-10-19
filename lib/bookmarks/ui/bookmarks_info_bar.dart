@@ -35,11 +35,11 @@ class BookmarksInfoBar extends ConsumerWidget {
         return GestureDetector(
           onTap: () => context.push('/bookmarks'),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+            padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
             child: DecoratedBox(
               decoration: BoxDecoration(
                 color: context.colors.scheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(12.0),
+                borderRadius: BorderRadius.all(Radius.circular(12.0)),
               ),
               child: ListTile(
                 dense: true,

@@ -57,7 +57,7 @@ class OpenId {
 
       split = resp.body.split('\n');
 
-      if (split[0] != 'ns:$_openIdNs') {
+      if (split.first != 'ns:$_openIdNs') {
         throw Exception('Wrong ns in the response');
       }
 

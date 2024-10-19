@@ -85,11 +85,11 @@ class ScreenshotsTile extends ConsumerWidget {
                   padding: const EdgeInsets.fromLTRB(0.0, 8.0, 8.0, 8.0),
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
                       color: context.colors.scheme.surface,
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
                         fadeInDuration: const Duration(milliseconds: 200),

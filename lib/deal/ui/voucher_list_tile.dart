@@ -23,8 +23,8 @@ class VoucherListTile extends StatelessWidget {
             if (context.mounted) {
               ObservatorySnackBar.show(
                 context,
-                content: RichText(
-                  text: TextSpan(
+                content: Text.rich(
+                  TextSpan(
                     children: <TextSpan>[
                       TextSpan(
                         text: 'Voucher ',
@@ -61,9 +61,9 @@ class VoucherListTile extends StatelessWidget {
           Icons.copy,
           size: 16,
         ),
-        title: RichText(
+        title: Text.rich(
           maxLines: 2,
-          text: TextSpan(
+          TextSpan(
             children: <TextSpan>[
               TextSpan(
                 text: 'Voucher: ',

@@ -74,7 +74,7 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
         return [];
       }
 
-      final List<Deal> deals = await GetIt.I<API>().gameIdsBySteamIds(
+      final List<Deal> deals = await GetIt.I<API>().getDealsBySteamIds(
         wishlist,
       );
 
