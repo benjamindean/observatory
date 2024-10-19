@@ -14,7 +14,7 @@ class BottomSheetContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: context.colors.scheme.surfaceContainer,
+      color: context.colors.scheme.surface,
       child: SafeArea(
         child: ColoredBox(
           color: color ?? context.colors.scheme.surfaceContainer,

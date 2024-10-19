@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:observatory/auth/providers/itad_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/auth/state/steam_state.dart';
 import 'package:observatory/shared/api/api.dart';
@@ -78,31 +77,10 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
       final List<Deal> deals = await GetIt.I<API>().gameIdsBySteamIds(
         wishlist,
       );
-      final List<String> dealIds = deals.map((deal) => deal.id).toList();
 
       if (deals.isNotEmpty) {
-        final List<Deal> steamDeals =
-            (ref.read(asyncWaitListProvider).valueOrNull ?? [])
-                .where((game) => game.source == DealSource.steam)
-                .toList();
-
-        final List<Deal> removedDeals = steamDeals.where(
-          (deal) {
-            return !dealIds.contains(deal.id);
-          },
-        ).toList();
-
-        await GetIt.I<SettingsRepository>().removeDeals(removedDeals);
-
-        ref
-            .read(itadProvider.notifier)
-            .addToWaitlist(deals.map((deal) => deal.id).toList());
-
-        ref
-            .read(itadProvider.notifier)
-            .removeFromWaitlist(removedDeals.map((deal) => deal.id).toList());
-
         await ref.watch(asyncWaitListProvider.notifier).addToWaitlist(deals);
+        await ref.watch(asyncWaitListProvider.notifier).reset();
       }
 
       state = state.copyWith(

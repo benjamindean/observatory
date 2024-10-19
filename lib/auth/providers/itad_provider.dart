@@ -234,21 +234,39 @@ class ITADNotifier extends Notifier<ITADState> {
       final List<Deal> deals = await getWaitlist();
 
       if (deals.isNotEmpty) {
-        await ref.watch(asyncWaitListProvider.notifier).addToWaitlist(
-              deals.toList(),
-            );
-
-        final List<String> newDealIds = deals.map((deal) => deal.id).toList();
         final List<String> existingDealIds = ref.watch(waitlistIdsProvider);
-        final List<String> syncBack = existingDealIds.where(
-          (id) {
-            return !newDealIds.contains(id);
+        final List<String> newDealIds = deals.map((deal) => deal.id).toList();
+        final List<String> addedDealIds = newDealIds
+            .toSet()
+            .difference(
+              existingDealIds.toSet(),
+            )
+            .toList();
+
+        final List<Deal> addedDeals = deals.where(
+          (deal) {
+            return addedDealIds.contains(deal.id);
           },
         ).toList();
 
-        if (syncBack.isNotEmpty) {
-          addToWaitlist(syncBack);
+        final List<String> syncBackDeals = existingDealIds
+            .toSet()
+            .difference(
+              newDealIds.toSet(),
+            )
+            .toList();
+
+        if (addedDeals.isNotEmpty) {
+          await ref
+              .read(asyncWaitListProvider.notifier)
+              .addToWaitlist(addedDeals);
         }
+
+        if (syncBackDeals.isNotEmpty) {
+          await addToWaitlist(syncBackDeals);
+        }
+
+        await ref.read(asyncWaitListProvider.notifier).reset();
       }
 
       state = state.copyWith(
