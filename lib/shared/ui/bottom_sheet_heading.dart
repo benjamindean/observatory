@@ -1,6 +1,5 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:observatory/shared/context_extension.dart';
 
 class BottomSheetHeading extends StatelessWidget {
   final String text;
@@ -18,7 +17,7 @@ class BottomSheetHeading extends StatelessWidget {
       contentPadding: const EdgeInsets.only(left: 16.0, right: 8.0),
       key: Key('bottom-sheet-heading-$text'),
       visualDensity: VisualDensity.compact,
-      tileColor: context.midElevatedCanvasColor,
+      tileColor: context.colors.scheme.surface,
       title: Text(
         text,
         style: context.textStyles.labelLarge.copyWith(

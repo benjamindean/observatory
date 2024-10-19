@@ -55,7 +55,7 @@ class DealFunctions {
     return ObservatorySnackBar.show(
       context,
       onAction: () {
-        notifier.addToWaitlist(updatedDeal);
+        notifier.addToWaitlist([updatedDeal]);
       },
       icon: Icons.remove_circle,
       content: RichText(
@@ -93,7 +93,7 @@ class DealFunctions {
 
     HapticFeedback.mediumImpact();
 
-    notifier.addToWaitlist(updatedDeal);
+    notifier.addToWaitlist([updatedDeal]);
 
     if (!showToast) {
       return;

@@ -557,7 +557,7 @@ class AsyncWaitListNotifierMock extends AsyncNotifier<List<Deal>>
   }
 
   @override
-  Future<void> addToWaitlist(Deal deal) async {
+  Future<void> addToWaitlist(List<Deal> deals) async {
     state = state;
   }
 

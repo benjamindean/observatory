@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
-import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 
 class BookmarksInfoBar extends ConsumerWidget {
@@ -39,7 +38,7 @@ class BookmarksInfoBar extends ConsumerWidget {
             padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: context.elevatedBottomAppBarColor,
+                color: context.colors.scheme.surfaceContainer,
                 borderRadius: BorderRadius.circular(12.0),
               ),
               child: ListTile(

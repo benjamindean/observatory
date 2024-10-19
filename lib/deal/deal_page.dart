@@ -14,7 +14,6 @@ import 'package:observatory/deal/providers/deal_provider.dart';
 import 'package:observatory/deal/ui/page_sections/screenshots_tile.dart';
 import 'package:observatory/deal/ui/page_sections/summary_tile.dart';
 import 'package:observatory/deal/ui/page_sections/tags_tile.dart';
-import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/is_there_any_deal_info.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
@@ -33,7 +32,7 @@ class DealPage extends ConsumerWidget {
     final Deal dealState = ref.watch(dealProvider(deal));
 
     return ColoredBox(
-      color: context.elevatedBottomAppBarColor,
+      color: context.colors.scheme.surfaceContainer,
       child: SafeArea(
         child: Scaffold(
           bottomNavigationBar: DealPageBottomAppBar(
@@ -45,7 +44,7 @@ class DealPage extends ConsumerWidget {
               DealAppBar(deal: deal),
               PinnedHeaderSliver(
                 child: ColoredBox(
-                  color: context.elevatedBottomAppBarColor,
+                  color: context.colors.scheme.surfaceContainer,
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Text(

@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:observatory/settings/providers/itad_config_provider.dart';
 import 'package:observatory/settings/stores_select/stores_list_provider.dart';
 import 'package:observatory/shared/models/store.dart';
-import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/observatory_back_button.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 
@@ -35,8 +34,6 @@ class StoreSelectPage extends ConsumerWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        elevation: APPBAR_ELEVATION,
-        surfaceTintColor: context.colors.scheme.surfaceTint,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

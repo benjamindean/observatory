@@ -28,20 +28,25 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
     state = await AsyncValue.guard(() => _fetchWaitList());
   }
 
-  Future<void> addToWaitlist(Deal deal) async {
-    ref.read(itadProvider.notifier).addToWaitlist([deal.id]);
+  Future<void> addToWaitlist(List<Deal> deals) async {
+    ref.read(itadProvider.notifier).addToWaitlist(
+          deals.map((deal) => deal.id).toList(),
+        );
 
     state = await AsyncValue.guard(
       () async {
-        await GetIt.I<SettingsRepository>().saveDeal(deal);
+        final List<Deal> newDeals = deals.map((deal) {
+          return deal.copyWith(
+            added: deal.added == 0
+                ? DateTime.now().millisecondsSinceEpoch
+                : deal.added,
+          );
+        }).toList();
+
+        await GetIt.I<SettingsRepository>().saveDeals(newDeals);
 
         return Set<Deal>.of(
-          List.of(state.valueOrNull ?? [])
-            ..add(
-              deal.copyWith(
-                added: DateTime.now().millisecondsSinceEpoch,
-              ),
-            ),
+          List.of(state.valueOrNull ?? [])..addAll(newDeals),
         ).toList();
       },
     );

@@ -198,7 +198,9 @@ class SettingsRepository {
         id: deal.id,
         slug: deal.slug,
         title: deal.title,
-        added: DateTime.now().millisecondsSinceEpoch,
+        added: deal.added == 0
+            ? DateTime.now().millisecondsSinceEpoch
+            : deal.added,
         source: DealSource.itad,
       ),
     );

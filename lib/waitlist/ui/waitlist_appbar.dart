@@ -35,7 +35,6 @@ class WaitlistAppBar extends ConsumerWidget {
 
     if (searchState.isOpen) {
       return SliverAppBar(
-        surfaceTintColor: context.colors.scheme.surfaceTint,
         floating: true,
         titleSpacing: 0.0,
         title: SearchInput(
@@ -50,7 +49,6 @@ class WaitlistAppBar extends ConsumerWidget {
     }
 
     return SliverAppBar(
-      surfaceTintColor: context.colors.scheme.surfaceTint,
       floating: true,
       flexibleSpace: AppBar(
         title: GestureDetector(

@@ -1,5 +1,3 @@
-import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,7 +9,6 @@ import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/state/settings_state.dart';
-import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/discounted_badge.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
@@ -38,9 +35,6 @@ class HomePage extends ConsumerWidget {
     return Scaffold(
       key: const Key('home-page'),
       bottomNavigationBar: NavigationBar(
-        elevation: APPBAR_ELEVATION,
-        backgroundColor: context.colors.scheme.surfaceContainer,
-        surfaceTintColor: context.colors.scheme.surfaceTint,
         onDestinationSelected: (int index) async {
           child.goBranch(index);
 

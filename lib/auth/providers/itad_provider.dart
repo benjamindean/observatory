@@ -234,11 +234,20 @@ class ITADNotifier extends Notifier<ITADState> {
       final List<Deal> deals = await getWaitlist();
 
       if (deals.isNotEmpty) {
-        await GetIt.I<SettingsRepository>().saveDeals(deals.toList());
-        await ref.watch(asyncWaitListProvider.notifier).reset();
-        await ref.read(itadProvider.notifier).addToWaitlist(
-              ref.watch(waitlistIdsProvider),
+        await ref.watch(asyncWaitListProvider.notifier).addToWaitlist(
+              deals.toList(),
             );
+
+        final List<String> existingDealIds = ref.watch(waitlistIdsProvider);
+        final List<String> syncBack = existingDealIds.where(
+          (id) {
+            return !deals.any((deal) => deal.id == id);
+          },
+        ).toList();
+
+        if (syncBack.isNotEmpty) {
+          addToWaitlist(syncBack);
+        }
       }
 
       state = state.copyWith(

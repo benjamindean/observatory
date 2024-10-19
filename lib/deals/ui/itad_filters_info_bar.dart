@@ -7,7 +7,6 @@ import 'package:observatory/itad_filters/itad_filters_page.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/settings/providers/itad_config_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/ui/dot_separator.dart';
 
@@ -42,7 +41,7 @@ class ITADFiltersInfoBar extends ConsumerWidget {
         padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: context.elevatedBottomAppBarColor,
+            color: context.colors.scheme.surfaceContainer,
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: ListTile(

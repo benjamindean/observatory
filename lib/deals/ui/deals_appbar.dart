@@ -23,7 +23,6 @@ class DealsAppBar extends ConsumerWidget {
     );
 
     return SliverAppBar(
-      surfaceTintColor: context.colors.scheme.surfaceTint,
       floating: true,
       flexibleSpace: AppBar(
         title: GestureDetector(

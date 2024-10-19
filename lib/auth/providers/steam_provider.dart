@@ -93,7 +93,6 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
         ).toList();
 
         await GetIt.I<SettingsRepository>().removeDeals(removedDeals);
-        await GetIt.I<SettingsRepository>().saveDeals(deals.toList());
 
         ref
             .read(itadProvider.notifier)
@@ -102,9 +101,9 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
         ref
             .read(itadProvider.notifier)
             .removeFromWaitlist(removedDeals.map((deal) => deal.id).toList());
-      }
 
-      await ref.watch(asyncWaitListProvider.notifier).reset();
+        await ref.watch(asyncWaitListProvider.notifier).addToWaitlist(deals);
+      }
 
       state = state.copyWith(
         isLoading: false,

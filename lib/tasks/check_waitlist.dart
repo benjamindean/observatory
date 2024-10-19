@@ -66,7 +66,7 @@ Future<bool> checkWaitlistTask() async {
 }
 
 Future<void> enableCheckWaitlistTask({
-  Duration frequency = const Duration(hours: 2),
+  Duration frequency = const Duration(hours: 4),
 }) async {
   Logger().d('Enabling $TASK_CHECK_WAITLIST task');
 
@@ -74,7 +74,7 @@ Future<void> enableCheckWaitlistTask({
     TASK_CHECK_WAITLIST,
     TASK_CHECK_WAITLIST,
     frequency: frequency,
-    initialDelay: const Duration(minutes: 5),
+    initialDelay: const Duration(minutes: 30),
     backoffPolicy: BackoffPolicy.exponential,
     constraints: Constraints(
       networkType: NetworkType.connected,
