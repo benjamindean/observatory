@@ -41,97 +41,96 @@ class WaitlistSortingPage extends ConsumerWidget {
         WaitlistSorting.date_added;
 
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const BottomSheetHeading(
+      child: CustomScrollView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(
+            child: const BottomSheetHeading(
               text: 'Sort By',
               trailing: CloseBottomSheetButton(),
             ),
-            CustomScrollView(
-              shrinkWrap: true,
-              slivers: [
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final WaitlistSorting sorting =
-                          WaitlistSorting.values[index];
-                      final bool isSelected = sorting == waitlistSorting;
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final WaitlistSorting sorting = WaitlistSorting.values[index];
+                final bool isSelected = sorting == waitlistSorting;
 
-                      return ListTile(
-                        key: ValueKey('waitlist_sorting_${sorting.name}'),
-                        contentPadding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
-                        selectedTileColor: context.colors.scheme.secondary,
-                        selectedColor: context.colors.scheme.onSecondary,
-                        selected: isSelected,
-                        onTap: () async {
-                          ref
-                              .read(asyncSettingsProvider.notifier)
-                              .setWaitlistSorting(sorting);
+                return ListTile(
+                  key: ValueKey('waitlist_sorting_${sorting.name}'),
+                  contentPadding: const EdgeInsets.fromLTRB(16, 0, 12, 0),
+                  selectedTileColor: context.colors.scheme.secondary,
+                  selectedColor: context.colors.scheme.onSecondary,
+                  selected: isSelected,
+                  onTap: () async {
+                    ref
+                        .read(asyncSettingsProvider.notifier)
+                        .setWaitlistSorting(sorting);
 
-                          if (sorting == waitlistSorting) {
-                            ref
-                                .read(asyncSettingsProvider.notifier)
-                                .setWaitlistSortingDirection(
-                                  waitlistSortingDirection ==
-                                          WaitlistSortingDirection.asc
-                                      ? WaitlistSortingDirection.desc
-                                      : WaitlistSortingDirection.asc,
-                                );
-                          }
-                        },
-                        title: Text(
-                          waitlistSortingStrings[sorting]?['title'] ?? 'Price',
-                          style: context.textStyles.titleMedium.copyWith(
-                            color: isSelected
-                                ? context.colors.scheme.onSecondary
-                                : context.colors.scheme.onSurface,
+                    if (sorting == waitlistSorting) {
+                      ref
+                          .read(asyncSettingsProvider.notifier)
+                          .setWaitlistSortingDirection(
+                            waitlistSortingDirection ==
+                                    WaitlistSortingDirection.asc
+                                ? WaitlistSortingDirection.desc
+                                : WaitlistSortingDirection.asc,
+                          );
+                    }
+                  },
+                  title: Text(
+                    waitlistSortingStrings[sorting]?['title'] ?? 'Price',
+                    style: context.textStyles.titleMedium.copyWith(
+                      color: isSelected
+                          ? context.colors.scheme.onSecondary
+                          : context.colors.scheme.onSurface,
+                    ),
+                  ),
+                  trailing: Builder(
+                    builder: (context) {
+                      if (sorting == waitlistSorting) {
+                        return Chip(
+                          side: BorderSide.none,
+                          label: Text(
+                            waitlistSortingStrings[sorting]
+                                    ?[waitlistSortingDirection] ??
+                                'Unknown',
+                            style: context.textStyles.labelMedium.copyWith(
+                              color: context.colors.scheme.onTertiary,
+                            ),
                           ),
-                        ),
-                        trailing: Builder(
-                          builder: (context) {
-                            if (sorting == waitlistSorting) {
-                              return Chip(
-                                side: BorderSide.none,
-                                label: Text(
-                                  waitlistSortingStrings[sorting]
-                                          ?[waitlistSortingDirection] ??
-                                      'Unknown',
-                                  style:
-                                      context.textStyles.labelMedium.copyWith(
-                                    color: context.colors.scheme.onTertiary,
-                                  ),
-                                ),
-                                backgroundColor: context.colors.scheme.tertiary,
-                              );
-                            }
+                          backgroundColor: context.colors.scheme.tertiary,
+                        );
+                      }
 
-                            return const SizedBox.shrink();
-                          },
-                        ),
-                      );
+                      return const SizedBox.shrink();
                     },
-                    childCount: WaitlistSorting.values.length,
+                  ),
+                );
+              },
+              childCount: WaitlistSorting.values.length,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                const BottomSheetHeading(text: 'Settings'),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+                  child: Column(
+                    children: [
+                      SteamLogInButton(),
+                      SizedBox(height: 8.0),
+                      ITADLogInButton(),
+                    ],
                   ),
                 ),
+                const CollapsePinnedListTile()
               ],
             ),
-            const BottomSheetHeading(text: 'Settings'),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-              child: Column(
-                children: [
-                  SteamLogInButton(),
-                  SizedBox(height: 8.0),
-                  ITADLogInButton(),
-                ],
-              ),
-            ),
-            const CollapsePinnedListTile(),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
