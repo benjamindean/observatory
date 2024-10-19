@@ -26,14 +26,25 @@ class AddedOn extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 4.0),
-      child: Text(
-        DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY).format(
-          DateTime.fromMillisecondsSinceEpoch(
-            added.toInt(),
+      child: Text.rich(
+        TextSpan(
+          style: context.themes.text.labelSmall?.copyWith(
+            color: context.colors.hint,
           ),
-        ),
-        style: context.themes.text.labelSmall?.copyWith(
-          color: context.colors.hint,
+          text: 'Added on ',
+          children: [
+            TextSpan(
+              text: DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY).format(
+                DateTime.fromMillisecondsSinceEpoch(
+                  added.toInt(),
+                ),
+              ),
+              style: context.themes.text.labelSmall?.copyWith(
+                color: context.colors.hint,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ),
     );
