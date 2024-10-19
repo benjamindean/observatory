@@ -238,10 +238,11 @@ class ITADNotifier extends Notifier<ITADState> {
               deals.toList(),
             );
 
+        final List<String> newDealIds = deals.map((deal) => deal.id).toList();
         final List<String> existingDealIds = ref.watch(waitlistIdsProvider);
         final List<String> syncBack = existingDealIds.where(
           (id) {
-            return !deals.any((deal) => deal.id == id);
+            return !newDealIds.contains(id);
           },
         ).toList();
 
