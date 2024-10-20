@@ -1,8 +1,5 @@
 import 'package:observatory/settings/settings_repository.dart';
 
-const double CARD_ELEVATION = 2.0;
-const double APPBAR_ELEVATION = 2.0;
-
 const SCREENSHOT_WIDTH = 569;
 const SCREENSHOT_HEIGHT = 360;
 

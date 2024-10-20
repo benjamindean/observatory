@@ -1,4 +1,3 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,11 +7,10 @@ import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/router.dart';
-import 'package:observatory/settings/providers/settings_provider.dart';
-import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/load_more.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class DealsList extends ConsumerWidget {
   const DealsList({
@@ -21,17 +19,11 @@ class DealsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final DealCategory dealsCategory = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.valueOrNull?.dealsTab ?? DealCategory.all,
-      ),
-    );
-
     final AsyncValue<DealsState> deals = ref.watch(
-      asyncDealsProvider(dealsCategory),
+      asyncDealsProvider,
     );
     final AsyncDealsNotifier dealsNotifier = ref.watch(
-      asyncDealsProvider(dealsCategory).notifier,
+      asyncDealsProvider.notifier,
     );
 
     final double cardHeight = ref
@@ -49,9 +41,9 @@ class DealsList extends ConsumerWidget {
           stackTrace: stackTrace,
         );
 
-        FirebaseCrashlytics.instance.recordError(
+        Sentry.captureException(
           error,
-          stackTrace,
+          stackTrace: stackTrace,
         );
 
         return SliverFillRemaining(

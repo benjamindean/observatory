@@ -5,7 +5,7 @@ part 'backup.g.dart';
 
 @freezed
 class Backup with _$Backup {
-  static String fileName = 'observatory_waitlist_backup.json';
+  final String fileName = 'observatory_waitlist_backup.json';
 
   const Backup._();
 

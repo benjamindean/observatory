@@ -1,9 +1,8 @@
-import 'package:get_it/get_it.dart';
-import 'package:observatory/secret_loader.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-final String API_IDENTIFIER = GetIt.I<Secret>().itadApiIdentifier;
-final String API_KEY = GetIt.I<Secret>().itadApiKey;
-final String API_SECRET = GetIt.I<Secret>().itadApiSecret;
+final String API_IDENTIFIER = dotenv.get('ITAD_API_IDENTIFIER');
+final String API_KEY = dotenv.get('ITAD_API_KEY');
+final String API_SECRET = dotenv.get('ITAD_API_SECRET');
 
 const List<String> API_SCOPES = [
   'user_info',
@@ -20,17 +19,41 @@ const MAX_STEAM_WISHLIST_PAGES = 7;
 const DEALS_COUNT = 50;
 const int RECENTS_LIMIT = 10;
 
-const Map<String, String> DEAL_FILTERS = {
-  'trending': 'All Games',
-  'time': 'Newest',
-  'cut': 'Highest Price Cut',
-  'price': 'Lowest Price',
-  'expiry': 'Expiring Soon',
-  'release-date': 'Release Date',
-  'rank': 'Most Popular',
-  'steam-players': 'Steam Players Count',
-  'steam-reviews': 'Steam Reviews',
-  'opencritic': 'OpenCritic Score',
-  'metacritic': 'Metacritic Score',
-  'metacritic-users': 'Metacritic User Score',
+const Map<SortBy, String> SORT_BY_FILTER_STRINGS = {
+  SortBy.trending: '-trending',
+  SortBy.time: '-time',
+  SortBy.cut: '-cut',
+  SortBy.price: 'price',
+  SortBy.releasedate: '-release-date',
+  SortBy.rank: 'rank',
+  SortBy.steamplayers: '-steam-players',
+  SortBy.steamreviews: '-steam-reviews',
+  SortBy.metacritic: '-metacritic',
+  SortBy.metacriticuser: '-metacritic-user',
 };
+
+const Map<SortBy, String> SORT_BY_VALUES = {
+  SortBy.trending: 'Trending',
+  SortBy.time: 'Newest',
+  SortBy.cut: 'Highest Price Cut',
+  SortBy.price: 'Lowest Price',
+  SortBy.releasedate: 'Release Date',
+  SortBy.rank: 'Most Popular',
+  SortBy.steamplayers: 'Steam Players',
+  SortBy.steamreviews: 'Steam Reviews',
+  SortBy.metacritic: 'Metacritic Score',
+  SortBy.metacriticuser: 'Metacritic User Score',
+};
+
+enum SortBy {
+  trending,
+  time,
+  cut,
+  price,
+  releasedate,
+  rank,
+  steamreviews,
+  steamplayers,
+  metacritic,
+  metacriticuser,
+}

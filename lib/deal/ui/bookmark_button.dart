@@ -7,12 +7,12 @@ import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class BookmarkButton extends ConsumerWidget {
-  final Deal deal;
-
   const BookmarkButton({
     super.key,
     required this.deal,
   });
+
+  final Deal deal;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

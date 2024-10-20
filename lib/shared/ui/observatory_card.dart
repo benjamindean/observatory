@@ -1,14 +1,13 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:observatory/shared/ui/constants.dart';
 
 class ObservatoryCard extends StatelessWidget {
   final Widget child;
-  final double elevation;
+  final double? elevation;
 
   const ObservatoryCard({
     super.key,
-    this.elevation = CARD_ELEVATION,
+    this.elevation,
     required this.child,
   });
 

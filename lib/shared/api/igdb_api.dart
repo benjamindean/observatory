@@ -1,14 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:observatory/secret_loader.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/api/utils.dart';
 import 'package:observatory/shared/models/game/game.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
@@ -35,7 +36,7 @@ class IGDBAPI {
       allowPostMethod: true,
       keyBuilder: (request) {
         return const Uuid().v5(
-          Uuid.NAMESPACE_URL,
+          Namespace.url.uuidValue.uuid,
           request.uri.toString() + request.data.toString(),
         );
       },
@@ -64,7 +65,7 @@ class IGDBAPI {
       final response = await dio.post(
           options: cacheOptions.toOptions().copyWith(
             headers: {
-              'Client-ID': GetIt.I<Secret>().igdbClientId,
+              'Client-ID': dotenv.get('IGDB_CLIENT_ID'),
               'Authorization': 'Bearer ${token?.token}',
             },
           ),
@@ -109,9 +110,9 @@ class IGDBAPI {
         error: error,
       );
 
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         error,
-        stackTrace,
+        stackTrace: stackTrace,
       );
 
       return null;

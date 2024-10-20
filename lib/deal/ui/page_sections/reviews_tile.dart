@@ -6,7 +6,6 @@ import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/review.dart';
-import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/dot_separator.dart';
 
 class ReviewsTile extends ConsumerWidget {
@@ -64,8 +63,6 @@ class ReviewsTile extends ConsumerWidget {
         return Padding(
           padding: const EdgeInsets.only(right: 8.0),
           child: Chip(
-            surfaceTintColor: context.colors.scheme.surfaceTint,
-            elevation: CARD_ELEVATION,
             label: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

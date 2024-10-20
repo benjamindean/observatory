@@ -38,6 +38,12 @@ class Deal with _$Deal {
 
   factory Deal.fromJson(Map<String, Object?> json) => _$DealFromJson(json);
 
+  @override
+  bool operator ==(Object other) => other is Deal && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   Price get bestPrice {
     return prices?.firstOrNull ??
         const Price(

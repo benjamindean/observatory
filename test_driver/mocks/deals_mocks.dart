@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
-import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/shop.dart';
@@ -304,8 +303,7 @@ final List<Deal> deals = [
   )
 ];
 
-class AsyncDealsNotifierMock
-    extends AutoDisposeFamilyAsyncNotifier<DealsState, DealCategory>
+class AsyncDealsNotifierMock extends AsyncNotifier<DealsState>
     with Mock
     implements AsyncDealsNotifier {
   Future<DealsState> _initDeals() async {
@@ -317,7 +315,7 @@ class AsyncDealsNotifierMock
   }
 
   @override
-  Future<DealsState> build(DealCategory arg) async {
+  Future<DealsState> build() async {
     return _initDeals();
   }
 

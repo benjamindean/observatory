@@ -1,5 +1,3 @@
-import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,12 +8,12 @@ import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/router.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/observatory_back_button.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class BookmarksPage extends ConsumerWidget {
   const BookmarksPage({
@@ -33,18 +31,48 @@ class BookmarksPage extends ConsumerWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        elevation: APPBAR_ELEVATION,
-        surfaceTintColor: context.colors.scheme.surfaceTint,
-        child: const Row(
+        child: Row(
           children: <Widget>[
             Expanded(
               flex: 40,
               child: ObservatoryBackButton(),
             ),
             Expanded(
-              flex: 60,
+              flex: 20,
               child: SizedBox.expand(),
             ),
+            TextButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (context) {
+                    return ObservatoryDialog(
+                      onApply: () {
+                        ref
+                            .read(asyncBookmarksProvider.notifier)
+                            .clearBookmarks()
+                            .then(
+                          (value) {
+                            if (context.mounted) {
+                              context.pop();
+                            }
+                          },
+                        );
+                      },
+                      onDiscard: () {
+                        context.pop();
+                      },
+                      title: 'Remove all pinned games?',
+                      body: 'This operation cannot be undone.',
+                      discardText: 'Cancel',
+                      applyText: 'Remove',
+                    );
+                  },
+                );
+              },
+              child: const Text('Remove All'),
+            )
           ],
         ),
       ),
@@ -53,15 +81,9 @@ class BookmarksPage extends ConsumerWidget {
         controller: PrimaryScrollController.of(context),
         slivers: [
           SliverAppBar(
-            surfaceTintColor: context.colors.scheme.surfaceTint,
             floating: true,
-            flexibleSpace: AppBar(
-              title: Text(
-                'Pinned Games',
-                style: context.textStyles.titleMedium.copyWith(
-                  color: context.colors.scheme.onSurface,
-                ),
-              ),
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text('Pinned Games'),
             ),
           ),
           waitlist.when(
@@ -73,9 +95,9 @@ class BookmarksPage extends ConsumerWidget {
                 stackTrace: stackTrace,
               );
 
-              FirebaseCrashlytics.instance.recordError(
+              Sentry.captureException(
                 error,
-                stackTrace,
+                stackTrace: stackTrace,
               );
 
               return const ErrorMessage(
@@ -104,49 +126,8 @@ class BookmarksPage extends ConsumerWidget {
                 padding: const EdgeInsets.all(6.0),
                 sliver: SliverFixedExtentList.builder(
                   itemExtent: cardHeight,
-                  itemCount: bookmarks.length + 1,
+                  itemCount: bookmarks.length,
                   itemBuilder: (context, index) {
-                    if (index == bookmarks.length) {
-                      return Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Center(
-                          child: TextButton.icon(
-                            icon: const Icon(Icons.cancel_rounded),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                builder: (context) {
-                                  return ObservatoryDialog(
-                                    onApply: () {
-                                      ref
-                                          .read(asyncBookmarksProvider.notifier)
-                                          .clearBookmarks()
-                                          .then(
-                                        (value) {
-                                          if (context.mounted) {
-                                            context.pop();
-                                          }
-                                        },
-                                      );
-                                    },
-                                    onDiscard: () {
-                                      context.pop();
-                                    },
-                                    title: 'Remove all pinned games?',
-                                    body: 'This operation cannot be undone.',
-                                    discardText: 'Cancel',
-                                    applyText: 'Remove',
-                                  );
-                                },
-                              );
-                            },
-                            label: const Text('Remove All'),
-                          ),
-                        ),
-                      );
-                    }
-
                     return DealCard(
                       deal: bookmarks[index],
                       page: NavigationBranch.waitlist,

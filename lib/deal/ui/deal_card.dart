@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,11 +21,13 @@ import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 class DealCard extends ConsumerWidget {
   final Deal deal;
   final NavigationBranch page;
+  final Function? onCardTapCallback;
 
   const DealCard({
     super.key,
     required this.deal,
     required this.page,
+    this.onCardTapCallback,
   });
 
   @override
@@ -47,7 +51,7 @@ class DealCard extends ConsumerWidget {
         children: [
           SlidableAction(
             padding: EdgeInsets.zero,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
             backgroundColor: Colors.transparent,
             onPressed: (_) {
               if (isInWaitlist) {
@@ -71,7 +75,7 @@ class DealCard extends ConsumerWidget {
           ),
           SlidableAction(
             padding: EdgeInsets.zero,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
             onPressed: (_) {
               if (!isInWaitlist) {
                 DealFunctions.addDealToWaitlist(
@@ -106,7 +110,7 @@ class DealCard extends ConsumerWidget {
       child: InkWell(
         splashColor: context.colors.scheme.primaryContainer,
         splashFactory: InkSparkle.splashFactory,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.all(Radius.circular(16.0)),
         onTap: () => onCardTap(context),
         onLongPress: () {
           HapticFeedback.mediumImpact();
@@ -181,5 +185,9 @@ class DealCard extends ConsumerWidget {
 
   void onCardTap(BuildContext context) {
     context.push('/deal', extra: deal);
+
+    if (onCardTapCallback != null) {
+      unawaited(onCardTapCallback!());
+    }
   }
 }

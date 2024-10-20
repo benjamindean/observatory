@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
-import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/models/deal.dart';
 
 class BookmarksInfoBar extends ConsumerWidget {
@@ -27,6 +26,7 @@ class BookmarksInfoBar extends ConsumerWidget {
     }
 
     return bookmarks.when(
+      skipLoadingOnReload: true,
       data: (deals) {
         if (deals.isEmpty) {
           return const SizedBox.shrink();
@@ -35,15 +35,15 @@ class BookmarksInfoBar extends ConsumerWidget {
         return GestureDetector(
           onTap: () => context.push('/bookmarks'),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+            padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: context.elevatedBottomAppBarColor,
-                borderRadius: BorderRadius.circular(12.0),
+                color: context.colors.scheme.surfaceContainer,
+                borderRadius: BorderRadius.all(Radius.circular(12.0)),
               ),
               child: ListTile(
                 dense: true,
-                contentPadding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
                 leading: Icon(
                   Icons.push_pin,
                   color: context.colors.scheme.onSurfaceVariant,

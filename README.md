@@ -47,25 +47,15 @@ Observatory is the essential app for tracking PC game prices and discounts exclu
 ## Contributing
 
 1. Register an app on IsThereAnyDeal [here](https://isthereanydeal.com/apps/my/) and mark it as unlisted.
-2. Get your credentials and create a file `assets/secrets.json` with the following content:
+2. Get your credentials and create a file `secrets.env` with the following content:
 
-```json
-{
-    "itad_api_key": "...",
-    "itad_api_secret": "...",
-    "itad_api_identifier": "..."
-}
+```env
+ITAD_API_KEY= ...
+ITAD_API_SECRET= ...
+ITAD_API_IDENTIFIER= ...
 ```
 3. Follow [Flutter Docs](https://docs.flutter.dev/) to set up the environment and run the app on an emulator or physical device.
-4. Create a new [Firebase](https://firebase.google.com/) project and [add it to the app](https://firebase.google.com/docs/flutter/setup). 
-
-```bash
-firebase login
-dart pub global activate flutterfire_cli
-flutterfire configure
-```
-
-5. Create a Pull Request describing your changes.
+4. Create a Pull Request describing your changes.
 
 ## Disclaimer 
 

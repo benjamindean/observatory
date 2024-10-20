@@ -341,42 +341,6 @@ class _$DealImpl extends _Deal {
     return 'Deal(id: $id, slug: $slug, type: $type, title: $title, steamId: $steamId, info: $info, overview: $overview, isLoading: $isLoading, added: $added, source: $source, prices: $prices)';
   }
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DealImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.slug, slug) || other.slug == slug) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.steamId, steamId) || other.steamId == steamId) &&
-            (identical(other.info, info) || other.info == info) &&
-            (identical(other.overview, overview) ||
-                other.overview == overview) &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.added, added) || other.added == added) &&
-            (identical(other.source, source) || other.source == source) &&
-            const DeepCollectionEquality().equals(other._prices, _prices));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      slug,
-      type,
-      title,
-      steamId,
-      info,
-      overview,
-      isLoading,
-      added,
-      source,
-      const DeepCollectionEquality().hash(_prices));
-
   /// Create a copy of Deal
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
