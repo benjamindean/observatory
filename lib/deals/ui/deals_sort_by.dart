@@ -5,6 +5,7 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:observatory/shared/ui/close_bottom_sheet_button.dart';
+import 'package:go_router/go_router.dart';
 
 void showDealsSortBy(BuildContext context) {
   showModalBottomSheet(
@@ -53,6 +54,8 @@ class DealsSortBy extends ConsumerWidget {
                   onTap: () {
                     ref.read(itadFiltersProvider.notifier).setSortBy(value);
                     ref.read(itadFiltersProvider.notifier).save();
+
+                    context.pop();
                   },
                   title: Text(
                     SORT_BY_VALUES[value] ?? SortBy.trending.name,
