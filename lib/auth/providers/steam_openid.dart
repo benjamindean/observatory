@@ -2,7 +2,9 @@ import 'package:http/http.dart' as http;
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class OpenId {
-  final _steam_login = 'https://steamcommunity.com/openid/login';
+  final String host = 'https://getobservatory.app';
+  final String returnUrl = 'https://getobservatory.app/app/auth/steam';
+  final String _steam_login = 'https://steamcommunity.com/openid/login';
 
   static const _openIdMode = 'checkid_setup';
   static const _openIdNs = 'http://specs.openid.net/auth/2.0';
@@ -12,9 +14,6 @@ class OpenId {
   static final RegExp _validation_regexp = RegExp(
     r'^https://steamcommunity.com/openid/id/(7[0-9]{15,25})$',
   );
-
-  final String host = 'https://getobservatory.app';
-  final String returnUrl = 'https://getobservatory.app/app/auth/steam';
 
   const OpenId();
 

@@ -5,10 +5,6 @@ import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
-  Future<List<Deal>> _fetchBookmarks() async {
-    return GetIt.I<SettingsRepository>().getBookmarks();
-  }
-
   @override
   Future<List<Deal>> build() async {
     final List<String> wailtistIds = ref.watch(waitlistIdsProvider);
@@ -17,7 +13,7 @@ class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
       return [];
     }
 
-    final List<Deal> bookmarks = await _fetchBookmarks();
+    final List<Deal> bookmarks = await fetchBookmarks();
     final List<Deal> filteredBookmarks = bookmarks
         .where(
           (deal) => wailtistIds.contains(deal.id),
@@ -73,6 +69,10 @@ class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
         return [];
       },
     );
+  }
+
+  Future<List<Deal>> fetchBookmarks() async {
+    return GetIt.I<SettingsRepository>().getBookmarks();
   }
 }
 

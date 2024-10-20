@@ -6,16 +6,12 @@ import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/itad_filters/itad_filters_page.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/settings/providers/itad_config_provider.dart';
-import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/ui/dot_separator.dart';
 
 class ITADFiltersInfoBar extends ConsumerWidget {
-  final DealCategory dealsTab;
-
   const ITADFiltersInfoBar({
     super.key,
-    required this.dealsTab,
   });
 
   @override
@@ -29,7 +25,7 @@ class ITADFiltersInfoBar extends ConsumerWidget {
       ),
     );
 
-    if (filters == const ITADFilters() || dealsTab != DealCategory.all) {
+    if (filters == const ITADFilters()) {
       return const SizedBox.shrink();
     }
 
@@ -60,7 +56,7 @@ class ITADFiltersInfoBar extends ConsumerWidget {
                   ? () {
                       ref.read(itadFiltersProvider.notifier).reset();
                       ref
-                          .read(asyncDealsProvider(DealCategory.all).notifier)
+                          .read(asyncDealsProvider.notifier)
                           .reset(withLoading: true);
                     }
                   : null,

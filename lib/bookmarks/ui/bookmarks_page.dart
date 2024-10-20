@@ -1,5 +1,3 @@
-import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -84,13 +82,8 @@ class BookmarksPage extends ConsumerWidget {
         slivers: [
           SliverAppBar(
             floating: true,
-            flexibleSpace: AppBar(
-              title: Text(
-                'Pinned Games',
-                style: context.textStyles.titleMedium.copyWith(
-                  color: context.colors.scheme.onSurface,
-                ),
-              ),
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text('Pinned Games'),
             ),
           ),
           waitlist.when(

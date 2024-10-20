@@ -17,7 +17,6 @@ import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';
-import 'package:observatory/shared/models/steam_featured_item.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -173,6 +172,9 @@ class API {
     final List<int> stores = await settingsReporsitory.getSelectedStores();
     final ITADFilters filters = settingsReporsitory.getITADFilters();
 
+    final String sortDealsBy =
+        (filters.sortBy ?? SortBy.trending.name).replaceAll('0', '-');
+
     final Uri url = Uri.https(BASE_URL, '/deals/v2', {
       'key': API_KEY,
       'limit': limit.toString(),
@@ -181,35 +183,13 @@ class API {
       'shops': stores.join(','),
       'nondeals': filters.nondeals.toString(),
       'mature': filters.mature.toString(),
-      'sort': '-trending',
+      'sort': '-$sortDealsBy',
       'filter': filters.filtersString,
     });
 
     final response = await dio.get(url.toString());
 
     return fetchDealData(deals: Parsers.deals(response));
-  }
-
-  Future<List<Deal>> fetchSteamTopSellers() async {
-    final Uri steamAPI = Uri.https(
-      'store.steampowered.com',
-      '/api/featuredcategories',
-    );
-    final steamResponse = await dio.get(steamAPI.toString());
-    final List<SteamFeaturedItem> topSellers = Parsers.steamStoreFront(
-      steamResponse,
-    );
-    final List<Deal> steamDeals = topSellers
-        .map(
-          (e) => Deal(
-            id: 'none',
-            steamId: 'app/${e.id}',
-            title: e.name,
-          ),
-        )
-        .toList();
-
-    return getByAppIDs(steamDeals);
   }
 
   Future<List<Deal>> getDealsBySteamIds(
@@ -300,53 +280,6 @@ class API {
     return SteamUser.fromJson(
       json.decode(steamResponse.toString())['response']['players'][0],
     );
-  }
-
-  Future<List<Deal>> fetchSteamFeatured() async {
-    final Uri steamAPI = Uri.https(
-      'store.steampowered.com',
-      '/api/featured',
-    );
-    final steamResponse = await dio.get(steamAPI.toString());
-    final List<SteamFeaturedItem> topSellers = Parsers.steamFeatured(
-      steamResponse,
-    );
-    final List<Deal> deals = topSellers
-        .map(
-          (e) => Deal(
-            id: 'none',
-            steamId: 'app/${e.id}',
-            title: e.name,
-          ),
-        )
-        .toList();
-
-    return getByAppIDs(deals);
-  }
-
-  Future<List<Deal>> fetchDealsCategory({
-    final int limit = DEALS_COUNT,
-    final int offset = 0,
-    final DealCategory category = DealCategory.all,
-  }) async {
-    final Uri url = Uri.https(
-      BASE_URL,
-      '/v01/stats/${category.name.toString()}/chart/',
-      {
-        'key': API_KEY,
-        'limit': limit.toString(),
-        'offset': offset.toString(),
-      },
-    );
-
-    final response = await dio.get(url.toString());
-    final List<Deal> deals = Parsers.popularityChart(response)
-        .map(
-          (e) => Deal(id: e.id),
-        )
-        .toList();
-
-    return fetchDealData(deals: deals);
   }
 
   Future<List<Deal>> fetchDealData({

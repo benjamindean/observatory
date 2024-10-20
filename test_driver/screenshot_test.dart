@@ -67,7 +67,7 @@ void main() async {
     await toggleTheme('dark');
 
     await driver.tap(find.byValueKey('navigation-deals'));
-    await driver.tap(find.byValueKey('deal-category-all'));
+    await driver.tap(find.byValueKey('deal-category-trending'));
 
     await takeScreenshot('deals_page');
 

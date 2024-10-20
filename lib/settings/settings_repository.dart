@@ -39,28 +39,6 @@ enum WaitlistSorting {
 
 enum WaitlistSortingDirection { asc, desc }
 
-enum DealCategory {
-  all,
-  steam_top_sellers,
-  steam_featured,
-}
-
-final Map<DealCategory, Map<String, String>> dealCategoryLabels = {
-  DealCategory.all: {
-    'title': 'All Games',
-    'subtitle': 'All currently trending deals.',
-  },
-  DealCategory.steam_top_sellers: {
-    'title': 'Steam Store',
-    'subtitle':
-        'A combination of Steam\'s Specials, Top Sellers and New Releases.',
-  },
-  DealCategory.steam_featured: {
-    'title': 'Steam Featured',
-    'subtitle': 'Featured games from the Steam\'s main page.',
-  },
-};
-
 class SettingsRepository {
   final Box settingsBox = Hive.box(SETTINGS_BOX_NAME);
   final Box<Deal> savedDealsBox = Hive.box<Deal>(
@@ -99,7 +77,6 @@ class SettingsRepository {
   final String PREF_PURCHASED_PRODUCTS = 'observatory_purchased_products';
   final String PREF_COLLAPSE_PINNED = 'observatory_collapse_pinned';
 
-  final DealCategory defaultCategory = DealCategory.all;
   final WaitlistSorting defaultWaitlistSorting = WaitlistSorting.discount_date;
   final WaitlistSortingDirection defaultWaitlistSortingDirection =
       WaitlistSortingDirection.asc;
@@ -264,22 +241,6 @@ class SettingsRepository {
     return settingsBox.put(
       PREF_LAUNCH_COUNTER,
       count,
-    );
-  }
-
-  Future<DealCategory> getDealsTab() async {
-    final String category = await settingsBox.get(
-      PREF_DEALS_TAB,
-      defaultValue: defaultCategory.name.toString(),
-    );
-
-    return DealCategory.values.asNameMap()[category] ?? defaultCategory;
-  }
-
-  Future<void> setDealsTab(DealCategory category) async {
-    return settingsBox.put(
-      PREF_DEALS_TAB,
-      category.name.toString(),
     );
   }
 

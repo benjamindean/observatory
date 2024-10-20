@@ -21,7 +21,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
     return SettingsState(
       showHeaders: await repository.getShowHeaders(),
-      dealsTab: await repository.getDealsTab(),
       waitlistNotifications: await repository.getWaitlistNotifications(),
       waitlistSorting: await repository.getWaitlistSorting(),
       waitlistSortingDirection: await repository.getWaitlistSortingDirection(),
@@ -41,18 +40,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
         return state.requireValue.copyWith(
           showHeaders: showHeaders,
-        );
-      },
-    );
-  }
-
-  Future<void> setDealsTab(DealCategory category) async {
-    state = await AsyncValue.guard(
-      () async {
-        await repository.setDealsTab(category);
-
-        return state.requireValue.copyWith(
-          dealsTab: category,
         );
       },
     );

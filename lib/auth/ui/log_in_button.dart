@@ -3,15 +3,6 @@ import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 
 class LogInButton extends StatelessWidget {
-  final Color color;
-  final bool isLoading;
-  final Function iconBuilder;
-  final VoidCallback onPressed;
-  final VoidCallback onLogOut;
-  final String? username;
-  final Widget text;
-  final String label;
-
   const LogInButton({
     super.key,
     required this.color,
@@ -23,6 +14,15 @@ class LogInButton extends StatelessWidget {
     required this.isLoading,
     required this.label,
   });
+
+  final Color color;
+  final bool isLoading;
+  final Function iconBuilder;
+  final VoidCallback onPressed;
+  final VoidCallback onLogOut;
+  final String? username;
+  final Widget text;
+  final String label;
 
   @override
   Widget build(BuildContext context) {

@@ -2,13 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/settings/providers/itad_config_provider.dart';
-import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
 
-class AsyncDealsNotifier
-    extends AutoDisposeFamilyAsyncNotifier<DealsState, DealCategory> {
+class AsyncDealsNotifier extends AsyncNotifier<DealsState> {
   Future<DealsState> _initDeals() async {
     final List<Deal> results = await fetchDeals();
     final List<Deal> deals = Set<Deal>.of(results).toList();
@@ -27,15 +25,13 @@ class AsyncDealsNotifier
 
     return DealsState(
       deals: deals,
-      hasReachedMax: deals.isEmpty ||
-          arg == DealCategory.steam_top_sellers ||
-          arg == DealCategory.steam_featured,
+      hasReachedMax: deals.isEmpty,
       pageNumber: 1,
     );
   }
 
   @override
-  Future<DealsState> build(DealCategory arg) async {
+  Future<DealsState> build() async {
     return _initDeals();
   }
 
@@ -65,25 +61,9 @@ class AsyncDealsNotifier
   Future<List<Deal>> fetchDeals({int offset = 0}) async {
     final API api = GetIt.I<API>();
 
-    if (arg == DealCategory.all) {
-      return api.fetchDeals(
-        limit: DEALS_COUNT,
-        offset: offset,
-      );
-    }
-
-    if (arg == DealCategory.steam_top_sellers) {
-      return api.fetchSteamTopSellers();
-    }
-
-    if (arg == DealCategory.steam_featured) {
-      return api.fetchSteamFeatured();
-    }
-
-    return api.fetchDealsCategory(
+    return api.fetchDeals(
       limit: DEALS_COUNT,
       offset: offset,
-      category: arg,
     );
   }
 
@@ -98,7 +78,7 @@ class AsyncDealsNotifier
   }
 }
 
-final asyncDealsProvider = AsyncNotifierProvider.autoDispose
-    .family<AsyncDealsNotifier, DealsState, DealCategory>(
+final asyncDealsProvider =
+    AsyncNotifierProvider<AsyncDealsNotifier, DealsState>(
   (AsyncDealsNotifier.new),
 );

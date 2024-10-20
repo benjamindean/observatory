@@ -19,17 +19,32 @@ const MAX_STEAM_WISHLIST_PAGES = 7;
 const DEALS_COUNT = 50;
 const int RECENTS_LIMIT = 10;
 
-const Map<String, String> DEAL_FILTERS = {
-  'trending': 'All Games',
-  'time': 'Newest',
-  'cut': 'Highest Price Cut',
-  'price': 'Lowest Price',
-  'expiry': 'Expiring Soon',
-  'release-date': 'Release Date',
-  'rank': 'Most Popular',
-  'steam-players': 'Steam Players Count',
-  'steam-reviews': 'Steam Reviews',
-  'opencritic': 'OpenCritic Score',
-  'metacritic': 'Metacritic Score',
-  'metacritic-users': 'Metacritic User Score',
+const Map<SortBy, String> SORT_BY_VALUES = {
+  SortBy.trending: 'Trending',
+  SortBy.time: 'Newest',
+  SortBy.cut: 'Highest Price Cut',
+  SortBy.price: 'Lowest Price',
+  SortBy.expiry: 'Expiring Soon',
+  SortBy.release0date: 'Release Date',
+  SortBy.rank: 'Most Popular',
+  SortBy.steam0players: 'Steam Players Count',
+  SortBy.steam0reviews: 'Steam Reviews',
+  SortBy.opencritic: 'OpenCritic Score',
+  SortBy.metacritic: 'Metacritic Score',
+  SortBy.metacritic0user: 'Metacritic User Score',
 };
+
+enum SortBy {
+  trending,
+  time,
+  cut,
+  price,
+  expiry,
+  release0date,
+  rank,
+  steam0reviews,
+  steam0players,
+  opencritic,
+  metacritic,
+  metacritic0user,
+}

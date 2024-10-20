@@ -3,11 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
-import 'package:observatory/deals/ui/deals_filter.dart';
-import 'package:observatory/itad_filters/itad_filters_page.dart';
+import 'package:observatory/deals/ui/deals_sort_by.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
-import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/settings/state/settings_state.dart';
 import 'package:observatory/shared/ui/discounted_badge.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
@@ -26,11 +24,6 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<SettingsState> settings = ref.watch(asyncSettingsProvider);
-    final DealCategory dealsTab = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.valueOrNull?.dealsTab ?? DealCategory.all,
-      ),
-    );
 
     return Scaffold(
       key: const Key('home-page'),
@@ -43,11 +36,7 @@ class HomePage extends ConsumerWidget {
           }
 
           if (index == 0 && index == child.currentIndex) {
-            if (dealsTab == DealCategory.all) {
-              return showITADFilters(context);
-            }
-
-            return showDealsFilter(context);
+            return showDealsSortBy(context);
           }
 
           if (index == 2 && index == child.currentIndex) {

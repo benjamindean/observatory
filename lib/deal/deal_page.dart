@@ -20,12 +20,12 @@ import 'package:observatory/shared/widgets/list_heading.dart';
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 
 class DealPage extends ConsumerWidget {
-  final Deal deal;
-
   const DealPage({
     super.key,
     required this.deal,
   });
+
+  final Deal deal;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

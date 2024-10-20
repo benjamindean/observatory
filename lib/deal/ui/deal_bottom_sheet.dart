@@ -11,12 +11,12 @@ import 'package:observatory/shared/ui/backdrop_container.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class AddedOn extends StatelessWidget {
-  final int added;
-
   const AddedOn({
     super.key,
     required this.added,
   });
+
+  final int added;
 
   @override
   Widget build(BuildContext context) {

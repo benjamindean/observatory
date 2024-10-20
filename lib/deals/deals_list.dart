@@ -7,8 +7,6 @@ import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/router.dart';
-import 'package:observatory/settings/providers/settings_provider.dart';
-import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/load_more.dart';
@@ -21,17 +19,11 @@ class DealsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final DealCategory dealsCategory = ref.watch(
-      asyncSettingsProvider.select(
-        (value) => value.valueOrNull?.dealsTab ?? DealCategory.all,
-      ),
-    );
-
     final AsyncValue<DealsState> deals = ref.watch(
-      asyncDealsProvider(dealsCategory),
+      asyncDealsProvider,
     );
     final AsyncDealsNotifier dealsNotifier = ref.watch(
-      asyncDealsProvider(dealsCategory).notifier,
+      asyncDealsProvider.notifier,
     );
 
     final double cardHeight = ref

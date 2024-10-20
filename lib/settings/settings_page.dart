@@ -37,7 +37,9 @@ class SettingsPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        flexibleSpace: FlexibleSpaceBar(
+          title: const Text('Settings'),
+        ),
       ),
       body: SafeArea(
         child: settings.when(
