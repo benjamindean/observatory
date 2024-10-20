@@ -172,9 +172,6 @@ class API {
     final List<int> stores = await settingsReporsitory.getSelectedStores();
     final ITADFilters filters = settingsReporsitory.getITADFilters();
 
-    final String sortDealsBy =
-        (filters.sortBy ?? SortBy.trending.name).replaceAll('0', '-');
-
     final Uri url = Uri.https(BASE_URL, '/deals/v2', {
       'key': API_KEY,
       'limit': limit.toString(),
@@ -183,7 +180,7 @@ class API {
       'shops': stores.join(','),
       'nondeals': filters.nondeals.toString(),
       'mature': filters.mature.toString(),
-      'sort': '-$sortDealsBy',
+      'sort': SORT_BY_VALUES[filters.sortBy ?? SortBy.trending],
       'filter': filters.filtersString,
     });
 

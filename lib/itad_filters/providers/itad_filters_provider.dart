@@ -90,12 +90,15 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
 
   Future<void> setSortBy(SortBy sortBy) async {
     state = state.copyWith(
+      current: state.current.copyWith(
+        sortBy: sortBy.name,
+      ),
       cached: state.cached.copyWith(
         sortBy: sortBy.name,
       ),
     );
 
-    await save();
+    await GetIt.I<SettingsRepository>().setITADFilters(state.current);
 
     return ref.read(asyncDealsProvider.notifier).reset(withLoading: true);
   }

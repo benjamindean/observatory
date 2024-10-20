@@ -20,18 +20,29 @@ const DEALS_COUNT = 50;
 const int RECENTS_LIMIT = 10;
 
 const Map<SortBy, String> SORT_BY_VALUES = {
+  SortBy.trending: '-trending',
+  SortBy.time: '-time',
+  SortBy.cut: '-cut',
+  SortBy.price: 'price',
+  SortBy.releasedate: '-release-date',
+  SortBy.rank: 'rank',
+  SortBy.steamplayers: '-steam-players',
+  SortBy.steamreviews: '-steam-reviews',
+  SortBy.metacritic: '-metacritic',
+  SortBy.metacriticuser: '-metacritic-user',
+};
+
+const Map<SortBy, String> SORT_BY_FILTER_STRINGS = {
   SortBy.trending: 'Trending',
   SortBy.time: 'Newest',
   SortBy.cut: 'Highest Price Cut',
   SortBy.price: 'Lowest Price',
-  SortBy.expiry: 'Expiring Soon',
-  SortBy.release0date: 'Release Date',
+  SortBy.releasedate: 'Release Date',
   SortBy.rank: 'Most Popular',
-  SortBy.steam0players: 'Steam Players Count',
-  SortBy.steam0reviews: 'Steam Reviews',
-  SortBy.opencritic: 'OpenCritic Score',
+  SortBy.steamplayers: 'Steam Players',
+  SortBy.steamreviews: 'Steam Reviews',
   SortBy.metacritic: 'Metacritic Score',
-  SortBy.metacritic0user: 'Metacritic User Score',
+  SortBy.metacriticuser: 'Metacritic User Score',
 };
 
 enum SortBy {
@@ -39,12 +50,10 @@ enum SortBy {
   time,
   cut,
   price,
-  expiry,
-  release0date,
+  releasedate,
   rank,
-  steam0reviews,
-  steam0players,
-  opencritic,
+  steamreviews,
+  steamplayers,
   metacritic,
-  metacritic0user,
+  metacriticuser,
 }
