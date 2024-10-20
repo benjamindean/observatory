@@ -19,7 +19,7 @@ const MAX_STEAM_WISHLIST_PAGES = 7;
 const DEALS_COUNT = 50;
 const int RECENTS_LIMIT = 10;
 
-const Map<SortBy, String> SORT_BY_VALUES = {
+const Map<SortBy, String> SORT_BY_FILTER_STRINGS = {
   SortBy.trending: '-trending',
   SortBy.time: '-time',
   SortBy.cut: '-cut',
@@ -32,7 +32,7 @@ const Map<SortBy, String> SORT_BY_VALUES = {
   SortBy.metacriticuser: '-metacritic-user',
 };
 
-const Map<SortBy, String> SORT_BY_FILTER_STRINGS = {
+const Map<SortBy, String> SORT_BY_VALUES = {
   SortBy.trending: 'Trending',
   SortBy.time: 'Newest',
   SortBy.cut: 'Highest Price Cut',
