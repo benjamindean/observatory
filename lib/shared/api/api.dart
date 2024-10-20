@@ -180,7 +180,8 @@ class API {
       'shops': stores.join(','),
       'nondeals': filters.nondeals.toString(),
       'mature': filters.mature.toString(),
-      'sort': SORT_BY_FILTER_STRINGS[filters.sortBy ?? SortBy.trending],
+      'sort': SORT_BY_FILTER_STRINGS[
+          SortBy.values.byName(filters.sortBy ?? SortBy.trending.name)],
       'filter': filters.filtersString,
     });
 
