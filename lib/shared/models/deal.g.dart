@@ -66,6 +66,8 @@ class DealSourceAdapter extends TypeAdapter<DealSource> {
         return DealSource.itad;
       case 1:
         return DealSource.steam;
+      case 2:
+        return DealSource.observatory;
       default:
         return DealSource.itad;
     }
@@ -79,6 +81,9 @@ class DealSourceAdapter extends TypeAdapter<DealSource> {
         break;
       case DealSource.steam:
         writer.writeByte(1);
+        break;
+      case DealSource.observatory:
+        writer.writeByte(2);
         break;
     }
   }
@@ -113,7 +118,7 @@ _$DealImpl _$$DealImplFromJson(Map<String, dynamic> json) => _$DealImpl(
       isLoading: json['isLoading'] as bool? ?? false,
       added: (json['added'] as num?)?.toInt() ?? 0,
       source: $enumDecodeNullable(_$DealSourceEnumMap, json['source']) ??
-          DealSource.itad,
+          DealSource.observatory,
       prices: (json['prices'] as List<dynamic>?)
               ?.map((e) => Price.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -138,4 +143,5 @@ Map<String, dynamic> _$$DealImplToJson(_$DealImpl instance) =>
 const _$DealSourceEnumMap = {
   DealSource.itad: 'itad',
   DealSource.steam: 'steam',
+  DealSource.observatory: 'observatory',
 };

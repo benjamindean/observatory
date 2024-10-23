@@ -13,7 +13,7 @@ class PriceCut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextStyle? textStyle = context.themes.text.titleLarge?.copyWith(
-      fontSize: 20.0,
+      fontSize: 22.0,
     );
     final int priceCutInt = priceCut.toInt();
 
@@ -36,11 +36,11 @@ class PriceCut extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 1.0),
+            padding: const EdgeInsets.only(top: 3.0),
             child: Icon(
               Icons.percent,
               color: context.colors.disabled,
-              size: 22,
+              size: 24,
             ),
           ),
         ],
@@ -65,9 +65,10 @@ class PriceCut extends StatelessWidget {
         Container(
           width: 6.0,
           height: 1.8,
-          padding: const EdgeInsets.fromLTRB(0, 2.0, 2.0, 0),
+          margin: const EdgeInsets.only(top: 3.0),
           color: highlightColor,
         ),
+        SizedBox(width: 2.0),
         Text(
           priceCutInt.toString(),
           style: textStyle?.copyWith(
@@ -76,11 +77,11 @@ class PriceCut extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 1.0),
+          padding: const EdgeInsets.only(top: 3.0),
           child: Icon(
             Icons.percent,
             color: highlightColor,
-            size: 22,
+            size: 24,
           ),
         ),
       ],

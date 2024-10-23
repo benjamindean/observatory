@@ -53,7 +53,6 @@ class DealsSortBy extends ConsumerWidget {
                   selected: value.name == sortBy,
                   onTap: () {
                     ref.read(itadFiltersProvider.notifier).setSortBy(value);
-                    ref.read(itadFiltersProvider.notifier).save();
 
                     context.pop();
                   },

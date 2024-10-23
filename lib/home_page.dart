@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
-import 'package:observatory/deals/ui/deals_sort_by.dart';
+import 'package:observatory/itad_filters/itad_filters_page.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/state/settings_state.dart';
@@ -36,7 +36,7 @@ class HomePage extends ConsumerWidget {
           }
 
           if (index == 0 && index == child.currentIndex) {
-            return showDealsSortBy(context);
+            return showITADFilters(context);
           }
 
           if (index == 2 && index == child.currentIndex) {

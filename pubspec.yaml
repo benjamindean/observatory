@@ -99,3 +99,4 @@ flutter:
     - assets/images/itad-logo.jpg
     - secrets.env
     - assets/google_fonts/
+    - assets/images/store_icons/

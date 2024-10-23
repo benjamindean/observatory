@@ -159,24 +159,26 @@ class DealCard extends ConsumerWidget {
                 ],
               ),
             ),
-            if (!isWaitlistPage && isInWaitlist)
-              Align(
-                alignment: Alignment.topRight,
-                child: Icon(
-                  Icons.favorite_rounded,
-                  color: context.colors.scheme.primary,
-                  size: context.textStyles.titleMedium.fontSize,
-                ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (!isWaitlistPage && isInWaitlist)
+                    Icon(
+                      Icons.favorite_rounded,
+                      color: context.colors.scheme.primary,
+                      size: context.textStyles.titleMedium.fontSize,
+                    ),
+                  if (isInBookmarks && isWaitlistPage)
+                    Icon(
+                      Icons.push_pin_rounded,
+                      color: context.colors.scheme.tertiary,
+                      size: context.textStyles.titleMedium.fontSize,
+                    )
+                ],
               ),
-            if (isInBookmarks && isWaitlistPage)
-              Align(
-                alignment: Alignment.topRight,
-                child: Icon(
-                  Icons.push_pin_rounded,
-                  color: context.colors.scheme.tertiary,
-                  size: context.textStyles.titleMedium.fontSize,
-                ),
-              )
+            ),
           ],
         ),
       ),

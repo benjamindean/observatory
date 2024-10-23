@@ -30,7 +30,7 @@ class DealsAppBar extends StatelessWidget {
           OrySmallButton(
             onPressed: () => showDealsSortBy(context),
             icon: Icons.sort,
-            label: 'Sort By',
+            label: 'Sort',
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),

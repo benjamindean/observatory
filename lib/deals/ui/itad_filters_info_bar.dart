@@ -75,7 +75,7 @@ class ITADFiltersInfoBar extends ConsumerWidget {
               overflow: TextOverflow.ellipsis,
               style: context.themes.text.labelMedium?.copyWith(
                 color: context.colors.hint,
-                letterSpacing: 0.2,
+                letterSpacing: 0.1,
               ),
               TextSpan(
                 children: [

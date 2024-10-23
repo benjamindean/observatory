@@ -14,7 +14,9 @@ enum DealSource {
   @HiveField(0)
   itad,
   @HiveField(1)
-  steam
+  steam,
+  @HiveField(2)
+  observatory,
 }
 
 @freezed
@@ -32,7 +34,7 @@ class Deal with _$Deal {
     Overview? overview,
     @Default(false) bool isLoading,
     @HiveField(3) @Default(0) int added,
-    @HiveField(4) @Default(DealSource.itad) DealSource source,
+    @HiveField(4) @Default(DealSource.observatory) DealSource source,
     @HiveField(5) @Default([]) List<Price>? prices,
   }) = _Deal;
 

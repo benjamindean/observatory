@@ -113,11 +113,13 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
   }
 
   Future<void> reset() async {
-    const ITADFilters filters = ITADFilters();
+    final ITADFilters filters = ITADFilters(
+      sortBy: GetIt.I<SettingsRepository>().getITADFilters().sortBy,
+    );
 
     await GetIt.I<SettingsRepository>().setITADFilters(filters);
 
-    state = const ITADFiltersConfig(
+    state = ITADFiltersConfig(
       cached: filters,
       current: filters,
     );

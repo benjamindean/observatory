@@ -285,7 +285,7 @@ class _$DealImpl extends _Deal {
       this.overview,
       this.isLoading = false,
       @HiveField(3) this.added = 0,
-      @HiveField(4) this.source = DealSource.itad,
+      @HiveField(4) this.source = DealSource.observatory,
       @HiveField(5) final List<Price>? prices = const []})
       : _prices = prices,
         super._();
