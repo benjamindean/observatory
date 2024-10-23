@@ -5,7 +5,6 @@ import 'package:observatory/deal/deal_functions.dart';
 import 'package:observatory/deal/ui/bookmark_button.dart';
 import 'package:observatory/deal/ui/waitlist_button.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/observatory_back_button.dart';
 
 class DealPageBottomAppBar extends ConsumerWidget {
@@ -19,8 +18,6 @@ class DealPageBottomAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return BottomAppBar(
-      elevation: APPBAR_ELEVATION,
-      surfaceTintColor: context.colors.scheme.surfaceTint,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,

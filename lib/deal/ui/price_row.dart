@@ -32,7 +32,7 @@ class PriceRow extends StatelessWidget {
           priceCut: price?.cut ?? 0,
         ),
         const Padding(
-          padding: EdgeInsets.only(top: 2.0),
+          padding: EdgeInsets.only(top: 3.0),
           child: DotSeparator(),
         ),
         Padding(

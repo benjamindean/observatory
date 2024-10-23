@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/auth/state/steam_state.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/api/utils.dart';
@@ -15,9 +17,9 @@ import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';
-import 'package:observatory/shared/models/steam_featured_item.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class API {
   final Dio dio;
@@ -59,9 +61,9 @@ class API {
         error: error,
       );
 
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         error,
-        stackTrace,
+        stackTrace: stackTrace,
       );
 
       return null;
@@ -91,9 +93,9 @@ class API {
         error: error,
       );
 
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         error,
-        stackTrace,
+        stackTrace: stackTrace,
       );
 
       return null;
@@ -111,12 +113,13 @@ class API {
 
     for (List<String> list in listOfIds) {
       try {
-        final Uri url = Uri.https(BASE_URL, '/games/prices/v2', {
+        final Uri url = Uri.https(BASE_URL, '/games/prices/v3', {
           'key': API_KEY,
           'country': country,
           'shops': stores.join(','),
-          'nondeals': 'true',
+          'deals': 'false',
           'vouchers': 'true',
+          'capacity': '0',
         });
 
         final response = await dio.post(
@@ -131,9 +134,9 @@ class API {
           error: error,
         );
 
-        FirebaseCrashlytics.instance.recordError(
+        Sentry.captureException(
           error,
-          stackTrace,
+          stackTrace: stackTrace,
         );
       }
     }
@@ -177,7 +180,8 @@ class API {
       'shops': stores.join(','),
       'nondeals': filters.nondeals.toString(),
       'mature': filters.mature.toString(),
-      'sort': '-trending',
+      'sort': SORT_BY_FILTER_STRINGS[
+          SortBy.values.byName(filters.sortBy ?? SortBy.trending.name)],
       'filter': filters.filtersString,
     });
 
@@ -186,29 +190,7 @@ class API {
     return fetchDealData(deals: Parsers.deals(response));
   }
 
-  Future<List<Deal>> fetchSteamTopSellers() async {
-    final Uri steamAPI = Uri.https(
-      'store.steampowered.com',
-      '/api/featuredcategories',
-    );
-    final steamResponse = await dio.get(steamAPI.toString());
-    final List<SteamFeaturedItem> topSellers = Parsers.steamStoreFront(
-      steamResponse,
-    );
-    final List<Deal> steamDeals = topSellers
-        .map(
-          (e) => Deal(
-            id: 'none',
-            steamId: 'app/${e.id}',
-            title: e.name,
-          ),
-        )
-        .toList();
-
-    return getByAppIDs(steamDeals);
-  }
-
-  Future<List<Deal>> gameIdsBySteamIds(
+  Future<List<Deal>> getDealsBySteamIds(
     List<Deal> deals,
   ) async {
     final List<Store> allStores = await stores();
@@ -243,20 +225,20 @@ class API {
   }
 
   Future<List<Deal>> getByAppIDs(List<Deal> deals) async {
-    final List<Deal> foundDeals = await gameIdsBySteamIds(deals);
+    final List<Deal> foundDeals = await getDealsBySteamIds(deals);
 
     return fetchDealData(
       deals: foundDeals,
     );
   }
 
-  Future<List<Deal>> fetchSteamWishlist(String username) async {
+  Future<List<Deal>> fetchSteamWishlist(String steamId) async {
     final Map<String, dynamic> results = {};
 
     for (int i = 0; i < MAX_STEAM_WISHLIST_PAGES; i++) {
       final Uri steamAPI = Uri.https(
         'store.steampowered.com',
-        '/wishlist/id/$username/wishlistdata',
+        '/wishlist/profiles/$steamId/wishlistdata/',
         {'p': '$i'},
       );
       final steamResponse = await dio.get(steamAPI.toString());
@@ -282,51 +264,20 @@ class API {
         .toList();
   }
 
-  Future<List<Deal>> fetchSteamFeatured() async {
+  Future<SteamUser> fetchSteamUser(String steamId) async {
     final Uri steamAPI = Uri.https(
-      'store.steampowered.com',
-      '/api/featured',
-    );
-    final steamResponse = await dio.get(steamAPI.toString());
-    final List<SteamFeaturedItem> topSellers = Parsers.steamFeatured(
-      steamResponse,
-    );
-    final List<Deal> deals = topSellers
-        .map(
-          (e) => Deal(
-            id: 'none',
-            steamId: 'app/${e.id}',
-            title: e.name,
-          ),
-        )
-        .toList();
-
-    return getByAppIDs(deals);
-  }
-
-  Future<List<Deal>> fetchDealsCategory({
-    final int limit = DEALS_COUNT,
-    final int offset = 0,
-    final DealCategory category = DealCategory.all,
-  }) async {
-    final Uri url = Uri.https(
-      BASE_URL,
-      '/v01/stats/${category.name.toString()}/chart/',
+      'api.steampowered.com',
+      '/ISteamUser/GetPlayerSummaries/v0002/',
       {
-        'key': API_KEY,
-        'limit': limit.toString(),
-        'offset': offset.toString(),
+        'key': dotenv.get('STEAM_API_KEY'),
+        'steamids': steamId,
       },
     );
+    final steamResponse = await dio.get(steamAPI.toString());
 
-    final response = await dio.get(url.toString());
-    final List<Deal> deals = Parsers.popularityChart(response)
-        .map(
-          (e) => Deal(id: e.id),
-        )
-        .toList();
-
-    return fetchDealData(deals: deals);
+    return SteamUser.fromJson(
+      json.decode(steamResponse.toString())['response']['players'][0],
+    );
   }
 
   Future<List<Deal>> fetchDealData({
@@ -401,9 +352,9 @@ class API {
         error: error,
       );
 
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         error,
-        stackTrace,
+        stackTrace: stackTrace,
       );
 
       return null;
@@ -415,11 +366,13 @@ class API {
   }) async {
     try {
       final List<int> stores = await settingsReporsitory.getSelectedStores();
+      final String country = await settingsReporsitory.getCountry();
 
       final Uri url = Uri.https(BASE_URL, '/games/history/v2', {
         'key': API_KEY,
         'id': id,
         'shops': stores.join(','),
+        'country': country,
       });
 
       return Parsers.history(await dio.get(url.toString()));
@@ -429,9 +382,9 @@ class API {
         error: error,
       );
 
-      FirebaseCrashlytics.instance.recordError(
+      Sentry.captureException(
         error,
-        stackTrace,
+        stackTrace: stackTrace,
       );
 
       return null;

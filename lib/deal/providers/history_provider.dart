@@ -40,5 +40,11 @@ final historyProvider =
     return [];
   }
 
-  return spots;
+  return spots
+    ..add(
+      MapEntry(
+        DateTime.now().toLocal().millisecondsSinceEpoch,
+        spots.last.value,
+      ),
+    );
 });

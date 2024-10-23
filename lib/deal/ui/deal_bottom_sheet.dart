@@ -2,12 +2,54 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/deal_functions.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/backdrop_container.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
+
+class AddedOn extends StatelessWidget {
+  const AddedOn({
+    super.key,
+    required this.added,
+  });
+
+  final int added;
+
+  @override
+  Widget build(BuildContext context) {
+    if (added == 0) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 4.0),
+      child: Text.rich(
+        TextSpan(
+          style: context.themes.text.labelSmall?.copyWith(
+            color: context.colors.hint,
+          ),
+          text: 'Added on ',
+          children: [
+            TextSpan(
+              text: DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY).format(
+                DateTime.fromMillisecondsSinceEpoch(
+                  added.toInt(),
+                ),
+              ),
+              style: context.themes.text.labelSmall?.copyWith(
+                color: context.colors.hint,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class DealBottomSheet extends ConsumerWidget {
   final Deal deal;
@@ -33,11 +75,19 @@ class DealBottomSheet extends ConsumerWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(
-              deal.titleParsed,
-              style: context.themes.text.titleMedium?.copyWith(
-                color: context.colors.scheme.onSurface,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  deal.titleParsed,
+                  style: context.themes.text.titleMedium?.copyWith(
+                    color: context.colors.scheme.onSurface,
+                  ),
+                ),
+                AddedOn(
+                  added: deal.added,
+                )
+              ],
             ),
           ),
           BackdropContainer(

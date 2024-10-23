@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 import 'package:observatory/itad_filters/ui/filtered_tags_list.dart';
-import 'package:observatory/shared/context_extension.dart';
 import 'package:observatory/shared/steam_tags_list.dart';
 
 class TagsListPage extends HookConsumerWidget {
@@ -42,7 +41,7 @@ class TagsListPage extends HookConsumerWidget {
               visible: tags.isNotEmpty,
               child: Container(
                 width: double.infinity,
-                color: context.midElevatedCanvasColor,
+                color: context.colors.scheme.surface,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Wrap(

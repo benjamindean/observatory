@@ -33,7 +33,6 @@ class SearchInput extends ConsumerWidget {
           hintText: 'Search',
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(30),
           ),
           prefixIcon: Tooltip(
             message: 'Go Back',

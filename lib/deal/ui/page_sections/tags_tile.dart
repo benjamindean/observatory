@@ -5,7 +5,6 @@ import 'package:observatory/deal/providers/info_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/info.dart';
-import 'package:observatory/shared/ui/constants.dart';
 
 class TagsTile extends ConsumerWidget {
   final Deal deal;
@@ -45,8 +44,6 @@ class TagsTile extends ConsumerWidget {
               return Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Chip(
-                  surfaceTintColor: context.colors.scheme.surfaceTint,
-                  elevation: CARD_ELEVATION,
                   label: Text(
                     tags[idx],
                     textScaler: const TextScaler.linear(0.9),

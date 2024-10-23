@@ -5,11 +5,13 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 class ObservatoryProgressIndicator extends StatelessWidget {
   final double size;
   final double lineWidth;
+  final Color? color;
 
   const ObservatoryProgressIndicator({
     super.key,
     this.size = 60,
     this.lineWidth = 3.0,
+    this.color,
   });
 
   @override
@@ -17,7 +19,7 @@ class ObservatoryProgressIndicator extends StatelessWidget {
     return SpinKitDualRing(
       key: const Key('progress-indicator'),
       lineWidth: lineWidth,
-      color: context.colors.scheme.primary,
+      color: color ?? context.colors.scheme.primary,
       size: size,
     );
   }

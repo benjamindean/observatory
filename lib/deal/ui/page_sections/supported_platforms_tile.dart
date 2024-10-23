@@ -5,7 +5,6 @@ import 'package:observatory/deal/providers/game_details_provider.dart';
 import 'package:observatory/deal/ui/page_sections/deal_page_section_async.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/game/game.dart';
-import 'package:observatory/shared/ui/constants.dart';
 
 class SupportedPlatformsTile extends ConsumerWidget {
   final Deal deal;
@@ -45,8 +44,6 @@ class SupportedPlatformsTile extends ConsumerWidget {
               return Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Chip(
-                  surfaceTintColor: context.colors.scheme.surfaceTint,
-                  elevation: CARD_ELEVATION,
                   label: Text(
                     platforms[idx].abbreviation.toString(),
                     textScaler: const TextScaler.linear(0.9),

@@ -15,7 +15,7 @@ class CurrentPrice extends StatelessWidget {
     return Text(
       price?.price.formattedPrice ?? '0',
       style: context.themes.text.titleLarge?.copyWith(
-        fontSize: 20.0,
+        fontSize: 22.0,
         color: context.colors.scheme.onSurface,
         overflow: TextOverflow.ellipsis,
       ),

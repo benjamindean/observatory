@@ -11,7 +11,6 @@ import 'package:observatory/itad_filters/ui/nsfw_tile.dart';
 import 'package:observatory/itad_filters/ui/platform_select_tile.dart';
 import 'package:observatory/itad_filters/ui/price_slider.dart';
 import 'package:observatory/itad_filters/ui/tags_filter_tile.dart';
-import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
@@ -77,8 +76,7 @@ class ITADFiltersPage extends ConsumerWidget {
                         ? () {
                             ref.read(itadFiltersProvider.notifier).save();
                             ref
-                                .read(asyncDealsProvider(DealCategory.all)
-                                    .notifier)
+                                .read(asyncDealsProvider.notifier)
                                 .reset(withLoading: true);
 
                             context.pop();

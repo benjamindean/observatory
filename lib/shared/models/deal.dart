@@ -14,7 +14,9 @@ enum DealSource {
   @HiveField(0)
   itad,
   @HiveField(1)
-  steam
+  steam,
+  @HiveField(2)
+  observatory,
 }
 
 @freezed
@@ -32,11 +34,17 @@ class Deal with _$Deal {
     Overview? overview,
     @Default(false) bool isLoading,
     @HiveField(3) @Default(0) int added,
-    @HiveField(4) @Default(DealSource.itad) DealSource source,
+    @HiveField(4) @Default(DealSource.observatory) DealSource source,
     @HiveField(5) @Default([]) List<Price>? prices,
   }) = _Deal;
 
   factory Deal.fromJson(Map<String, Object?> json) => _$DealFromJson(json);
+
+  @override
+  bool operator ==(Object other) => other is Deal && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
 
   Price get bestPrice {
     return prices?.firstOrNull ??
