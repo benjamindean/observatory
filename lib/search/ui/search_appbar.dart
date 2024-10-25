@@ -30,6 +30,8 @@ class Debouncer {
   }
 }
 
+final Debouncer debouncer = Debouncer(milliseconds: 700);
+
 class SearchAppBar extends ConsumerWidget {
   const SearchAppBar({
     super.key,
@@ -38,7 +40,6 @@ class SearchAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final SearchState searchState = ref.watch(searchResultsProvider);
-    final Debouncer debouncer = Debouncer(milliseconds: 500);
 
     if (searchState.isOpen) {
       return SliverAppBar(
@@ -50,16 +51,10 @@ class SearchAppBar extends ConsumerWidget {
           onChanged: (String value) {
             debouncer.run(() {
               if (value.trim().isNotEmpty) {
-                ref.read(searchResultsProvider.notifier).performSearch(value);
                 ref.read(searchResultsProvider.notifier).setQuery(value);
+                ref.read(searchResultsProvider.notifier).performSearch(value);
               }
             });
-          },
-          onSubmitted: (String value) {
-            if (value.trim().isNotEmpty) {
-              ref.read(searchResultsProvider.notifier).performSearch(value);
-              ref.read(asynRecentsProvider.notifier).addRecent(value);
-            }
           },
         ),
       );

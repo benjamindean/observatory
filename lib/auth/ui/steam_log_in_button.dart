@@ -38,7 +38,7 @@ class SteamLogInButton extends ConsumerWidget {
       },
       onPressed: () async {
         if (steamState.user != null) {
-          ref.read(steamProvider.notifier).import();
+          ref.read(steamProvider.notifier).importData();
 
           return;
         }

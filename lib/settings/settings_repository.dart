@@ -23,6 +23,7 @@ const BOOKMARKED_DEALS_BOX_NAME = 'observatory_bookmarked_deals';
 const PAST_SAVED_DEALS_BOX_NAME = 'observatory_past_saved_deals';
 const RECENT_SEARCHES_BOX_NAME = 'observatory_recent_searches';
 const ITAD_USER_BOX_NAME = 'itad_user';
+const LIBRARY_BOX_NAME = 'observatory_library';
 
 const ITAD_SECURE_KEY = 'itadSecureKey';
 
@@ -55,6 +56,9 @@ class SettingsRepository {
   );
   final Box<ITADUser?> itadUserBox = Hive.box<ITADUser?>(
     ITAD_USER_BOX_NAME,
+  );
+  final Box<Deal> libraryBox = Hive.box<Deal>(
+    LIBRARY_BOX_NAME,
   );
 
   final String PREF_COUNTRY = 'observatory_default_country';
@@ -101,6 +105,7 @@ class SettingsRepository {
     await Hive.openBox<Deal>(BOOKMARKED_DEALS_BOX_NAME);
     await Hive.openBox<Deal>(PAST_SAVED_DEALS_BOX_NAME);
     await Hive.openBox<String>(RECENT_SEARCHES_BOX_NAME);
+    await Hive.openBox<Deal>(LIBRARY_BOX_NAME);
 
     const FlutterSecureStorage secureStorage = FlutterSecureStorage();
     final bool containsEncryptionKey = await secureStorage.containsKey(
@@ -478,5 +483,28 @@ class SettingsRepository {
       PREF_COLLAPSE_PINNED,
       collapse,
     );
+  }
+
+  Future<List<Deal>> getLibrary() async {
+    return libraryBox.values.toList();
+  }
+
+  Future<List<Deal>> setLibrary(List<Deal> games) async {
+    final List<Deal> library = await getLibrary();
+    final List<Deal> newList = Set<Deal>.of({...library, ...games}).toList();
+
+    await libraryBox.clear();
+    await libraryBox.putAll({
+      for (final Deal deal in newList)
+        deal.id: Deal(
+          id: deal.id,
+          slug: deal.slug,
+          title: deal.title,
+          added: deal.added,
+          source: deal.source,
+        ),
+    });
+
+    return newList;
   }
 }

@@ -10,6 +10,7 @@ import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/deal_functions.dart';
 import 'package:observatory/deal/ui/deal_bottom_sheet.dart';
 import 'package:observatory/deal/ui/deal_card_info_row.dart';
+import 'package:observatory/library/providers/library_provider.dart';
 import 'package:observatory/router.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/shared/models/deal.dart';
@@ -40,9 +41,11 @@ class DealCard extends ConsumerWidget {
     );
     final List<String> waitlist = ref.watch(waitlistIdsProvider);
     final List<String> bookmarks = ref.watch(bookmarkIdsProvider);
+    final List<String> library = ref.watch(libraryIdsProvider);
 
     final bool isInWaitlist = waitlist.contains(deal.id);
     final bool isInBookmarks = bookmarks.contains(deal.id);
+    final bool isInLibrary = library.contains(deal.id);
 
     return Slidable(
       endActionPane: ActionPane(
@@ -175,7 +178,13 @@ class DealCard extends ConsumerWidget {
                       Icons.push_pin_rounded,
                       color: context.colors.scheme.tertiary,
                       size: context.textStyles.titleMedium.fontSize,
-                    )
+                    ),
+                  if (isInLibrary)
+                    Icon(
+                      Icons.library_add_check,
+                      color: context.colors.scheme.secondary,
+                      size: context.textStyles.titleMedium.fontSize,
+                    ),
                 ],
               ),
             ),

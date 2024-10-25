@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/deal_functions.dart';
+import 'package:observatory/library/providers/library_provider.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/backdrop_container.dart';
@@ -26,26 +27,73 @@ class AddedOn extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 4.0),
-      child: Text.rich(
-        TextSpan(
-          style: context.themes.text.labelSmall?.copyWith(
-            color: context.colors.hint,
+      child: Row(
+        children: [
+          Icon(
+            Icons.access_time_filled_sharp,
+            color: context.colors.scheme.secondary,
+            size: context.textStyles.labelLarge.fontSize,
           ),
-          text: 'Added on ',
-          children: [
+          const SizedBox(width: 4.0),
+          Text.rich(
             TextSpan(
-              text: DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY).format(
-                DateTime.fromMillisecondsSinceEpoch(
-                  added.toInt(),
-                ),
-              ),
               style: context.themes.text.labelSmall?.copyWith(
                 color: context.colors.hint,
-                fontWeight: FontWeight.bold,
               ),
+              text: 'Added on ',
+              children: [
+                TextSpan(
+                  text: DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY).format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                      added.toInt(),
+                    ),
+                  ),
+                  style: context.themes.text.labelSmall?.copyWith(
+                    color: context.colors.hint,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class InLibraryHint extends StatelessWidget {
+  const InLibraryHint({
+    super.key,
+    required this.isInLibrary,
+  });
+
+  final bool isInLibrary;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!isInLibrary) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 4.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.library_add_check,
+            color: context.colors.scheme.secondary,
+            size: context.textStyles.labelLarge.fontSize,
+          ),
+          const SizedBox(width: 4.0),
+          Text(
+            'In Library',
+            style: context.themes.text.labelSmall?.copyWith(
+              color: context.colors.hint,
+            ),
+          )
+        ],
       ),
     );
   }
@@ -67,6 +115,9 @@ class DealBottomSheet extends ConsumerWidget {
     final List<String> bookmarks = ref.watch(bookmarkIdsProvider);
     final bool isInBookmarks = bookmarks.contains(deal.id);
 
+    final List<String> library = ref.watch(libraryIdsProvider);
+    final bool isInLibrary = library.contains(deal.id);
+
     return BottomSheetContainer(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -86,6 +137,9 @@ class DealBottomSheet extends ConsumerWidget {
                 ),
                 AddedOn(
                   added: deal.added,
+                ),
+                InLibraryHint(
+                  isInLibrary: isInLibrary,
                 )
               ],
             ),

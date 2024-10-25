@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/auth/state/itad_state.dart';
 import 'package:oauth2/oauth2.dart';
+import 'package:observatory/library/providers/library_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
@@ -200,6 +201,35 @@ class ITADNotifier extends Notifier<ITADState> {
         .toList();
   }
 
+  Future<List<Deal>> getCollection() async {
+    if (state.client == null) {
+      return [];
+    }
+
+    final itadCollectionResponse = await state.client?.get(
+      Uri.parse('https://api.isthereanydeal.com/collection/games/v1'),
+    );
+
+    if (itadCollectionResponse == null) {
+      return [];
+    }
+
+    return json
+        .decode(itadCollectionResponse.body)
+        .map<Deal>(
+          (deal) => Deal(
+            id: deal['id'],
+            title: deal['title'],
+            source: DealSource.itad,
+            type: deal['type'] ?? 'game',
+            added: deal['added'] != null
+                ? DateTime.parse(deal['added']).millisecondsSinceEpoch
+                : 0,
+          ),
+        )
+        .toList();
+  }
+
   Future<void> clearWaitlist() async {
     if (state.client == null) {
       return;
@@ -221,63 +251,84 @@ class ITADNotifier extends Notifier<ITADState> {
     );
   }
 
-  Future<List<Deal>?> import() async {
+  Future<List<Deal>?> importWaitlist() async {
     if (state.client == null) {
       return null;
     }
 
+    final List<Deal> deals = await getWaitlist();
+
+    if (deals.isNotEmpty) {
+      final List<String> existingDealIds = ref.watch(waitlistIdsProvider);
+      final List<String> newDealIds = deals.map((deal) => deal.id).toList();
+      final List<String> addedDealIds = newDealIds
+          .toSet()
+          .difference(
+            existingDealIds.toSet(),
+          )
+          .toList();
+
+      final List<Deal> addedDeals = deals.where(
+        (deal) {
+          return addedDealIds.contains(deal.id);
+        },
+      ).toList();
+
+      final List<String> syncBackDeals = existingDealIds
+          .toSet()
+          .difference(
+            newDealIds.toSet(),
+          )
+          .toList();
+
+      if (addedDeals.isNotEmpty) {
+        await ref
+            .read(asyncWaitListProvider.notifier)
+            .addToWaitlist(addedDeals);
+      }
+
+      if (syncBackDeals.isNotEmpty) {
+        await addToWaitlist(syncBackDeals);
+      }
+
+      await ref.read(asyncWaitListProvider.notifier).reset();
+    }
+
+    state = state.copyWith(
+      error: null,
+    );
+
+    return deals;
+  }
+
+  Future<List<Deal>?> importCollection() async {
+    if (state.client == null) {
+      return null;
+    }
+
+    final List<Deal> deals = await getCollection();
+
+    if (deals.isNotEmpty) {
+      await ref.read(asyncLibraryProvider.notifier).setLibrary(deals);
+    }
+
+    state = state.copyWith(
+      error: null,
+    );
+
+    return deals;
+  }
+
+  Future<void> importData() async {
     state = state.copyWith(
       isLoading: true,
     );
 
     try {
-      final List<Deal> deals = await getWaitlist();
-
-      if (deals.isNotEmpty) {
-        final List<String> existingDealIds = ref.watch(waitlistIdsProvider);
-        final List<String> newDealIds = deals.map((deal) => deal.id).toList();
-        final List<String> addedDealIds = newDealIds
-            .toSet()
-            .difference(
-              existingDealIds.toSet(),
-            )
-            .toList();
-
-        final List<Deal> addedDeals = deals.where(
-          (deal) {
-            return addedDealIds.contains(deal.id);
-          },
-        ).toList();
-
-        final List<String> syncBackDeals = existingDealIds
-            .toSet()
-            .difference(
-              newDealIds.toSet(),
-            )
-            .toList();
-
-        if (addedDeals.isNotEmpty) {
-          await ref
-              .read(asyncWaitListProvider.notifier)
-              .addToWaitlist(addedDeals);
-        }
-
-        if (syncBackDeals.isNotEmpty) {
-          await addToWaitlist(syncBackDeals);
-        }
-
-        await ref.read(asyncWaitListProvider.notifier).reset();
-      }
-
-      state = state.copyWith(
-        isLoading: false,
-        error: null,
-      );
-
-      return deals;
+      await importWaitlist();
     } catch (error, stackTrace) {
       Logger().e(
-        'Failed to import IsThereAnyDeal waitlist',
+        'Failed to import ITAD waitlist',
         error: error,
         stackTrace: stackTrace,
       );
@@ -288,12 +339,32 @@ class ITADNotifier extends Notifier<ITADState> {
       );
 
       state = state.copyWith(
-        isLoading: false,
-        error: 'User not found or your wishlist is empty.',
+        error: error.toString(),
+      );
+    }
+
+    try {
+      await importCollection();
+    } catch (error, stackTrace) {
+      Logger().e(
+        'Failed to import ITAD collection',
+        error: error,
+        stackTrace: stackTrace,
       );
 
-      return null;
+      Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+      );
+
+      state = state.copyWith(
+        error: error.toString(),
+      );
     }
+
+    state = state.copyWith(
+      isLoading: false,
+    );
   }
 }
 

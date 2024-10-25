@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/library/providers/library_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/auth/state/steam_state.dart';
 import 'package:observatory/shared/api/api.dart';
@@ -47,7 +48,7 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
     return steamUser;
   }
 
-  Future<List<Deal>?> import() async {
+  Future<List<Deal>?> importWishlist() async {
     final SteamUser? steamUser = GetIt.I<SettingsRepository>().getSteamUser();
 
     if (steamUser == null) {
@@ -55,41 +56,80 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
     }
 
     state = state.copyWith(
-      isLoading: true,
       user: steamUser,
     );
 
-    try {
-      final List<Deal> wishlist = await GetIt.I<API>().fetchSteamWishlist(
-        steamUser.steamid!,
-      );
+    final List<Deal> wishlist = await GetIt.I<API>().fetchSteamWishlist(
+      steamUser.steamid!,
+    );
 
-      if (wishlist.isEmpty) {
-        state = state.copyWith(
-          isLoading: false,
-          error:
-              'User not found or your wishlist is empty. Please make sure that your profile and library are public.',
-        );
-
-        return [];
-      }
-
-      final List<Deal> deals = await GetIt.I<API>().getDealsBySteamIds(
-        wishlist,
-      );
-
-      if (deals.isNotEmpty) {
-        await ref.watch(asyncWaitListProvider.notifier).addToWaitlist(deals);
-        await ref.watch(asyncWaitListProvider.notifier).reset();
-      }
-
+    if (wishlist.isEmpty) {
       state = state.copyWith(
-        isLoading: false,
-        deals: deals.reversed.toList(),
-        error: null,
+        error:
+            'User not found or your wishlist is empty. Please make sure that your profile and library are public.',
       );
 
-      return deals;
+      return [];
+    }
+
+    final List<Deal> deals = await GetIt.I<API>().getDealsBySteamIds(
+      wishlist,
+    );
+
+    if (deals.isNotEmpty) {
+      await ref.watch(asyncWaitListProvider.notifier).addToWaitlist(deals);
+      await ref.watch(asyncWaitListProvider.notifier).reset();
+    }
+
+    state = state.copyWith(
+      deals: deals.reversed.toList(),
+      error: null,
+    );
+
+    return deals;
+  }
+
+  Future<List<Deal>?> importLibrary() async {
+    final SteamUser? steamUser = GetIt.I<SettingsRepository>().getSteamUser();
+
+    if (steamUser == null) {
+      return null;
+    }
+
+    state = state.copyWith(
+      user: steamUser,
+    );
+
+    final List<Deal> library = await GetIt.I<API>().fetchSteamLibrary(
+      steamUser.steamid!,
+    );
+
+    if (library.isEmpty) {
+      return [];
+    }
+
+    final List<Deal> deals = await GetIt.I<API>().getDealsBySteamIds(
+      library,
+    );
+
+    if (deals.isNotEmpty) {
+      await ref.watch(asyncLibraryProvider.notifier).setLibrary(deals);
+    }
+
+    state = state.copyWith(
+      error: null,
+    );
+
+    return deals;
+  }
+
+  Future<void> importData() async {
+    state = state.copyWith(
+      isLoading: true,
+    );
+
+    try {
+      await importWishlist();
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to import Steam wishlist',
@@ -101,15 +141,26 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
         error,
         stackTrace: stackTrace,
       );
+    }
 
-      state = state.copyWith(
-        isLoading: false,
-        error:
-            'User not found or your wishlist is empty. Please make sure that your profile and library are public.',
+    try {
+      await importLibrary();
+    } catch (error, stackTrace) {
+      Logger().e(
+        'Failed to import Steam library',
+        error: error,
+        stackTrace: stackTrace,
       );
 
-      return null;
+      Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+      );
     }
+
+    state = state.copyWith(
+      isLoading: false,
+    );
   }
 }
 

@@ -25,7 +25,7 @@ class ITADLogInButton extends ConsumerWidget {
       },
       onPressed: () {
         if (itadState.user != null) {
-          ref.read(itadProvider.notifier).import();
+          ref.read(itadProvider.notifier).importData();
 
           return;
         }

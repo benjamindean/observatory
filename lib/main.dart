@@ -76,12 +76,12 @@ class Observatory extends ConsumerWidget {
       (uri) async {
         if (uri.path == '/app/auth/steam') {
           await ref.read(steamProvider.notifier).handleRedirect(uri);
-          await ref.read(steamProvider.notifier).import();
+          await ref.read(steamProvider.notifier).importData();
         }
 
         if (uri.path == '/app/auth/itad') {
           await ref.watch(itadProvider.notifier).handleRedirect(uri);
-          await ref.watch(itadProvider.notifier).import();
+          await ref.watch(itadProvider.notifier).importData();
         }
       },
       onError: (error) {

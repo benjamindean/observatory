@@ -264,6 +264,36 @@ class API {
         .toList();
   }
 
+  Future<List<Deal>> fetchSteamLibrary(String steamId) async {
+    final Uri steamAPI = Uri.https(
+      'api.steampowered.com',
+      '/IPlayerService/GetOwnedGames/v0001/',
+      {
+        'key': dotenv.get('STEAM_API_KEY'),
+        'steamid': steamId,
+        'format': 'json',
+        'include_appinfo': 'true',
+      },
+    );
+    final steamResponse = await dio.get(steamAPI.toString());
+    final response = json.decode(steamResponse.toString());
+
+    if (response['response']['game_count'] == 0) {
+      return [];
+    }
+
+    return response['response']['games']
+        .map<Deal>(
+          (e) => Deal(
+            id: 'none',
+            title: e['name'],
+            steamId: 'app/${e['appid']}',
+            source: DealSource.steam,
+          ),
+        )
+        .toList();
+  }
+
   Future<SteamUser> fetchSteamUser(String steamId) async {
     final Uri steamAPI = Uri.https(
       'api.steampowered.com',
