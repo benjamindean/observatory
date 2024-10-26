@@ -250,7 +250,7 @@ class FilteredWailistNotifier extends Notifier<List<Deal>> {
   @override
   List<Deal> build() {
     final List<Deal> filteredWaitlist = ref.watch(sortedWaitlistProvider);
-    final SearchState searchState = ref.watch(filterResultsProvider);
+    final SearchState searchState = ref.watch(waitlistSearchProvider);
 
     if (searchState.isOpen && searchState.query != null) {
       return filteredWaitlist

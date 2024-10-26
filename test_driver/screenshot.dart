@@ -43,10 +43,10 @@ void main() async {
         searchProvider.overrideWithProvider(
           (type) {
             if (type == SearchType.search) {
-              return searchResultsProviderMock;
+              return dealSearchProviderMock;
             }
 
-            return filterResultsProvider;
+            return waitlistSearchProvider;
           },
         ),
       ],

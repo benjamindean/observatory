@@ -24,7 +24,7 @@ class WaitListList extends ConsumerWidget {
     final List<Deal> filteredWaitlist = ref.watch(filteredWaitlistProvider);
 
     final bool isSearchActive = ref.watch(
-      filterResultsProvider.select(
+      waitlistSearchProvider.select(
         (value) => value.isOpen && value.query != null,
       ),
     );

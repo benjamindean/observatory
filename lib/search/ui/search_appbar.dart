@@ -39,11 +39,10 @@ class SearchAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final SearchState searchState = ref.watch(searchResultsProvider);
+    final SearchState searchState = ref.watch(dealSearchProvider);
 
     if (searchState.isOpen) {
       return SliverAppBar(
-        pinned: searchState.deals?.isEmpty ?? true ? true : false,
         floating: true,
         titleSpacing: 0.0,
         title: SearchInput(
@@ -51,8 +50,9 @@ class SearchAppBar extends ConsumerWidget {
           onChanged: (String value) {
             debouncer.run(() {
               if (value.trim().isNotEmpty) {
-                ref.read(searchResultsProvider.notifier).setQuery(value);
-                ref.read(searchResultsProvider.notifier).performSearch(value);
+                ref
+                    .read(dealSearchProvider.notifier)
+                    .performSearch(value.trim());
               }
             });
           },
@@ -61,12 +61,11 @@ class SearchAppBar extends ConsumerWidget {
     }
 
     return SliverAppBar(
-      pinned: searchState.deals?.isEmpty ?? true ? true : false,
       floating: true,
       actions: <Widget>[
         OrySmallButton(
           onPressed: () {
-            ref.read(searchResultsProvider.notifier).setIsOpen();
+            ref.read(dealSearchProvider.notifier).setIsOpen();
           },
           icon: Icons.search,
           label: 'Search',

@@ -19,55 +19,54 @@ class SearchInput extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = searchType == SearchType.search
-        ? searchResultsProvider
-        : filterResultsProvider;
+        ? dealSearchProvider
+        : waitlistSearchProvider;
 
     final SearchState searchState = ref.watch(provider);
 
-    return Form(
-      child: TextField(
-        focusNode: searchState.focusNode,
-        controller: searchState.searchInputController,
-        decoration: InputDecoration(
-          fillColor: Colors.transparent,
-          hintText: 'Search',
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide.none,
-          ),
-          prefixIcon: Tooltip(
-            message: 'Go Back',
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back_outlined),
-              onPressed: () {
-                ref.read(provider.notifier).reset();
-              },
-            ),
-          ),
-          suffixIcon: Builder(
-            builder: (context) {
-              if (searchState.isLoading) {
-                return const ObservatoryIconProgressIndicator();
-              }
-
-              return Tooltip(
-                message: 'Reset Search',
-                child: IconButton(
-                  onPressed: () {
-                    if ((searchState.query ?? '').isEmpty) {
-                      return ref.read(provider.notifier).reset();
-                    }
-
-                    return ref.read(provider.notifier).clear();
-                  },
-                  icon: const Icon(Icons.clear_outlined),
-                ),
-              );
+    return TextField(
+      focusNode: searchState.focusNode,
+      controller: searchState.searchInputController,
+      textInputAction: TextInputAction.search,
+      decoration: InputDecoration(
+        fillColor: Colors.transparent,
+        hintText: 'Search',
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide.none,
+        ),
+        prefixIcon: Tooltip(
+          message: 'Go Back',
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back_outlined),
+            onPressed: () {
+              ref.read(provider.notifier).reset();
             },
           ),
         ),
-        onChanged: onChanged,
-        onSubmitted: onSubmitted,
+        suffixIcon: Builder(
+          builder: (context) {
+            if (searchState.isLoading) {
+              return const ObservatoryIconProgressIndicator();
+            }
+
+            return Tooltip(
+              message: 'Reset Search',
+              child: IconButton(
+                onPressed: () {
+                  if ((searchState.query ?? '').isEmpty) {
+                    return ref.read(provider.notifier).reset();
+                  }
+
+                  return ref.read(provider.notifier).clear();
+                },
+                icon: const Icon(Icons.clear_outlined),
+              ),
+            );
+          },
+        ),
       ),
+      onChanged: onChanged,
+      onSubmitted: onSubmitted,
     );
   }
 }

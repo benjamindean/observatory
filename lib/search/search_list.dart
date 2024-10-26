@@ -4,7 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/router.dart';
+import 'package:observatory/search/providers/recents_provider.dart';
 import 'package:observatory/search/providers/search_provider.dart';
+import 'package:observatory/search/providers/search_results_provider.dart';
 import 'package:observatory/search/state/search_state.dart';
 import 'package:observatory/search/ui/recent_searches_list.dart';
 import 'package:observatory/shared/models/deal.dart';
@@ -21,6 +23,7 @@ class SearchList extends ConsumerWidget {
         SearchType.search,
       ),
     );
+    final List<Deal>? searchResults = ref.watch(searchResultsProvider);
 
     final double cardHeight = ref
         .watch(dealCardSizeProvider.notifier)
@@ -32,13 +35,11 @@ class SearchList extends ConsumerWidget {
           return const OryFullScreenSpinner();
         }
 
-        if (searchState.deals == null) {
+        if (searchResults == null) {
           return const RecentSearchesList();
         }
 
-        final List<Deal> deals = searchState.deals ?? [];
-
-        if (searchState.deals?.isEmpty == true) {
+        if (searchResults.isEmpty) {
           return const SliverFillRemaining(
             hasScrollBody: false,
             child: ErrorMessage(
@@ -53,14 +54,14 @@ class SearchList extends ConsumerWidget {
           padding: const EdgeInsets.all(6.0),
           sliver: SliverFixedExtentList.builder(
             itemExtent: cardHeight,
-            itemCount: searchState.deals?.length ?? 0,
+            itemCount: searchResults.length,
             itemBuilder: (context, index) {
               return DealCard(
-                deal: deals[index],
+                deal: searchResults[index],
                 page: NavigationBranch.search,
                 onCardTapCallback: () {
                   ref.read(asynRecentsProvider.notifier).addRecent(
-                        deals[index].title,
+                        searchResults[index].title,
                       );
                 },
               );

@@ -32,7 +32,7 @@ class HomePage extends ConsumerWidget {
           child.goBranch(index);
 
           if (index == 1 && index == child.currentIndex) {
-            return ref.read(searchResultsProvider.notifier).setIsOpen();
+            return ref.read(dealSearchProvider.notifier).setIsOpen();
           }
 
           if (index == 0 && index == child.currentIndex) {

@@ -2,102 +2,15 @@ import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/deal_functions.dart';
+import 'package:observatory/deal/ui/added_on_hint.dart';
+import 'package:observatory/deal/ui/in_library_hint.dart';
 import 'package:observatory/library/providers/library_provider.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/backdrop_container.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
-
-class AddedOn extends StatelessWidget {
-  const AddedOn({
-    super.key,
-    required this.added,
-  });
-
-  final int added;
-
-  @override
-  Widget build(BuildContext context) {
-    if (added == 0) {
-      return const SizedBox.shrink();
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 4.0),
-      child: Row(
-        children: [
-          Icon(
-            Icons.access_time_filled_sharp,
-            color: context.colors.scheme.secondary,
-            size: context.textStyles.labelLarge.fontSize,
-          ),
-          const SizedBox(width: 4.0),
-          Text.rich(
-            TextSpan(
-              style: context.themes.text.labelSmall?.copyWith(
-                color: context.colors.hint,
-              ),
-              text: 'Added on ',
-              children: [
-                TextSpan(
-                  text: DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY).format(
-                    DateTime.fromMillisecondsSinceEpoch(
-                      added.toInt(),
-                    ),
-                  ),
-                  style: context.themes.text.labelSmall?.copyWith(
-                    color: context.colors.hint,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class InLibraryHint extends StatelessWidget {
-  const InLibraryHint({
-    super.key,
-    required this.isInLibrary,
-  });
-
-  final bool isInLibrary;
-
-  @override
-  Widget build(BuildContext context) {
-    if (!isInLibrary) {
-      return const SizedBox.shrink();
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 4.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.library_add_check,
-            color: context.colors.scheme.secondary,
-            size: context.textStyles.labelLarge.fontSize,
-          ),
-          const SizedBox(width: 4.0),
-          Text(
-            'In Library',
-            style: context.themes.text.labelSmall?.copyWith(
-              color: context.colors.hint,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
 
 class DealBottomSheet extends ConsumerWidget {
   final Deal deal;
@@ -135,7 +48,7 @@ class DealBottomSheet extends ConsumerWidget {
                     color: context.colors.scheme.onSurface,
                   ),
                 ),
-                AddedOn(
+                AddedOnHint(
                   added: deal.added,
                 ),
                 InLibraryHint(

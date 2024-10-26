@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/search/providers/recents_provider.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
@@ -30,7 +31,7 @@ class RecentSearchesList extends ConsumerWidget {
                 icon: Icons.search_off_outlined,
                 helper: TextButton(
                   onPressed: () {
-                    ref.read(searchResultsProvider.notifier).setIsOpen();
+                    ref.read(dealSearchProvider.notifier).setIsOpen();
                   },
                   child: const Text('Search Now'),
                 ),
@@ -89,7 +90,7 @@ class RecentSearchesList extends ConsumerWidget {
                 child: InkWell(
                   onTap: () async {
                     await ref
-                        .read(searchResultsProvider.notifier)
+                        .read(dealSearchProvider.notifier)
                         .performSearch(recentsList[index]);
                   },
                   child: ListTile(

@@ -19,7 +19,7 @@ class WaitlistAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final SearchState searchState = ref.watch(filterResultsProvider);
+    final SearchState searchState = ref.watch(waitlistSearchProvider);
     final WaitlistSortingDirection waitlistSortingDirection = ref.watch(
           asyncSettingsProvider.select(
             (value) => value.valueOrNull?.waitlistSortingDirection,
@@ -40,7 +40,7 @@ class WaitlistAppBar extends ConsumerWidget {
         title: SearchInput(
           searchType: SearchType.filter,
           onChanged: (String value) {
-            ref.read(filterResultsProvider.notifier).setQuery(
+            ref.read(waitlistSearchProvider.notifier).setQuery(
                   value.trim(),
                 );
           },
@@ -102,7 +102,7 @@ class WaitlistAppBar extends ConsumerWidget {
             child: IconButton(
               padding: EdgeInsets.zero,
               onPressed: () {
-                ref.read(filterResultsProvider.notifier).setIsOpen();
+                ref.read(waitlistSearchProvider.notifier).setIsOpen();
               },
               icon: const Icon(Icons.search),
             ),
