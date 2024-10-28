@@ -228,11 +228,7 @@ tags
 ## User settings
 xcuserdata/
 
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/
 
 secrets.json
 google-services.json
