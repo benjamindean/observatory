@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:observatory/shared/api/constans.dart';
+import 'package:observatory/shared/constans.dart';
 
 List<List<String>> splitIDs(List<String> ids) {
   final List<List<String>> listsOfIDs = [];

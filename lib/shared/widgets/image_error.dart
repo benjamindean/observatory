@@ -1,6 +1,6 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/constans.dart';
 
 class ImageError extends StatelessWidget {
   final bool isCompact;

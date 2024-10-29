@@ -7,7 +7,7 @@ import 'package:observatory/auth/state/itad_state.dart';
 import 'package:oauth2/oauth2.dart';
 import 'package:observatory/library/providers/library_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/shared/api/constans.dart';
+import 'package:observatory/shared/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';

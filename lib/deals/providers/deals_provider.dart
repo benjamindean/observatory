@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/settings/providers/itad_config_provider.dart';
 import 'package:observatory/shared/api/api.dart';
-import 'package:observatory/shared/api/constans.dart';
+import 'package:observatory/shared/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
 
 class AsyncDealsNotifier extends AsyncNotifier<DealsState> {

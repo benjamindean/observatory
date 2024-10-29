@@ -9,7 +9,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/auth/state/itad_state.dart';
 import 'package:observatory/auth/state/steam_state.dart';
-import 'package:observatory/shared/api/constans.dart';
+import 'package:observatory/shared/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/game/game.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
@@ -26,9 +26,6 @@ const ITAD_USER_BOX_NAME = 'itad_user';
 const LIBRARY_BOX_NAME = 'observatory_library';
 
 const ITAD_SECURE_KEY = 'itadSecureKey';
-
-const int IMAGE_WIDTH = 600;
-const int IMAGE_HEIGHT = 344;
 
 enum WaitlistSorting {
   title,

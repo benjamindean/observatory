@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
-import 'package:observatory/shared/api/constans.dart';
+import 'package:observatory/shared/constans.dart';
 
 class DealsInfoAppBar extends ConsumerWidget {
   const DealsInfoAppBar({

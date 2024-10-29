@@ -58,6 +58,9 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   sentry_flutter: ^8.9.0
   flutter_dotenv: ^5.2.1
+  chewie: ^1.8.5
+  youtube_player_flutter: ^9.1.1
+  video_player: ^2.9.2
 
 flutter_launcher_icons:
   android:

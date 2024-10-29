@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:observatory/deal/ui/game_user_info_row.dart';
 import 'package:observatory/deal/ui/history_chart.dart';
 import 'package:observatory/deal/ui/page_sections/bundles_tile.dart';
 import 'package:observatory/deal/ui/deal_app_bar.dart';
@@ -11,7 +12,7 @@ import 'package:observatory/deal/ui/page_sections/supported_platforms_tile.dart'
 import 'package:observatory/deal/ui/price_listview.dart';
 import 'package:observatory/deal/ui/page_sections/reviews_tile.dart';
 import 'package:observatory/deal/providers/deal_provider.dart';
-import 'package:observatory/deal/ui/page_sections/screenshots_tile.dart';
+import 'package:observatory/deal/ui/page_sections/screenshots/screenshots_tile.dart';
 import 'package:observatory/deal/ui/page_sections/summary_tile.dart';
 import 'package:observatory/deal/ui/page_sections/tags_tile.dart';
 import 'package:observatory/shared/models/deal.dart';
@@ -59,7 +60,8 @@ class DealPage extends ConsumerWidget {
               SliverList.list(
                 key: Key('deal-${deal.id}-sliver-list'),
                 children: [
-                  const SizedBox(height: 8),
+                  GameUserInfoRow(deal: deal),
+                  const SizedBox(height: 8.0),
                   SummaryTile(deal: deal),
                   ReleaseDateTile(deal: deal),
                   TagsTile(deal: deal),

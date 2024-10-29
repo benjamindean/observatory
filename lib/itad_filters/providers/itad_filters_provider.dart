@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/shared/api/constans.dart';
+import 'package:observatory/shared/constans.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 
 class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {

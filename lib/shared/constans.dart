@@ -13,11 +13,25 @@ const List<String> API_SCOPES = [
 ];
 const String BASE_URL = 'api.isthereanydeal.com';
 const String REDIRECT_URL = 'https://observatory-bc08e.web.app/';
-const API_LIMIT = 100;
-const MAX_STEAM_WISHLIST_PAGES = 7;
+const int API_LIMIT = 100;
+const int MAX_STEAM_WISHLIST_PAGES = 7;
 
-const DEALS_COUNT = 50;
+const int DEALS_COUNT = 50;
 const int RECENTS_LIMIT = 10;
+const double THUMBNAIL_DELIMITER = 2.5;
+
+const int IMAGE_WIDTH = 600;
+const int IMAGE_HEIGHT = 344;
+
+const int SCREENSHOT_WIDTH = 569;
+const int SCREENSHOT_HEIGHT = 360;
+
+const double SIZE_DELIMITER = 3.4;
+
+const double THUMB_WIDTH = IMAGE_WIDTH / SIZE_DELIMITER;
+const double THUMB_HEIGHT = IMAGE_HEIGHT / SIZE_DELIMITER;
+
+const BASE_CARD_HEIGHT = 100.0;
 
 const Map<SortBy, String> SORT_BY_FILTER_STRINGS = {
   SortBy.trending: '-trending',

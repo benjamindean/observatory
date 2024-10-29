@@ -4,9 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/deal_functions.dart';
-import 'package:observatory/deal/ui/added_on_hint.dart';
-import 'package:observatory/deal/ui/in_library_hint.dart';
-import 'package:observatory/library/providers/library_provider.dart';
+import 'package:observatory/deal/ui/game_user_info_row.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/backdrop_container.dart';
@@ -28,9 +26,6 @@ class DealBottomSheet extends ConsumerWidget {
     final List<String> bookmarks = ref.watch(bookmarkIdsProvider);
     final bool isInBookmarks = bookmarks.contains(deal.id);
 
-    final List<String> library = ref.watch(libraryIdsProvider);
-    final bool isInLibrary = library.contains(deal.id);
-
     return BottomSheetContainer(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -39,24 +34,14 @@ class DealBottomSheet extends ConsumerWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  deal.titleParsed,
-                  style: context.themes.text.titleMedium?.copyWith(
-                    color: context.colors.scheme.onSurface,
-                  ),
-                ),
-                AddedOnHint(
-                  added: deal.added,
-                ),
-                InLibraryHint(
-                  isInLibrary: isInLibrary,
-                )
-              ],
+            child: Text(
+              deal.titleParsed,
+              style: context.themes.text.titleMedium?.copyWith(
+                color: context.colors.scheme.onSurface,
+              ),
             ),
           ),
+          GameUserInfoRow(deal: deal),
           BackdropContainer(
             child: Column(
               children: [
