@@ -47,6 +47,7 @@ Future<void> initSupabase() async {
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
     if (task == TASK_CHECK_WAITLIST) {
+      await initSupabase();
       await initSettings();
 
       return await checkWaitlistTask();

@@ -57,7 +57,6 @@ class DealPage extends ConsumerWidget {
                             color: context.colors.scheme.onSurface,
                           ),
                         ),
-                        const SizedBox(height: 4.0),
                         GameUserInfoRow(deal: deal),
                       ],
                     ),

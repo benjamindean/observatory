@@ -14,7 +14,7 @@ const List<String> API_SCOPES = [
 const String BASE_URL = 'api.isthereanydeal.com';
 const String REDIRECT_URL = 'https://observatory-bc08e.web.app/';
 const int API_LIMIT = 100;
-const int MAX_STEAM_WISHLIST_PAGES = 7;
+const int MAX_STEAM_WISHLIST_PAGES = 20;
 
 const int DEALS_COUNT = 50;
 const int RECENTS_LIMIT = 10;

@@ -9,7 +9,6 @@ import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/auth/state/steam_state.dart';
 import 'package:observatory/shared/constans.dart';
 import 'package:observatory/shared/api/parsers.dart';
-import 'package:observatory/shared/api/utils.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/history.dart';
 import 'package:observatory/shared/models/info.dart';
@@ -108,40 +107,35 @@ class API {
     final String country = await settingsReporsitory.getCountry();
     final List<int> stores = await settingsReporsitory.getSelectedStores();
 
-    final Map<String, List<Price>> prices = {};
-    final List<List<String>> listOfIds = splitIDs(ids);
-
-    for (List<String> list in listOfIds) {
-      try {
-        final Uri url = Uri.https(BASE_URL, '/games/prices/v3', {
-          'key': API_KEY,
+    try {
+      final FunctionResponse prices =
+          await Supabase.instance.client.functions.invoke(
+        'itad-api/prices',
+        method: HttpMethod.post,
+        queryParameters: {
           'country': country,
           'shops': stores.join(','),
           'deals': 'false',
           'vouchers': 'true',
           'capacity': '0',
-        });
+        },
+        body: ids,
+      );
 
-        final response = await dio.post(
-          url.toString(),
-          data: json.encode(list),
-        );
+      return Parsers.prices(prices.data);
+    } catch (error, stackTrace) {
+      Logger().e(
+        'Failed to fetch prices',
+        error: error,
+      );
 
-        prices.addAll(Parsers.prices(response));
-      } catch (error, stackTrace) {
-        Logger().e(
-          'Failed to fetch prices',
-          error: error,
-        );
+      Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+      );
 
-        Sentry.captureException(
-          error,
-          stackTrace: stackTrace,
-        );
-      }
+      return {};
     }
-
-    return prices;
   }
 
   Future<List<Store>> stores() async {

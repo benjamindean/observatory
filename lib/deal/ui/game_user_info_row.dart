@@ -18,17 +18,23 @@ class GameUserInfoRow extends ConsumerWidget {
     final List<String> library = ref.watch(libraryIdsProvider);
     final bool isInLibrary = library.contains(deal.id);
 
-    return Row(
-      children: [
-        InLibraryHint(
-          isInLibrary: isInLibrary,
-        ),
-        if (isInLibrary) 
-          const SizedBox(width: 8.0),
-        AddedOnHint(
-          added: deal.added,
-        ),
-      ],
+    if (!isInLibrary && deal.added == 0) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 4.0),
+      child: Row(
+        children: [
+          InLibraryHint(
+            isInLibrary: isInLibrary,
+          ),
+          if (isInLibrary) const SizedBox(width: 8.0),
+          AddedOnHint(
+            added: deal.added,
+          ),
+        ],
+      ),
     );
   }
 }
