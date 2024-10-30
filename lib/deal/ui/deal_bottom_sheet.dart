@@ -34,14 +34,21 @@ class DealBottomSheet extends ConsumerWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(
-              deal.titleParsed,
-              style: context.themes.text.titleMedium?.copyWith(
-                color: context.colors.scheme.onSurface,
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  deal.titleParsed,
+                  style: context.themes.text.titleMedium?.copyWith(
+                    color: context.colors.scheme.onSurface,
+                  ),
+                ),
+                const SizedBox(height: 4.0),
+                GameUserInfoRow(deal: deal),
+              ],
             ),
           ),
-          GameUserInfoRow(deal: deal),
           BackdropContainer(
             child: Column(
               children: [

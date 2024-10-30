@@ -20,7 +20,7 @@ class Hint extends StatelessWidget {
         Icon(
           icon,
           color: context.colors.scheme.secondary,
-          size: context.textStyles.labelLarge.fontSize,
+          size: context.textStyles.labelMedium.fontSize,
         ),
         const SizedBox(width: 4.0),
         child,

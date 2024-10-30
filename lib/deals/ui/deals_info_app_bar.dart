@@ -16,7 +16,7 @@ class DealsInfoAppBar extends ConsumerWidget {
     final AsyncValue<DealsState> deals = ref.watch(asyncDealsProvider);
     final String sortBy = ref.watch(
       itadFiltersProvider.select(
-        (value) => value.current.sortBy ?? SortBy.trending.name,
+        (value) => value.current.sortBy ?? SortDealsBy.trending.name,
       ),
     );
 
@@ -25,7 +25,8 @@ class DealsInfoAppBar extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          SORT_BY_VALUES[SortBy.values.byName(sortBy)] ?? SortBy.trending.name,
+          SORT_BY_VALUES[SortDealsBy.values.byName(sortBy)] ??
+              SortDealsBy.trending.name,
           style: context.textStyles.labelLarge.copyWith(
             color: context.colors.scheme.onSurfaceVariant,
             fontWeight: FontWeight.bold,

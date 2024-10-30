@@ -48,11 +48,18 @@ class DealPage extends ConsumerWidget {
                   color: context.colors.scheme.surfaceContainer,
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Text(
-                      deal.titleParsed,
-                      style: context.textStyles.titleMedium.copyWith(
-                        color: context.colors.scheme.onSurface,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          deal.titleParsed,
+                          style: context.textStyles.titleMedium.copyWith(
+                            color: context.colors.scheme.onSurface,
+                          ),
+                        ),
+                        const SizedBox(height: 4.0),
+                        GameUserInfoRow(deal: deal),
+                      ],
                     ),
                   ),
                 ),
@@ -60,7 +67,6 @@ class DealPage extends ConsumerWidget {
               SliverList.list(
                 key: Key('deal-${deal.id}-sliver-list'),
                 children: [
-                  GameUserInfoRow(deal: deal),
                   const SizedBox(height: 8.0),
                   SummaryTile(deal: deal),
                   ReleaseDateTile(deal: deal),

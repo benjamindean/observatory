@@ -33,33 +33,33 @@ const double THUMB_HEIGHT = IMAGE_HEIGHT / SIZE_DELIMITER;
 
 const BASE_CARD_HEIGHT = 100.0;
 
-const Map<SortBy, String> SORT_BY_FILTER_STRINGS = {
-  SortBy.trending: '-trending',
-  SortBy.time: '-time',
-  SortBy.cut: '-cut',
-  SortBy.price: 'price',
-  SortBy.releasedate: '-release-date',
-  SortBy.rank: 'rank',
-  SortBy.steamplayers: '-steam-players',
-  SortBy.steamreviews: '-steam-reviews',
-  SortBy.metacritic: '-metacritic',
-  SortBy.metacriticuser: '-metacritic-user',
+const Map<SortDealsBy, String> SORT_BY_FILTER_STRINGS = {
+  SortDealsBy.trending: '-trending',
+  SortDealsBy.time: '-time',
+  SortDealsBy.cut: '-cut',
+  SortDealsBy.price: 'price',
+  SortDealsBy.releasedate: '-release-date',
+  SortDealsBy.rank: 'rank',
+  SortDealsBy.steamplayers: '-steam-players',
+  SortDealsBy.steamreviews: '-steam-reviews',
+  SortDealsBy.metacritic: '-metacritic',
+  SortDealsBy.metacriticuser: '-metacritic-user',
 };
 
-const Map<SortBy, String> SORT_BY_VALUES = {
-  SortBy.trending: 'Trending',
-  SortBy.time: 'Newest',
-  SortBy.cut: 'Highest Price Cut',
-  SortBy.price: 'Lowest Price',
-  SortBy.releasedate: 'Release Date',
-  SortBy.rank: 'Most Popular',
-  SortBy.steamplayers: 'Steam Players',
-  SortBy.steamreviews: 'Steam Reviews',
-  SortBy.metacritic: 'Metacritic Score',
-  SortBy.metacriticuser: 'Metacritic User Score',
+const Map<SortDealsBy, String> SORT_BY_VALUES = {
+  SortDealsBy.trending: 'Trending',
+  SortDealsBy.time: 'Newest',
+  SortDealsBy.cut: 'Highest Price Cut',
+  SortDealsBy.price: 'Lowest Price',
+  SortDealsBy.releasedate: 'Release Date',
+  SortDealsBy.rank: 'Most Popular',
+  SortDealsBy.steamplayers: 'Steam Players',
+  SortDealsBy.steamreviews: 'Steam Reviews',
+  SortDealsBy.metacritic: 'Metacritic Score',
+  SortDealsBy.metacriticuser: 'Metacritic User Score',
 };
 
-enum SortBy {
+enum SortDealsBy {
   trending,
   time,
   cut,

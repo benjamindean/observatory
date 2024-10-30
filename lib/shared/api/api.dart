@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
@@ -20,6 +19,7 @@ import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class API {
   final Dio dio;
@@ -172,22 +172,27 @@ class API {
     final List<int> stores = await settingsReporsitory.getSelectedStores();
     final ITADFilters filters = settingsReporsitory.getITADFilters();
 
-    final Uri url = Uri.https(BASE_URL, '/deals/v2', {
-      'key': API_KEY,
-      'limit': limit.toString(),
-      'offset': offset.toString(),
-      'country': country,
-      'shops': stores.join(','),
-      'nondeals': filters.nondeals.toString(),
-      'mature': filters.mature.toString(),
-      'sort': SORT_BY_FILTER_STRINGS[
-          SortBy.values.byName(filters.sortBy ?? SortBy.trending.name)],
-      'filter': filters.filtersString,
-    });
+    final FunctionResponse response =
+        await Supabase.instance.client.functions.invoke(
+      'itad-api/deals',
+      method: HttpMethod.get,
+      queryParameters: {
+        'limit': limit.toString(),
+        'offset': offset.toString(),
+        'country': country,
+        'shops': stores.join(','),
+        'nondeals': filters.nondeals.toString(),
+        'mature': filters.mature.toString(),
+        'sort': SORT_BY_FILTER_STRINGS[SortDealsBy.values
+            .byName(filters.sortBy ?? SortDealsBy.trending.name)],
+        'filter': filters.filtersString,
+        'include_prices': 'true',
+        'deals': 'false',
+        'vouchers': 'true',
+      },
+    );
 
-    final response = await dio.get(url.toString());
-
-    return fetchDealData(deals: Parsers.deals(response));
+    return Parsers.deals(response.data);
   }
 
   Future<List<Deal>> getDealsBySteamIds(
@@ -265,24 +270,16 @@ class API {
   }
 
   Future<List<Deal>> fetchSteamLibrary(String steamId) async {
-    final Uri steamAPI = Uri.https(
-      'api.steampowered.com',
-      '/IPlayerService/GetOwnedGames/v0001/',
-      {
-        'key': dotenv.get('STEAM_API_KEY'),
+    final FunctionResponse steamLibrary =
+        await Supabase.instance.client.functions.invoke(
+      'steam-api/library',
+      method: HttpMethod.get,
+      queryParameters: {
         'steamid': steamId,
-        'format': 'json',
-        'include_appinfo': 'true',
       },
     );
-    final steamResponse = await dio.get(steamAPI.toString());
-    final response = json.decode(steamResponse.toString());
 
-    if (response['response']['game_count'] == 0) {
-      return [];
-    }
-
-    return response['response']['games']
+    return steamLibrary.data
         .map<Deal>(
           (e) => Deal(
             id: 'none',
@@ -295,19 +292,16 @@ class API {
   }
 
   Future<SteamUser> fetchSteamUser(String steamId) async {
-    final Uri steamAPI = Uri.https(
-      'api.steampowered.com',
-      '/ISteamUser/GetPlayerSummaries/v0002/',
-      {
-        'key': dotenv.get('STEAM_API_KEY'),
-        'steamids': steamId,
+    final FunctionResponse steamUser =
+        await Supabase.instance.client.functions.invoke(
+      'steam-api/user',
+      method: HttpMethod.get,
+      queryParameters: {
+        'steamid': steamId,
       },
     );
-    final steamResponse = await dio.get(steamAPI.toString());
 
-    return SteamUser.fromJson(
-      json.decode(steamResponse.toString())['response']['players'][0],
-    );
+    return SteamUser.fromJson(steamUser.data);
   }
 
   Future<List<Deal>> fetchDealData({

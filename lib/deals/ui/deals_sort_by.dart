@@ -26,7 +26,7 @@ class DealsSortBy extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final String sortBy = ref.watch(
       itadFiltersProvider.select(
-        (value) => value.current.sortBy ?? SortBy.trending.name,
+        (value) => value.current.sortBy ?? SortDealsBy.trending.name,
       ),
     );
 
@@ -44,7 +44,7 @@ class DealsSortBy extends ConsumerWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                final SortBy value = SortBy.values[index];
+                final SortDealsBy value = SortDealsBy.values[index];
 
                 return ListTile(
                   key: Key('deal-category-${value.name.toString()}'),
@@ -57,7 +57,7 @@ class DealsSortBy extends ConsumerWidget {
                     context.pop();
                   },
                   title: Text(
-                    SORT_BY_VALUES[value] ?? SortBy.trending.name,
+                    SORT_BY_VALUES[value] ?? SortDealsBy.trending.name,
                     style: context.textStyles.titleMedium.copyWith(
                       color: value.name == sortBy
                           ? context.colors.scheme.onSecondary
@@ -66,7 +66,7 @@ class DealsSortBy extends ConsumerWidget {
                   ),
                 );
               },
-              childCount: SortBy.values.length,
+              childCount: SortDealsBy.values.length,
             ),
           ),
         ],

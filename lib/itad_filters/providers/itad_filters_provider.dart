@@ -88,7 +88,7 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
     );
   }
 
-  Future<void> setSortBy(SortBy sortBy) async {
+  Future<void> setSortBy(SortDealsBy sortBy) async {
     state = state.copyWith(
       current: state.current.copyWith(
         sortBy: sortBy.name,

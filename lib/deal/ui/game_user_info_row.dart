@@ -4,7 +4,6 @@ import 'package:observatory/deal/ui/added_on_hint.dart';
 import 'package:observatory/deal/ui/in_library_hint.dart';
 import 'package:observatory/library/providers/library_provider.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 
 class GameUserInfoRow extends ConsumerWidget {
   const GameUserInfoRow({
@@ -19,22 +18,17 @@ class GameUserInfoRow extends ConsumerWidget {
     final List<String> library = ref.watch(libraryIdsProvider);
     final bool isInLibrary = library.contains(deal.id);
 
-    return ColoredBox(
-      color: context.colors.scheme.surfaceContainer,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-        child: Row(
-          children: [
-            InLibraryHint(
-              isInLibrary: isInLibrary,
-            ),
-            const SizedBox(width: 8.0),
-            AddedOnHint(
-              added: deal.added,
-            ),
-          ],
+    return Row(
+      children: [
+        InLibraryHint(
+          isInLibrary: isInLibrary,
         ),
-      ),
+        if (isInLibrary) 
+          const SizedBox(width: 8.0),
+        AddedOnHint(
+          added: deal.added,
+        ),
+      ],
     );
   }
 }

@@ -62,9 +62,7 @@ class Parsers {
   }
 
   static List<Deal> deals(contents) {
-    final List<dynamic> rawList = json.decode(contents.toString())['list'];
-
-    return rawList.map<Deal>((deal) => Deal.fromJson(deal)).toList();
+    return contents.map<Deal>((deal) => Deal.fromJson(deal)).toList();
   }
 
   static List<Deal> searchResults(contents) {
