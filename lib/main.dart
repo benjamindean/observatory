@@ -18,43 +18,44 @@ import 'package:observatory/shared/models/observatory_theme.dart';
 import 'package:observatory/shared/ui/theme.dart';
 import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:observatory/tasks/constants.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workmanager/workmanager.dart';
 
-Future<void> initSettings() async {
-  await dotenv.load(fileName: 'secrets.env');
-  await SettingsRepository.init();
-
-  final String cache = (await getApplicationDocumentsDirectory()).path;
-
-  GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
-  GetIt.I.registerSingleton<API>(API.create(cache));
-}
-
 Future<void> initSupabase() async {
+  await dotenv.load(fileName: 'secrets.env');
+
   await Supabase.initialize(
     url: dotenv.get('SUPABASE_URL'),
     anonKey: dotenv.get('SUPABASE_ANON_KEY'),
     authOptions: const FlutterAuthClientOptions(
       detectSessionInUri: false,
     ),
+    debug: kDebugMode,
   );
+}
+
+Future<void> initSettings() async {
+  await SettingsRepository.init();
+
+  GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
+  GetIt.I.registerSingleton<API>(API());
 }
 
 @pragma('vm:entry-point')
 void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) async {
-    if (task == TASK_CHECK_WAITLIST) {
-      await initSupabase();
-      await initSettings();
+  Workmanager().executeTask(
+    (String task, Map<String, dynamic>? inputData) async {
+      if (task == TASK_CHECK_WAITLIST) {
+        await initSupabase();
+        await initSettings();
 
-      return await checkWaitlistTask();
-    }
+        return await checkWaitlistTask();
+      }
 
-    return Future.value(true);
-  });
+      return Future.value(true);
+    },
+  );
 }
 
 @pragma('vm:entry-point')
@@ -111,8 +112,8 @@ class Observatory extends ConsumerWidget {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await initSettings();
   await initSupabase();
+  await initSettings();
 
   await AwesomeNotifications().initialize(
     null,

@@ -14,6 +14,7 @@ import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/waitlist/ui/empty_waitlist.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 
 class WaitListList extends ConsumerWidget {
   const WaitListList({super.key});
@@ -43,7 +44,18 @@ class WaitListList extends ConsumerWidget {
         .getHeight(MediaQuery.of(context).size.width);
 
     if (isSteamImportLoading || isITADImportLoading) {
-      return const OryFullScreenSpinner();
+      return OryFullScreenSpinner(
+        message: Padding(
+          padding: EdgeInsets.all(32.0),
+          child: Text(
+            'Importing your waitlist\nThis might take a while depending on the size of your waitlist',
+            textAlign: TextAlign.center,
+            style: context.textStyles.labelLarge.copyWith(
+              color: context.colors.scheme.onSurfaceVariant,
+            ),
+          ),
+        ),
+      );
     }
 
     return waitlist.when(

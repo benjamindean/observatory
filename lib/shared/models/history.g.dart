@@ -22,7 +22,7 @@ Map<String, dynamic> _$$HistoryPriceImplToJson(_$HistoryPriceImpl instance) =>
 
 _$HistoryImpl _$$HistoryImplFromJson(Map<String, dynamic> json) =>
     _$HistoryImpl(
-      timestamp: json['timestamp'] as String?,
+      timestamp: (json['timestamp'] as num).toInt(),
       shop: json['shop'] == null
           ? null
           : Shop.fromJson(json['shop'] as Map<String, dynamic>),

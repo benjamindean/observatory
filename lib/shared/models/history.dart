@@ -21,7 +21,7 @@ class HistoryPrice with _$HistoryPrice {
 @freezed
 class History with _$History {
   const factory History({
-    required String? timestamp,
+    required int timestamp,
     Shop? shop,
     HistoryPrice? deal,
   }) = _History;

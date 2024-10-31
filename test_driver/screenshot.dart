@@ -9,7 +9,6 @@ import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import './mocks/waitlist_mocks.dart';
@@ -21,17 +20,14 @@ void main() async {
 
   enableFlutterDriverExtension(enableTextEntryEmulation: false);
 
-  await SettingsRepository.init();
-
-  final String cache = (await getApplicationDocumentsDirectory()).path;
-
-  GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
-  GetIt.I.registerSingleton<API>(API.create(cache));
-
   await Supabase.initialize(
     url: dotenv.get('SUPABASE_URL'),
     anonKey: dotenv.get('SUPABASE_ANON_KEY'),
   );
+
+  await SettingsRepository.init();
+
+  GetIt.I.registerSingleton<API>(API());
 
   await GetIt.I<SettingsRepository>().setITADFilters(filtersMock);
 

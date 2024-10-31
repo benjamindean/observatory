@@ -244,7 +244,7 @@ History _$HistoryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$History {
-  String? get timestamp => throw _privateConstructorUsedError;
+  int get timestamp => throw _privateConstructorUsedError;
   Shop? get shop => throw _privateConstructorUsedError;
   HistoryPrice? get deal => throw _privateConstructorUsedError;
 
@@ -262,7 +262,7 @@ abstract class $HistoryCopyWith<$Res> {
   factory $HistoryCopyWith(History value, $Res Function(History) then) =
       _$HistoryCopyWithImpl<$Res, History>;
   @useResult
-  $Res call({String? timestamp, Shop? shop, HistoryPrice? deal});
+  $Res call({int timestamp, Shop? shop, HistoryPrice? deal});
 
   $ShopCopyWith<$Res>? get shop;
   $HistoryPriceCopyWith<$Res>? get deal;
@@ -283,15 +283,15 @@ class _$HistoryCopyWithImpl<$Res, $Val extends History>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timestamp = freezed,
+    Object? timestamp = null,
     Object? shop = freezed,
     Object? deal = freezed,
   }) {
     return _then(_value.copyWith(
-      timestamp: freezed == timestamp
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int,
       shop: freezed == shop
           ? _value.shop
           : shop // ignore: cast_nullable_to_non_nullable
@@ -339,7 +339,7 @@ abstract class _$$HistoryImplCopyWith<$Res> implements $HistoryCopyWith<$Res> {
       __$$HistoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? timestamp, Shop? shop, HistoryPrice? deal});
+  $Res call({int timestamp, Shop? shop, HistoryPrice? deal});
 
   @override
   $ShopCopyWith<$Res>? get shop;
@@ -360,15 +360,15 @@ class __$$HistoryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timestamp = freezed,
+    Object? timestamp = null,
     Object? shop = freezed,
     Object? deal = freezed,
   }) {
     return _then(_$HistoryImpl(
-      timestamp: freezed == timestamp
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int,
       shop: freezed == shop
           ? _value.shop
           : shop // ignore: cast_nullable_to_non_nullable
@@ -390,7 +390,7 @@ class _$HistoryImpl with DiagnosticableTreeMixin implements _History {
       _$$HistoryImplFromJson(json);
 
   @override
-  final String? timestamp;
+  final int timestamp;
   @override
   final Shop? shop;
   @override
@@ -444,14 +444,14 @@ class _$HistoryImpl with DiagnosticableTreeMixin implements _History {
 
 abstract class _History implements History {
   const factory _History(
-      {required final String? timestamp,
+      {required final int timestamp,
       final Shop? shop,
       final HistoryPrice? deal}) = _$HistoryImpl;
 
   factory _History.fromJson(Map<String, dynamic> json) = _$HistoryImpl.fromJson;
 
   @override
-  String? get timestamp;
+  int get timestamp;
   @override
   Shop? get shop;
   @override

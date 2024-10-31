@@ -1,14 +1,13 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/auth/state/steam_state.dart';
 import 'package:observatory/shared/constans.dart';
-import 'package:observatory/shared/api/parsers.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/models/history.dart';
 import 'package:observatory/shared/models/info.dart';
@@ -16,44 +15,27 @@ import 'package:observatory/shared/models/itad_filters.dart';
 import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/store.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class API {
-  final Dio dio;
-  final CacheOptions cacheOptions;
+  final Dio dio = Dio(BaseOptions(responseType: ResponseType.plain));
   final SettingsRepository settingsReporsitory = GetIt.I<SettingsRepository>();
-
-  API({
-    required this.dio,
-    required this.cacheOptions,
-  });
-
-  static API create(String? directory) {
-    final options = CacheOptions(
-      store: HiveCacheStore(directory),
-      policy: CachePolicy.noCache,
-      maxStale: const Duration(days: 14),
-    );
-
-    return API(
-      dio: Dio(BaseOptions(responseType: ResponseType.plain))
-        ..interceptors.add(DioCacheInterceptor(options: options)),
-      cacheOptions: options,
-    );
-  }
 
   Future<Info?> info({
     required String id,
   }) async {
     try {
-      final Uri url = Uri.https(BASE_URL, '/games/info/v2', {
-        'key': API_KEY,
-        'id': id,
-      });
+      final FunctionResponse info =
+          await Supabase.instance.client.functions.invoke(
+        'itad-api/info',
+        method: HttpMethod.get,
+        queryParameters: {
+          'id': id,
+        },
+      );
 
-      return Parsers.info(await dio.get(url.toString()));
+      return Info.fromJson(info.data);
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch info',
@@ -72,20 +54,15 @@ class API {
   Future<Overview?> overview({
     required List<String> ids,
   }) async {
-    final String country = await settingsReporsitory.getCountry();
-
     try {
-      final Uri url = Uri.https(BASE_URL, '/games/overview/v2', {
-        'key': API_KEY,
-        'country': country,
-      });
-
-      final response = await dio.post(
-        url.toString(),
-        data: json.encode(ids),
+      final FunctionResponse overview =
+          await Supabase.instance.client.functions.invoke(
+        'itad-api/overview',
+        method: HttpMethod.post,
+        body: ids,
       );
 
-      return Parsers.overview(response);
+      return Overview.fromJson(overview.data);
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch overview',
@@ -122,7 +99,22 @@ class API {
         body: ids,
       );
 
-      return Parsers.prices(prices.data);
+      return prices.data.map<String, List<Price>?>(
+        (String key, value) {
+          return MapEntry<String, List<Price>?>(
+            key,
+            (value['deals'] ?? [])
+                .map<Price>(
+                  (price) => Price.fromJson(price).copyWith(
+                    timestampMs: DateTime.tryParse(
+                      price['timestamp'],
+                    )?.millisecondsSinceEpoch,
+                  ),
+                )
+                .toList(),
+          );
+        },
+      );
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch prices',
@@ -139,23 +131,39 @@ class API {
   }
 
   Future<List<Store>> stores() async {
+    final DefaultCacheManager cacheManager = DefaultCacheManager();
     final String country = await settingsReporsitory.getCountry();
 
-    final Uri url = Uri.https(BASE_URL, '/service/shops/v1', {
-      'key': API_KEY,
-      'country': country,
-    });
-
-    final stores = await dio.get(
-      url.toString(),
-      options: cacheOptions
-          .copyWith(
-            policy: CachePolicy.forceCache,
-          )
-          .toOptions(),
+    final String cacheKey = 'stores-$country';
+    final FileInfo? file = await cacheManager.getFileFromCache(
+      cacheKey,
     );
 
-    return Parsers.stores(stores);
+    if (file != null) {
+      return json
+          .decode(
+            utf8.decode(file.file.readAsStringSync().codeUnits),
+          )
+          .map<Store>((e) => Store.fromJson(e))
+          .toList();
+    }
+
+    final FunctionResponse stores =
+        await Supabase.instance.client.functions.invoke(
+      'itad-api/stores',
+      method: HttpMethod.get,
+      queryParameters: {
+        'country': country,
+      },
+    );
+
+    await cacheManager.putFile(
+      cacheKey,
+      utf8.encode(json.encode(stores.data)),
+      maxAge: const Duration(days: 7),
+    );
+
+    return stores.data.map<Store>((e) => Store.fromJson(e)).toList();
   }
 
   Future<List<Deal>> fetchDeals({
@@ -186,7 +194,7 @@ class API {
       },
     );
 
-    return Parsers.deals(response.data);
+    return response.data.map<Deal>((deal) => Deal.fromJson(deal)).toList();
   }
 
   Future<List<Deal>> getDealsBySteamIds(
@@ -198,9 +206,6 @@ class API {
           (e) => e.title == 'Steam',
         )
         .id;
-    final Uri url = Uri.https(BASE_URL, '/lookup/id/shop/$steamStoreId/v1', {
-      'key': API_KEY,
-    });
     final List<String?> steamAppIds = deals
         .map(
           (e) => e.steamId,
@@ -209,7 +214,9 @@ class API {
         .toList();
 
     final response = await dio.post(
-      url.toString(),
+      Uri.https(BASE_URL, '/lookup/id/shop/$steamStoreId/v1', {
+        'key': API_KEY,
+      }).toString(),
       data: json.encode(steamAppIds),
     );
 
@@ -338,8 +345,6 @@ class API {
 
   Future<List<Deal>> getSearchResults({
     required final String query,
-    final int limit = 20,
-    final int offset = 0,
   }) async {
     final Uri url = Uri.https(BASE_URL, '/games/search/v1', {
       'key': API_KEY,
@@ -348,52 +353,33 @@ class API {
     });
 
     final response = await dio.get(url.toString());
-    final List<Deal> deals = Parsers.searchResults(response);
+    final List<Deal> deals = json
+        .decode(response.toString())
+        .map<Deal>((deal) => Deal.fromJson(deal))
+        .toList();
 
     return fetchDealData(deals: deals);
   }
 
-  Future<Map<String, dynamic>?> lookupSteamIds({
-    required List<String> ids,
-  }) async {
-    try {
-      final Uri url = Uri.https(BASE_URL, '/unstable/id-lookup/steam/v1', {
-        'key': API_KEY,
-      });
-
-      final response = await dio.post(url.toString(), data: json.encode(ids));
-
-      return json.decode(response.toString());
-    } catch (error, stackTrace) {
-      Logger().e(
-        'Failed to fetch steam ID mappings',
-        error: error,
-      );
-
-      Sentry.captureException(
-        error,
-        stackTrace: stackTrace,
-      );
-
-      return null;
-    }
-  }
-
-  Future<List<History>?> history({
+  Future<List<History>> history({
     required String id,
   }) async {
     try {
       final List<int> stores = await settingsReporsitory.getSelectedStores();
       final String country = await settingsReporsitory.getCountry();
 
-      final Uri url = Uri.https(BASE_URL, '/games/history/v2', {
-        'key': API_KEY,
-        'id': id,
-        'shops': stores.join(','),
-        'country': country,
-      });
+      final FunctionResponse history =
+          await Supabase.instance.client.functions.invoke(
+        'itad-api/history',
+        method: HttpMethod.get,
+        queryParameters: {
+          'id': id,
+          'country': country,
+          'shops': stores.join(','),
+        },
+      );
 
-      return Parsers.history(await dio.get(url.toString()));
+      return history.data.map<History>((e) => History.fromJson(e)).toList();
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch history',
@@ -405,7 +391,7 @@ class API {
         stackTrace: stackTrace,
       );
 
-      return null;
+      return [];
     }
   }
 }
