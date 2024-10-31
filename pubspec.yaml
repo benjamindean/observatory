@@ -59,6 +59,7 @@ dependencies:
   youtube_player_flutter: ^9.1.1
   video_player: ^2.9.2
   flutter_cache_manager: ^3.4.1
+  path_provider: ^2.1.5
 
 flutter_launcher_icons:
   android:
