@@ -235,7 +235,8 @@ xcuserdata/
 !.vscode/extensions.json
 
 secrets.json
-secrets.*
+secrets.env
+secrets.dev.env
 google-services.json
 GoogleService-Info.plist
 firebase_options.dart

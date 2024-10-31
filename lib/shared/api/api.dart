@@ -248,11 +248,7 @@ class API {
       },
     );
 
-    return wishlist.data
-        .map<Deal>(
-          (e) => Deal.fromJson(e),
-        )
-        .toList();
+    return wishlist.data.map<Deal>((e) => Deal.fromJson(e)).toList();
   }
 
   Future<List<Deal>> fetchSteamLibrary(String steamId) async {
