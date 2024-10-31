@@ -239,33 +239,18 @@ class API {
   }
 
   Future<List<Deal>> fetchSteamWishlist(String steamId) async {
-    final Map<String, dynamic> results = {};
+    final FunctionResponse wishlist =
+        await Supabase.instance.client.functions.invoke(
+      'steam-api/wishlist',
+      method: HttpMethod.get,
+      queryParameters: {
+        'steamid': steamId,
+      },
+    );
 
-    for (int i = 0; i < MAX_STEAM_WISHLIST_PAGES; i++) {
-      final Uri steamAPI = Uri.https(
-        'store.steampowered.com',
-        '/wishlist/profiles/$steamId/wishlistdata/',
-        {'p': '$i'},
-      );
-      final steamResponse = await dio.get(steamAPI.toString());
-      final response = json.decode(steamResponse.toString());
-
-      if (response is List) {
-        break;
-      }
-
-      results.addAll(response);
-    }
-
-    return results.entries
-        .map(
-          (e) => Deal(
-            id: 'none',
-            title: e.value['name'],
-            steamId: 'app/${e.key}',
-            added: (e.value['added'] ?? 0) * 1000,
-            source: DealSource.steam,
-          ),
+    return wishlist.data
+        .map<Deal>(
+          (e) => Deal.fromJson(e),
         )
         .toList();
   }

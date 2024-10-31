@@ -99,5 +99,6 @@ flutter:
     - assets/images/bmc-button.png
     - assets/images/itad-logo.jpg
     - secrets.env
+    - secrets.dev.env
     - assets/google_fonts/
     - assets/images/store_icons/
