@@ -47,14 +47,10 @@ class SearchAppBar extends ConsumerWidget {
         titleSpacing: 0.0,
         title: SearchInput(
           searchType: SearchType.search,
-          onChanged: (String value) {
-            debouncer.run(() {
-              if (value.trim().isNotEmpty) {
-                ref
-                    .read(dealSearchProvider.notifier)
-                    .performSearch(value.trim());
-              }
-            });
+          onSubmitted: (String value) {
+            if (value.trim().isNotEmpty) {
+              ref.read(dealSearchProvider.notifier).performSearch(value.trim());
+            }
           },
         ),
       );

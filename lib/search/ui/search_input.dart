@@ -7,13 +7,13 @@ import 'package:observatory/shared/widgets/progress_indicator.dart';
 class SearchInput extends ConsumerWidget {
   final SearchType searchType;
   final Function(String)? onSubmitted;
-  final Function(String) onChanged;
+  final Function(String)? onChanged;
 
   const SearchInput({
     super.key,
     this.searchType = SearchType.search,
     this.onSubmitted,
-    required this.onChanged,
+    this.onChanged,
   });
 
   @override

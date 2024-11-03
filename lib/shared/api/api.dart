@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
@@ -9,6 +10,7 @@ import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/auth/state/steam_state.dart';
 import 'package:observatory/shared/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/models/game/game.dart';
 import 'package:observatory/shared/models/history.dart';
 import 'package:observatory/shared/models/info.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
@@ -16,9 +18,19 @@ import 'package:observatory/shared/models/overview.dart';
 import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class API {
+  final Dio observatoryAPI = Dio(
+    BaseOptions(
+      responseType: ResponseType.json,
+      baseUrl: 'https://observatory-server-776eq.ondigitalocean.app/api/v1/',
+      headers: {
+        'Authorization':
+            'Bearer ${dotenv.maybeGet('OBSERVATORY_API_KEY') ?? dotenv.maybeGet('OBSERVATORY_DEV_API_KEY')}',
+      },
+    ),
+  );
+
   final Dio dio = Dio(BaseOptions(responseType: ResponseType.plain));
   final SettingsRepository settingsReporsitory = GetIt.I<SettingsRepository>();
 
@@ -26,10 +38,8 @@ class API {
     required String id,
   }) async {
     try {
-      final FunctionResponse info =
-          await Supabase.instance.client.functions.invoke(
-        'itad-api/info',
-        method: HttpMethod.get,
+      final Response info = await observatoryAPI.get(
+        '/itad-api/info',
         queryParameters: {
           'id': id,
         },
@@ -55,17 +65,44 @@ class API {
     required List<String> ids,
   }) async {
     try {
-      final FunctionResponse overview =
-          await Supabase.instance.client.functions.invoke(
-        'itad-api/overview',
-        method: HttpMethod.post,
-        body: ids,
+      final Response overview = await observatoryAPI.post(
+        '/itad-api/overview',
+        data: json.encode(ids),
       );
 
       return Overview.fromJson(overview.data);
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch overview',
+        error: error,
+      );
+
+      Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+      );
+
+      return null;
+    }
+  }
+
+  Future<GameDetails?> gameDetails({
+    required String id,
+    required String title,
+  }) async {
+    try {
+      final Response details = await observatoryAPI.get(
+        '/game-info',
+        queryParameters: {
+          'id': id,
+          'title': title,
+        },
+      );
+
+      return GameDetails.fromJson(details.data);
+    } catch (error, stackTrace) {
+      Logger().e(
+        'Failed to fetch game details',
         error: error,
       );
 
@@ -85,10 +122,8 @@ class API {
     final List<int> stores = await settingsReporsitory.getSelectedStores();
 
     try {
-      final FunctionResponse prices =
-          await Supabase.instance.client.functions.invoke(
-        'itad-api/prices',
-        method: HttpMethod.post,
+      final Response prices = await observatoryAPI.post(
+        '/itad-api/prices',
         queryParameters: {
           'country': country,
           'shops': stores.join(','),
@@ -96,7 +131,7 @@ class API {
           'vouchers': 'true',
           'capacity': '0',
         },
-        body: ids,
+        data: json.encode(ids),
       );
 
       return prices.data.map<String, List<Price>?>(
@@ -148,10 +183,8 @@ class API {
           .toList();
     }
 
-    final FunctionResponse stores =
-        await Supabase.instance.client.functions.invoke(
-      'itad-api/stores',
-      method: HttpMethod.get,
+    final Response stores = await observatoryAPI.get(
+      '/itad-api/stores',
       queryParameters: {
         'country': country,
       },
@@ -174,10 +207,8 @@ class API {
     final List<int> stores = await settingsReporsitory.getSelectedStores();
     final ITADFilters filters = settingsReporsitory.getITADFilters();
 
-    final FunctionResponse response =
-        await Supabase.instance.client.functions.invoke(
-      'itad-api/deals',
-      method: HttpMethod.get,
+    final Response response = await observatoryAPI.get(
+      '/itad-api/deals',
       queryParameters: {
         'limit': limit.toString(),
         'offset': offset.toString(),
@@ -230,19 +261,9 @@ class API {
         .toList();
   }
 
-  Future<List<Deal>> getByAppIDs(List<Deal> deals) async {
-    final List<Deal> foundDeals = await getDealsBySteamIds(deals);
-
-    return fetchDealData(
-      deals: foundDeals,
-    );
-  }
-
   Future<List<Deal>> fetchSteamWishlist(String steamId) async {
-    final FunctionResponse wishlist =
-        await Supabase.instance.client.functions.invoke(
-      'steam-api/wishlist',
-      method: HttpMethod.get,
+    final Response wishlist = await observatoryAPI.get(
+      '/steam-api/wishlist',
       queryParameters: {
         'steamid': steamId,
       },
@@ -252,10 +273,8 @@ class API {
   }
 
   Future<List<Deal>> fetchSteamLibrary(String steamId) async {
-    final FunctionResponse steamLibrary =
-        await Supabase.instance.client.functions.invoke(
-      'steam-api/library',
-      method: HttpMethod.get,
+    final Response steamLibrary = await observatoryAPI.get(
+      '/steam-api/library',
       queryParameters: {
         'steamid': steamId,
       },
@@ -274,10 +293,8 @@ class API {
   }
 
   Future<SteamUser> fetchSteamUser(String steamId) async {
-    final FunctionResponse steamUser =
-        await Supabase.instance.client.functions.invoke(
-      'steam-api/user',
-      method: HttpMethod.get,
+    final Response steamUser = await observatoryAPI.get(
+      '/steam-api/user',
       queryParameters: {
         'steamid': steamId,
       },
@@ -349,10 +366,8 @@ class API {
       final List<int> stores = await settingsReporsitory.getSelectedStores();
       final String country = await settingsReporsitory.getCountry();
 
-      final FunctionResponse history =
-          await Supabase.instance.client.functions.invoke(
-        'itad-api/history',
-        method: HttpMethod.get,
+      final Response history = await observatoryAPI.get(
+        '/itad-api/history',
         queryParameters: {
           'id': id,
           'country': country,
