@@ -22,6 +22,8 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:workmanager/workmanager.dart';
 
 Future<void> initSettings() async {
+  await dotenv.load(fileName: 'secrets.env');
+
   await SettingsRepository.init();
 
   GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
