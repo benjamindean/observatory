@@ -9,7 +9,6 @@ import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import './mocks/waitlist_mocks.dart';
 import './mocks/search_mocks.dart';
@@ -19,11 +18,6 @@ void main() async {
   WidgetsApp.debugAllowBannerOverride = false;
 
   enableFlutterDriverExtension(enableTextEntryEmulation: false);
-
-  await Supabase.initialize(
-    url: dotenv.get('SUPABASE_URL'),
-    anonKey: dotenv.get('SUPABASE_ANON_KEY'),
-  );
 
   await SettingsRepository.init();
 

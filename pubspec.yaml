@@ -42,10 +42,8 @@ dependencies:
       url: https://github.com/fluttercommunity/flutter_workmanager.git
       ref: b783000
   photo_view: ^0.15.0
-  supabase_flutter: ^2.6.0
   uuid: ^4.4.2
   lzstring: ^2.0.0+2
-  supabase: ^2.3.0
   flutter_hooks: ^0.20.5
   hooks_riverpod: ^2.5.2
   app_links: ^6.2.0
