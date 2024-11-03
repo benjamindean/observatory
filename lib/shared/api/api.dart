@@ -99,7 +99,7 @@ class API {
         },
       );
 
-      return GameDetails.fromJson(details.data);
+      return GameDetails.fromJson(details.data['data']);
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch game details',
