@@ -23,7 +23,7 @@ class API {
   final Dio observatoryAPI = Dio(
     BaseOptions(
       responseType: ResponseType.json,
-      baseUrl: 'https://observatory-server-776eq.ondigitalocean.app/api/v1/',
+      baseUrl: 'https://getobservatory.app/api/v1/',
       headers: {
         'Authorization':
             'Bearer ${dotenv.maybeGet('OBSERVATORY_API_KEY') ?? dotenv.maybeGet('OBSERVATORY_DEV_API_KEY')}',
