@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
+import 'package:observatory/search/providers/recents_provider.dart';
 import 'package:observatory/search/providers/search_results_provider.dart';
 import 'package:observatory/search/state/search_state.dart';
 import 'package:observatory/shared/api/api.dart';
@@ -59,12 +60,13 @@ class SearchNotifier extends FamilyNotifier<SearchState, SearchType> {
       query: query,
     );
 
-    final List<Deal> results = await GetIt.I<API>().getSearchResults(
+    final List<Deal> results = await GetIt.I<API>().search(
       query: query,
     );
     final List<Deal> deals = Set<Deal>.of(results).toList();
 
     ref.read(searchResultsProvider.notifier).setResults(deals);
+    ref.read(asynRecentsProvider.notifier).addRecent(query);
 
     state = state.copyWith(
       query: query,

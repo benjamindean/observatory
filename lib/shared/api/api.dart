@@ -20,6 +20,7 @@ import 'package:observatory/shared/models/store.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class API {
+  final SettingsRepository settingsReporsitory = GetIt.I<SettingsRepository>();
   final Dio observatoryAPI = Dio(
     BaseOptions(
       responseType: ResponseType.json,
@@ -30,9 +31,6 @@ class API {
       },
     ),
   );
-
-  final Dio dio = Dio(BaseOptions(responseType: ResponseType.plain));
-  final SettingsRepository settingsReporsitory = GetIt.I<SettingsRepository>();
 
   Future<Info?> info({
     required String id,
@@ -228,37 +226,14 @@ class API {
     return response.data.map<Deal>((deal) => Deal.fromJson(deal)).toList();
   }
 
-  Future<List<Deal>> getDealsBySteamIds(
-    List<Deal> deals,
-  ) async {
+  Future<int> getSteamStoreId() async {
     final List<Store> allStores = await stores();
-    final int steamStoreId = allStores
+
+    return allStores
         .firstWhere(
           (e) => e.title == 'Steam',
         )
         .id;
-    final List<String?> steamAppIds = deals
-        .map(
-          (e) => e.steamId,
-        )
-        .whereType<String>()
-        .toList();
-
-    final response = await dio.post(
-      Uri.https(BASE_URL, '/lookup/id/shop/$steamStoreId/v1', {
-        'key': API_KEY,
-      }).toString(),
-      data: json.encode(steamAppIds),
-    );
-
-    final Map<String, dynamic> idsMap = json.decode(response.toString());
-
-    return deals
-        .map(
-          (e) => e.copyWith(id: idsMap[e.steamId] ?? 'none'),
-        )
-        .where((e) => e.id != 'none')
-        .toList();
   }
 
   Future<List<Deal>> fetchSteamWishlist(String steamId) async {
@@ -266,6 +241,7 @@ class API {
       '/steam-api/wishlist',
       queryParameters: {
         'steamid': steamId,
+        'shopId': await getSteamStoreId(),
       },
     );
 
@@ -277,6 +253,7 @@ class API {
       '/steam-api/library',
       queryParameters: {
         'steamid': steamId,
+        'shopId': await getSteamStoreId(),
       },
     );
 
@@ -303,25 +280,6 @@ class API {
     return SteamUser.fromJson(steamUser.data);
   }
 
-  Future<List<Deal>> fetchDealData({
-    required List<Deal> deals,
-  }) async {
-    if (deals.isEmpty) {
-      return [];
-    }
-
-    final List<String> ids = deals.map((e) => e.id).toList();
-    final Map<String, List<Price>?> listOfPrices = await prices(ids: ids);
-
-    return deals.map(
-      (deal) {
-        return deal.copyWith(
-          prices: listOfPrices[deal.id] ?? [],
-        );
-      },
-    ).toList();
-  }
-
   Future<List<Deal>> fetchWaitlist() async {
     final List<Deal> deals = settingsReporsitory.getWaitlistDeals();
     final List<String> ids = deals.map((e) => e.id).toList();
@@ -341,22 +299,25 @@ class API {
     ).toList();
   }
 
-  Future<List<Deal>> getSearchResults({
+  Future<List<Deal>> search({
     required final String query,
   }) async {
-    final Uri url = Uri.https(BASE_URL, '/games/search/v1', {
-      'key': API_KEY,
-      'title': query.toString(),
-      'results': 30.toString(),
-    });
+    final String country = await settingsReporsitory.getCountry();
+    final List<int> stores = await settingsReporsitory.getSelectedStores();
 
-    final response = await dio.get(url.toString());
-    final List<Deal> deals = json
-        .decode(response.toString())
-        .map<Deal>((deal) => Deal.fromJson(deal))
-        .toList();
+    final Response searchResults = await observatoryAPI.get(
+      '/itad-api/search',
+      queryParameters: {
+        'country': country,
+        'shops': stores.join(','),
+        'deals': 'false',
+        'vouchers': 'true',
+        'capacity': '0',
+        'query': query,
+      },
+    );
 
-    return fetchDealData(deals: deals);
+    return searchResults.data.map<Deal>((deal) => Deal.fromJson(deal)).toList();
   }
 
   Future<List<History>> history({

@@ -72,21 +72,15 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
       return [];
     }
 
-    final List<Deal> deals = await GetIt.I<API>().getDealsBySteamIds(
-      wishlist,
-    );
-
-    if (deals.isNotEmpty) {
-      await ref.watch(asyncWaitListProvider.notifier).addToWaitlist(deals);
-      await ref.watch(asyncWaitListProvider.notifier).reset();
-    }
+    await ref.watch(asyncWaitListProvider.notifier).addToWaitlist(wishlist);
+    await ref.watch(asyncWaitListProvider.notifier).reset();
 
     state = state.copyWith(
-      deals: deals.reversed.toList(),
+      deals: wishlist.reversed.toList(),
       error: null,
     );
 
-    return deals;
+    return wishlist;
   }
 
   Future<List<Deal>?> importLibrary() async {
@@ -108,19 +102,13 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
       return [];
     }
 
-    final List<Deal> deals = await GetIt.I<API>().getDealsBySteamIds(
-      library,
-    );
-
-    if (deals.isNotEmpty) {
-      await ref.watch(asyncLibraryProvider.notifier).setLibrary(deals);
-    }
+    await ref.watch(asyncLibraryProvider.notifier).setLibrary(library);
 
     state = state.copyWith(
       error: null,
     );
 
-    return deals;
+    return library;
   }
 
   Future<void> importData() async {
