@@ -265,7 +265,6 @@ class ITADNotifier extends Notifier<ITADState> {
             DealSource.itad,
           );
       await ref.read(asyncWaitListProvider.notifier).addToWaitlist(deals);
-      await ref.read(asyncWaitListProvider.notifier).reset();
 
       final List<String> syncBackDeals = ref
               .watch(asyncWaitListProvider)
@@ -284,6 +283,8 @@ class ITADNotifier extends Notifier<ITADState> {
       if (syncBackDeals.isNotEmpty) {
         await addToWaitlist(syncBackDeals);
       }
+
+      await ref.read(asyncWaitListProvider.notifier).reset();
     }
 
     state = state.copyWith(
