@@ -72,6 +72,13 @@ class SteamNotifier extends AutoDisposeNotifier<SteamState> {
       return [];
     }
 
+    await ref
+        .watch(
+          asyncWaitListProvider.notifier,
+        )
+        .removeFromWaitListBySource(
+          DealSource.steam,
+        );
     await ref.watch(asyncWaitListProvider.notifier).addToWaitlist(wishlist);
     await ref.watch(asyncWaitListProvider.notifier).reset();
 

@@ -214,6 +214,18 @@ class SettingsRepository {
     );
   }
 
+  Future<void> removeDealsBySource(DealSource source) async {
+    final List<Deal> deals = savedDealsBox.values
+        .where(
+          (deal) => deal.source == source,
+        )
+        .toList();
+
+    return savedDealsBox.deleteAll(
+      deals.map((e) => e.id).toList(),
+    );
+  }
+
   Future<List<int>> getSelectedStores() async {
     return await settingsBox.get(
       PREF_SELECTED_STORES,

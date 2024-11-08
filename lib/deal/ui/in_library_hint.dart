@@ -17,7 +17,7 @@ class InLibraryHint extends StatelessWidget {
     }
 
     return Hint(
-      icon: Icons.library_add_check,
+      icon: Icons.book,
       child: Text(
         'In Library',
         style: context.themes.text.labelSmall?.copyWith(

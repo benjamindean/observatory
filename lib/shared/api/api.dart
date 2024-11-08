@@ -70,14 +70,20 @@ class API {
     required String id,
   }) async {
     try {
-      final Response info = await observatoryAPI.get(
-        '/itad-api/info',
-        queryParameters: {
-          'id': id,
-        },
+      final info = await wrapCache(
+        () => observatoryAPI.get(
+          '/itad-api/info',
+          queryParameters: {
+            'id': id,
+          },
+          options: Options(
+            responseType: ResponseType.bytes,
+          ),
+        ),
+        cacheKey: 'info-$id',
       );
 
-      return Info.fromJson(info.data);
+      return Info.fromJson(info);
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch info',
@@ -97,12 +103,18 @@ class API {
     required List<String> ids,
   }) async {
     try {
-      final Response overview = await observatoryAPI.post(
-        '/itad-api/overview',
-        data: json.encode(ids),
+      final overview = await wrapCache(
+        () => observatoryAPI.post(
+          '/itad-api/overview',
+          data: json.encode(ids),
+          options: Options(
+            responseType: ResponseType.bytes,
+          ),
+        ),
+        cacheKey: 'overview-${ids.join('-')}',
       );
 
-      return Overview.fromJson(overview.data);
+      return Overview.fromJson(overview);
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch overview',

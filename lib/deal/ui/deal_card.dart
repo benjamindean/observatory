@@ -181,7 +181,7 @@ class DealCard extends ConsumerWidget {
                     ),
                   if (isInLibrary)
                     Icon(
-                      Icons.library_add_check,
+                      Icons.book,
                       color: context.colors.scheme.secondary,
                       size: context.textStyles.titleMedium.fontSize,
                     ),

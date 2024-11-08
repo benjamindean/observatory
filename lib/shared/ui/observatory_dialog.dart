@@ -48,12 +48,7 @@ class ObservatoryDialog extends StatelessWidget {
             OverflowBar(
               alignment: MainAxisAlignment.spaceBetween,
               children: [
-                FilledButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(
-                      context.colors.scheme.errorContainer,
-                    ),
-                  ),
+                TextButton(
                   onPressed: onDiscard,
                   child: Text(
                     discardText,
