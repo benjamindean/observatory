@@ -19,18 +19,52 @@ import 'package:observatory/shared/models/price.dart';
 import 'package:observatory/shared/models/store.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
+Future<dynamic> wrapCache(
+  Function func, {
+  String cacheKey = '',
+  Duration maxAge = const Duration(days: 7),
+}) async {
+  final DefaultCacheManager cacheManager = DefaultCacheManager();
+  final FileInfo? file = await cacheManager.getFileFromCache(
+    cacheKey,
+  );
+
+  if (file != null) {
+    return json.decode(
+      utf8.decode(
+        file.file.readAsBytesSync(),
+        allowMalformed: true,
+      ),
+    );
+  }
+
+  final Response response = await func();
+
+  if (response.data != null) {
+    await cacheManager.putFile(
+      cacheKey,
+      response.data,
+      maxAge: maxAge,
+    );
+
+    return json.decode(utf8.decode(response.data));
+  }
+
+  return null;
+}
+
+final BaseOptions options = BaseOptions(
+  responseType: ResponseType.json,
+  baseUrl: 'https://getobservatory.app/api/v1/',
+  headers: {
+    'Authorization':
+        'Bearer ${dotenv.maybeGet('OBSERVATORY_API_KEY') ?? dotenv.maybeGet('OBSERVATORY_DEV_API_KEY')}',
+  },
+);
+
 class API {
   final SettingsRepository settingsReporsitory = GetIt.I<SettingsRepository>();
-  final Dio observatoryAPI = Dio(
-    BaseOptions(
-      responseType: ResponseType.json,
-      baseUrl: 'https://getobservatory.app/api/v1/',
-      headers: {
-        'Authorization':
-            'Bearer ${dotenv.maybeGet('OBSERVATORY_API_KEY') ?? dotenv.maybeGet('OBSERVATORY_DEV_API_KEY')}',
-      },
-    ),
-  );
+  final Dio observatoryAPI = Dio(options);
 
   Future<Info?> info({
     required String id,
@@ -89,15 +123,21 @@ class API {
     required String title,
   }) async {
     try {
-      final Response details = await observatoryAPI.get(
-        '/game-info',
-        queryParameters: {
-          'id': id,
-          'title': title,
-        },
+      final details = await wrapCache(
+        () => observatoryAPI.get(
+          '/game-info',
+          queryParameters: {
+            'id': id,
+            'title': title,
+          },
+          options: Options(
+            responseType: ResponseType.bytes,
+          ),
+        ),
+        cacheKey: 'game-info-$id',
       );
 
-      return GameDetails.fromJson(details.data['data']);
+      return GameDetails.fromJson(details['data']);
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch game details',
@@ -164,37 +204,22 @@ class API {
   }
 
   Future<List<Store>> stores() async {
-    final DefaultCacheManager cacheManager = DefaultCacheManager();
     final String country = await settingsReporsitory.getCountry();
 
-    final String cacheKey = 'stores-$country';
-    final FileInfo? file = await cacheManager.getFileFromCache(
-      cacheKey,
+    final stores = await wrapCache(
+      () => observatoryAPI.get(
+        '/itad-api/stores',
+        queryParameters: {
+          'country': country,
+        },
+        options: Options(
+          responseType: ResponseType.bytes,
+        ),
+      ),
+      cacheKey: 'stores-$country',
     );
 
-    if (file != null) {
-      return json
-          .decode(
-            utf8.decode(file.file.readAsStringSync().codeUnits),
-          )
-          .map<Store>((e) => Store.fromJson(e))
-          .toList();
-    }
-
-    final Response stores = await observatoryAPI.get(
-      '/itad-api/stores',
-      queryParameters: {
-        'country': country,
-      },
-    );
-
-    await cacheManager.putFile(
-      cacheKey,
-      utf8.encode(json.encode(stores.data)),
-      maxAge: const Duration(days: 7),
-    );
-
-    return stores.data.map<Store>((e) => Store.fromJson(e)).toList();
+    return stores.map<Store>((e) => Store.fromJson(e)).toList();
   }
 
   Future<List<Deal>> fetchDeals({
@@ -327,16 +352,23 @@ class API {
       final List<int> stores = await settingsReporsitory.getSelectedStores();
       final String country = await settingsReporsitory.getCountry();
 
-      final Response history = await observatoryAPI.get(
-        '/itad-api/history',
-        queryParameters: {
-          'id': id,
-          'country': country,
-          'shops': stores.join(','),
-        },
+      final history = await wrapCache(
+        () => observatoryAPI.get(
+          '/itad-api/history',
+          queryParameters: {
+            'id': id,
+            'country': country,
+            'shops': stores.join(','),
+          },
+          options: Options(
+            responseType: ResponseType.bytes,
+          ),
+        ),
+        cacheKey: 'history-$id',
+        maxAge: Duration(days: 1),
       );
 
-      return history.data.map<History>((e) => History.fromJson(e)).toList();
+      return history.map<History>((e) => History.fromJson(e)).toList();
     } catch (error, stackTrace) {
       Logger().e(
         'Failed to fetch history',
