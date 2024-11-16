@@ -16,11 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PurchaseState {
-  List<ProductDetails> get products => throw _privateConstructorUsedError;
-  bool get isPending => throw _privateConstructorUsedError;
+  List<StoreProduct> get products => throw _privateConstructorUsedError;
   List<String> get purchasedProductIds => throw _privateConstructorUsedError;
-  StreamSubscription<List<PurchaseDetails>>? get subscription =>
-      throw _privateConstructorUsedError;
+  bool get isPending => throw _privateConstructorUsedError;
 
   /// Create a copy of PurchaseState
   /// with the given fields replaced by the non-null parameter values.
@@ -36,10 +34,9 @@ abstract class $PurchaseStateCopyWith<$Res> {
       _$PurchaseStateCopyWithImpl<$Res, PurchaseState>;
   @useResult
   $Res call(
-      {List<ProductDetails> products,
-      bool isPending,
+      {List<StoreProduct> products,
       List<String> purchasedProductIds,
-      StreamSubscription<List<PurchaseDetails>>? subscription});
+      bool isPending});
 }
 
 /// @nodoc
@@ -58,27 +55,22 @@ class _$PurchaseStateCopyWithImpl<$Res, $Val extends PurchaseState>
   @override
   $Res call({
     Object? products = null,
-    Object? isPending = null,
     Object? purchasedProductIds = null,
-    Object? subscription = freezed,
+    Object? isPending = null,
   }) {
     return _then(_value.copyWith(
       products: null == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductDetails>,
-      isPending: null == isPending
-          ? _value.isPending
-          : isPending // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as List<StoreProduct>,
       purchasedProductIds: null == purchasedProductIds
           ? _value.purchasedProductIds
           : purchasedProductIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      subscription: freezed == subscription
-          ? _value.subscription
-          : subscription // ignore: cast_nullable_to_non_nullable
-              as StreamSubscription<List<PurchaseDetails>>?,
+      isPending: null == isPending
+          ? _value.isPending
+          : isPending // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -92,10 +84,9 @@ abstract class _$$PurchaseStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<ProductDetails> products,
-      bool isPending,
+      {List<StoreProduct> products,
       List<String> purchasedProductIds,
-      StreamSubscription<List<PurchaseDetails>>? subscription});
+      bool isPending});
 }
 
 /// @nodoc
@@ -112,27 +103,22 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? products = null,
-    Object? isPending = null,
     Object? purchasedProductIds = null,
-    Object? subscription = freezed,
+    Object? isPending = null,
   }) {
     return _then(_$PurchaseStateImpl(
       products: null == products
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductDetails>,
-      isPending: null == isPending
-          ? _value.isPending
-          : isPending // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as List<StoreProduct>,
       purchasedProductIds: null == purchasedProductIds
           ? _value._purchasedProductIds
           : purchasedProductIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      subscription: freezed == subscription
-          ? _value.subscription
-          : subscription // ignore: cast_nullable_to_non_nullable
-              as StreamSubscription<List<PurchaseDetails>>?,
+      isPending: null == isPending
+          ? _value.isPending
+          : isPending // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -141,25 +127,21 @@ class __$$PurchaseStateImplCopyWithImpl<$Res>
 
 class _$PurchaseStateImpl implements _PurchaseState {
   _$PurchaseStateImpl(
-      {final List<ProductDetails> products = const [],
-      this.isPending = false,
+      {final List<StoreProduct> products = const [],
       final List<String> purchasedProductIds = const [],
-      this.subscription})
+      this.isPending = false})
       : _products = products,
         _purchasedProductIds = purchasedProductIds;
 
-  final List<ProductDetails> _products;
+  final List<StoreProduct> _products;
   @override
   @JsonKey()
-  List<ProductDetails> get products {
+  List<StoreProduct> get products {
     if (_products is EqualUnmodifiableListView) return _products;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_products);
   }
 
-  @override
-  @JsonKey()
-  final bool isPending;
   final List<String> _purchasedProductIds;
   @override
   @JsonKey()
@@ -171,11 +153,12 @@ class _$PurchaseStateImpl implements _PurchaseState {
   }
 
   @override
-  final StreamSubscription<List<PurchaseDetails>>? subscription;
+  @JsonKey()
+  final bool isPending;
 
   @override
   String toString() {
-    return 'PurchaseState(products: $products, isPending: $isPending, purchasedProductIds: $purchasedProductIds, subscription: $subscription)';
+    return 'PurchaseState(products: $products, purchasedProductIds: $purchasedProductIds, isPending: $isPending)';
   }
 
   @override
@@ -184,21 +167,18 @@ class _$PurchaseStateImpl implements _PurchaseState {
         (other.runtimeType == runtimeType &&
             other is _$PurchaseStateImpl &&
             const DeepCollectionEquality().equals(other._products, _products) &&
-            (identical(other.isPending, isPending) ||
-                other.isPending == isPending) &&
             const DeepCollectionEquality()
                 .equals(other._purchasedProductIds, _purchasedProductIds) &&
-            (identical(other.subscription, subscription) ||
-                other.subscription == subscription));
+            (identical(other.isPending, isPending) ||
+                other.isPending == isPending));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_products),
-      isPending,
       const DeepCollectionEquality().hash(_purchasedProductIds),
-      subscription);
+      isPending);
 
   /// Create a copy of PurchaseState
   /// with the given fields replaced by the non-null parameter values.
@@ -211,20 +191,16 @@ class _$PurchaseStateImpl implements _PurchaseState {
 
 abstract class _PurchaseState implements PurchaseState {
   factory _PurchaseState(
-          {final List<ProductDetails> products,
-          final bool isPending,
-          final List<String> purchasedProductIds,
-          final StreamSubscription<List<PurchaseDetails>>? subscription}) =
-      _$PurchaseStateImpl;
+      {final List<StoreProduct> products,
+      final List<String> purchasedProductIds,
+      final bool isPending}) = _$PurchaseStateImpl;
 
   @override
-  List<ProductDetails> get products;
-  @override
-  bool get isPending;
+  List<StoreProduct> get products;
   @override
   List<String> get purchasedProductIds;
   @override
-  StreamSubscription<List<PurchaseDetails>>? get subscription;
+  bool get isPending;
 
   /// Create a copy of PurchaseState
   /// with the given fields replaced by the non-null parameter values.

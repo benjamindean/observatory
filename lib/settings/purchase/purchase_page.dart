@@ -1,12 +1,13 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/products_list.dart';
 import 'package:observatory/settings/purchase/purchase_provider.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/shared/ui/observatory_snack_bar.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class PurchasePage extends ConsumerWidget {
@@ -37,7 +38,7 @@ class PurchasePage extends ConsumerWidget {
       appBar: AppBar(
         actions: [
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               ref.read(asyncPurchaseProvider.notifier).setIsPending(true);
 
               ObservatorySnackBar.show(
@@ -46,19 +47,35 @@ class PurchasePage extends ConsumerWidget {
                 content: const Text('Restoring purchases...'),
               );
 
-              InAppPurchase.instance.restorePurchases().then(
-                (value) {
-                  ref.read(asyncPurchaseProvider.notifier).setIsPending(false);
+              try {
+                final CustomerInfo customerInfo =
+                    await Purchases.restorePurchases();
 
-                  if (context.mounted) {
-                    ObservatorySnackBar.show(
-                      context,
-                      icon: Icons.check,
-                      content: const Text('Purchases restored!'),
+                ref.read(asyncPurchaseProvider.notifier).deliverPurchases(
+                      customerInfo.allPurchasedProductIdentifiers,
                     );
-                  }
-                },
-              );
+              } on PlatformException catch (error, stackTrace) {
+                Logger().e(
+                  'Failed to restore purchases',
+                  error: error,
+                  stackTrace: stackTrace,
+                );
+
+                Sentry.captureException(
+                  error,
+                  stackTrace: stackTrace,
+                );
+
+                ref.read(asyncPurchaseProvider.notifier).setIsPending(false);
+
+                if (context.mounted) {
+                  ObservatorySnackBar.show(
+                    context,
+                    icon: Icons.error,
+                    content: const Text('Failed to restore purchases'),
+                  );
+                }
+              }
             },
             child: Text(
               'Restore Purchases',
@@ -117,12 +134,10 @@ class PurchasePage extends ConsumerWidget {
                             isPending: state.isPending,
                             products: state.products,
                             purchasedProductIds: state.purchasedProductIds,
-                            onPurchase: (product) {
-                              InAppPurchase.instance.buyNonConsumable(
-                                purchaseParam: PurchaseParam(
-                                  productDetails: product,
-                                ),
-                              );
+                            onPurchase: (StoreProduct product) {
+                              ref
+                                  .read(asyncPurchaseProvider.notifier)
+                                  .purchaseProduct(product);
                             },
                           ),
                         ),

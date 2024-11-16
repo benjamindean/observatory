@@ -94,36 +94,6 @@ class HomePage extends ConsumerWidget {
           );
         },
         data: (config) {
-          // Future.delayed(Duration.zero, () {
-          //   GetIt.I<SettingsRepository>().getLaunchCounter().then(
-          //     (value) {
-          //       // if (value % 5 == 0) {
-          //       if (context.mounted) {
-          //         return showBottomSheet(
-          //           context: context,
-          //           builder: (context) {
-          //             return ObservatoryDialog(
-          //               onApply: () {
-          //                 context.pop();
-          //                 context.push('/observatory-plus');
-          //               },
-          //               onDiscard: () {
-          //                 context.pop();
-          //               },
-          //               title: 'Support Observatory',
-          //               body:
-          //                   'This app is free and ad-free, and I intend to keep it that way for the foreseeable future. If you enjoy the app, please consider supporting it.',
-          //               discardText: 'Not Now',
-          //               applyText: 'Support',
-          //             );
-          //           },
-          //         );
-          //       }
-          //       // }
-          //     },
-          //   );
-          // });
-
           return child;
         },
       ),

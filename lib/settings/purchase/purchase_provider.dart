@@ -1,45 +1,55 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:collection/collection.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-
-final List<ProductDetails> debugList = [
-  ProductDetails(
-    id: '1',
-    title: 'Test',
-    description: 'Desc',
-    price: '22',
-    rawPrice: 22,
-    currencyCode: 'USD',
-  ),
-  ProductDetails(
-    id: '2',
-    title: 'Test',
-    description: 'Desc',
-    price: '233',
-    rawPrice: 223,
-    currencyCode: 'USD',
-  ),
-];
 
 class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
   @override
   Future<PurchaseState> build() async {
+    await Purchases.configure(
+      PurchasesConfiguration(dotenv.env['REVENUECAT_API_KEY']!),
+    );
+
     return PurchaseState(
       products: await _fetchPurchases(),
       purchasedProductIds:
           await GetIt.I<SettingsRepository>().getPurchasedProductIds(),
-      subscription: ref.read(purchaseStreamProvider),
     );
   }
 
-  Future<void> deliverPurchase(String productId) async {
+  Future<StoreProduct?> purchaseProduct(StoreProduct product) async {
+    setIsPending(true);
+
+    try {
+      final CustomerInfo customerInfo = await Purchases.purchaseStoreProduct(
+        product,
+      );
+
+      await deliverPurchases(customerInfo.allPurchasedProductIdentifiers);
+
+      setIsPending(false);
+
+      return product;
+    } on PlatformException catch (error, stackTrace) {
+      setIsPending(false);
+
+      Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+      );
+
+      return null;
+    }
+  }
+
+  Future<void> deliverPurchases(List<String> productIds) async {
     setIsPending(true);
 
     final List<String> purchasedProductIds = ref.watch(
@@ -47,7 +57,10 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
         (state) => state.valueOrNull?.purchasedProductIds ?? [],
       ),
     );
-    final List<String> newList = {...purchasedProductIds, productId}.toList();
+    final List<String> newList = {
+      ...purchasedProductIds,
+      ...productIds,
+    }.toList();
 
     await GetIt.I<SettingsRepository>().setPurchasedProductIds(newList);
 
@@ -67,25 +80,23 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     });
   }
 
-  Future<List<ProductDetails>> _fetchPurchases() async {
-    final bool available = await InAppPurchase.instance.isAvailable();
+  Future<List<StoreProduct>> _fetchPurchases() async {
+    try {
+      return Purchases.getProducts(
+        [
+          'development_support_tier_1',
+          'development_support_tier_2',
+          'development_support_tier_3',
+        ],
+        productCategory: ProductCategory.nonSubscription,
+      );
+    } on PlatformException catch (error, stackTrace) {
+      Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+      );
 
-    if (!available) {
       return [];
-    } else {
-      const Set<String> purchaseIds = <String>{
-        'development_support_tier_1',
-        'development_support_tier_2',
-        'development_support_tier_3'
-      };
-      final ProductDetailsResponse response =
-          await InAppPurchase.instance.queryProductDetails(
-        purchaseIds,
-      );
-
-      return response.productDetails.sortedBy(
-        (element) => element.rawPrice.toString(),
-      );
     }
   }
 
@@ -100,54 +111,6 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
 final asyncPurchaseProvider =
     AsyncNotifierProvider<AsyncPurchaseNotifier, PurchaseState>(() {
   return AsyncPurchaseNotifier();
-});
-
-class PurchaseStreamNotifier
-    extends Notifier<StreamSubscription<List<PurchaseDetails>>> {
-  @override
-  StreamSubscription<List<PurchaseDetails>> build() {
-    return InAppPurchase.instance.purchaseStream.listen(
-      (List<PurchaseDetails> purchaseDetailsList) async {
-        for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
-          final PurchaseStatus status = purchaseDetails.status;
-
-          if (status == PurchaseStatus.pending) {
-            ref.read(asyncPurchaseProvider.notifier).setIsPending(true);
-          } else {
-            if (status == PurchaseStatus.error) {
-              ref.read(asyncPurchaseProvider.notifier).setIsPending(false);
-            } else if (status == PurchaseStatus.purchased ||
-                status == PurchaseStatus.restored) {
-              ref.read(asyncPurchaseProvider.notifier).setIsPending(false);
-
-              unawaited(
-                ref.watch(asyncPurchaseProvider.notifier).deliverPurchase(
-                      purchaseDetails.productID,
-                    ),
-              );
-            }
-
-            if (purchaseDetails.pendingCompletePurchase) {
-              await InAppPurchase.instance.completePurchase(purchaseDetails);
-
-              ref.read(asyncPurchaseProvider.notifier).setIsPending(false);
-            }
-          }
-        }
-      },
-      onError: (error, stackTrace) {
-        Sentry.captureException(
-          error,
-          stackTrace: stackTrace,
-        );
-      },
-    );
-  }
-}
-
-final purchaseStreamProvider = NotifierProvider<PurchaseStreamNotifier,
-    StreamSubscription<List<PurchaseDetails>>>(() {
-  return PurchaseStreamNotifier();
 });
 
 class PlusFeaturesNotifier extends Notifier<bool> {

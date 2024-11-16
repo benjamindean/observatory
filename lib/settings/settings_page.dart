@@ -72,7 +72,10 @@ class SettingsPage extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const PurchaseButton(),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+                    child: const PurchaseButton(),
+                  ),
                   const ListHeading(title: 'General'),
                   const CountrySettingsListTile(),
                   const StoresSettingsListTile(),

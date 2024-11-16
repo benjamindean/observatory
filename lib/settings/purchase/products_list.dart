@@ -1,14 +1,14 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 
 import 'package:flutter/material.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:collection/collection.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 class PurchaseButton extends StatelessWidget {
   final bool isPending;
-  final ProductDetails? currentProduct;
-  final List<ProductDetails> leftoverProducts;
+  final StoreProduct? currentProduct;
+  final List<StoreProduct> leftoverProducts;
 
   const PurchaseButton({
     super.key,
@@ -45,7 +45,7 @@ class PurchaseButton extends StatelessWidget {
             ),
           ),
           TextSpan(
-            text: currentProduct != null ? currentProduct?.price : '',
+            text: currentProduct != null ? currentProduct?.priceString : '',
             style: context.textStyles.bodyLarge.copyWith(
               color: context.colors.scheme.onSecondary,
               fontWeight: FontWeight.bold,
@@ -59,8 +59,8 @@ class PurchaseButton extends StatelessWidget {
 
 class ProductsList extends StatefulWidget {
   final bool isPending;
-  final Function(ProductDetails) onPurchase;
-  final List<ProductDetails> products;
+  final Function(StoreProduct) onPurchase;
+  final List<StoreProduct> products;
   final List<String> purchasedProductIds;
 
   const ProductsList({
@@ -76,14 +76,7 @@ class ProductsList extends StatefulWidget {
 }
 
 class ProductsListState extends State<ProductsList> {
-  ProductDetails selectedProduct = ProductDetails(
-    id: '0',
-    title: 'Unknown',
-    description: 'Unknown',
-    price: 0.toString(),
-    rawPrice: 0,
-    currencyCode: 'USD',
-  );
+  StoreProduct? selectedProduct;
 
   @override
   void initState() {
@@ -100,17 +93,17 @@ class ProductsListState extends State<ProductsList> {
       );
     }
 
-    final List<ProductDetails> leftoverProducts = widget.products
+    final List<StoreProduct> leftoverProducts = widget.products
         .where(
-          (e) => !widget.purchasedProductIds.contains(e.id),
+          (e) => !widget.purchasedProductIds.contains(e.identifier),
         )
         .toList();
 
-    final ProductDetails currentProduct = leftoverProducts.firstWhereOrNull(
+    final StoreProduct currentProduct = leftoverProducts.firstWhereOrNull(
           (e) => e == selectedProduct,
         ) ??
         leftoverProducts.firstOrNull ??
-        selectedProduct;
+        widget.products.first;
 
     return Column(
       children: [
@@ -118,13 +111,13 @@ class ProductsListState extends State<ProductsList> {
           children: widget.products.map<Widget>(
             (e) {
               final bool isPurchased = widget.purchasedProductIds.contains(
-                e.id,
+                e.identifier,
               );
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
-                child: RadioListTile<ProductDetails>(
-                  title: Text(e.price),
+                child: RadioListTile<StoreProduct>(
+                  title: Text(e.priceString),
                   subtitle: isPurchased
                       ? Text('You have already purchased this item')
                       : Text(e.title),
@@ -138,7 +131,7 @@ class ProductsListState extends State<ProductsList> {
                   value: e,
                   groupValue: currentProduct,
                   onChanged: !(widget.isPending || isPurchased)
-                      ? (ProductDetails? value) {
+                      ? (StoreProduct? value) {
                           setState(() {
                             selectedProduct = value!;
                           });
@@ -163,7 +156,9 @@ class ProductsListState extends State<ProductsList> {
               onPressed: leftoverProducts.isEmpty
                   ? null
                   : () {
-                      widget.onPurchase(selectedProduct);
+                      if (selectedProduct != null) {
+                        widget.onPurchase(selectedProduct!);
+                      }
                     },
               child: PurchaseButton(
                 isPending: widget.isPending,
