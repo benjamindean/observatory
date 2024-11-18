@@ -22,7 +22,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 Future<dynamic> wrapCache(
   Function func, {
   String cacheKey = '',
-  Duration maxAge = const Duration(days: 7),
+  Duration maxAge = const Duration(days: 14),
 }) async {
   final DefaultCacheManager cacheManager = DefaultCacheManager();
   final FileInfo? file = await cacheManager.getFileFromCache(

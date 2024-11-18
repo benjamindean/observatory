@@ -82,7 +82,7 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
 
   Future<List<StoreProduct>> _fetchPurchases() async {
     try {
-      return Purchases.getProducts(
+      final List<StoreProduct> products = await Purchases.getProducts(
         [
           'development_support_tier_1',
           'development_support_tier_2',
@@ -90,6 +90,8 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
         ],
         productCategory: ProductCategory.nonSubscription,
       );
+
+      return products..sort((a, b) => a.price.compareTo(b.price));
     } on PlatformException catch (error, stackTrace) {
       Sentry.captureException(
         error,

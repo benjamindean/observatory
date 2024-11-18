@@ -28,6 +28,7 @@ class _YouTubeVideoState extends State<YouTubeVideo> {
         mute: false,
         enableCaption: false,
         forceHD: true,
+        hideControls: true,
         useHybridComposition: !kDebugMode,
       ),
     );
