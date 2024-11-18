@@ -28,7 +28,6 @@ class _YouTubeVideoState extends State<YouTubeVideo> {
         mute: false,
         enableCaption: false,
         forceHD: true,
-        hideControls: true,
         useHybridComposition: !kDebugMode,
       ),
     );
@@ -47,8 +46,13 @@ class _YouTubeVideoState extends State<YouTubeVideo> {
     return YoutubePlayerBuilder(
       player: YoutubePlayer(
         controller: videoController!,
-        showVideoProgressIndicator: true,
+        showVideoProgressIndicator: false,
         progressIndicatorColor: context.colors.scheme.primary,
+        liveUIColor: context.colors.scheme.primary,
+        progressColors: ProgressBarColors(
+          playedColor: context.colors.scheme.primary,
+          handleColor: context.colors.scheme.secondary,
+        ),
       ),
       builder: (BuildContext context, Widget player) {
         return Column(
