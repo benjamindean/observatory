@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:observatory/settings/providers/itad_config_provider.dart';
 import 'package:observatory/settings/stores_select/stores_list_provider.dart';
 import 'package:observatory/shared/models/store.dart';
-import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/observatory_back_button.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 
@@ -35,8 +34,6 @@ class StoreSelectPage extends ConsumerWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        elevation: APPBAR_ELEVATION,
-        surfaceTintColor: context.colors.scheme.surfaceTint,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -172,11 +169,8 @@ class StoreSelectPage extends ConsumerWidget {
         ),
       ),
       appBar: AppBar(
-        title: Text(
-          'Select Stores',
-          style: context.textStyles.titleMedium.copyWith(
-            color: context.colors.scheme.onSurfaceVariant,
-          ),
+        flexibleSpace: FlexibleSpaceBar(
+          title: Text('Select Stores'),
         ),
       ),
       body: Column(
@@ -218,27 +212,32 @@ class StoreSelectPage extends ConsumerWidget {
               }
             },
             child: Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: stores.length,
-                itemBuilder: (context, index) {
-                  final String storeTitle = stores[index].title;
-                  final int storeId = stores[index].id;
+              child: CustomScrollView(
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final String storeTitle = stores[index].title;
+                        final int storeId = stores[index].id;
 
-                  return CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    title: Text(storeTitle),
-                    value: storeList.contains(storeId),
-                    enabled: storeId != 61,
-                    onChanged: (value) async {
-                      if (value != null) {
-                        return ref
-                            .read(listProvider.notifier)
-                            .toggle(storeId, value);
-                      }
-                    },
-                  );
-                },
+                        return CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: Text(storeTitle),
+                          value: storeList.contains(storeId),
+                          enabled: storeId != 61,
+                          onChanged: (value) async {
+                            if (value != null) {
+                              return ref
+                                  .read(listProvider.notifier)
+                                  .toggle(storeId, value);
+                            }
+                          },
+                        );
+                      },
+                      childCount: stores.length,
+                    ),
+                  ),
+                ],
               ),
             ),
           )

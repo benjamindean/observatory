@@ -1,13 +1,15 @@
-import 'package:observatory/settings/purchase/purchase_tile.dart';
+import 'package:observatory/auth/ui/itad_log_in_button.dart';
+import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
+import 'package:observatory/settings/purchase/purchase_botton.dart';
 import 'package:observatory/settings/ui/about_links.dart';
 import 'package:observatory/settings/ui/country_settings_list_tile.dart';
+import 'package:observatory/auth/ui/steam_log_in_button.dart';
 import 'package:observatory/settings/ui/stores_settings_list_tile.dart';
 import 'package:observatory/settings/ui/theme_list_tile.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
 import 'package:observatory/settings/ui/waitlist_alerts_settings_tile.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -20,6 +22,8 @@ import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:observatory/waitlist/ui/collapse_pinned_list_tile.dart';
+import 'package:observatory/waitlist/ui/mute_games_in_library_list_tile.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({
@@ -34,7 +38,9 @@ class SettingsPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        flexibleSpace: FlexibleSpaceBar(
+          title: const Text('Settings'),
+        ),
       ),
       body: SafeArea(
         child: settings.when(
@@ -46,9 +52,9 @@ class SettingsPage extends ConsumerWidget {
               stackTrace: stackTrace,
             );
 
-            FirebaseCrashlytics.instance.recordError(
+            Sentry.captureException(
               error,
-              stackTrace,
+              stackTrace: stackTrace,
             );
 
             return ErrorMessage(
@@ -67,6 +73,10 @@ class SettingsPage extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+                    child: const PurchaseButton(),
+                  ),
                   const ListHeading(title: 'General'),
                   const CountrySettingsListTile(),
                   const StoresSettingsListTile(),
@@ -76,30 +86,19 @@ class SettingsPage extends ConsumerWidget {
                   const ThemeListTile(),
                   const ThemeTrueBlackListTile(),
                   const ListHeading(title: 'Waitlist'),
-                  ListTile(
-                    title: const Text('Import from Steam'),
-                    subtitle: const Text('Import your wishlist from Steam.'),
-                    trailing: OutlinedButton.icon(
-                      icon: const Icon(Icons.import_export_outlined),
-                      label: const Text('Import'),
-                      onPressed: () {
-                        context.push('/steam-import');
-                      },
-                    ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                    child: SteamLogInButton(),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                    child: ITADLogInButton(),
                   ),
                   const CollapsePinnedListTile(),
                   const WaitlistAlertsSettingsTile(),
+                  const ListHeading(title: 'Library'),
+                  const MuteGamesInLibraryListTile(),
                   const ListHeading(title: 'Internal'),
-                  SwitchListTile(
-                    value: settings.valueOrNull?.crashlyticsEnabled ?? false,
-                    title: const Text('Crashlytics'),
-                    subtitle: const Text('Send anonymouse crash reports.'),
-                    onChanged: (value) {
-                      ref
-                          .read(asyncSettingsProvider.notifier)
-                          .setCrashlyticsEnabled(value);
-                    },
-                  ),
                   ExpansionTile(
                     title: const Text('Danger Zone'),
                     children: [
@@ -107,13 +106,13 @@ class SettingsPage extends ConsumerWidget {
                         title: const Text('Clear Waitlist'),
                         subtitle:
                             const Text('Clear all games from your waitlist.'),
-                        onTap: () async {
+                        onTap: () {
                           showDialog(
                             context: context,
                             barrierDismissible: true,
                             builder: (context) {
                               return ObservatoryDialog(
-                                onApply: () async {
+                                onApply: () {
                                   ref
                                       .watch(asyncWaitListProvider.notifier)
                                       .clearWaitlist();
@@ -123,9 +122,9 @@ class SettingsPage extends ConsumerWidget {
                                 onDiscard: () {
                                   context.pop();
                                 },
-                                title: 'Confirm Waitlist Clearing',
+                                title: 'Confirm waitlist clearing',
                                 body:
-                                    'Are you sure you want to clear your waitlist?',
+                                    'Are you sure you want to clear all games from your waitlist?',
                                 discardText: 'Cancel',
                                 applyText: 'Yes',
                               );
@@ -134,17 +133,17 @@ class SettingsPage extends ConsumerWidget {
                         },
                       ),
                       ListTile(
-                        title: const Text('Remove Steam imports'),
+                        title: const Text('Remove Steam Imports'),
                         subtitle: const Text(
                           'Remove games imported from your Steam wishlist.',
                         ),
-                        onTap: () async {
+                        onTap: () {
                           showDialog(
                             context: context,
                             barrierDismissible: true,
                             builder: (context) {
                               return ObservatoryDialog(
-                                onApply: () async {
+                                onApply: () {
                                   ref
                                       .watch(asyncWaitListProvider.notifier)
                                       .removeSteamImports();
@@ -156,7 +155,38 @@ class SettingsPage extends ConsumerWidget {
                                 },
                                 title: 'Confirm Steam imports removal',
                                 body:
-                                    'Are you sure you want to remove games imported from Steam?',
+                                    'Are you sure you want to remove games imported from your Steam wishlist?',
+                                discardText: 'Cancel',
+                                applyText: 'Yes',
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      ListTile(
+                        title: const Text('Clear Pinned Games'),
+                        subtitle: const Text(
+                          'Clear all games pinned to the top of your waitlist.',
+                        ),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (context) {
+                              return ObservatoryDialog(
+                                onApply: () {
+                                  ref
+                                      .watch(asyncBookmarksProvider.notifier)
+                                      .clearBookmarks();
+
+                                  context.pop();
+                                },
+                                onDiscard: () {
+                                  context.pop();
+                                },
+                                title: 'Confirm clearing pinned games',
+                                body:
+                                    'Are you sure you want to clear all games pinned to the top of your waitlist?',
                                 discardText: 'Cancel',
                                 applyText: 'Yes',
                               );
@@ -252,7 +282,6 @@ class SettingsPage extends ConsumerWidget {
                   //     icon: const Icon(Icons.backup),
                   //   ),
                   // ),
-                  const PurchaseTile(),
                   const ListHeading(title: 'About'),
                   const AboutLinks()
                 ],

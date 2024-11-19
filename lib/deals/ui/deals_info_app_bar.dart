@@ -3,20 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/deals/state/deals_state.dart';
-import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
+import 'package:observatory/shared/constans.dart';
 
 class DealsInfoAppBar extends ConsumerWidget {
-  final DealCategory dealsTab;
-
   const DealsInfoAppBar({
     super.key,
-    required this.dealsTab,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<DealsState> deals = ref.watch(
-      asyncDealsProvider(dealsTab),
+    final AsyncValue<DealsState> deals = ref.watch(asyncDealsProvider);
+    final String sortBy = ref.watch(
+      itadFiltersProvider.select(
+        (value) => value.current.sortBy ?? SortDealsBy.trending.name,
+      ),
     );
 
     return Column(
@@ -24,7 +25,8 @@ class DealsInfoAppBar extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          dealCategoryLabels[dealsTab]?['title'] ?? 'Unknown',
+          SORT_BY_VALUES[SortDealsBy.values.byName(sortBy)] ??
+              SortDealsBy.trending.name,
           style: context.textStyles.labelLarge.copyWith(
             color: context.colors.scheme.onSurfaceVariant,
             fontWeight: FontWeight.bold,

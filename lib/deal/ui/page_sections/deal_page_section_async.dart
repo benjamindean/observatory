@@ -1,10 +1,11 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/observatory_shimmer.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class DealPageSectionAsync<T> extends StatelessWidget {
   final AsyncValue<T> state;
@@ -68,9 +69,9 @@ class DealPageSectionAsync<T> extends StatelessWidget {
                     stackTrace: stackTrace,
                   );
 
-                  FirebaseCrashlytics.instance.recordError(
+                  Sentry.captureException(
                     error,
-                    stackTrace,
+                    stackTrace: stackTrace,
                   );
 
                   return Text(

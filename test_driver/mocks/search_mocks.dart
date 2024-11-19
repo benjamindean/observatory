@@ -938,7 +938,6 @@ class SearchNotifierMock extends FamilyNotifier<SearchState, SearchType>
   @override
   SearchState build(SearchType arg) => SearchState(
         query: 'Dark Souls III',
-        deals: results,
         focusNode: FocusNode(),
         isOpen: true,
         searchInputController: TextEditingController(
@@ -977,6 +976,6 @@ final searchProviderMock =
   SearchNotifierMock.new,
 );
 
-final searchResultsProviderMock = searchProviderMock(
+final dealSearchProviderMock = searchProviderMock(
   SearchType.search,
 );

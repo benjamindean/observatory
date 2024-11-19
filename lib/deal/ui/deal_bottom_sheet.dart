@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/deal_functions.dart';
+import 'package:observatory/deal/ui/game_user_info_row.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/bottom_sheet_container.dart';
 import 'package:observatory/shared/ui/backdrop_container.dart';
@@ -33,11 +34,18 @@ class DealBottomSheet extends ConsumerWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(
-              deal.titleParsed,
-              style: context.themes.text.titleMedium?.copyWith(
-                color: context.colors.scheme.onSurface,
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  deal.titleParsed,
+                  style: context.themes.text.titleMedium?.copyWith(
+                    color: context.colors.scheme.onSurface,
+                  ),
+                ),
+                GameUserInfoRow(deal: deal),
+              ],
             ),
           ),
           BackdropContainer(

@@ -28,8 +28,6 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>124</string>
-	<key>FirebaseCrashlyticsCollectionEnabled</key>
-	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -53,6 +51,17 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+	<dict>
+		<key>CFBundleURLSchemes</key>
+		<array>
+		<string>videogameobservatory</string>
+		</array>
+		<key>CFBundleURLName</key>
+		<string>getobservatory.app</string>
+	</dict>
 	</array>
 </dict>
 </plist>

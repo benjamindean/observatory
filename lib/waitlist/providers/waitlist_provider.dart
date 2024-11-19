@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
+import 'package:observatory/auth/providers/itad_provider.dart';
 import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/search/state/search_state.dart';
@@ -27,24 +30,37 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
     state = await AsyncValue.guard(() => _fetchWaitList());
   }
 
-  Future<void> addToWaitlist(Deal deal) async {
+  Future<void> addToWaitlist(List<Deal> deals) async {
     state = await AsyncValue.guard(
       () async {
-        await GetIt.I<SettingsRepository>().saveDeal(deal);
+        final List<Deal> newDeals = deals.map(
+          (deal) {
+            return deal.copyWith(
+              added: deal.added == 0
+                  ? DateTime.now().millisecondsSinceEpoch
+                  : deal.added,
+            );
+          },
+        ).toList();
+
+        await GetIt.I<SettingsRepository>().saveDeals(newDeals);
 
         return Set<Deal>.of(
-          List.of(state.valueOrNull ?? [])
-            ..add(
-              deal.copyWith(
-                added: DateTime.now().millisecondsSinceEpoch,
-              ),
-            ),
+          List.of(state.valueOrNull ?? [])..addAll(newDeals),
         ).toList();
       },
+    );
+
+    unawaited(
+      ref
+          .read(itadProvider.notifier)
+          .addToWaitlist(deals.map((deal) => deal.id).toList()),
     );
   }
 
   Future<void> removeFromWaitList(Deal deal) async {
+    ref.read(itadProvider.notifier).removeFromWaitlist([deal.id]);
+
     state = await AsyncValue.guard(
       () async {
         await GetIt.I<SettingsRepository>().removeDeal(deal);
@@ -52,6 +68,19 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
         return List.of(state.valueOrNull ?? [])
           ..removeWhere(
             (element) => element.id == deal.id,
+          );
+      },
+    );
+  }
+
+  Future<void> removeFromWaitListBySource(DealSource source) async {
+    state = await AsyncValue.guard(
+      () async {
+        await GetIt.I<SettingsRepository>().removeDealsBySource(source);
+
+        return List.of(state.valueOrNull ?? [])
+          ..removeWhere(
+            (element) => element.source == source,
           );
       },
     );
@@ -130,8 +159,7 @@ class SortedWailistNotifier extends Notifier<List<Deal>> {
       return groupedList[false] ?? [];
     }
 
-    return groupedList[true] ?? []
-      ..addAll(groupedList[false] ?? []);
+    return (groupedList[true] ?? [])..addAll(groupedList[false] ?? []);
   }
 
   List<Deal> getSortedWaitlist(
@@ -235,7 +263,7 @@ class FilteredWailistNotifier extends Notifier<List<Deal>> {
   @override
   List<Deal> build() {
     final List<Deal> filteredWaitlist = ref.watch(sortedWaitlistProvider);
-    final SearchState searchState = ref.watch(filterResultsProvider);
+    final SearchState searchState = ref.watch(waitlistSearchProvider);
 
     if (searchState.isOpen && searchState.query != null) {
       return filteredWaitlist

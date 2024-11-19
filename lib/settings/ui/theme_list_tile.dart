@@ -40,18 +40,22 @@ class ThemeListTile extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: SizedBox(
             height: 70,
-            child: ListView.builder(
-              itemExtent: 74,
+            child: CustomScrollView(
               key: const Key('color-scheme-list'),
-              shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemCount: schemes.length,
-              itemBuilder: (context, index) {
-                return SchemePreview(
-                  key: ValueKey('color-scheme-${schemes[index].name}'),
-                  scheme: schemes[index],
-                );
-              },
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return SchemePreview(
+                        key: ValueKey('color-scheme-${schemes[index].name}'),
+                        scheme: schemes[index],
+                      );
+                    },
+                    childCount: schemes.length,
+                  ),
+                ),
+              ],
             ),
           ),
         )

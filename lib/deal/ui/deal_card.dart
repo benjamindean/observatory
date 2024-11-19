@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,10 +10,11 @@ import 'package:observatory/bookmarks/providers/bookmarks_provider.dart';
 import 'package:observatory/deal/deal_functions.dart';
 import 'package:observatory/deal/ui/deal_bottom_sheet.dart';
 import 'package:observatory/deal/ui/deal_card_info_row.dart';
+import 'package:observatory/library/providers/library_provider.dart';
 import 'package:observatory/router.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
+import 'package:observatory/shared/constans.dart';
 import 'package:observatory/shared/models/deal.dart';
-import 'package:observatory/shared/ui/constants.dart';
 import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:observatory/shared/widgets/header_image.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
@@ -19,11 +22,13 @@ import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 class DealCard extends ConsumerWidget {
   final Deal deal;
   final NavigationBranch page;
+  final Function? onCardTapCallback;
 
   const DealCard({
     super.key,
     required this.deal,
     required this.page,
+    this.onCardTapCallback,
   });
 
   @override
@@ -34,11 +39,18 @@ class DealCard extends ConsumerWidget {
         (value) => value.valueOrNull?.showHeaders ?? false,
       ),
     );
+    final bool muteGamesInLibrary = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.muteGamesInLibrary ?? true,
+      ),
+    );
     final List<String> waitlist = ref.watch(waitlistIdsProvider);
     final List<String> bookmarks = ref.watch(bookmarkIdsProvider);
+    final List<String> library = ref.watch(libraryIdsProvider);
 
     final bool isInWaitlist = waitlist.contains(deal.id);
     final bool isInBookmarks = bookmarks.contains(deal.id);
+    final bool isInLibrary = library.contains(deal.id);
 
     return Slidable(
       endActionPane: ActionPane(
@@ -47,7 +59,7 @@ class DealCard extends ConsumerWidget {
         children: [
           SlidableAction(
             padding: EdgeInsets.zero,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
             backgroundColor: Colors.transparent,
             onPressed: (_) {
               if (isInWaitlist) {
@@ -71,7 +83,7 @@ class DealCard extends ConsumerWidget {
           ),
           SlidableAction(
             padding: EdgeInsets.zero,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
             onPressed: (_) {
               if (!isInWaitlist) {
                 DealFunctions.addDealToWaitlist(
@@ -106,7 +118,7 @@ class DealCard extends ConsumerWidget {
       child: InkWell(
         splashColor: context.colors.scheme.primaryContainer,
         splashFactory: InkSparkle.splashFactory,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.all(Radius.circular(16.0)),
         onTap: () => onCardTap(context),
         onLongPress: () {
           HapticFeedback.mediumImpact();
@@ -129,6 +141,7 @@ class DealCard extends ConsumerWidget {
         child: Stack(
           children: [
             ObservatoryCard(
+              elevation: isInLibrary && muteGamesInLibrary ? 0.5 : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -155,24 +168,32 @@ class DealCard extends ConsumerWidget {
                 ],
               ),
             ),
-            if (!isWaitlistPage && isInWaitlist)
-              Align(
-                alignment: Alignment.topRight,
-                child: Icon(
-                  Icons.favorite_rounded,
-                  color: context.colors.scheme.primary,
-                  size: context.textStyles.titleMedium.fontSize,
-                ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (!isWaitlistPage && isInWaitlist)
+                    Icon(
+                      Icons.favorite_rounded,
+                      color: context.colors.scheme.primary,
+                      size: context.textStyles.titleMedium.fontSize,
+                    ),
+                  if (isInBookmarks && isWaitlistPage)
+                    Icon(
+                      Icons.push_pin_rounded,
+                      color: context.colors.scheme.tertiary,
+                      size: context.textStyles.titleMedium.fontSize,
+                    ),
+                  if (isInLibrary)
+                    Icon(
+                      Icons.book,
+                      color: context.colors.scheme.secondary,
+                      size: context.textStyles.titleMedium.fontSize,
+                    ),
+                ],
               ),
-            if (isInBookmarks && isWaitlistPage)
-              Align(
-                alignment: Alignment.topRight,
-                child: Icon(
-                  Icons.push_pin_rounded,
-                  color: context.colors.scheme.tertiary,
-                  size: context.textStyles.titleMedium.fontSize,
-                ),
-              )
+            ),
           ],
         ),
       ),
@@ -181,5 +202,9 @@ class DealCard extends ConsumerWidget {
 
   void onCardTap(BuildContext context) {
     context.push('/deal', extra: deal);
+
+    if (onCardTapCallback != null) {
+      unawaited(onCardTapCallback!());
+    }
   }
 }

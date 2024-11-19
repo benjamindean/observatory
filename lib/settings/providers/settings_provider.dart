@@ -1,4 +1,3 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:observatory/settings/settings_repository.dart';
@@ -22,13 +21,11 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
     return SettingsState(
       showHeaders: await repository.getShowHeaders(),
-      dealsTab: await repository.getDealsTab(),
       waitlistNotifications: await repository.getWaitlistNotifications(),
       waitlistSorting: await repository.getWaitlistSorting(),
       waitlistSortingDirection: await repository.getWaitlistSortingDirection(),
       collapsePinned: await repository.getCollapsePinned(),
-      crashlyticsEnabled:
-          FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled,
+      muteGamesInLibrary: await repository.getMuteGamesInLibrary(),
     );
   }
 
@@ -44,18 +41,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
         return state.requireValue.copyWith(
           showHeaders: showHeaders,
-        );
-      },
-    );
-  }
-
-  Future<void> setDealsTab(DealCategory category) async {
-    state = await AsyncValue.guard(
-      () async {
-        await repository.setDealsTab(category);
-
-        return state.requireValue.copyWith(
-          dealsTab: category,
         );
       },
     );
@@ -105,23 +90,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
     );
   }
 
-  Future<void> setCrashlyticsEnabled(
-    bool isEnabled,
-  ) async {
-    state = await AsyncValue.guard(
-      () async {
-        await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
-          isEnabled,
-        );
-
-        return state.requireValue.copyWith(
-          crashlyticsEnabled:
-              FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled,
-        );
-      },
-    );
-  }
-
   Future<void> setCollapsePinned(bool collapse) async {
     state = await AsyncValue.guard(
       () async {
@@ -129,6 +97,18 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
         return state.requireValue.copyWith(
           collapsePinned: collapse,
+        );
+      },
+    );
+  }
+
+  Future<void> setMuteGamesInLibrary(bool mute) async {
+    state = await AsyncValue.guard(
+      () async {
+        await repository.setMuteGamesInLibrary(mute);
+
+        return state.requireValue.copyWith(
+          muteGamesInLibrary: mute,
         );
       },
     );

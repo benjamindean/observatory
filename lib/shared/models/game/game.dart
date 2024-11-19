@@ -62,11 +62,11 @@ class GameScreenshot with _$GameScreenshot {
     String? url,
   }) = _GameScreenshot;
 
-  String? getURL({
+  String getURL({
     ScreenshotSize size = ScreenshotSize.thumb,
   }) {
     if (url == null) {
-      return null;
+      return '';
     }
 
     final String urlParsed = 'https:$url';
@@ -151,6 +151,10 @@ class GameVideo with _$GameVideo {
 
   factory GameVideo.fromJson(Map<String, Object?> json) =>
       _$GameVideoFromJson(json);
+
+  bool get isYouTube {
+    return video_id != null && !video_id!.contains('http');
+  }
 }
 
 @freezed

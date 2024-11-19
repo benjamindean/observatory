@@ -22,13 +22,12 @@ SettingsState _$SettingsStateFromJson(Map<String, dynamic> json) {
 mixin _$SettingsState {
   bool get showHeaders => throw _privateConstructorUsedError;
   bool get waitlistNotifications => throw _privateConstructorUsedError;
-  DealCategory get dealsTab => throw _privateConstructorUsedError;
   WaitlistSorting get waitlistSorting => throw _privateConstructorUsedError;
   WaitlistSortingDirection get waitlistSortingDirection =>
       throw _privateConstructorUsedError;
-  bool get crashlyticsEnabled => throw _privateConstructorUsedError;
   List<String> get purchasedProductIds => throw _privateConstructorUsedError;
   bool get collapsePinned => throw _privateConstructorUsedError;
+  bool get muteGamesInLibrary => throw _privateConstructorUsedError;
 
   /// Serializes this SettingsState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,12 +48,11 @@ abstract class $SettingsStateCopyWith<$Res> {
   $Res call(
       {bool showHeaders,
       bool waitlistNotifications,
-      DealCategory dealsTab,
       WaitlistSorting waitlistSorting,
       WaitlistSortingDirection waitlistSortingDirection,
-      bool crashlyticsEnabled,
       List<String> purchasedProductIds,
-      bool collapsePinned});
+      bool collapsePinned,
+      bool muteGamesInLibrary});
 }
 
 /// @nodoc
@@ -74,12 +72,11 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   $Res call({
     Object? showHeaders = null,
     Object? waitlistNotifications = null,
-    Object? dealsTab = null,
     Object? waitlistSorting = null,
     Object? waitlistSortingDirection = null,
-    Object? crashlyticsEnabled = null,
     Object? purchasedProductIds = null,
     Object? collapsePinned = null,
+    Object? muteGamesInLibrary = null,
   }) {
     return _then(_value.copyWith(
       showHeaders: null == showHeaders
@@ -90,10 +87,6 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.waitlistNotifications
           : waitlistNotifications // ignore: cast_nullable_to_non_nullable
               as bool,
-      dealsTab: null == dealsTab
-          ? _value.dealsTab
-          : dealsTab // ignore: cast_nullable_to_non_nullable
-              as DealCategory,
       waitlistSorting: null == waitlistSorting
           ? _value.waitlistSorting
           : waitlistSorting // ignore: cast_nullable_to_non_nullable
@@ -102,10 +95,6 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.waitlistSortingDirection
           : waitlistSortingDirection // ignore: cast_nullable_to_non_nullable
               as WaitlistSortingDirection,
-      crashlyticsEnabled: null == crashlyticsEnabled
-          ? _value.crashlyticsEnabled
-          : crashlyticsEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
       purchasedProductIds: null == purchasedProductIds
           ? _value.purchasedProductIds
           : purchasedProductIds // ignore: cast_nullable_to_non_nullable
@@ -113,6 +102,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
       collapsePinned: null == collapsePinned
           ? _value.collapsePinned
           : collapsePinned // ignore: cast_nullable_to_non_nullable
+              as bool,
+      muteGamesInLibrary: null == muteGamesInLibrary
+          ? _value.muteGamesInLibrary
+          : muteGamesInLibrary // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -129,12 +122,11 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
   $Res call(
       {bool showHeaders,
       bool waitlistNotifications,
-      DealCategory dealsTab,
       WaitlistSorting waitlistSorting,
       WaitlistSortingDirection waitlistSortingDirection,
-      bool crashlyticsEnabled,
       List<String> purchasedProductIds,
-      bool collapsePinned});
+      bool collapsePinned,
+      bool muteGamesInLibrary});
 }
 
 /// @nodoc
@@ -152,12 +144,11 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
   $Res call({
     Object? showHeaders = null,
     Object? waitlistNotifications = null,
-    Object? dealsTab = null,
     Object? waitlistSorting = null,
     Object? waitlistSortingDirection = null,
-    Object? crashlyticsEnabled = null,
     Object? purchasedProductIds = null,
     Object? collapsePinned = null,
+    Object? muteGamesInLibrary = null,
   }) {
     return _then(_$SettingsStateImpl(
       showHeaders: null == showHeaders
@@ -168,10 +159,6 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.waitlistNotifications
           : waitlistNotifications // ignore: cast_nullable_to_non_nullable
               as bool,
-      dealsTab: null == dealsTab
-          ? _value.dealsTab
-          : dealsTab // ignore: cast_nullable_to_non_nullable
-              as DealCategory,
       waitlistSorting: null == waitlistSorting
           ? _value.waitlistSorting
           : waitlistSorting // ignore: cast_nullable_to_non_nullable
@@ -180,10 +167,6 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.waitlistSortingDirection
           : waitlistSortingDirection // ignore: cast_nullable_to_non_nullable
               as WaitlistSortingDirection,
-      crashlyticsEnabled: null == crashlyticsEnabled
-          ? _value.crashlyticsEnabled
-          : crashlyticsEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
       purchasedProductIds: null == purchasedProductIds
           ? _value._purchasedProductIds
           : purchasedProductIds // ignore: cast_nullable_to_non_nullable
@@ -191,6 +174,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
       collapsePinned: null == collapsePinned
           ? _value.collapsePinned
           : collapsePinned // ignore: cast_nullable_to_non_nullable
+              as bool,
+      muteGamesInLibrary: null == muteGamesInLibrary
+          ? _value.muteGamesInLibrary
+          : muteGamesInLibrary // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -202,12 +189,11 @@ class _$SettingsStateImpl implements _SettingsState {
   _$SettingsStateImpl(
       {required this.showHeaders,
       required this.waitlistNotifications,
-      this.dealsTab = DealCategory.all,
       required this.waitlistSorting,
       required this.waitlistSortingDirection,
-      required this.crashlyticsEnabled,
       final List<String> purchasedProductIds = const [],
-      this.collapsePinned = false})
+      this.collapsePinned = false,
+      this.muteGamesInLibrary = true})
       : _purchasedProductIds = purchasedProductIds;
 
   factory _$SettingsStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -218,14 +204,9 @@ class _$SettingsStateImpl implements _SettingsState {
   @override
   final bool waitlistNotifications;
   @override
-  @JsonKey()
-  final DealCategory dealsTab;
-  @override
   final WaitlistSorting waitlistSorting;
   @override
   final WaitlistSortingDirection waitlistSortingDirection;
-  @override
-  final bool crashlyticsEnabled;
   final List<String> _purchasedProductIds;
   @override
   @JsonKey()
@@ -239,10 +220,13 @@ class _$SettingsStateImpl implements _SettingsState {
   @override
   @JsonKey()
   final bool collapsePinned;
+  @override
+  @JsonKey()
+  final bool muteGamesInLibrary;
 
   @override
   String toString() {
-    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, dealsTab: $dealsTab, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, crashlyticsEnabled: $crashlyticsEnabled, purchasedProductIds: $purchasedProductIds, collapsePinned: $collapsePinned)';
+    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, purchasedProductIds: $purchasedProductIds, collapsePinned: $collapsePinned, muteGamesInLibrary: $muteGamesInLibrary)';
   }
 
   @override
@@ -254,19 +238,17 @@ class _$SettingsStateImpl implements _SettingsState {
                 other.showHeaders == showHeaders) &&
             (identical(other.waitlistNotifications, waitlistNotifications) ||
                 other.waitlistNotifications == waitlistNotifications) &&
-            (identical(other.dealsTab, dealsTab) ||
-                other.dealsTab == dealsTab) &&
             (identical(other.waitlistSorting, waitlistSorting) ||
                 other.waitlistSorting == waitlistSorting) &&
             (identical(
                     other.waitlistSortingDirection, waitlistSortingDirection) ||
                 other.waitlistSortingDirection == waitlistSortingDirection) &&
-            (identical(other.crashlyticsEnabled, crashlyticsEnabled) ||
-                other.crashlyticsEnabled == crashlyticsEnabled) &&
             const DeepCollectionEquality()
                 .equals(other._purchasedProductIds, _purchasedProductIds) &&
             (identical(other.collapsePinned, collapsePinned) ||
-                other.collapsePinned == collapsePinned));
+                other.collapsePinned == collapsePinned) &&
+            (identical(other.muteGamesInLibrary, muteGamesInLibrary) ||
+                other.muteGamesInLibrary == muteGamesInLibrary));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -275,12 +257,11 @@ class _$SettingsStateImpl implements _SettingsState {
       runtimeType,
       showHeaders,
       waitlistNotifications,
-      dealsTab,
       waitlistSorting,
       waitlistSortingDirection,
-      crashlyticsEnabled,
       const DeepCollectionEquality().hash(_purchasedProductIds),
-      collapsePinned);
+      collapsePinned,
+      muteGamesInLibrary);
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -302,12 +283,11 @@ abstract class _SettingsState implements SettingsState {
   factory _SettingsState(
       {required final bool showHeaders,
       required final bool waitlistNotifications,
-      final DealCategory dealsTab,
       required final WaitlistSorting waitlistSorting,
       required final WaitlistSortingDirection waitlistSortingDirection,
-      required final bool crashlyticsEnabled,
       final List<String> purchasedProductIds,
-      final bool collapsePinned}) = _$SettingsStateImpl;
+      final bool collapsePinned,
+      final bool muteGamesInLibrary}) = _$SettingsStateImpl;
 
   factory _SettingsState.fromJson(Map<String, dynamic> json) =
       _$SettingsStateImpl.fromJson;
@@ -317,17 +297,15 @@ abstract class _SettingsState implements SettingsState {
   @override
   bool get waitlistNotifications;
   @override
-  DealCategory get dealsTab;
-  @override
   WaitlistSorting get waitlistSorting;
   @override
   WaitlistSortingDirection get waitlistSortingDirection;
   @override
-  bool get crashlyticsEnabled;
-  @override
   List<String> get purchasedProductIds;
   @override
   bool get collapsePinned;
+  @override
+  bool get muteGamesInLibrary;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.

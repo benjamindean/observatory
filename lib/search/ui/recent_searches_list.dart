@@ -1,14 +1,17 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
+import 'package:observatory/search/providers/recents_provider.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/shared/ui/observatory_card.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/shared/ui/ory_full_screen_spinner.dart';
 import 'package:observatory/shared/widgets/error_message.dart';
+import 'package:observatory/shared/widgets/list_heading.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 class RecentSearchesList extends ConsumerWidget {
   const RecentSearchesList({
@@ -30,7 +33,7 @@ class RecentSearchesList extends ConsumerWidget {
                 icon: Icons.search_off_outlined,
                 helper: TextButton(
                   onPressed: () {
-                    ref.read(searchResultsProvider.notifier).setIsOpen();
+                    ref.read(dealSearchProvider.notifier).setIsOpen();
                   },
                   child: const Text('Search Now'),
                 ),
@@ -41,76 +44,82 @@ class RecentSearchesList extends ConsumerWidget {
 
         final List<String> recentsList = data.toList();
 
-        return SliverPadding(
-          padding: const EdgeInsets.all(6.0),
-          sliver: SliverList.builder(
-            itemBuilder: (context, index) {
-              if (index == recentsList.length) {
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Center(
-                    child: TextButton.icon(
-                      icon: const Icon(Icons.cancel),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: true,
-                          builder: (context) {
-                            return ObservatoryDialog(
-                              onApply: () {
-                                ref
-                                    .read(asynRecentsProvider.notifier)
-                                    .clearRecents()
-                                    .then(
-                                  (value) {
-                                    if (context.mounted) {
-                                      context.pop();
-                                    }
+        return MultiSliver(
+          children: [
+            PinnedHeaderSliver(
+              child: ListHeading(title: 'Recents'),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.all(6.0),
+              sliver: SliverList.builder(
+                itemBuilder: (context, index) {
+                  if (index == recentsList.length) {
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Center(
+                        child: TextButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (context) {
+                                return ObservatoryDialog(
+                                  onApply: () {
+                                    ref
+                                        .read(asynRecentsProvider.notifier)
+                                        .clearRecents()
+                                        .then(
+                                      (value) {
+                                        if (context.mounted) {
+                                          context.pop();
+                                        }
+                                      },
+                                    );
                                   },
+                                  onDiscard: () {
+                                    context.pop();
+                                  },
+                                  title: 'Clear all recent searches?',
+                                  body: 'This operation cannot be undone.',
+                                  discardText: 'Cancel',
+                                  applyText: 'Clear',
                                 );
                               },
-                              onDiscard: () {
-                                context.pop();
-                              },
-                              title: 'Clear all recent searches?',
-                              body: 'This operation cannot be undone.',
-                              discardText: 'Cancel',
-                              applyText: 'Clear',
                             );
                           },
-                        );
-                      },
-                      label: const Text('Clear All'),
-                    ),
-                  ),
-                );
-              }
+                          child: const Text('Clear All'),
+                        ),
+                      ),
+                    );
+                  }
 
-              return ObservatoryCard(
-                elevation: 0,
-                child: InkWell(
-                  onTap: () async {
-                    await ref
-                        .read(searchResultsProvider.notifier)
-                        .performSearch(recentsList[index]);
-                  },
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.fromLTRB(16.0, 0, 0, 0),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.cancel),
-                      onPressed: () {
-                        ref.read(asynRecentsProvider.notifier).removeRecent(
-                              recentsList[index],
-                            );
+                  return ObservatoryCard(
+                    child: InkWell(
+                      onTap: () async {
+                        await ref
+                            .read(dealSearchProvider.notifier)
+                            .performSearch(recentsList[index]);
                       },
+                      child: ListTile(
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(16.0, 0, 0, 0),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.cancel),
+                          onPressed: () {
+                            ref.read(asynRecentsProvider.notifier).removeRecent(
+                                  recentsList[index],
+                                );
+                          },
+                        ),
+                        title: Text(recentsList[index]),
+                      ),
                     ),
-                    title: Text(recentsList[index]),
-                  ),
-                ),
-              );
-            },
-            itemCount: recentsList.length + 1,
-          ),
+                  );
+                },
+                itemCount: recentsList.length + 1,
+              ),
+            ),
+          ],
         );
       },
       error: (error, stackTrace) {
@@ -120,9 +129,9 @@ class RecentSearchesList extends ConsumerWidget {
           stackTrace: stackTrace,
         );
 
-        FirebaseCrashlytics.instance.recordError(
+        Sentry.captureException(
           error,
-          stackTrace,
+          stackTrace: stackTrace,
         );
 
         return const SliverFillRemaining(

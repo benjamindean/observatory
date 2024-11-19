@@ -19,7 +19,7 @@ class WaitlistAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final SearchState searchState = ref.watch(filterResultsProvider);
+    final SearchState searchState = ref.watch(waitlistSearchProvider);
     final WaitlistSortingDirection waitlistSortingDirection = ref.watch(
           asyncSettingsProvider.select(
             (value) => value.valueOrNull?.waitlistSortingDirection,
@@ -35,13 +35,12 @@ class WaitlistAppBar extends ConsumerWidget {
 
     if (searchState.isOpen) {
       return SliverAppBar(
-        surfaceTintColor: context.colors.scheme.surfaceTint,
         floating: true,
         titleSpacing: 0.0,
         title: SearchInput(
           searchType: SearchType.filter,
           onChanged: (String value) {
-            ref.read(filterResultsProvider.notifier).setQuery(
+            ref.read(waitlistSearchProvider.notifier).setQuery(
                   value.trim(),
                 );
           },
@@ -50,7 +49,6 @@ class WaitlistAppBar extends ConsumerWidget {
     }
 
     return SliverAppBar(
-      surfaceTintColor: context.colors.scheme.surfaceTint,
       floating: true,
       flexibleSpace: AppBar(
         title: GestureDetector(
@@ -104,7 +102,7 @@ class WaitlistAppBar extends ConsumerWidget {
             child: IconButton(
               padding: EdgeInsets.zero,
               onPressed: () {
-                ref.read(filterResultsProvider.notifier).setIsOpen();
+                ref.read(waitlistSearchProvider.notifier).setIsOpen();
               },
               icon: const Icon(Icons.search),
             ),

@@ -1,12 +1,13 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:observatory/auth/ui/itad_log_in_button.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/auth/ui/steam_log_in_button.dart';
 import 'package:observatory/shared/ui/bottom_sheet_heading.dart';
 import 'package:observatory/shared/ui/close_bottom_sheet_button.dart';
 import 'package:observatory/waitlist/ui/collapse_pinned_list_tile.dart';
-import 'package:observatory/waitlist/ui/steam_import_list_tile.dart';
 import 'package:observatory/waitlist/ui/waitlist_sorting_strings.dart';
 
 void showWaitlistSorting(BuildContext context) {
@@ -40,20 +41,19 @@ class WaitlistSortingPage extends ConsumerWidget {
         WaitlistSorting.date_added;
 
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const BottomSheetHeading(
+      child: CustomScrollView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(
+            child: const BottomSheetHeading(
               text: 'Sort By',
               trailing: CloseBottomSheetButton(),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: WaitlistSorting.values.length,
-              itemBuilder: (context, index) {
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
                 final WaitlistSorting sorting = WaitlistSorting.values[index];
                 final bool isSelected = sorting == waitlistSorting;
 
@@ -82,9 +82,10 @@ class WaitlistSortingPage extends ConsumerWidget {
                   title: Text(
                     waitlistSortingStrings[sorting]?['title'] ?? 'Price',
                     style: context.textStyles.titleMedium.copyWith(
-                        color: isSelected
-                            ? context.colors.scheme.onSecondary
-                            : context.colors.scheme.onSurface),
+                      color: isSelected
+                          ? context.colors.scheme.onSecondary
+                          : context.colors.scheme.onSurface,
+                    ),
                   ),
                   trailing: Builder(
                     builder: (context) {
@@ -108,12 +109,28 @@ class WaitlistSortingPage extends ConsumerWidget {
                   ),
                 );
               },
+              childCount: WaitlistSorting.values.length,
             ),
-            const BottomSheetHeading(text: 'Settings'),
-            const SteamImportListTile(),
-            const CollapsePinnedListTile(),
-          ],
-        ),
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                const BottomSheetHeading(text: 'Settings'),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+                  child: Column(
+                    children: [
+                      SteamLogInButton(),
+                      SizedBox(height: 8.0),
+                      ITADLogInButton(),
+                    ],
+                  ),
+                ),
+                const CollapsePinnedListTile(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

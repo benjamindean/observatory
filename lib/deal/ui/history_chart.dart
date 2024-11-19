@@ -23,7 +23,7 @@ class HistoryChart extends ConsumerWidget {
         (value) => value.valueOrNull?.currency ?? 'USD',
       ),
     );
-    final AsyncValue<List<MapEntry<int, History>>> historyState = ref.watch(
+    final AsyncValue<List<History>> historyState = ref.watch(
       historyProvider(id),
     );
 
@@ -35,9 +35,9 @@ class HistoryChart extends ConsumerWidget {
 
         final List<FlSpot> spots = history
             .map(
-              (entry) => FlSpot(
-                entry.key.toDouble(),
-                entry.value.deal?.price.amount.toDouble() ?? 0,
+              (point) => FlSpot(
+                point.timestamp.toDouble(),
+                point.deal?.price.amount.toDouble() ?? 0,
               ),
             )
             .toList();
@@ -161,7 +161,10 @@ class HistoryChart extends ConsumerWidget {
         );
       },
       loading: () {
-        return const ObservatoryShimmer();
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 16.0),
+          child: const ObservatoryShimmer(),
+        );
       },
       error: (error, stackTrace) {
         return const HistoryEmptyMessage();

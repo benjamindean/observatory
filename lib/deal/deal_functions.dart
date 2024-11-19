@@ -55,11 +55,11 @@ class DealFunctions {
     return ObservatorySnackBar.show(
       context,
       onAction: () {
-        notifier.addToWaitlist(updatedDeal);
+        notifier.addToWaitlist([updatedDeal]);
       },
       icon: Icons.remove_circle,
-      content: RichText(
-        text: TextSpan(
+      content: Text.rich(
+        TextSpan(
           children: <TextSpan>[
             TextSpan(
               text: deal.titleParsed,
@@ -93,7 +93,7 @@ class DealFunctions {
 
     HapticFeedback.mediumImpact();
 
-    notifier.addToWaitlist(updatedDeal);
+    notifier.addToWaitlist([updatedDeal]);
 
     if (!showToast) {
       return;
@@ -105,8 +105,8 @@ class DealFunctions {
         notifier.removeFromWaitList(updatedDeal);
       },
       icon: Icons.add_circle_outlined,
-      content: RichText(
-        text: TextSpan(
+      content: Text.rich(
+        TextSpan(
           children: <TextSpan>[
             TextSpan(
               text: deal.titleParsed,
@@ -152,8 +152,8 @@ class DealFunctions {
         notifier.removeBookmarks([updatedDeal]);
       },
       icon: Icons.push_pin_rounded,
-      content: RichText(
-        text: TextSpan(
+      content: Text.rich(
+        TextSpan(
           children: <TextSpan>[
             TextSpan(
               text: deal.titleParsed,
@@ -199,8 +199,8 @@ class DealFunctions {
         notifier.addBookmark(updatedDeal);
       },
       icon: Icons.push_pin_outlined,
-      content: RichText(
-        text: TextSpan(
+      content: Text.rich(
+        TextSpan(
           children: <TextSpan>[
             TextSpan(
               text: deal.titleParsed,

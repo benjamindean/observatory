@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:observatory/settings/providers/settings_provider.dart';
-import 'package:observatory/settings/settings_repository.dart';
-import 'package:observatory/shared/ui/constants.dart';
+import 'package:observatory/shared/constans.dart';
 
 class DealCardSizeProvider extends Notifier<double> {
   @override

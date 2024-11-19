@@ -1,133 +1,113 @@
 import 'dart:async';
+import 'dart:io';
 
-import 'package:collection/collection.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
   @override
   Future<PurchaseState> build() async {
-    final List<String> purchasedProductIds =
-        await GetIt.I<SettingsRepository>().getPurchasedProductIds();
-    final List<ProductDetails> products = await _fetchPurchases();
+    await Purchases.setLogLevel(LogLevel.verbose);
+
+    await Purchases.configure(
+      PurchasesConfiguration(dotenv.env['REVENUECAT_API_KEY']!),
+    );
 
     return PurchaseState(
-      products: products,
-      status: PurchaseStatus.canceled,
-      purchasedProductIds: purchasedProductIds,
+      products: await _fetchPurchases(),
+      purchasedProductIds:
+          await GetIt.I<SettingsRepository>().getPurchasedProductIds(),
     );
   }
 
-  Future<List<ProductDetails>> _fetchPurchases() async {
-    final bool available = await InAppPurchase.instance.isAvailable();
+  Future<StoreProduct?> purchaseProduct(StoreProduct product) async {
+    setIsPending(true);
 
-    if (!available) {
-      return [];
-    } else {
-      const Set<String> purchaseIds = <String>{
-        'development_support_tier_1',
-        'development_support_tier_2',
-        'development_support_tier_3'
-      };
-      final ProductDetailsResponse response =
-          await InAppPurchase.instance.queryProductDetails(
-        purchaseIds,
+    try {
+      final CustomerInfo customerInfo = await Purchases.purchaseStoreProduct(
+        product,
       );
 
-      return response.productDetails.sortedBy(
-        (element) => element.rawPrice.toString(),
+      await deliverPurchases(customerInfo.allPurchasedProductIdentifiers);
+
+      setIsPending(false);
+
+      return product;
+    } on PlatformException catch (error, stackTrace) {
+      setIsPending(false);
+
+      Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
       );
+
+      Logger().e(
+        'Failed to perform purchase',
+        error: error,
+        stackTrace: stackTrace,
+      );
+
+      return null;
     }
   }
 
-  Future<void> handleEndPurchase(PurchaseDetails purchase) async {
-    await InAppPurchase.instance.completePurchase(purchase);
+  Future<void> deliverPurchases(List<String> productIds) async {
+    setIsPending(true);
 
-    await GetIt.I<SettingsRepository>().setPurchasedProductIds(
-      purchase.productID,
+    final List<String> purchasedProductIds = ref.watch(
+      asyncPurchaseProvider.select(
+        (state) => state.valueOrNull?.purchasedProductIds ?? [],
+      ),
     );
+    final List<String> newList = {
+      ...purchasedProductIds,
+      ...productIds,
+    }.toList();
 
-    state = await AsyncValue.guard(
-      () async => state.requireValue.copyWith(
+    await GetIt.I<SettingsRepository>().setPurchasedProductIds(newList);
+
+    state = await AsyncValue.guard(() async {
+      return state.requireValue.copyWith(
         isPending: false,
-        purchasedProductIds: Set<String>.of(
-          (state.valueOrNull?.purchasedProductIds ?? [])
-            ..add(purchase.productID),
-        ).toList(),
-      ),
-    );
+        purchasedProductIds: newList,
+      );
+    });
   }
 
-  void setIsPending(bool isPending) {
-    state = AsyncValue.data(
-      state.requireValue.copyWith(
+  Future<void> setIsPending(bool isPending) async {
+    state = await AsyncValue.guard(() async {
+      return state.requireValue.copyWith(
         isPending: isPending,
-      ),
-    );
+      );
+    });
   }
 
-  bool get hasPlusFeatures {
-    return (state.valueOrNull?.purchasedProductIds ?? []).isNotEmpty;
-  }
-
-  Future<void> purchase(ProductDetails product) async {
+  Future<List<StoreProduct>> _fetchPurchases() async {
     try {
-      setIsPending(true);
-
-      await InAppPurchase.instance.buyNonConsumable(
-        purchaseParam: PurchaseParam(
-          productDetails: product,
-        ),
+      final List<StoreProduct> products = await Purchases.getProducts(
+        [
+          'development_support_tier_1',
+          'development_support_tier_2',
+          'development_support_tier_3',
+        ],
+        productCategory: ProductCategory.nonSubscription,
       );
 
-      setIsPending(false);
-    } catch (error, stackTrace) {
-      setIsPending(false);
-
-      Logger().e(
-        'Failed to purchase product',
-        error: error,
+      return products..sort((a, b) => a.price.compareTo(b.price));
+    } on PlatformException catch (error, stackTrace) {
+      Sentry.captureException(
+        error,
         stackTrace: stackTrace,
       );
 
-      FirebaseCrashlytics.instance.recordError(
-        error,
-        stackTrace,
-      );
-
-      return;
-    }
-  }
-
-  Future<bool> restore() async {
-    try {
-      setIsPending(true);
-
-      await InAppPurchase.instance.restorePurchases();
-
-      setIsPending(false);
-
-      return true;
-    } catch (error, stackTrace) {
-      setIsPending(false);
-
-      Logger().e(
-        'Failed to restore purchases',
-        error: error,
-        stackTrace: stackTrace,
-      );
-
-      FirebaseCrashlytics.instance.recordError(
-        error,
-        stackTrace,
-      );
-
-      return false;
+      return [];
     }
   }
 
@@ -142,4 +122,25 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
 final asyncPurchaseProvider =
     AsyncNotifierProvider<AsyncPurchaseNotifier, PurchaseState>(() {
   return AsyncPurchaseNotifier();
+});
+
+class PlusFeaturesNotifier extends Notifier<bool> {
+  @override
+  bool build() {
+    if (Platform.isAndroid) {
+      return true;
+    }
+
+    final List<String> purchasedProductIds = ref.watch(
+      asyncPurchaseProvider.select(
+        (state) => state.valueOrNull?.purchasedProductIds ?? [],
+      ),
+    );
+
+    return purchasedProductIds.isNotEmpty;
+  }
+}
+
+final plusFeaturesProvider = NotifierProvider<PlusFeaturesNotifier, bool>(() {
+  return PlusFeaturesNotifier();
 });

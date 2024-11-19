@@ -1,6 +1,6 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/constans.dart';
 
 class ImageError extends StatelessWidget {
   final bool isCompact;
@@ -14,7 +14,7 @@ class ImageError extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColoredBox(
       key: const Key('image-error'),
-      color: context.colors.scheme.surface,
+      color: context.colors.scheme.surfaceContainerLow,
       child: OverflowBox(
         maxWidth: double.infinity,
         maxHeight: (isCompact ? IMAGE_HEIGHT / 2 : IMAGE_HEIGHT).toDouble(),

@@ -61,13 +61,14 @@ class ITADFiltersAdapter extends TypeAdapter<ITADFilters> {
       mature: fields[4] as bool,
       nondeals: fields[5] as bool,
       platform: (fields[6] as List?)?.cast<int>(),
+      sortBy: fields[7] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ITADFilters obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.price)
       ..writeByte(1)
@@ -81,7 +82,9 @@ class ITADFiltersAdapter extends TypeAdapter<ITADFilters> {
       ..writeByte(5)
       ..write(obj.nondeals)
       ..writeByte(6)
-      ..write(obj.platform);
+      ..write(obj.platform)
+      ..writeByte(7)
+      ..write(obj.sortBy);
   }
 
   @override
@@ -125,6 +128,7 @@ _$ITADFiltersImpl _$$ITADFiltersImplFromJson(Map<String, dynamic> json) =>
       platform: (json['platform'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
           .toList(),
+      sortBy: json['sortBy'] as String? ?? 'trending',
     );
 
 Map<String, dynamic> _$$ITADFiltersImplToJson(_$ITADFiltersImpl instance) =>
@@ -136,6 +140,7 @@ Map<String, dynamic> _$$ITADFiltersImplToJson(_$ITADFiltersImpl instance) =>
       'mature': instance.mature,
       'nondeals': instance.nondeals,
       'platform': instance.platform,
+      'sortBy': instance.sortBy,
     };
 
 _$ITADFiltersConfigImpl _$$ITADFiltersConfigImplFromJson(

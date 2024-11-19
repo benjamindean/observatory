@@ -215,6 +215,8 @@ mixin _$ITADFilters {
   bool get nondeals => throw _privateConstructorUsedError;
   @HiveField(6)
   List<int>? get platform => throw _privateConstructorUsedError;
+  @HiveField(7)
+  String? get sortBy => throw _privateConstructorUsedError;
 
   /// Serializes this ITADFilters to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -239,7 +241,8 @@ abstract class $ITADFiltersCopyWith<$Res> {
       @HiveField(3) List<String>? tags,
       @HiveField(4) bool mature,
       @HiveField(5) bool nondeals,
-      @HiveField(6) List<int>? platform});
+      @HiveField(6) List<int>? platform,
+      @HiveField(7) String? sortBy});
 
   $MinMaxCopyWith<$Res>? get price;
   $MinMaxCopyWith<$Res>? get cut;
@@ -267,6 +270,7 @@ class _$ITADFiltersCopyWithImpl<$Res, $Val extends ITADFilters>
     Object? mature = null,
     Object? nondeals = null,
     Object? platform = freezed,
+    Object? sortBy = freezed,
   }) {
     return _then(_value.copyWith(
       price: freezed == price
@@ -297,6 +301,10 @@ class _$ITADFiltersCopyWithImpl<$Res, $Val extends ITADFilters>
           ? _value.platform
           : platform // ignore: cast_nullable_to_non_nullable
               as List<int>?,
+      sortBy: freezed == sortBy
+          ? _value.sortBy
+          : sortBy // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -344,7 +352,8 @@ abstract class _$$ITADFiltersImplCopyWith<$Res>
       @HiveField(3) List<String>? tags,
       @HiveField(4) bool mature,
       @HiveField(5) bool nondeals,
-      @HiveField(6) List<int>? platform});
+      @HiveField(6) List<int>? platform,
+      @HiveField(7) String? sortBy});
 
   @override
   $MinMaxCopyWith<$Res>? get price;
@@ -372,6 +381,7 @@ class __$$ITADFiltersImplCopyWithImpl<$Res>
     Object? mature = null,
     Object? nondeals = null,
     Object? platform = freezed,
+    Object? sortBy = freezed,
   }) {
     return _then(_$ITADFiltersImpl(
       price: freezed == price
@@ -402,6 +412,10 @@ class __$$ITADFiltersImplCopyWithImpl<$Res>
           ? _value._platform
           : platform // ignore: cast_nullable_to_non_nullable
               as List<int>?,
+      sortBy: freezed == sortBy
+          ? _value.sortBy
+          : sortBy // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -417,7 +431,8 @@ class _$ITADFiltersImpl extends _ITADFilters with DiagnosticableTreeMixin {
       @HiveField(3) final List<String>? tags,
       @HiveField(4) this.mature = false,
       @HiveField(5) this.nondeals = true,
-      @HiveField(6) final List<int>? platform})
+      @HiveField(6) final List<int>? platform,
+      @HiveField(7) this.sortBy = 'trending'})
       : _tags = tags,
         _platform = platform,
         super._();
@@ -465,8 +480,13 @@ class _$ITADFiltersImpl extends _ITADFilters with DiagnosticableTreeMixin {
   }
 
   @override
+  @JsonKey()
+  @HiveField(7)
+  final String? sortBy;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ITADFilters(price: $price, cut: $cut, bundled: $bundled, tags: $tags, mature: $mature, nondeals: $nondeals, platform: $platform)';
+    return 'ITADFilters(price: $price, cut: $cut, bundled: $bundled, tags: $tags, mature: $mature, nondeals: $nondeals, platform: $platform, sortBy: $sortBy)';
   }
 
   @override
@@ -480,7 +500,8 @@ class _$ITADFiltersImpl extends _ITADFilters with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('tags', tags))
       ..add(DiagnosticsProperty('mature', mature))
       ..add(DiagnosticsProperty('nondeals', nondeals))
-      ..add(DiagnosticsProperty('platform', platform));
+      ..add(DiagnosticsProperty('platform', platform))
+      ..add(DiagnosticsProperty('sortBy', sortBy));
   }
 
   @override
@@ -495,7 +516,8 @@ class _$ITADFiltersImpl extends _ITADFilters with DiagnosticableTreeMixin {
             (identical(other.mature, mature) || other.mature == mature) &&
             (identical(other.nondeals, nondeals) ||
                 other.nondeals == nondeals) &&
-            const DeepCollectionEquality().equals(other._platform, _platform));
+            const DeepCollectionEquality().equals(other._platform, _platform) &&
+            (identical(other.sortBy, sortBy) || other.sortBy == sortBy));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -508,7 +530,8 @@ class _$ITADFiltersImpl extends _ITADFilters with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(_tags),
       mature,
       nondeals,
-      const DeepCollectionEquality().hash(_platform));
+      const DeepCollectionEquality().hash(_platform),
+      sortBy);
 
   /// Create a copy of ITADFilters
   /// with the given fields replaced by the non-null parameter values.
@@ -534,7 +557,8 @@ abstract class _ITADFilters extends ITADFilters {
       @HiveField(3) final List<String>? tags,
       @HiveField(4) final bool mature,
       @HiveField(5) final bool nondeals,
-      @HiveField(6) final List<int>? platform}) = _$ITADFiltersImpl;
+      @HiveField(6) final List<int>? platform,
+      @HiveField(7) final String? sortBy}) = _$ITADFiltersImpl;
   const _ITADFilters._() : super._();
 
   factory _ITADFilters.fromJson(Map<String, dynamic> json) =
@@ -561,6 +585,9 @@ abstract class _ITADFilters extends ITADFilters {
   @override
   @HiveField(6)
   List<int>? get platform;
+  @override
+  @HiveField(7)
+  String? get sortBy;
 
   /// Create a copy of ITADFilters
   /// with the given fields replaced by the non-null parameter values.

@@ -12,7 +12,7 @@ class WaitlistInfoAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final SearchState searchState = ref.watch(filterResultsProvider);
+    final SearchState searchState = ref.watch(waitlistSearchProvider);
 
     if (searchState.isOpen) {
       return const SizedBox.shrink();

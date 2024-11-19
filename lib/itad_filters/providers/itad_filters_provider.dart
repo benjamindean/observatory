@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
+import 'package:observatory/deals/providers/deals_provider.dart';
 import 'package:observatory/settings/settings_repository.dart';
+import 'package:observatory/shared/constans.dart';
 import 'package:observatory/shared/models/itad_filters.dart';
 
 class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
@@ -53,7 +55,7 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
   }
 
   void setBundled(bool isBundled) {
-    if (isBundled == false) {
+    if (!isBundled) {
       state = state.copyWith(
         cached: state.cached.copyWith(bundled: null),
       );
@@ -86,6 +88,21 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
     );
   }
 
+  Future<void> setSortBy(SortDealsBy sortBy) async {
+    state = state.copyWith(
+      current: state.current.copyWith(
+        sortBy: sortBy.name,
+      ),
+      cached: state.cached.copyWith(
+        sortBy: sortBy.name,
+      ),
+    );
+
+    await GetIt.I<SettingsRepository>().setITADFilters(state.current);
+
+    return ref.read(asyncDealsProvider.notifier).reset(withLoading: true);
+  }
+
   Future<void> save() async {
     await GetIt.I<SettingsRepository>().setITADFilters(state.cached);
 
@@ -96,11 +113,13 @@ class ITADFiltersNotifier extends AutoDisposeNotifier<ITADFiltersConfig> {
   }
 
   Future<void> reset() async {
-    const ITADFilters filters = ITADFilters();
+    final ITADFilters filters = ITADFilters(
+      sortBy: GetIt.I<SettingsRepository>().getITADFilters().sortBy,
+    );
 
     await GetIt.I<SettingsRepository>().setITADFilters(filters);
 
-    state = const ITADFiltersConfig(
+    state = ITADFiltersConfig(
       cached: filters,
       current: filters,
     );
