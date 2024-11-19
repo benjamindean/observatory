@@ -57,6 +57,7 @@ dependencies:
   video_player: ^2.9.2
   flutter_cache_manager: ^3.4.1
   purchases_flutter: ^8.2.1
+  sliver_tools: ^0.2.12
 
 flutter_launcher_icons:
   android:

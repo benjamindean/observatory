@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:observatory/settings/purchase/purchase_state.dart';
 import 'package:observatory/settings/settings_repository.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -13,6 +14,8 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
   @override
   Future<PurchaseState> build() async {
+    await Purchases.setLogLevel(LogLevel.verbose);
+
     await Purchases.configure(
       PurchasesConfiguration(dotenv.env['REVENUECAT_API_KEY']!),
     );
@@ -42,6 +45,12 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
 
       Sentry.captureException(
         error,
+        stackTrace: stackTrace,
+      );
+
+      Logger().e(
+        'Failed to perform purchase',
+        error: error,
         stackTrace: stackTrace,
       );
 

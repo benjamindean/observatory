@@ -126,7 +126,7 @@ class WaitlistSortingPage extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const CollapsePinnedListTile()
+                const CollapsePinnedListTile(),
               ],
             ),
           ),

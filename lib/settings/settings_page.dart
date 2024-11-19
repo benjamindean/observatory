@@ -22,6 +22,7 @@ import 'package:observatory/shared/widgets/error_message.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
 import 'package:observatory/waitlist/ui/collapse_pinned_list_tile.dart';
+import 'package:observatory/waitlist/ui/mute_games_in_library_list_tile.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class SettingsPage extends ConsumerWidget {
@@ -95,6 +96,8 @@ class SettingsPage extends ConsumerWidget {
                   ),
                   const CollapsePinnedListTile(),
                   const WaitlistAlertsSettingsTile(),
+                  const ListHeading(title: 'Library'),
+                  const MuteGamesInLibraryListTile(),
                   const ListHeading(title: 'Internal'),
                   ExpansionTile(
                     title: const Text('Danger Zone'),

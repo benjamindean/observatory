@@ -39,6 +39,11 @@ class DealCard extends ConsumerWidget {
         (value) => value.valueOrNull?.showHeaders ?? false,
       ),
     );
+    final bool muteGamesInLibrary = ref.watch(
+      asyncSettingsProvider.select(
+        (value) => value.valueOrNull?.muteGamesInLibrary ?? true,
+      ),
+    );
     final List<String> waitlist = ref.watch(waitlistIdsProvider);
     final List<String> bookmarks = ref.watch(bookmarkIdsProvider);
     final List<String> library = ref.watch(libraryIdsProvider);
@@ -136,6 +141,7 @@ class DealCard extends ConsumerWidget {
         child: Stack(
           children: [
             ObservatoryCard(
+              elevation: isInLibrary && muteGamesInLibrary ? 0.5 : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,

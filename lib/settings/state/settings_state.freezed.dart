@@ -27,6 +27,7 @@ mixin _$SettingsState {
       throw _privateConstructorUsedError;
   List<String> get purchasedProductIds => throw _privateConstructorUsedError;
   bool get collapsePinned => throw _privateConstructorUsedError;
+  bool get muteGamesInLibrary => throw _privateConstructorUsedError;
 
   /// Serializes this SettingsState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,7 +51,8 @@ abstract class $SettingsStateCopyWith<$Res> {
       WaitlistSorting waitlistSorting,
       WaitlistSortingDirection waitlistSortingDirection,
       List<String> purchasedProductIds,
-      bool collapsePinned});
+      bool collapsePinned,
+      bool muteGamesInLibrary});
 }
 
 /// @nodoc
@@ -74,6 +76,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? waitlistSortingDirection = null,
     Object? purchasedProductIds = null,
     Object? collapsePinned = null,
+    Object? muteGamesInLibrary = null,
   }) {
     return _then(_value.copyWith(
       showHeaders: null == showHeaders
@@ -100,6 +103,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
           ? _value.collapsePinned
           : collapsePinned // ignore: cast_nullable_to_non_nullable
               as bool,
+      muteGamesInLibrary: null == muteGamesInLibrary
+          ? _value.muteGamesInLibrary
+          : muteGamesInLibrary // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -118,7 +125,8 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
       WaitlistSorting waitlistSorting,
       WaitlistSortingDirection waitlistSortingDirection,
       List<String> purchasedProductIds,
-      bool collapsePinned});
+      bool collapsePinned,
+      bool muteGamesInLibrary});
 }
 
 /// @nodoc
@@ -140,6 +148,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? waitlistSortingDirection = null,
     Object? purchasedProductIds = null,
     Object? collapsePinned = null,
+    Object? muteGamesInLibrary = null,
   }) {
     return _then(_$SettingsStateImpl(
       showHeaders: null == showHeaders
@@ -166,6 +175,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
           ? _value.collapsePinned
           : collapsePinned // ignore: cast_nullable_to_non_nullable
               as bool,
+      muteGamesInLibrary: null == muteGamesInLibrary
+          ? _value.muteGamesInLibrary
+          : muteGamesInLibrary // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -179,7 +192,8 @@ class _$SettingsStateImpl implements _SettingsState {
       required this.waitlistSorting,
       required this.waitlistSortingDirection,
       final List<String> purchasedProductIds = const [],
-      this.collapsePinned = false})
+      this.collapsePinned = false,
+      this.muteGamesInLibrary = true})
       : _purchasedProductIds = purchasedProductIds;
 
   factory _$SettingsStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -206,10 +220,13 @@ class _$SettingsStateImpl implements _SettingsState {
   @override
   @JsonKey()
   final bool collapsePinned;
+  @override
+  @JsonKey()
+  final bool muteGamesInLibrary;
 
   @override
   String toString() {
-    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, purchasedProductIds: $purchasedProductIds, collapsePinned: $collapsePinned)';
+    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, purchasedProductIds: $purchasedProductIds, collapsePinned: $collapsePinned, muteGamesInLibrary: $muteGamesInLibrary)';
   }
 
   @override
@@ -229,7 +246,9 @@ class _$SettingsStateImpl implements _SettingsState {
             const DeepCollectionEquality()
                 .equals(other._purchasedProductIds, _purchasedProductIds) &&
             (identical(other.collapsePinned, collapsePinned) ||
-                other.collapsePinned == collapsePinned));
+                other.collapsePinned == collapsePinned) &&
+            (identical(other.muteGamesInLibrary, muteGamesInLibrary) ||
+                other.muteGamesInLibrary == muteGamesInLibrary));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -241,7 +260,8 @@ class _$SettingsStateImpl implements _SettingsState {
       waitlistSorting,
       waitlistSortingDirection,
       const DeepCollectionEquality().hash(_purchasedProductIds),
-      collapsePinned);
+      collapsePinned,
+      muteGamesInLibrary);
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -266,7 +286,8 @@ abstract class _SettingsState implements SettingsState {
       required final WaitlistSorting waitlistSorting,
       required final WaitlistSortingDirection waitlistSortingDirection,
       final List<String> purchasedProductIds,
-      final bool collapsePinned}) = _$SettingsStateImpl;
+      final bool collapsePinned,
+      final bool muteGamesInLibrary}) = _$SettingsStateImpl;
 
   factory _SettingsState.fromJson(Map<String, dynamic> json) =
       _$SettingsStateImpl.fromJson;
@@ -283,6 +304,8 @@ abstract class _SettingsState implements SettingsState {
   List<String> get purchasedProductIds;
   @override
   bool get collapsePinned;
+  @override
+  bool get muteGamesInLibrary;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.

@@ -25,6 +25,7 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
       waitlistSorting: await repository.getWaitlistSorting(),
       waitlistSortingDirection: await repository.getWaitlistSortingDirection(),
       collapsePinned: await repository.getCollapsePinned(),
+      muteGamesInLibrary: await repository.getMuteGamesInLibrary(),
     );
   }
 
@@ -96,6 +97,18 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
         return state.requireValue.copyWith(
           collapsePinned: collapse,
+        );
+      },
+    );
+  }
+
+  Future<void> setMuteGamesInLibrary(bool mute) async {
+    state = await AsyncValue.guard(
+      () async {
+        await repository.setMuteGamesInLibrary(mute);
+
+        return state.requireValue.copyWith(
+          muteGamesInLibrary: mute,
         );
       },
     );

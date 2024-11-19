@@ -77,6 +77,7 @@ class SettingsRepository {
   final String PREF_LAUNCH_COUNTER = 'observatory_launch_counter';
   final String PREF_PURCHASED_PRODUCTS = 'observatory_purchased_products';
   final String PREF_COLLAPSE_PINNED = 'observatory_collapse_pinned';
+  final String PREF_MUTE_GAMES_IN_LIBRARY = 'observatory_mute_games_in_library';
 
   final WaitlistSorting defaultWaitlistSorting = WaitlistSorting.discount_date;
   final WaitlistSortingDirection defaultWaitlistSortingDirection =
@@ -491,6 +492,20 @@ class SettingsRepository {
     return settingsBox.put(
       PREF_COLLAPSE_PINNED,
       collapse,
+    );
+  }
+
+  Future<bool> getMuteGamesInLibrary() async {
+    return await settingsBox.get(
+      PREF_MUTE_GAMES_IN_LIBRARY,
+      defaultValue: true,
+    );
+  }
+
+  Future<void> setMuteGamesInLibrary(bool mute) async {
+    return settingsBox.put(
+      PREF_MUTE_GAMES_IN_LIBRARY,
+      mute,
     );
   }
 

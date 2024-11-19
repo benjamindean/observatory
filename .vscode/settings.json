@@ -2,7 +2,7 @@
   "[typescript]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
   },
-  "dart.flutterSdkPath": "/opt/flutter",
+  "dart.flutterSdkPath": "~/Documents/opt/flutter",
   "deno.enablePaths": [
     "supabase/functions"
   ],

@@ -19,6 +19,7 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
               .toList() ??
           const [],
       collapsePinned: json['collapsePinned'] as bool? ?? false,
+      muteGamesInLibrary: json['muteGamesInLibrary'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
@@ -30,6 +31,7 @@ Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
           _$WaitlistSortingDirectionEnumMap[instance.waitlistSortingDirection]!,
       'purchasedProductIds': instance.purchasedProductIds,
       'collapsePinned': instance.collapsePinned,
+      'muteGamesInLibrary': instance.muteGamesInLibrary,
     };
 
 const _$WaitlistSortingEnumMap = {
