@@ -100,4 +100,3 @@ flutter:
     - secrets.env
     - secrets.dev.env
     - assets/google_fonts/
-    - assets/images/store_icons/
