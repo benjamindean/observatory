@@ -13,18 +13,34 @@ class AsyncBookmarksNotifier extends AsyncNotifier<List<Deal>> {
       return [];
     }
 
+    return filterBookmarks(wailtistIds);
+  }
+
+  Future<void> cleanUp() async {
+    final List<String> wailtistIds = ref.read(waitlistIdsProvider);
+
+    if (wailtistIds.isEmpty) {
+      return;
+    }
+
     final List<Deal> bookmarks = await fetchBookmarks();
-    final List<Deal> filteredBookmarks = bookmarks
-        .where(
-          (deal) => wailtistIds.contains(deal.id),
-        )
-        .toList();
+    final List<Deal> filteredBookmarks = await filterBookmarks(wailtistIds);
 
     if (filteredBookmarks.length != bookmarks.length) {
       await GetIt.I<SettingsRepository>().setBookmarks(filteredBookmarks);
     }
 
-    return filteredBookmarks;
+    ref.invalidateSelf();
+  }
+
+  Future<List<Deal>> filterBookmarks(List<String> wailtistIds) async {
+    if (wailtistIds.isEmpty) {
+      return [];
+    }
+
+    final List<Deal> bookmarks = await fetchBookmarks();
+
+    return bookmarks.where((deal) => wailtistIds.contains(deal.id)).toList();
   }
 
   Future<void> addBookmark(Deal deal) async {

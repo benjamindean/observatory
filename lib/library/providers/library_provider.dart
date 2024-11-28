@@ -6,7 +6,7 @@ import 'package:observatory/shared/models/deal.dart';
 class AsyncLibraryNotifier extends AsyncNotifier<List<Deal>> {
   @override
   Future<List<Deal>> build() async {
-    return await fetchLibrary();
+    return fetchLibrary();
   }
 
   Future<void> setLibrary(List<Deal> games) async {

@@ -64,7 +64,7 @@ final GoRouter router = GoRouter(
             GoRoute(
               name: 'waitlist',
               path: '/waitlist',
-              pageBuilder: (context, state) => const NoTransitionPage(
+              pageBuilder: (context, state) => NoTransitionPage(
                 child: WaitListPage(),
               ),
             ),

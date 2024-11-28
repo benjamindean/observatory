@@ -14,7 +14,7 @@ import 'package:observatory/shared/models/deal.dart';
 
 class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   Future<List<Deal>> _fetchWaitList() async {
-    return await GetIt.I<API>().fetchWaitlist();
+    return GetIt.I<API>().fetchWaitlist();
   }
 
   @override
@@ -23,6 +23,8 @@ class AsyncWaitListNotifier extends AsyncNotifier<List<Deal>> {
   }
 
   Future<void> reset({bool withLoading = false}) async {
+    await ref.read(asyncBookmarksProvider.notifier).cleanUp();
+
     if (withLoading) {
       state = const AsyncValue.loading();
     }

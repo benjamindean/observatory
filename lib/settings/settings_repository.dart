@@ -126,7 +126,7 @@ class SettingsRepository {
   }
 
   Future<String> getCountry() async {
-    return await settingsBox.get(
+    return settingsBox.get(
       PREF_COUNTRY,
       defaultValue: 'US',
     );
@@ -140,7 +140,7 @@ class SettingsRepository {
   }
 
   Future<String> getCurrency() async {
-    return await settingsBox.get(
+    return settingsBox.get(
       PREF_CURRENCY,
       defaultValue: 'USD',
     );
@@ -154,7 +154,7 @@ class SettingsRepository {
   }
 
   Future<bool> getShowHeaders() async {
-    return await settingsBox.get(
+    return settingsBox.get(
       PREF_SHOW_HEADERS,
       defaultValue: true,
     );
@@ -228,7 +228,7 @@ class SettingsRepository {
   }
 
   Future<List<int>> getSelectedStores() async {
-    return await settingsBox.get(
+    return settingsBox.get(
       PREF_SELECTED_STORES,
       defaultValue: <int>[],
     );
@@ -242,7 +242,7 @@ class SettingsRepository {
   }
 
   Future<int> getLaunchCounter() async {
-    return await settingsBox.get(
+    return settingsBox.get(
       PREF_LAUNCH_COUNTER,
       defaultValue: 0,
     );
@@ -263,7 +263,7 @@ class SettingsRepository {
     final bool isEnabledOnSystem =
         await AwesomeNotifications().isNotificationAllowed();
 
-    return await settingsBox.get(
+    return settingsBox.get(
           PREF_WAITLIST_NOTIFICATIONS,
           defaultValue: false,
         ) &&
@@ -397,7 +397,7 @@ class SettingsRepository {
   }
 
   Future<IGDBAccessToken?> getIGDBAccessToken() async {
-    return await settingsBox.get(PREF_IGDB_ACCESS_TOKEN);
+    return settingsBox.get(PREF_IGDB_ACCESS_TOKEN);
   }
 
   Future<void> setIGDBAccessToken(IGDBAccessToken? accessToken) async {
@@ -430,7 +430,7 @@ class SettingsRepository {
   }
 
   Future<List<String>> getPurchasedProductIds() async {
-    return await settingsBox.get(
+    return settingsBox.get(
       PREF_PURCHASED_PRODUCTS,
       defaultValue: <String>[],
     );
@@ -482,7 +482,7 @@ class SettingsRepository {
   }
 
   Future<bool> getCollapsePinned() async {
-    return await settingsBox.get(
+    return settingsBox.get(
       PREF_COLLAPSE_PINNED,
       defaultValue: false,
     );
@@ -496,7 +496,7 @@ class SettingsRepository {
   }
 
   Future<bool> getMuteGamesInLibrary() async {
-    return await settingsBox.get(
+    return settingsBox.get(
       PREF_MUTE_GAMES_IN_LIBRARY,
       defaultValue: true,
     );

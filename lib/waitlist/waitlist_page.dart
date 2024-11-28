@@ -1,6 +1,6 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:observatory/bookmarks/ui/bookmarks_info_bar.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/shared/ui/pull_to_refresh.dart';
@@ -10,7 +10,9 @@ import 'package:observatory/waitlist/waitlist_list.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 
 class WaitListPage extends ConsumerWidget {
-  const WaitListPage({super.key});
+  const WaitListPage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
