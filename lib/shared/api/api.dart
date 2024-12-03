@@ -294,16 +294,7 @@ class API {
       },
     );
 
-    return steamLibrary.data
-        .map<Deal>(
-          (e) => Deal(
-            id: 'none',
-            title: e['name'],
-            steamId: 'app/${e['appid']}',
-            source: DealSource.steam,
-          ),
-        )
-        .toList();
+    return steamLibrary.data.map<Deal>((deal) => Deal.fromJson(deal)).toList();
   }
 
   Future<SteamUser> fetchSteamUser(String steamId) async {

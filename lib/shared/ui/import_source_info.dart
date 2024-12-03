@@ -1,5 +1,6 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:observatory/shared/models/deal.dart';
 
 final Map<DealSource, String> dealSourceNames = {
@@ -28,11 +29,25 @@ class ImportSourceInfo extends StatelessWidget {
           ),
           children: [
             const TextSpan(
-              text: 'Imported from ',
+              text: 'Added from ',
             ),
             TextSpan(
               text: dealSourceNames[deal.source] ?? 'Unknown',
               style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const TextSpan(
+              text: ' on ',
+            ),
+            TextSpan(
+              text: DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY).format(
+                DateTime.fromMillisecondsSinceEpoch(
+                  deal.added.toInt(),
+                ),
+              ),
+              style: context.themes.text.labelSmall?.copyWith(
+                color: context.colors.disabled,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
