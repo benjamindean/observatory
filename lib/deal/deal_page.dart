@@ -16,6 +16,7 @@ import 'package:observatory/deal/ui/page_sections/screenshots/screenshots_tile.d
 import 'package:observatory/deal/ui/page_sections/summary_tile.dart';
 import 'package:observatory/deal/ui/page_sections/tags_tile.dart';
 import 'package:observatory/shared/models/deal.dart';
+import 'package:observatory/shared/ui/import_source_info.dart';
 import 'package:observatory/shared/ui/is_there_any_deal_info.dart';
 import 'package:observatory/shared/widgets/list_heading.dart';
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
@@ -84,10 +85,15 @@ class DealPage extends ConsumerWidget {
               PriceListView(
                 prices: dealState.prices,
               ),
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: ListHeading(
                   title: 'Price History',
-                  subtitle: Text('Past 6 months'),
+                  subtitle: Text(
+                    'Past 6 months',
+                    style: context.themes.text.labelLarge?.copyWith(
+                      color: context.colors.hint,
+                    ),
+                  ),
                 ),
               ),
               SliverToBoxAdapter(
@@ -97,6 +103,9 @@ class DealPage extends ConsumerWidget {
               ),
               const SliverToBoxAdapter(
                 child: IsThereAnyDealInfo(),
+              ),
+              SliverToBoxAdapter(
+                child: ImportSourceInfo(deal: deal),
               ),
             ],
           ),

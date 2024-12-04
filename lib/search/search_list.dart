@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:observatory/deal/providers/deal_card_size_provider.dart';
 import 'package:observatory/deal/ui/deal_card.dart';
 import 'package:observatory/router.dart';
-import 'package:observatory/search/providers/recents_provider.dart';
 import 'package:observatory/search/providers/search_provider.dart';
 import 'package:observatory/search/providers/search_results_provider.dart';
 import 'package:observatory/search/state/search_state.dart';
@@ -59,11 +58,6 @@ class SearchList extends ConsumerWidget {
               return DealCard(
                 deal: searchResults[index],
                 page: NavigationBranch.search,
-                onCardTapCallback: () {
-                  ref.read(asynRecentsProvider.notifier).addRecent(
-                        searchResults[index].title,
-                      );
-                },
               );
             },
           ),

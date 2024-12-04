@@ -39,14 +39,18 @@ class DealFunctions {
     required Deal deal,
     bool showToast = true,
   }) async {
-    final AsyncWaitListNotifier notifier = ref.watch(
+    final AsyncWaitListNotifier waitlistNotifier = ref.watch(
       asyncWaitListProvider.notifier,
+    );
+    final AsyncBookmarksNotifier bookmarksNotifier = ref.watch(
+      asyncBookmarksProvider.notifier,
     );
     final Deal updatedDeal = deal.copyWith();
 
     HapticFeedback.mediumImpact();
 
-    notifier.removeFromWaitList(updatedDeal);
+    waitlistNotifier.removeFromWaitList(updatedDeal);
+    bookmarksNotifier.removeBookmarks([updatedDeal]);
 
     if (!showToast) {
       return;
@@ -55,7 +59,7 @@ class DealFunctions {
     return ObservatorySnackBar.show(
       context,
       onAction: () {
-        notifier.addToWaitlist([updatedDeal]);
+        waitlistNotifier.addToWaitlist([updatedDeal]);
       },
       icon: Icons.remove_circle,
       content: Text.rich(

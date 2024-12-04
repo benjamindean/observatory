@@ -12,7 +12,7 @@ PODS:
   - flutter_inappwebview_ios/Core (0.0.1):
     - Flutter
     - OrderedSet (~> 6.0.3)
-  - flutter_native_splash (0.0.1):
+  - flutter_native_splash (2.4.3):
     - Flutter
   - flutter_secure_storage (6.0.0):
     - Flutter
@@ -25,12 +25,12 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - purchases_flutter (8.2.1):
+  - purchases_flutter (8.2.2):
     - Flutter
-    - PurchasesHybridCommon (= 13.8.0)
-  - PurchasesHybridCommon (13.8.0):
-    - RevenueCat (= 5.7.1)
-  - RevenueCat (5.7.1)
+    - PurchasesHybridCommon (= 13.9.0)
+  - PurchasesHybridCommon (13.9.0):
+    - RevenueCat (= 5.8.0)
+  - RevenueCat (5.8.0)
   - Sentry/HybridSDK (8.40.1)
   - sentry_flutter (8.10.1):
     - Flutter
@@ -119,16 +119,16 @@ SPEC CHECKSUMS:
   awesome_notifications: dd5518ff1c80be03d4f1c40f04da9d9cc2a37af5
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_inappwebview_ios: 6f63631e2c62a7c350263b13fa5427aedefe81d4
-  flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
+  flutter_native_splash: e8a1e01082d97a8099d973f919f57904c925008a
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   IosAwnCore: 653786a911089012092ce831f2945cd339855a89
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
   package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
-  purchases_flutter: 920ed8740f1124c1204342913046ff5e085c81a5
-  PurchasesHybridCommon: bfd5bcf640a5c0a137d09287cdffcb4cf28fc12f
-  RevenueCat: fd13e14159aefb128a8e822451d08418e04fdda3
+  purchases_flutter: 279ea4decfaaa493fe32dcc88efb74c30d13f98c
+  PurchasesHybridCommon: 2e684a22e4aaf33c5fc10fd9e2ca2e27e6b7abff
+  RevenueCat: 4cd1daad3a57d2b4015ed2b4aef0a0f24ffce0a1
   Sentry: e9215d7b17f7902692b4f8700e061e4f853e3521
   sentry_flutter: 927eed60d66951d1b0f1db37fe94ff5cb7c80231
   share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f

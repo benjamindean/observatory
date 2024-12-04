@@ -60,7 +60,7 @@ Future<bool> checkWaitlistTask() async {
 
   final List<Deal> deals = await getNewDiscountedDeals();
 
-  return await showWaitlistNotification(
+  return showWaitlistNotification(
     deals: deals,
   );
 }

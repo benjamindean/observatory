@@ -5,5 +5,5 @@ import 'package:observatory/shared/models/history.dart';
 
 final historyProvider =
     FutureProvider.family<List<History>, String>((ref, id) async {
-  return await GetIt.I<API>().history(id: id);
+  return GetIt.I<API>().history(id: id);
 });

@@ -37,7 +37,7 @@ void callbackDispatcher() {
       if (task == TASK_CHECK_WAITLIST) {
         await initSettings();
 
-        return await checkWaitlistTask();
+        return checkWaitlistTask();
       }
 
       return Future.value(true);
