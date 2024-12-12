@@ -249,9 +249,6 @@ class SortedWailistNotifier extends Notifier<List<Deal>> {
             },
           )
           ..addAll(bottomDeals);
-
-      default:
-        return deals;
     }
   }
 }
