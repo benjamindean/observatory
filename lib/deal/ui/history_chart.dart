@@ -148,7 +148,8 @@ class HistoryChart extends ConsumerWidget {
                     ),
                     belowBarData: BarAreaData(
                       show: true,
-                      color: context.colors.scheme.secondary.withOpacity(0.3),
+                      color: context.colors.scheme.secondary
+                          .withValues(alpha: 0.3),
                     ),
                     lineChartStepData: const LineChartStepData(
                       stepDirection: LineChartStepData.stepDirectionForward,
