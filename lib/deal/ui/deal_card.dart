@@ -57,7 +57,7 @@ class DealCard extends ConsumerWidget {
         extentRatio: 0.4,
         motion: const ScrollMotion(),
         children: [
-          SlidableAction(
+          CustomSlidableAction(
             padding: EdgeInsets.zero,
             borderRadius: BorderRadius.all(Radius.circular(12.0)),
             backgroundColor: Colors.transparent,
@@ -77,11 +77,15 @@ class DealCard extends ConsumerWidget {
               );
             },
             foregroundColor: context.colors.scheme.primary,
-            icon: isInWaitlist
-                ? Icons.favorite_rounded
-                : Icons.favorite_outline_rounded,
+            child: Icon(
+              size: 24.0,
+              color: context.colors.scheme.primary,
+              isInWaitlist
+                  ? Icons.favorite_rounded
+                  : Icons.favorite_outline_rounded,
+            ),
           ),
-          SlidableAction(
+          CustomSlidableAction(
             padding: EdgeInsets.zero,
             borderRadius: BorderRadius.all(Radius.circular(12.0)),
             onPressed: (_) {
@@ -109,9 +113,11 @@ class DealCard extends ConsumerWidget {
             },
             backgroundColor: Colors.transparent,
             foregroundColor: context.colors.scheme.tertiary,
-            icon: isInBookmarks
-                ? Icons.push_pin_rounded
-                : Icons.push_pin_outlined,
+            child: Icon(
+              size: 24.0,
+              color: context.colors.scheme.tertiary,
+              isInBookmarks ? Icons.push_pin_rounded : Icons.push_pin_outlined,
+            ),
           ),
         ],
       ),

@@ -24,7 +24,7 @@ final shellNavigatorKeySearch = GlobalKey<NavigatorState>();
 final shellNavigatorKeyWaitlist = GlobalKey<NavigatorState>();
 
 final GoRouter router = GoRouter(
-  initialLocation: '/deals',
+  initialLocation: '/',
   navigatorKey: rootNavigatorKey,
   routes: [
     StatefulShellRoute.indexedStack(
@@ -39,7 +39,7 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               name: 'deals',
-              path: '/deals',
+              path: '/',
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: DealsPage(),
               ),
