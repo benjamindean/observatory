@@ -13,8 +13,11 @@ import 'package:observatory/waitlist/ui/waitlist_sorting_page.dart';
 import 'package:observatory/waitlist/ui/waitlist_sorting_strings.dart';
 
 class WaitlistAppBar extends ConsumerWidget {
+  final ScrollController scrollController;
+
   const WaitlistAppBar({
     super.key,
+    required this.scrollController,
   });
 
   @override
@@ -53,7 +56,7 @@ class WaitlistAppBar extends ConsumerWidget {
       flexibleSpace: AppBar(
         title: GestureDetector(
           onTap: () {
-            PrimaryScrollController.of(context).animateTo(
+            scrollController.animateTo(
               0,
               duration: const Duration(milliseconds: 200),
               curve: Curves.easeIn,
