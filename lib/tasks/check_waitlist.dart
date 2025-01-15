@@ -6,6 +6,7 @@ import 'package:observatory/settings/settings_repository.dart';
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:observatory/tasks/constants.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:workmanager/workmanager.dart';
 
 Future<List<Deal>> getNewDiscountedDeals() async {
@@ -58,15 +59,30 @@ Future<bool> checkWaitlistTask() async {
     return true;
   }
 
-  final List<Deal> deals = await getNewDiscountedDeals();
+  try {
+    final List<Deal> deals = await getNewDiscountedDeals();
 
-  return showWaitlistNotification(
-    deals: deals,
-  );
+    return showWaitlistNotification(
+      deals: deals,
+    );
+  } catch (error, stackTrace) {
+    Logger().e(
+      'Failed to check waitlist',
+      error: error,
+      stackTrace: stackTrace,
+    );
+
+    Sentry.captureException(
+      error,
+      stackTrace: stackTrace,
+    );
+
+    return true;
+  }
 }
 
 Future<void> enableCheckWaitlistTask({
-  Duration frequency = const Duration(hours: 4),
+  Duration frequency = const Duration(hours: 1),
 }) async {
   Logger().d('Enabling $TASK_CHECK_WAITLIST task');
 
