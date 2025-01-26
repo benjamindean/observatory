@@ -99,42 +99,44 @@ class Observatory extends ConsumerWidget {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await initSettings();
-
-  await AwesomeNotifications().initialize(
-    null,
-    NOTIFICATION_CHANNELS,
-    channelGroups: NOTIFICATION_GROUPS,
-  );
-
-  await AwesomeNotifications().setListeners(
-    onActionReceivedMethod: onActionReceivedMethod,
-  );
-
-  await Workmanager().initialize(
-    callbackDispatcher,
-    isInDebugMode: kDebugMode,
-  );
-
-  // Re-enable check waitlist task if notifications are enabled
-  GetIt.I<SettingsRepository>().getWaitlistNotifications().then((enabled) {
-    if (enabled) {
-      disableCheckWaitlistTask().then((_) {
-        enableCheckWaitlistTask();
-      });
-    }
-  });
-
-  GetIt.I<SettingsRepository>().incrementLaunchCounter();
-
   await SentryFlutter.init(
     (options) {
       options.dsn = kDebugMode ? '' : dotenv.get('SENTRY_DSN');
     },
-    appRunner: () => runApp(
-      const ProviderScope(
-        child: Observatory(),
-      ),
-    ),
+    appRunner: () async {
+      await initSettings();
+
+      await AwesomeNotifications().initialize(
+        null,
+        NOTIFICATION_CHANNELS,
+        channelGroups: NOTIFICATION_GROUPS,
+      );
+
+      await AwesomeNotifications().setListeners(
+        onActionReceivedMethod: onActionReceivedMethod,
+      );
+
+      await Workmanager().initialize(
+        callbackDispatcher,
+        isInDebugMode: kDebugMode,
+      );
+
+      // Re-enable check waitlist task if notifications are enabled
+      GetIt.I<SettingsRepository>().getWaitlistNotifications().then((enabled) {
+        if (enabled) {
+          disableCheckWaitlistTask().then((_) {
+            enableCheckWaitlistTask();
+          });
+        }
+      });
+
+      await GetIt.I<SettingsRepository>().incrementLaunchCounter();
+
+      return runApp(
+        const ProviderScope(
+          child: Observatory(),
+        ),
+      );
+    },
   );
 }
