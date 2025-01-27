@@ -33,6 +33,7 @@ void callbackDispatcher() {
   Workmanager().executeTask(
     (String task, Map<String, dynamic>? inputData) async {
       if (task == TASK_CHECK_WAITLIST) {
+        await dotenv.load(fileName: 'secrets.env');
         await initSettings();
 
         return checkWaitlistTask();
