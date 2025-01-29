@@ -21,7 +21,7 @@ import app_links
         GeneratedPluginRegistrant.register(with: registry)
     }
 
-    WorkmanagerPlugin.registerPeriodicTask(withIdentifier: "observatory-waitlist-check", frequency: NSNumber(value: 2 * 60 * 60))
+    WorkmanagerPlugin.registerPeriodicTask(withIdentifier: "observatory-waitlist-check", frequency: NSNumber(value: 4 * 60 * 60))
 
     if let url = AppLinks.shared.getLink(launchOptions: launchOptions) {
       AppLinks.shared.handleLink(url: url)
