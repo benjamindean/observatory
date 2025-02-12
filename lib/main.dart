@@ -20,6 +20,7 @@ import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:observatory/tasks/constants.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> initSettings() async {
   await SettingsRepository.init();
@@ -99,6 +100,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: 'secrets.env');
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    FlutterNativeSplash.remove();
+  });
 
   await SentryFlutter.init(
     (options) {

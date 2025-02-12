@@ -21,7 +21,7 @@ class PlatformSelectTile extends ConsumerWidget {
     final List<int> selectedPlatforms = ref.watch(
           itadFiltersProvider.select((value) => value.cached.platform),
         ) ??
-        [];
+        defaultPlatforms;
 
     return Column(
       children: [
@@ -50,7 +50,12 @@ class PlatformSelectTile extends ConsumerWidget {
           segments: platforms.map<ButtonSegment<int>>(
             ((int, String, IconData) platform) {
               return ButtonSegment<int>(
-                icon: FaIcon(platform.$3),
+                icon: FaIcon(
+                  platform.$3,
+                  color: selectedPlatforms.contains(platform.$1)
+                      ? context.colors.scheme.onPrimary
+                      : context.colors.scheme.primary,
+                ),
                 value: platform.$1,
                 label: Text(platform.$2),
               );
