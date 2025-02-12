@@ -103,6 +103,7 @@ void main() async {
   await SentryFlutter.init(
     (options) {
       options.dsn = dotenv.maybeGet('SENTRY_DSN') ?? '';
+      options.enableAutoSessionTracking = false;
     },
     appRunner: () async {
       await initSettings();
