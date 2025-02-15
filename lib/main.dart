@@ -145,6 +145,7 @@ void main() async {
     (options) {
       options.dsn = dotenv.maybeGet('SENTRY_DSN') ?? '';
       options.enableAutoSessionTracking = false;
+      options.enableAutoPerformanceTracing = false;
     },
     appRunner: () async {
       await initSettings();
