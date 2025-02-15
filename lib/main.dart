@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_links/app_links.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/foundation.dart';
@@ -52,16 +54,27 @@ Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
   }
 }
 
-class Observatory extends ConsumerWidget {
+class Observatory extends ConsumerStatefulWidget {
   const Observatory({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final ObservatoryTheme theme = ref.watch(themesProvider);
+  ConsumerState<Observatory> createState() => _ObservatoryState();
+}
 
-    AppLinks().uriLinkStream.listen(
+class _ObservatoryState extends ConsumerState<Observatory> {
+  StreamSubscription? _linkSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FlutterNativeSplash.remove();
+    });
+
+    _linkSubscription = AppLinks().uriLinkStream.listen(
       (uri) async {
         if (uri.path == '/app/auth/steam') {
           await ref.read(steamProvider.notifier).handleRedirect(uri);
@@ -80,18 +93,34 @@ class Observatory extends ConsumerWidget {
         );
       },
     );
+  }
 
-    return MaterialApp.router(
-      title: 'Observatory',
-      theme: lightTheme(
-        scheme: theme.flexScheme,
-      ),
-      darkTheme: darkTheme(
-        darkIsTrueBlack: theme.isTrueBlack,
-        scheme: theme.flexScheme,
-      ),
-      themeMode: ThemeMode.values.asNameMap()[theme.mode],
-      routerConfig: router,
+  @override
+  void dispose() {
+    _linkSubscription?.cancel();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer(
+      builder: (context, ref, _) {
+        final ObservatoryTheme theme = ref.watch(themesProvider);
+
+        return MaterialApp.router(
+          title: 'Observatory',
+          theme: lightTheme(
+            scheme: theme.flexScheme,
+          ),
+          darkTheme: darkTheme(
+            darkIsTrueBlack: theme.isTrueBlack,
+            scheme: theme.flexScheme,
+          ),
+          themeMode: ThemeMode.values.asNameMap()[theme.mode],
+          routerConfig: router,
+        );
+      },
     );
   }
 }
@@ -100,10 +129,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: 'secrets.env');
-
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    FlutterNativeSplash.remove();
-  });
 
   await SentryFlutter.init(
     (options) {
