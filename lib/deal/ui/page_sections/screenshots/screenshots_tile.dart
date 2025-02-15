@@ -125,8 +125,8 @@ class ScreenshotsTile extends ConsumerWidget {
                           ),
                           if (item is GameVideo)
                             ColoredBox(
-                              color: context.colors.scheme.surface.withOpacity(
-                                0.5,
+                              color: context.colors.scheme.surface.withValues(
+                                alpha: 0.5,
                               ),
                               child: Icon(
                                 Icons.play_circle_fill_sharp,

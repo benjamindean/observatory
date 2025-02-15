@@ -63,5 +63,7 @@
 		<string>getobservatory.app</string>
 	</dict>
 	</array>
+	<key>FlutterDeepLinkingEnabled</key>
+	<false/>
 </dict>
 </plist>

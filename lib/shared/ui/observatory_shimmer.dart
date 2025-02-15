@@ -11,7 +11,7 @@ class ObservatoryShimmer extends StatelessWidget {
     return LinearProgressIndicator(
       backgroundColor: context.colors.scheme.surface,
       minHeight: 4,
-      color: context.colors.scheme.onSurfaceVariant.withOpacity(0.2),
+      color: context.colors.scheme.onSurfaceVariant.withValues(alpha: 0.2),
     );
   }
 }

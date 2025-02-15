@@ -25,17 +25,17 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - purchases_flutter (8.2.2):
+  - purchases_flutter (8.4.6):
     - Flutter
-    - PurchasesHybridCommon (= 13.9.0)
-  - PurchasesHybridCommon (13.9.0):
-    - RevenueCat (= 5.8.0)
-  - RevenueCat (5.8.0)
-  - Sentry/HybridSDK (8.40.1)
-  - sentry_flutter (8.10.1):
+    - PurchasesHybridCommon (= 13.17.1)
+  - PurchasesHybridCommon (13.17.1):
+    - RevenueCat (= 5.16.1)
+  - RevenueCat (5.16.1)
+  - Sentry/HybridSDK (8.44.0)
+  - sentry_flutter (8.13.0):
     - Flutter
     - FlutterMacOS
-    - Sentry/HybridSDK (= 8.40.1)
+    - Sentry/HybridSDK (= 8.44.0)
   - share_plus (0.0.1):
     - Flutter
   - sqflite_darwin (0.0.4):
@@ -115,28 +115,28 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/workmanager/ios"
 
 SPEC CHECKSUMS:
-  app_links: e7a6750a915a9e161c58d91bc610e8cd1d4d0ad0
-  awesome_notifications: dd5518ff1c80be03d4f1c40f04da9d9cc2a37af5
+  app_links: 3da4c36b46cac3bf24eb897f1a6ce80bda109874
+  awesome_notifications: 0f432b28098d193920b11a44cfa9d2d9313a3888
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_inappwebview_ios: 6f63631e2c62a7c350263b13fa5427aedefe81d4
-  flutter_native_splash: e8a1e01082d97a8099d973f919f57904c925008a
-  flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
-  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
+  flutter_inappwebview_ios: b89ba3482b96fb25e00c967aae065701b66e9b99
+  flutter_native_splash: 6cad9122ea0fad137d23137dd14b937f3e90b145
+  flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
   IosAwnCore: 653786a911089012092ce831f2945cd339855a89
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
-  package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
-  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
-  purchases_flutter: 279ea4decfaaa493fe32dcc88efb74c30d13f98c
-  PurchasesHybridCommon: 2e684a22e4aaf33c5fc10fd9e2ca2e27e6b7abff
-  RevenueCat: 4cd1daad3a57d2b4015ed2b4aef0a0f24ffce0a1
-  Sentry: e9215d7b17f7902692b4f8700e061e4f853e3521
-  sentry_flutter: 927eed60d66951d1b0f1db37fe94ff5cb7c80231
-  share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f
-  sqflite_darwin: 5a7236e3b501866c1c9befc6771dfd73ffb8702d
-  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
-  video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
-  wakelock_plus: 78ec7c5b202cab7761af8e2b2b3d0671be6c4ae1
-  workmanager: 0afdcf5628bbde6924c21af7836fed07b42e30e6
+  package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
+  purchases_flutter: 9b781bb8f1fa7641bc72d0dcb13f57591e6b8d8f
+  PurchasesHybridCommon: 7ee74fefbad7fa42a74ff6e339af46fac3af4640
+  RevenueCat: d38c56d5e1058f955ee7fce4ea7b18d126235e64
+  Sentry: 0f9bc9adfc0b960e7f3bb5ec67e9a3d8193f3bdb
+  sentry_flutter: be956a32343176b344ef4b23ecdab47ab6f0ffa6
+  share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
+  sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
+  url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
+  video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
+  wakelock_plus: 04623e3f525556020ebd4034310f20fe7fda8b49
+  workmanager: 01be2de7f184bd15de93a1812936a2b7f42ef07e
 
 PODFILE CHECKSUM: afa7a8ef7311783bb837a096c9615e1218ab2c65
 

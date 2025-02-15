@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_links/app_links.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/foundation.dart';
@@ -20,10 +22,9 @@ import 'package:observatory/tasks/check_waitlist.dart';
 import 'package:observatory/tasks/constants.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> initSettings() async {
-  await dotenv.load(fileName: 'secrets.env');
-
   await SettingsRepository.init();
 
   GetIt.I.registerSingleton<SettingsRepository>(SettingsRepository());
@@ -35,6 +36,7 @@ void callbackDispatcher() {
   Workmanager().executeTask(
     (String task, Map<String, dynamic>? inputData) async {
       if (task == TASK_CHECK_WAITLIST) {
+        await dotenv.load(fileName: 'secrets.env');
         await initSettings();
 
         return checkWaitlistTask();
@@ -52,16 +54,38 @@ Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
   }
 }
 
-class Observatory extends ConsumerWidget {
+class Observatory extends ConsumerStatefulWidget {
   const Observatory({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final ObservatoryTheme theme = ref.watch(themesProvider);
+  ConsumerState<Observatory> createState() => _ObservatoryState();
+}
 
-    AppLinks().uriLinkStream.listen(
+class _ObservatoryState extends ConsumerState<Observatory> {
+  StreamSubscription? _linkSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FlutterNativeSplash.remove();
+
+      GetIt.I<SettingsRepository>().incrementLaunchCounter();
+
+      // Re-enable check waitlist task if notifications are enabled
+      GetIt.I<SettingsRepository>().getWaitlistNotifications().then((enabled) {
+        if (enabled) {
+          disableCheckWaitlistTask().then((_) {
+            enableCheckWaitlistTask();
+          });
+        }
+      });
+    });
+
+    _linkSubscription = AppLinks().uriLinkStream.listen(
       (uri) async {
         if (uri.path == '/app/auth/steam') {
           await ref.read(steamProvider.notifier).handleRedirect(uri);
@@ -80,18 +104,34 @@ class Observatory extends ConsumerWidget {
         );
       },
     );
+  }
 
-    return MaterialApp.router(
-      title: 'Observatory',
-      theme: lightTheme(
-        scheme: theme.flexScheme,
-      ),
-      darkTheme: darkTheme(
-        darkIsTrueBlack: theme.isTrueBlack,
-        scheme: theme.flexScheme,
-      ),
-      themeMode: ThemeMode.values.asNameMap()[theme.mode],
-      routerConfig: router,
+  @override
+  void dispose() {
+    _linkSubscription?.cancel();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer(
+      builder: (context, ref, _) {
+        final ObservatoryTheme theme = ref.watch(themesProvider);
+
+        return MaterialApp.router(
+          title: 'Observatory',
+          theme: lightTheme(
+            scheme: theme.flexScheme,
+          ),
+          darkTheme: darkTheme(
+            darkIsTrueBlack: theme.isTrueBlack,
+            scheme: theme.flexScheme,
+          ),
+          themeMode: ThemeMode.values.asNameMap()[theme.mode],
+          routerConfig: router,
+        );
+      },
     );
   }
 }
@@ -99,42 +139,37 @@ class Observatory extends ConsumerWidget {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await initSettings();
-
-  await AwesomeNotifications().initialize(
-    null,
-    NOTIFICATION_CHANNELS,
-    channelGroups: NOTIFICATION_GROUPS,
-  );
-
-  await AwesomeNotifications().setListeners(
-    onActionReceivedMethod: onActionReceivedMethod,
-  );
-
-  await Workmanager().initialize(
-    callbackDispatcher,
-    isInDebugMode: kDebugMode,
-  );
-
-  // Re-enable check waitlist task if notifications are enabled
-  GetIt.I<SettingsRepository>().getWaitlistNotifications().then((enabled) {
-    if (enabled) {
-      disableCheckWaitlistTask().then((_) {
-        enableCheckWaitlistTask();
-      });
-    }
-  });
-
-  GetIt.I<SettingsRepository>().incrementLaunchCounter();
+  await dotenv.load(fileName: 'secrets.env');
 
   await SentryFlutter.init(
     (options) {
-      options.dsn = kDebugMode ? '' : dotenv.get('SENTRY_DSN');
+      options.dsn = dotenv.maybeGet('SENTRY_DSN') ?? '';
+      options.enableAutoSessionTracking = false;
+      options.enableAutoPerformanceTracing = false;
     },
-    appRunner: () => runApp(
-      const ProviderScope(
-        child: Observatory(),
-      ),
-    ),
+    appRunner: () async {
+      await initSettings();
+
+      await AwesomeNotifications().initialize(
+        null,
+        NOTIFICATION_CHANNELS,
+        channelGroups: NOTIFICATION_GROUPS,
+      );
+
+      await AwesomeNotifications().setListeners(
+        onActionReceivedMethod: onActionReceivedMethod,
+      );
+
+      await Workmanager().initialize(
+        callbackDispatcher,
+        isInDebugMode: kDebugMode,
+      );
+
+      return runApp(
+        const ProviderScope(
+          child: Observatory(),
+        ),
+      );
+    },
   );
 }
