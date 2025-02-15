@@ -25,12 +25,12 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - purchases_flutter (8.4.5):
+  - purchases_flutter (8.4.6):
     - Flutter
-    - PurchasesHybridCommon (= 13.17.0)
-  - PurchasesHybridCommon (13.17.0):
-    - RevenueCat (= 5.16.0)
-  - RevenueCat (5.16.0)
+    - PurchasesHybridCommon (= 13.17.1)
+  - PurchasesHybridCommon (13.17.1):
+    - RevenueCat (= 5.16.1)
+  - RevenueCat (5.16.1)
   - Sentry/HybridSDK (8.44.0)
   - sentry_flutter (8.13.0):
     - Flutter
@@ -126,9 +126,9 @@ SPEC CHECKSUMS:
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
-  purchases_flutter: db78e1e6bb215fd0f0743dccf24ceb865d296fba
-  PurchasesHybridCommon: 8f8ae5a747a62e252fc271bb5c36932c5877b8e5
-  RevenueCat: b7c34cdc66e4eaa854e56a56d0266261ed0822ca
+  purchases_flutter: 9b781bb8f1fa7641bc72d0dcb13f57591e6b8d8f
+  PurchasesHybridCommon: 7ee74fefbad7fa42a74ff6e339af46fac3af4640
+  RevenueCat: d38c56d5e1058f955ee7fce4ea7b18d126235e64
   Sentry: 0f9bc9adfc0b960e7f3bb5ec67e9a3d8193f3bdb
   sentry_flutter: be956a32343176b344ef4b23ecdab47ab6f0ffa6
   share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a

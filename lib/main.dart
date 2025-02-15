@@ -72,6 +72,17 @@ class _ObservatoryState extends ConsumerState<Observatory> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FlutterNativeSplash.remove();
+
+      GetIt.I<SettingsRepository>().incrementLaunchCounter();
+
+      // Re-enable check waitlist task if notifications are enabled
+      GetIt.I<SettingsRepository>().getWaitlistNotifications().then((enabled) {
+        if (enabled) {
+          disableCheckWaitlistTask().then((_) {
+            enableCheckWaitlistTask();
+          });
+        }
+      });
     });
 
     _linkSubscription = AppLinks().uriLinkStream.listen(
@@ -152,17 +163,6 @@ void main() async {
         callbackDispatcher,
         isInDebugMode: kDebugMode,
       );
-
-      // Re-enable check waitlist task if notifications are enabled
-      GetIt.I<SettingsRepository>().getWaitlistNotifications().then((enabled) {
-        if (enabled) {
-          disableCheckWaitlistTask().then((_) {
-            enableCheckWaitlistTask();
-          });
-        }
-      });
-
-      await GetIt.I<SettingsRepository>().incrementLaunchCounter();
 
       return runApp(
         const ProviderScope(
