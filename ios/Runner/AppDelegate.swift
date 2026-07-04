@@ -1,7 +1,7 @@
 import UIKit
 import Flutter
 import awesome_notifications
-import workmanager
+import workmanager_apple
 import app_links
 
 @main

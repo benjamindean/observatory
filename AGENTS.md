@@ -93,6 +93,29 @@ Codegen & Formatting Checks
   flutter analyze
   ```
 
+## IsThereAnyDeal (ITAD) API Reference
+
+- **API Documentation**: Always refer to the official ITAD API documentation at https://docs.isthereanydeal.com/ when modifying API endpoints, query parameters, models, or OAuth flows.
+- **Base URLs**:
+  - Global base URL for proxy endpoints: `https://getobservatory.app/api/v1/`
+  - Direct endpoints for OAuth and User actions: `https://api.isthereanydeal.com`
+- **OAuth Settings**:
+  - Authorize URL: `https://isthereanydeal.com/oauth/authorize/`
+  - Token URL: `https://isthereanydeal.com/oauth/token/`
+  - Scopes: `user_info`, `notes_read`, `notes_write`, `profiles`, `wait_read`, `wait_write`, `coll_read`, `coll_write`
+- **Direct User Endpoints**:
+  - `/user/info/v2` (GET) - Fetches the authenticated user's username.
+  - `/waitlist/games/v1` (GET, PUT, DELETE) - Retrieves, adds to, or removes games from the user's waitlist.
+  - `/collection/games/v1` (GET) - Retrieves the user's collection.
+- **Proxied Endpoints (via Observatory Backend)**:
+  - `/itad-api/info` - Detailed game info by ID.
+  - `/itad-api/overview` - Game overview.
+  - `/itad-api/prices` - Current prices/deals by game IDs.
+  - `/itad-api/stores` - Available stores by country.
+  - `/itad-api/deals` - Filtered list of current deals.
+  - `/itad-api/search` - Search game deals.
+  - `/itad-api/history` - Historical price data.
+
 ## Theming & Color Guidelines
 
 - **Responsive Tokens**: Always use context extension color tokens (e.g.
