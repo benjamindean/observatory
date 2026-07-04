@@ -1,7 +1,6 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:observatory/shared/models/deal.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -33,7 +32,7 @@ class SearchOnTile extends ConsumerWidget {
       leading: SizedBox(
         width: 30,
         child: Center(
-          child: FaIcon(
+          child: Icon(
             leading,
             size: context.themes.text.titleLarge?.fontSize,
           ),

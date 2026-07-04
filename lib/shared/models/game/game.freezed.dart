@@ -33,12 +33,8 @@ mixin _$GameDetails {
   List<GameTheme> get themes => throw _privateConstructorUsedError;
   List<GameWebsite> get websites => throw _privateConstructorUsedError;
 
-  /// Serializes this GameDetails to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of GameDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $GameDetailsCopyWith<GameDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -76,8 +72,6 @@ class _$GameDetailsCopyWithImpl<$Res, $Val extends GameDetails>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GameDetails
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -146,8 +140,6 @@ class _$GameDetailsCopyWithImpl<$Res, $Val extends GameDetails>
     ) as $Val);
   }
 
-  /// Create a copy of GameDetails
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $IGDBCoverCopyWith<$Res>? get cover {
@@ -195,8 +187,6 @@ class __$$GameDetailsImplCopyWithImpl<$Res>
       _$GameDetailsImpl _value, $Res Function(_$GameDetailsImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GameDetails
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -380,7 +370,7 @@ class _$GameDetailsImpl extends _GameDetails {
             const DeepCollectionEquality().equals(other._websites, _websites));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -397,9 +387,7 @@ class _$GameDetailsImpl extends _GameDetails {
       const DeepCollectionEquality().hash(_themes),
       const DeepCollectionEquality().hash(_websites));
 
-  /// Create a copy of GameDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GameDetailsImplCopyWith<_$GameDetailsImpl> get copyWith =>
@@ -456,11 +444,8 @@ abstract class _GameDetails extends GameDetails {
   List<GameTheme> get themes;
   @override
   List<GameWebsite> get websites;
-
-  /// Create a copy of GameDetails
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GameDetailsImplCopyWith<_$GameDetailsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -474,12 +459,8 @@ mixin _$GameScreenshot {
   int? get id => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
 
-  /// Serializes this GameScreenshot to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of GameScreenshot
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $GameScreenshotCopyWith<GameScreenshot> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -503,8 +484,6 @@ class _$GameScreenshotCopyWithImpl<$Res, $Val extends GameScreenshot>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GameScreenshot
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -543,8 +522,6 @@ class __$$GameScreenshotImplCopyWithImpl<$Res>
       _$GameScreenshotImpl _value, $Res Function(_$GameScreenshotImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GameScreenshot
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -591,13 +568,11 @@ class _$GameScreenshotImpl extends _GameScreenshot {
             (identical(other.url, url) || other.url == url));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, url);
 
-  /// Create a copy of GameScreenshot
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GameScreenshotImplCopyWith<_$GameScreenshotImpl> get copyWith =>
@@ -624,11 +599,8 @@ abstract class _GameScreenshot extends GameScreenshot {
   int? get id;
   @override
   String? get url;
-
-  /// Create a copy of GameScreenshot
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GameScreenshotImplCopyWith<_$GameScreenshotImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -643,12 +615,8 @@ mixin _$GamePlatform {
   String? get name => throw _privateConstructorUsedError;
   String? get abbreviation => throw _privateConstructorUsedError;
 
-  /// Serializes this GamePlatform to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of GamePlatform
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $GamePlatformCopyWith<GamePlatform> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -672,8 +640,6 @@ class _$GamePlatformCopyWithImpl<$Res, $Val extends GamePlatform>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GamePlatform
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -717,8 +683,6 @@ class __$$GamePlatformImplCopyWithImpl<$Res>
       _$GamePlatformImpl _value, $Res Function(_$GamePlatformImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GamePlatform
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -774,13 +738,11 @@ class _$GamePlatformImpl extends _GamePlatform {
                 other.abbreviation == abbreviation));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, abbreviation);
 
-  /// Create a copy of GamePlatform
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GamePlatformImplCopyWith<_$GamePlatformImpl> get copyWith =>
@@ -810,11 +772,8 @@ abstract class _GamePlatform extends GamePlatform {
   String? get name;
   @override
   String? get abbreviation;
-
-  /// Create a copy of GamePlatform
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GamePlatformImplCopyWith<_$GamePlatformImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -828,12 +787,8 @@ mixin _$IGDBCover {
   int? get id => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
 
-  /// Serializes this IGDBCover to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of IGDBCover
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $IGDBCoverCopyWith<IGDBCover> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -856,8 +811,6 @@ class _$IGDBCoverCopyWithImpl<$Res, $Val extends IGDBCover>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of IGDBCover
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -896,8 +849,6 @@ class __$$IGDBCoverImplCopyWithImpl<$Res>
       _$IGDBCoverImpl _value, $Res Function(_$IGDBCoverImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of IGDBCover
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -944,13 +895,11 @@ class _$IGDBCoverImpl extends _IGDBCover {
             (identical(other.url, url) || other.url == url));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, url);
 
-  /// Create a copy of IGDBCover
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$IGDBCoverImplCopyWith<_$IGDBCoverImpl> get copyWith =>
@@ -976,11 +925,8 @@ abstract class _IGDBCover extends IGDBCover {
   int? get id;
   @override
   String? get url;
-
-  /// Create a copy of IGDBCover
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$IGDBCoverImplCopyWith<_$IGDBCoverImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -994,12 +940,8 @@ mixin _$GameTheme {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
 
-  /// Serializes this GameTheme to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of GameTheme
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $GameThemeCopyWith<GameTheme> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1022,8 +964,6 @@ class _$GameThemeCopyWithImpl<$Res, $Val extends GameTheme>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GameTheme
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1062,8 +1002,6 @@ class __$$GameThemeImplCopyWithImpl<$Res>
       _$GameThemeImpl _value, $Res Function(_$GameThemeImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GameTheme
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1110,13 +1048,11 @@ class _$GameThemeImpl extends _GameTheme {
             (identical(other.name, name) || other.name == name));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name);
 
-  /// Create a copy of GameTheme
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GameThemeImplCopyWith<_$GameThemeImpl> get copyWith =>
@@ -1142,11 +1078,8 @@ abstract class _GameTheme extends GameTheme {
   int? get id;
   @override
   String? get name;
-
-  /// Create a copy of GameTheme
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GameThemeImplCopyWith<_$GameThemeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1161,12 +1094,8 @@ mixin _$GameVideo {
   String? get name => throw _privateConstructorUsedError;
   String? get video_id => throw _privateConstructorUsedError;
 
-  /// Serializes this GameVideo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of GameVideo
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $GameVideoCopyWith<GameVideo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1189,8 +1118,6 @@ class _$GameVideoCopyWithImpl<$Res, $Val extends GameVideo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GameVideo
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1234,8 +1161,6 @@ class __$$GameVideoImplCopyWithImpl<$Res>
       _$GameVideoImpl _value, $Res Function(_$GameVideoImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GameVideo
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1291,13 +1216,11 @@ class _$GameVideoImpl extends _GameVideo {
                 other.video_id == video_id));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, video_id);
 
-  /// Create a copy of GameVideo
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GameVideoImplCopyWith<_$GameVideoImpl> get copyWith =>
@@ -1327,11 +1250,8 @@ abstract class _GameVideo extends GameVideo {
   String? get name;
   @override
   String? get video_id;
-
-  /// Create a copy of GameVideo
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GameVideoImplCopyWith<_$GameVideoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1345,12 +1265,8 @@ mixin _$GameWebsite {
   int? get id => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
 
-  /// Serializes this GameWebsite to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of GameWebsite
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $GameWebsiteCopyWith<GameWebsite> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1374,8 +1290,6 @@ class _$GameWebsiteCopyWithImpl<$Res, $Val extends GameWebsite>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GameWebsite
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1414,8 +1328,6 @@ class __$$GameWebsiteImplCopyWithImpl<$Res>
       _$GameWebsiteImpl _value, $Res Function(_$GameWebsiteImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GameWebsite
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1462,13 +1374,11 @@ class _$GameWebsiteImpl extends _GameWebsite {
             (identical(other.url, url) || other.url == url));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, url);
 
-  /// Create a copy of GameWebsite
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GameWebsiteImplCopyWith<_$GameWebsiteImpl> get copyWith =>
@@ -1494,11 +1404,8 @@ abstract class _GameWebsite extends GameWebsite {
   int? get id;
   @override
   String? get url;
-
-  /// Create a copy of GameWebsite
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GameWebsiteImplCopyWith<_$GameWebsiteImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1514,12 +1421,8 @@ mixin _$IGDBAccessToken {
   @HiveField(1)
   int get expires_at => throw _privateConstructorUsedError;
 
-  /// Serializes this IGDBAccessToken to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of IGDBAccessToken
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $IGDBAccessTokenCopyWith<IGDBAccessToken> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1543,8 +1446,6 @@ class _$IGDBAccessTokenCopyWithImpl<$Res, $Val extends IGDBAccessToken>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of IGDBAccessToken
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1583,8 +1484,6 @@ class __$$IGDBAccessTokenImplCopyWithImpl<$Res>
       _$IGDBAccessTokenImpl _value, $Res Function(_$IGDBAccessTokenImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of IGDBAccessToken
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1637,13 +1536,11 @@ class _$IGDBAccessTokenImpl extends _IGDBAccessToken {
                 other.expires_at == expires_at));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, token, expires_at);
 
-  /// Create a copy of IGDBAccessToken
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$IGDBAccessTokenImplCopyWith<_$IGDBAccessTokenImpl> get copyWith =>
@@ -1673,11 +1570,8 @@ abstract class _IGDBAccessToken extends IGDBAccessToken {
   @override
   @HiveField(1)
   int get expires_at;
-
-  /// Create a copy of IGDBAccessToken
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$IGDBAccessTokenImplCopyWith<_$IGDBAccessTokenImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

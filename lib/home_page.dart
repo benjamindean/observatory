@@ -83,7 +83,7 @@ class HomePage extends ConsumerWidget {
 
           return ErrorMessage(
             message: 'Failed to load settings. Please try again later.',
-            icon: FontAwesomeIcons.solidFaceDizzy,
+            icon: FontAwesomeIcons.solidFaceDizzy.data,
             helper: TextButton.icon(
               icon: const Icon(Icons.refresh),
               label: const Text('Retry'),

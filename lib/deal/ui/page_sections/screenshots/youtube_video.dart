@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:observatory/shared/widgets/progress_indicator.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class YouTubeVideo extends StatefulWidget {
   final String videoId;
@@ -21,14 +19,13 @@ class _YouTubeVideoState extends State<YouTubeVideo> {
 
   @override
   void initState() {
-    videoController = YoutubePlayerController(
-      initialVideoId: widget.videoId,
-      flags: YoutubePlayerFlags(
-        autoPlay: true,
+    videoController = YoutubePlayerController.fromVideoId(
+      videoId: widget.videoId,
+      autoPlay: true,
+      params: const YoutubePlayerParams(
+        showControls: true,
+        showFullscreenButton: true,
         mute: false,
-        enableCaption: false,
-        forceHD: true,
-        useHybridComposition: !kDebugMode,
       ),
     );
 
@@ -43,32 +40,15 @@ class _YouTubeVideoState extends State<YouTubeVideo> {
       );
     }
 
-    return YoutubePlayerBuilder(
-      player: YoutubePlayer(
-        controller: videoController!,
-        showVideoProgressIndicator: false,
-        progressIndicatorColor: context.colors.scheme.primary,
-        liveUIColor: context.colors.scheme.primary,
-        progressColors: ProgressBarColors(
-          playedColor: context.colors.scheme.primary,
-          handleColor: context.colors.scheme.secondary,
-        ),
-      ),
-      builder: (BuildContext context, Widget player) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            player,
-          ],
-        );
-      },
+    return YoutubePlayer(
+      controller: videoController!,
+      aspectRatio: 16 / 9,
     );
   }
 
   @override
   void dispose() {
-    videoController?.dispose();
+    videoController?.close();
 
     super.dispose();
   }

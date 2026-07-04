@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:observatory/itad_filters/providers/itad_filters_provider.dart';
 
-const List<(int, String, IconData)> platforms = <(int, String, IconData)>[
+const List<(int, String, FaIconData)> platforms = <(int, String, FaIconData)>[
   (1, 'Windows', FontAwesomeIcons.windows),
   (2, 'Mac', FontAwesomeIcons.apple),
   (3, 'Linux', FontAwesomeIcons.linux),
@@ -48,7 +48,7 @@ class PlatformSelectTile extends ConsumerWidget {
                 .setPlatforms(newSelection.toList());
           },
           segments: platforms.map<ButtonSegment<int>>(
-            ((int, String, IconData) platform) {
+            ((int, String, FaIconData) platform) {
               return ButtonSegment<int>(
                 icon: FaIcon(
                   platform.$3,

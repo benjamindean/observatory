@@ -50,7 +50,7 @@ class DealsList extends ConsumerWidget {
           hasScrollBody: false,
           child: Center(
             child: ErrorMessage(
-              icon: FontAwesomeIcons.solidFaceDizzy,
+              icon: FontAwesomeIcons.solidFaceDizzy.data,
               message:
                   'Failed to fetch deals. The service might be down at the moment. Please try again later.',
               helper: TextButton.icon(
@@ -72,7 +72,7 @@ class DealsList extends ConsumerWidget {
               child: ErrorMessage(
                 message:
                     'No deals matching the current filters found in the selected category.',
-                icon: FontAwesomeIcons.solidFaceSadCry,
+                icon: FontAwesomeIcons.solidFaceSadCry.data,
                 helper: TextButton.icon(
                   icon: const Icon(Icons.refresh_rounded),
                   label: const Text('Refresh'),

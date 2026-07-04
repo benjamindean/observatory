@@ -23,12 +23,8 @@ mixin _$Overview {
   List<OverviewPrices>? get prices => throw _privateConstructorUsedError;
   List<Bundle>? get bundles => throw _privateConstructorUsedError;
 
-  /// Serializes this Overview to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Overview
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $OverviewCopyWith<Overview> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,8 +47,6 @@ class _$OverviewCopyWithImpl<$Res, $Val extends Overview>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Overview
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -91,8 +85,6 @@ class __$$OverviewImplCopyWithImpl<$Res>
       _$OverviewImpl _value, $Res Function(_$OverviewImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Overview
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -169,16 +161,14 @@ class _$OverviewImpl with DiagnosticableTreeMixin implements _Overview {
             const DeepCollectionEquality().equals(other._bundles, _bundles));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_prices),
       const DeepCollectionEquality().hash(_bundles));
 
-  /// Create a copy of Overview
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$OverviewImplCopyWith<_$OverviewImpl> get copyWith =>
@@ -204,11 +194,8 @@ abstract class _Overview implements Overview {
   List<OverviewPrices>? get prices;
   @override
   List<Bundle>? get bundles;
-
-  /// Create a copy of Overview
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$OverviewImplCopyWith<_$OverviewImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -223,12 +210,8 @@ mixin _$OverviewPrices {
   Price? get current => throw _privateConstructorUsedError;
   Price? get lowest => throw _privateConstructorUsedError;
 
-  /// Serializes this OverviewPrices to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of OverviewPrices
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $OverviewPricesCopyWith<OverviewPrices> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -255,8 +238,6 @@ class _$OverviewPricesCopyWithImpl<$Res, $Val extends OverviewPrices>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of OverviewPrices
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -280,8 +261,6 @@ class _$OverviewPricesCopyWithImpl<$Res, $Val extends OverviewPrices>
     ) as $Val);
   }
 
-  /// Create a copy of OverviewPrices
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PriceCopyWith<$Res>? get current {
@@ -294,8 +273,6 @@ class _$OverviewPricesCopyWithImpl<$Res, $Val extends OverviewPrices>
     });
   }
 
-  /// Create a copy of OverviewPrices
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PriceCopyWith<$Res>? get lowest {
@@ -333,8 +310,6 @@ class __$$OverviewPricesImplCopyWithImpl<$Res>
       _$OverviewPricesImpl _value, $Res Function(_$OverviewPricesImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of OverviewPrices
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -401,13 +376,11 @@ class _$OverviewPricesImpl
             (identical(other.lowest, lowest) || other.lowest == lowest));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, current, lowest);
 
-  /// Create a copy of OverviewPrices
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$OverviewPricesImplCopyWith<_$OverviewPricesImpl> get copyWith =>
@@ -437,11 +410,8 @@ abstract class _OverviewPrices implements OverviewPrices {
   Price? get current;
   @override
   Price? get lowest;
-
-  /// Create a copy of OverviewPrices
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$OverviewPricesImplCopyWith<_$OverviewPricesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -459,12 +429,8 @@ mixin _$Bundle {
   BundlePage get page => throw _privateConstructorUsedError;
   String? get expiry => throw _privateConstructorUsedError;
 
-  /// Serializes this Bundle to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Bundle
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $BundleCopyWith<Bundle> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -494,8 +460,6 @@ class _$BundleCopyWithImpl<$Res, $Val extends Bundle>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Bundle
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -534,8 +498,6 @@ class _$BundleCopyWithImpl<$Res, $Val extends Bundle>
     ) as $Val);
   }
 
-  /// Create a copy of Bundle
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $BundlePageCopyWith<$Res> get page {
@@ -572,8 +534,6 @@ class __$$BundleImplCopyWithImpl<$Res>
       _$BundleImpl _value, $Res Function(_$BundleImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Bundle
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -672,14 +632,12 @@ class _$BundleImpl extends _Bundle with DiagnosticableTreeMixin {
             (identical(other.expiry, expiry) || other.expiry == expiry));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, title, url, details, page, expiry);
 
-  /// Create a copy of Bundle
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$BundleImplCopyWith<_$BundleImpl> get copyWith =>
@@ -717,11 +675,8 @@ abstract class _Bundle extends Bundle {
   BundlePage get page;
   @override
   String? get expiry;
-
-  /// Create a copy of Bundle
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$BundleImplCopyWith<_$BundleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -735,12 +690,8 @@ mixin _$BundlePage {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
-  /// Serializes this BundlePage to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of BundlePage
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $BundlePageCopyWith<BundlePage> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -764,8 +715,6 @@ class _$BundlePageCopyWithImpl<$Res, $Val extends BundlePage>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of BundlePage
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -804,8 +753,6 @@ class __$$BundlePageImplCopyWithImpl<$Res>
       _$BundlePageImpl _value, $Res Function(_$BundlePageImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of BundlePage
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -861,13 +808,11 @@ class _$BundlePageImpl with DiagnosticableTreeMixin implements _BundlePage {
             (identical(other.name, name) || other.name == name));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name);
 
-  /// Create a copy of BundlePage
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$BundlePageImplCopyWith<_$BundlePageImpl> get copyWith =>
@@ -892,11 +837,8 @@ abstract class _BundlePage implements BundlePage {
   int get id;
   @override
   String get name;
-
-  /// Create a copy of BundlePage
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$BundlePageImplCopyWith<_$BundlePageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

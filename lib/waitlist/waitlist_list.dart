@@ -78,7 +78,7 @@ class WaitListList extends ConsumerWidget {
           hasScrollBody: false,
           child: Center(
             child: ErrorMessage(
-              icon: FontAwesomeIcons.solidFaceDizzy,
+              icon: FontAwesomeIcons.solidFaceDizzy.data,
               message: 'Failed to fetch waitlist.',
               helper: TextButton.icon(
                 icon: const Icon(Icons.refresh),
@@ -95,11 +95,11 @@ class WaitListList extends ConsumerWidget {
       },
       data: (deals) {
         if (isSearchActive && filteredWaitlist.isEmpty) {
-          return const SliverFillRemaining(
+          return SliverFillRemaining(
             hasScrollBody: false,
             child: ErrorMessage(
               message: 'No games found for your query.',
-              icon: FontAwesomeIcons.solidFaceSadTear,
+              icon: FontAwesomeIcons.solidFaceSadTear.data,
             ),
           );
         }

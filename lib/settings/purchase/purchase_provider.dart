@@ -31,9 +31,10 @@ class AsyncPurchaseNotifier extends AsyncNotifier<PurchaseState> {
     setIsPending(true);
 
     try {
-      final CustomerInfo customerInfo = await Purchases.purchaseStoreProduct(
-        product,
+      final PurchaseResult purchaseResult = await Purchases.purchase(
+        PurchaseParams.storeProduct(product),
       );
+      final CustomerInfo customerInfo = purchaseResult.customerInfo;
 
       await deliverPurchases(customerInfo.allPurchasedProductIdentifiers);
 

@@ -41,7 +41,7 @@ class Bundle with _$Bundle {
     String? expiry,
   }) = _Bundle;
 
-  get isExpired {
+  bool get isExpired {
     if (expiry == null) {
       return true;
     }

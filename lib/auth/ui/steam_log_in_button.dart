@@ -31,8 +31,8 @@ class SteamLogInButton extends ConsumerWidget {
           );
         }
 
-        return const Icon(
-          FontAwesomeIcons.steam,
+        return Icon(
+          FontAwesomeIcons.steam.data,
           size: 32,
         );
       },

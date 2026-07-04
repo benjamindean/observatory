@@ -54,8 +54,10 @@ class PriceBottomSheet extends ConsumerWidget {
                   ),
                   title: const Text('Share Link'),
                   onTap: () {
-                    Share.share(
-                      price.url.toString(),
+                    SharePlus.instance.share(
+                      ShareParams(
+                        text: price.url.toString(),
+                      ),
                     );
 
                     context.pop();

@@ -24,12 +24,8 @@ mixin _$HistoryPrice {
   PriceDetails get regular => throw _privateConstructorUsedError;
   double get cut => throw _privateConstructorUsedError;
 
-  /// Serializes this HistoryPrice to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of HistoryPrice
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $HistoryPriceCopyWith<HistoryPrice> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -56,8 +52,6 @@ class _$HistoryPriceCopyWithImpl<$Res, $Val extends HistoryPrice>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of HistoryPrice
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,8 +75,6 @@ class _$HistoryPriceCopyWithImpl<$Res, $Val extends HistoryPrice>
     ) as $Val);
   }
 
-  /// Create a copy of HistoryPrice
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PriceDetailsCopyWith<$Res> get price {
@@ -91,8 +83,6 @@ class _$HistoryPriceCopyWithImpl<$Res, $Val extends HistoryPrice>
     });
   }
 
-  /// Create a copy of HistoryPrice
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PriceDetailsCopyWith<$Res> get regular {
@@ -126,8 +116,6 @@ class __$$HistoryPriceImplCopyWithImpl<$Res>
       _$HistoryPriceImpl _value, $Res Function(_$HistoryPriceImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of HistoryPrice
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -194,13 +182,11 @@ class _$HistoryPriceImpl with DiagnosticableTreeMixin implements _HistoryPrice {
             (identical(other.cut, cut) || other.cut == cut));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, price, regular, cut);
 
-  /// Create a copy of HistoryPrice
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$HistoryPriceImplCopyWith<_$HistoryPriceImpl> get copyWith =>
@@ -229,11 +215,8 @@ abstract class _HistoryPrice implements HistoryPrice {
   PriceDetails get regular;
   @override
   double get cut;
-
-  /// Create a copy of HistoryPrice
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$HistoryPriceImplCopyWith<_$HistoryPriceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -248,12 +231,8 @@ mixin _$History {
   Shop? get shop => throw _privateConstructorUsedError;
   HistoryPrice? get deal => throw _privateConstructorUsedError;
 
-  /// Serializes this History to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of History
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $HistoryCopyWith<History> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -278,8 +257,6 @@ class _$HistoryCopyWithImpl<$Res, $Val extends History>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of History
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -303,8 +280,6 @@ class _$HistoryCopyWithImpl<$Res, $Val extends History>
     ) as $Val);
   }
 
-  /// Create a copy of History
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ShopCopyWith<$Res>? get shop {
@@ -317,8 +292,6 @@ class _$HistoryCopyWithImpl<$Res, $Val extends History>
     });
   }
 
-  /// Create a copy of History
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $HistoryPriceCopyWith<$Res>? get deal {
@@ -355,8 +328,6 @@ class __$$HistoryImplCopyWithImpl<$Res>
       _$HistoryImpl _value, $Res Function(_$HistoryImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of History
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -422,13 +393,11 @@ class _$HistoryImpl with DiagnosticableTreeMixin implements _History {
             (identical(other.deal, deal) || other.deal == deal));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, timestamp, shop, deal);
 
-  /// Create a copy of History
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$HistoryImplCopyWith<_$HistoryImpl> get copyWith =>
@@ -456,11 +425,8 @@ abstract class _History implements History {
   Shop? get shop;
   @override
   HistoryPrice? get deal;
-
-  /// Create a copy of History
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$HistoryImplCopyWith<_$HistoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -134,10 +134,10 @@ class RecentSearchesList extends ConsumerWidget {
           stackTrace: stackTrace,
         );
 
-        return const SliverFillRemaining(
+        return SliverFillRemaining(
           hasScrollBody: false,
           child: ErrorMessage(
-            icon: FontAwesomeIcons.solidFaceDizzy,
+            icon: FontAwesomeIcons.solidFaceDizzy.data,
             message: 'Failed to load recents.',
           ),
         );

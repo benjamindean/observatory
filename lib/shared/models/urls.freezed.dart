@@ -25,12 +25,8 @@ mixin _$Urls {
   String? get dlc => throw _privateConstructorUsedError;
   String? get buy => throw _privateConstructorUsedError;
 
-  /// Serializes this Urls to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Urls
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $UrlsCopyWith<Urls> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -52,8 +48,6 @@ class _$UrlsCopyWithImpl<$Res, $Val extends Urls>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Urls
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -100,8 +94,6 @@ class __$$UrlsImplCopyWithImpl<$Res>
   __$$UrlsImplCopyWithImpl(_$UrlsImpl _value, $Res Function(_$UrlsImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Urls
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -179,13 +171,11 @@ class _$UrlsImpl with DiagnosticableTreeMixin implements _Urls {
             (identical(other.buy, buy) || other.buy == buy));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, package, game, dlc, buy);
 
-  /// Create a copy of Urls
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$UrlsImplCopyWith<_$UrlsImpl> get copyWith =>
@@ -216,11 +206,8 @@ abstract class _Urls implements Urls {
   String? get dlc;
   @override
   String? get buy;
-
-  /// Create a copy of Urls
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$UrlsImplCopyWith<_$UrlsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

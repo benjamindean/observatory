@@ -25,12 +25,8 @@ mixin _$ITADUser {
   @HiveField(1)
   String? get credentials => throw _privateConstructorUsedError;
 
-  /// Serializes this ITADUser to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ITADUser
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $ITADUserCopyWith<ITADUser> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -54,8 +50,6 @@ class _$ITADUserCopyWithImpl<$Res, $Val extends ITADUser>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ITADUser
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -95,8 +89,6 @@ class __$$ITADUserImplCopyWithImpl<$Res>
       _$ITADUserImpl _value, $Res Function(_$ITADUserImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ITADUser
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,13 +140,11 @@ class _$ITADUserImpl implements _ITADUser {
                 other.credentials == credentials));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, username, credentials);
 
-  /// Create a copy of ITADUser
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ITADUserImplCopyWith<_$ITADUserImpl> get copyWith =>
@@ -182,11 +172,8 @@ abstract class _ITADUser implements ITADUser {
   @override
   @HiveField(1)
   String? get credentials;
-
-  /// Create a copy of ITADUser
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ITADUserImplCopyWith<_$ITADUserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -201,9 +188,7 @@ mixin _$ITADState {
   AuthorizationCodeGrant? get grant => throw _privateConstructorUsedError;
   Uri? get autorizationUrl => throw _privateConstructorUsedError;
 
-  /// Create a copy of ITADState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $ITADStateCopyWith<ITADState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -235,8 +220,6 @@ class _$ITADStateCopyWithImpl<$Res, $Val extends ITADState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ITADState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -280,8 +263,6 @@ class _$ITADStateCopyWithImpl<$Res, $Val extends ITADState>
     ) as $Val);
   }
 
-  /// Create a copy of ITADState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ITADUserCopyWith<$Res>? get user {
@@ -324,8 +305,6 @@ class __$$ITADStateImplCopyWithImpl<$Res>
       _$ITADStateImpl _value, $Res Function(_$ITADStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ITADState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -424,9 +403,7 @@ class _$ITADStateImpl implements _ITADState {
   int get hashCode => Object.hash(runtimeType, user, isLoading, error, client,
       lastSyncDate, grant, autorizationUrl);
 
-  /// Create a copy of ITADState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ITADStateImplCopyWith<_$ITADStateImpl> get copyWith =>
@@ -457,11 +434,8 @@ abstract class _ITADState implements ITADState {
   AuthorizationCodeGrant? get grant;
   @override
   Uri? get autorizationUrl;
-
-  /// Create a copy of ITADState
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ITADStateImplCopyWith<_$ITADStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

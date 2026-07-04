@@ -15,9 +15,11 @@ class DealFunctions {
     final Price? price = deal.prices?.firstOrNull;
 
     if (price != null) {
-      Share.share(
-        price.url.toString(),
-        subject: '${deal.titleParsed} on ${price.shop.name}',
+      SharePlus.instance.share(
+        ShareParams(
+          text: price.url.toString(),
+          subject: '${deal.titleParsed} on ${price.shop.name}',
+        ),
       );
     }
   }

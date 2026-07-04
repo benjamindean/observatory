@@ -47,7 +47,7 @@ class LinksBottomSheet extends StatelessWidget {
                       return SearchOnTile(
                         deal: deal,
                         title: 'Steam',
-                        leading: FontAwesomeIcons.steam,
+                        leading: FontAwesomeIcons.steam.data,
                         link: (uri != null && uri.toString().isNotEmpty)
                             ? uri
                             : Uri.parse(
@@ -59,7 +59,7 @@ class LinksBottomSheet extends StatelessWidget {
                   SearchOnTile(
                     deal: deal,
                     title: 'YouTube',
-                    leading: FontAwesomeIcons.youtube,
+                    leading: FontAwesomeIcons.youtube.data,
                     link: Uri.parse(
                       'https://www.youtube.com/results?search_query=${Uri.encodeQueryComponent(deal.title)}',
                     ),
@@ -67,7 +67,7 @@ class LinksBottomSheet extends StatelessWidget {
                   SearchOnTile(
                     deal: deal,
                     title: 'Wikipedia',
-                    leading: FontAwesomeIcons.wikipediaW,
+                    leading: FontAwesomeIcons.wikipediaW.data,
                     link: Uri.parse(
                       'https://en.wikipedia.org/w/index.php?search=${Uri.encodeComponent(deal.title)}',
                     ),
@@ -75,7 +75,7 @@ class LinksBottomSheet extends StatelessWidget {
                   SearchOnTile(
                     deal: deal,
                     title: 'Metacritic',
-                    leading: FontAwesomeIcons.squareArrowUpRight,
+                    leading: FontAwesomeIcons.squareArrowUpRight.data,
                     link: Uri.parse(
                       'https://www.metacritic.com/search/${Uri.encodeComponent(deal.title)}/',
                     ),

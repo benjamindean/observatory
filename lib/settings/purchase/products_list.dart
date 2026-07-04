@@ -129,7 +129,9 @@ class ProductsListState extends State<ProductsList> {
                     borderRadius: BorderRadius.all(Radius.circular(12.0)),
                   ),
                   value: e,
+                  // ignore: deprecated_member_use
                   groupValue: currentProduct,
+                  // ignore: deprecated_member_use
                   onChanged: !(widget.isPending || isPurchased)
                       ? (StoreProduct? value) {
                           setState(() {

@@ -29,12 +29,8 @@ mixin _$SteamUser {
   @HiveField(3)
   String? get avatarfull => throw _privateConstructorUsedError;
 
-  /// Serializes this SteamUser to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of SteamUser
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $SteamUserCopyWith<SteamUser> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -61,8 +57,6 @@ class _$SteamUserCopyWithImpl<$Res, $Val extends SteamUser>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SteamUser
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -115,8 +109,6 @@ class __$$SteamUserImplCopyWithImpl<$Res>
       _$SteamUserImpl _value, $Res Function(_$SteamUserImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SteamUser
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -190,14 +182,12 @@ class _$SteamUserImpl implements _SteamUser {
                 other.avatarfull == avatarfull));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, steamid, personaname, profileurl, avatarfull);
 
-  /// Create a copy of SteamUser
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SteamUserImplCopyWith<_$SteamUserImpl> get copyWith =>
@@ -233,11 +223,8 @@ abstract class _SteamUser implements SteamUser {
   @override
   @HiveField(3)
   String? get avatarfull;
-
-  /// Create a copy of SteamUser
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$SteamUserImplCopyWith<_$SteamUserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -249,9 +236,7 @@ mixin _$SteamState {
   bool get isLoading => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
-  /// Create a copy of SteamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $SteamStateCopyWith<SteamState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -278,8 +263,6 @@ class _$SteamStateCopyWithImpl<$Res, $Val extends SteamState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SteamState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -308,8 +291,6 @@ class _$SteamStateCopyWithImpl<$Res, $Val extends SteamState>
     ) as $Val);
   }
 
-  /// Create a copy of SteamState
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $SteamUserCopyWith<$Res>? get user {
@@ -346,8 +327,6 @@ class __$$SteamStateImplCopyWithImpl<$Res>
       _$SteamStateImpl _value, $Res Function(_$SteamStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SteamState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -423,9 +402,7 @@ class _$SteamStateImpl implements _SteamState {
   int get hashCode => Object.hash(runtimeType, user,
       const DeepCollectionEquality().hash(_deals), isLoading, error);
 
-  /// Create a copy of SteamState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$SteamStateImplCopyWith<_$SteamStateImpl> get copyWith =>
@@ -447,11 +424,8 @@ abstract class _SteamState implements SteamState {
   bool get isLoading;
   @override
   String? get error;
-
-  /// Create a copy of SteamState
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$SteamStateImplCopyWith<_$SteamStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

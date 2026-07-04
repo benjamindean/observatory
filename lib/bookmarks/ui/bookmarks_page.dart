@@ -107,8 +107,8 @@ class BookmarksPage extends ConsumerWidget {
                   stackTrace: stackTrace,
                 );
 
-                return const ErrorMessage(
-                  icon: FontAwesomeIcons.solidFaceFrown,
+                return ErrorMessage(
+                  icon: FontAwesomeIcons.solidFaceFrown.data,
                   message: 'Failed to load pinned games.',
                 );
               },
@@ -118,12 +118,12 @@ class BookmarksPage extends ConsumerWidget {
                 }).toList();
 
                 if (bookmarks.isEmpty) {
-                  return const SliverFillRemaining(
+                  return SliverFillRemaining(
                     hasScrollBody: false,
                     child: Center(
                       child: ErrorMessage(
                         message: 'You have no bookmarks.',
-                        icon: FontAwesomeIcons.solidFaceSadTear,
+                        icon: FontAwesomeIcons.solidFaceSadTear.data,
                       ),
                     ),
                   );

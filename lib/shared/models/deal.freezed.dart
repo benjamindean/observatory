@@ -38,12 +38,8 @@ mixin _$Deal {
   @HiveField(5)
   List<Price>? get prices => throw _privateConstructorUsedError;
 
-  /// Serializes this Deal to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Deal
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $DealCopyWith<Deal> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -79,8 +75,6 @@ class _$DealCopyWithImpl<$Res, $Val extends Deal>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Deal
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -144,8 +138,6 @@ class _$DealCopyWithImpl<$Res, $Val extends Deal>
     ) as $Val);
   }
 
-  /// Create a copy of Deal
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $InfoCopyWith<$Res>? get info {
@@ -158,8 +150,6 @@ class _$DealCopyWithImpl<$Res, $Val extends Deal>
     });
   }
 
-  /// Create a copy of Deal
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $OverviewCopyWith<$Res>? get overview {
@@ -206,8 +196,6 @@ class __$$DealImplCopyWithImpl<$Res>
   __$$DealImplCopyWithImpl(_$DealImpl _value, $Res Function(_$DealImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Deal
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -341,9 +329,7 @@ class _$DealImpl extends _Deal {
     return 'Deal(id: $id, slug: $slug, type: $type, title: $title, steamId: $steamId, info: $info, overview: $overview, isLoading: $isLoading, added: $added, source: $source, prices: $prices)';
   }
 
-  /// Create a copy of Deal
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$DealImplCopyWith<_$DealImpl> get copyWith =>
@@ -402,11 +388,8 @@ abstract class _Deal extends Deal {
   @override
   @HiveField(5)
   List<Price>? get prices;
-
-  /// Create a copy of Deal
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$DealImplCopyWith<_$DealImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

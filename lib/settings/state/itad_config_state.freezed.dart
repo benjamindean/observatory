@@ -25,12 +25,8 @@ mixin _$ITADConfigState {
   List<int> get selectedStores => throw _privateConstructorUsedError;
   List<Store> get stores => throw _privateConstructorUsedError;
 
-  /// Serializes this ITADConfigState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ITADConfigState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $ITADConfigStateCopyWith<ITADConfigState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -58,8 +54,6 @@ class _$ITADConfigStateCopyWithImpl<$Res, $Val extends ITADConfigState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ITADConfigState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -112,8 +106,6 @@ class __$$ITADConfigStateImplCopyWithImpl<$Res>
       _$ITADConfigStateImpl _value, $Res Function(_$ITADConfigStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ITADConfigState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -198,7 +190,7 @@ class _$ITADConfigStateImpl implements _ITADConfigState {
             const DeepCollectionEquality().equals(other._stores, _stores));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -207,9 +199,7 @@ class _$ITADConfigStateImpl implements _ITADConfigState {
       const DeepCollectionEquality().hash(_selectedStores),
       const DeepCollectionEquality().hash(_stores));
 
-  /// Create a copy of ITADConfigState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ITADConfigStateImplCopyWith<_$ITADConfigStateImpl> get copyWith =>
@@ -242,11 +232,8 @@ abstract class _ITADConfigState implements ITADConfigState {
   List<int> get selectedStores;
   @override
   List<Store> get stores;
-
-  /// Create a copy of ITADConfigState
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$ITADConfigStateImplCopyWith<_$ITADConfigStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

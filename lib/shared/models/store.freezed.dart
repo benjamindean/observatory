@@ -23,12 +23,8 @@ mixin _$Store {
   int get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
 
-  /// Serializes this Store to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Store
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $StoreCopyWith<Store> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -50,8 +46,6 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Store
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -89,8 +83,6 @@ class __$$StoreImplCopyWithImpl<$Res>
       _$StoreImpl _value, $Res Function(_$StoreImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Store
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -146,13 +138,11 @@ class _$StoreImpl with DiagnosticableTreeMixin implements _Store {
             (identical(other.title, title) || other.title == title));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, title);
 
-  /// Create a copy of Store
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$StoreImplCopyWith<_$StoreImpl> get copyWith =>
@@ -176,11 +166,8 @@ abstract class _Store implements Store {
   int get id;
   @override
   String get title;
-
-  /// Create a copy of Store
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$StoreImplCopyWith<_$StoreImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

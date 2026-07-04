@@ -41,7 +41,7 @@ class ScreenshotsTile extends ConsumerWidget {
     required this.deal,
   });
 
-  String getURL(item) {
+  String getURL(dynamic item) {
     if (item is GameVideo) {
       if (item.isYouTube) {
         return 'https://img.youtube.com/vi/${item.video_id}/hqdefault.jpg';

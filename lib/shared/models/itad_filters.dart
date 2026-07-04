@@ -44,7 +44,7 @@ class ITADFilters with _$ITADFilters {
   factory ITADFilters.fromJson(Map<String, Object?> json) =>
       _$ITADFiltersFromJson(json);
 
-  get filtersString {
+  String? get filtersString {
     return LZString.compressToBase64Sync(
       json.encode(
         {

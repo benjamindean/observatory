@@ -39,11 +39,11 @@ class SearchList extends ConsumerWidget {
         }
 
         if (searchResults.isEmpty) {
-          return const SliverFillRemaining(
+          return SliverFillRemaining(
             hasScrollBody: false,
             child: ErrorMessage(
               message: 'No results found for your query.',
-              icon: FontAwesomeIcons.solidFaceSadTear,
+              icon: FontAwesomeIcons.solidFaceSadTear.data,
             ),
           );
         }
