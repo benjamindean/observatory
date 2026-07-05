@@ -85,7 +85,7 @@ ThemeData lightTheme({
       scheme: scheme,
       usedColors: 6,
       surfaceMode: FlexSurfaceMode.highSurfaceLowScaffold,
-      blendLevel: 12,
+      blendLevel: 8,
       subThemesData: const FlexSubThemesData(
         chipSchemeColor: SchemeColor.surfaceContainer,
         cardElevation: 2.0,
@@ -145,7 +145,7 @@ ThemeData lightTheme({
         keepPrimary: true,
         keepSecondaryContainer: true,
       ),
-      variant: FlexSchemeVariant.candyPop,
+      variant: FlexSchemeVariant.fidelity,
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       fontFamily: GoogleFonts.openSans().fontFamily,
     );

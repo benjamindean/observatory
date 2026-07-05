@@ -54,7 +54,8 @@ class HistoryChart extends ConsumerWidget {
                     fitInsideHorizontally: true,
                     fitInsideVertically: true,
                     getTooltipColor: (_) => context.colors.scheme.tertiary,
-                    tooltipBorderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                    tooltipBorderRadius:
+                        const BorderRadius.all(Radius.circular(12.0)),
                     getTooltipItems: (List<LineBarSpot> touchedSpots) {
                       return touchedSpots.map(
                         (LineBarSpot touchedSpot) {

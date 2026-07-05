@@ -16,7 +16,7 @@ extension IterableExtension<T> on List<T> {
   }
 }
 
-extension BuildContextEntension<T> on BuildContext {
+extension BuildContextExtension<T> on BuildContext {
   bool get isMobile => MediaQuery.of(this).size.width <= 500.0;
 
   bool get isTablet =>

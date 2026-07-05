@@ -39,7 +39,8 @@ class CountrySettingsListTile extends ConsumerWidget {
                     showCountryPicker(
                       context: context,
                       useRootNavigator: true,
-                      useSafeArea: true,
+                      useSafeArea: false,
+                      showDragHandle: false,
                       countryListTheme: CountryListThemeData(
                         bottomSheetHeight:
                             MediaQuery.of(context).size.height * 0.8,

@@ -94,25 +94,22 @@ class RecentSearchesList extends ConsumerWidget {
                   }
 
                   return ObservatoryCard(
-                    child: InkWell(
+                    child: ListTile(
                       onTap: () async {
                         await ref
                             .read(dealSearchProvider.notifier)
                             .performSearch(recentsList[index]);
                       },
-                      child: ListTile(
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(16.0, 0, 0, 0),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.cancel),
-                          onPressed: () {
-                            ref.read(asynRecentsProvider.notifier).removeRecent(
-                                  recentsList[index],
-                                );
-                          },
-                        ),
-                        title: Text(recentsList[index]),
+                      contentPadding: const EdgeInsets.fromLTRB(16.0, 0, 0, 0),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.cancel),
+                        onPressed: () {
+                          ref.read(asynRecentsProvider.notifier).removeRecent(
+                                recentsList[index],
+                              );
+                        },
                       ),
+                      title: Text(recentsList[index]),
                     ),
                   );
                 },

@@ -23,44 +23,31 @@ class ErrorMessage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Icon(
-                    icon,
-                    color: context.colors.disabled,
-                    size: 50,
-                  ),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Icon(
+                icon,
+                color: context.colors.disabled,
+                size: 50,
+              ),
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Builder(
-                  builder: (context) {
-                    if (message != null) {
-                      return Flexible(
-                        child: Text(
-                          message ?? 'Unknown Error',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: context.themes.text.bodyMedium?.fontSize,
-                            color: context.colors.disabled,
-                          ),
-                        ),
-                      );
-                    }
+            Builder(
+              builder: (context) {
+                if (message != null) {
+                  return Text(
+                    message ?? 'Unknown Error',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: context.themes.text.bodyMedium?.fontSize,
+                      color: context.colors.disabled,
+                    ),
+                  );
+                }
 
-                    return child ?? const SizedBox.shrink();
-                  },
-                )
-              ],
+                return child ?? const SizedBox.shrink();
+              },
             ),
-            helper ?? const SizedBox.shrink()
+            helper ?? const SizedBox.shrink(),
           ],
         ),
       ),

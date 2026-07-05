@@ -21,10 +21,16 @@ class ObservatorySnackBar {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        persist: false,
+        duration: const Duration(
+          seconds: 3,
+        ),
         margin: const EdgeInsets.all(12.0),
         backgroundColor: context.colors.scheme.inverseSurface,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12.0),
+          ),
         ),
         behavior: SnackBarBehavior.floating,
         action: onAction != null
