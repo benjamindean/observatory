@@ -1,7 +1,5 @@
 import UIKit
 import Flutter
-import awesome_notifications
-import workmanager_apple
 import app_links
 
 @main
@@ -11,17 +9,6 @@ import app_links
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
-
-    SwiftAwesomeNotificationsPlugin.setPluginRegistrantCallback { registry in
-        SwiftAwesomeNotificationsPlugin.register(
-          with: registry.registrar(forPlugin: "io.flutter.plugins.awesomenotifications.AwesomeNotificationsPlugin")!)
-    }
-
-    WorkmanagerPlugin.setPluginRegistrantCallback { registry in
-        GeneratedPluginRegistrant.register(with: registry)
-    }
-
-    WorkmanagerPlugin.registerPeriodicTask(withIdentifier: "observatory-waitlist-check", frequency: NSNumber(value: 4 * 60 * 60))
 
     if let url = AppLinks.shared.getLink(launchOptions: launchOptions) {
       AppLinks.shared.handleLink(url: url)

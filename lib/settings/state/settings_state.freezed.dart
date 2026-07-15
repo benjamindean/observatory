@@ -21,7 +21,6 @@ SettingsState _$SettingsStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SettingsState {
   bool get showHeaders => throw _privateConstructorUsedError;
-  bool get waitlistNotifications => throw _privateConstructorUsedError;
   WaitlistSorting get waitlistSorting => throw _privateConstructorUsedError;
   WaitlistSortingDirection get waitlistSortingDirection =>
       throw _privateConstructorUsedError;
@@ -43,7 +42,6 @@ abstract class $SettingsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool showHeaders,
-      bool waitlistNotifications,
       WaitlistSorting waitlistSorting,
       WaitlistSortingDirection waitlistSortingDirection,
       List<String> purchasedProductIds,
@@ -65,7 +63,6 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   @override
   $Res call({
     Object? showHeaders = null,
-    Object? waitlistNotifications = null,
     Object? waitlistSorting = null,
     Object? waitlistSortingDirection = null,
     Object? purchasedProductIds = null,
@@ -76,10 +73,6 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
       showHeaders: null == showHeaders
           ? _value.showHeaders
           : showHeaders // ignore: cast_nullable_to_non_nullable
-              as bool,
-      waitlistNotifications: null == waitlistNotifications
-          ? _value.waitlistNotifications
-          : waitlistNotifications // ignore: cast_nullable_to_non_nullable
               as bool,
       waitlistSorting: null == waitlistSorting
           ? _value.waitlistSorting
@@ -115,7 +108,6 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool showHeaders,
-      bool waitlistNotifications,
       WaitlistSorting waitlistSorting,
       WaitlistSortingDirection waitlistSortingDirection,
       List<String> purchasedProductIds,
@@ -135,7 +127,6 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? showHeaders = null,
-    Object? waitlistNotifications = null,
     Object? waitlistSorting = null,
     Object? waitlistSortingDirection = null,
     Object? purchasedProductIds = null,
@@ -146,10 +137,6 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
       showHeaders: null == showHeaders
           ? _value.showHeaders
           : showHeaders // ignore: cast_nullable_to_non_nullable
-              as bool,
-      waitlistNotifications: null == waitlistNotifications
-          ? _value.waitlistNotifications
-          : waitlistNotifications // ignore: cast_nullable_to_non_nullable
               as bool,
       waitlistSorting: null == waitlistSorting
           ? _value.waitlistSorting
@@ -180,7 +167,6 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
 class _$SettingsStateImpl implements _SettingsState {
   _$SettingsStateImpl(
       {required this.showHeaders,
-      required this.waitlistNotifications,
       required this.waitlistSorting,
       required this.waitlistSortingDirection,
       final List<String> purchasedProductIds = const [],
@@ -193,8 +179,6 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   final bool showHeaders;
-  @override
-  final bool waitlistNotifications;
   @override
   final WaitlistSorting waitlistSorting;
   @override
@@ -218,7 +202,7 @@ class _$SettingsStateImpl implements _SettingsState {
 
   @override
   String toString() {
-    return 'SettingsState(showHeaders: $showHeaders, waitlistNotifications: $waitlistNotifications, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, purchasedProductIds: $purchasedProductIds, collapsePinned: $collapsePinned, muteGamesInLibrary: $muteGamesInLibrary)';
+    return 'SettingsState(showHeaders: $showHeaders, waitlistSorting: $waitlistSorting, waitlistSortingDirection: $waitlistSortingDirection, purchasedProductIds: $purchasedProductIds, collapsePinned: $collapsePinned, muteGamesInLibrary: $muteGamesInLibrary)';
   }
 
   @override
@@ -228,8 +212,6 @@ class _$SettingsStateImpl implements _SettingsState {
             other is _$SettingsStateImpl &&
             (identical(other.showHeaders, showHeaders) ||
                 other.showHeaders == showHeaders) &&
-            (identical(other.waitlistNotifications, waitlistNotifications) ||
-                other.waitlistNotifications == waitlistNotifications) &&
             (identical(other.waitlistSorting, waitlistSorting) ||
                 other.waitlistSorting == waitlistSorting) &&
             (identical(
@@ -248,7 +230,6 @@ class _$SettingsStateImpl implements _SettingsState {
   int get hashCode => Object.hash(
       runtimeType,
       showHeaders,
-      waitlistNotifications,
       waitlistSorting,
       waitlistSortingDirection,
       const DeepCollectionEquality().hash(_purchasedProductIds),
@@ -272,7 +253,6 @@ class _$SettingsStateImpl implements _SettingsState {
 abstract class _SettingsState implements SettingsState {
   factory _SettingsState(
       {required final bool showHeaders,
-      required final bool waitlistNotifications,
       required final WaitlistSorting waitlistSorting,
       required final WaitlistSortingDirection waitlistSortingDirection,
       final List<String> purchasedProductIds,
@@ -284,8 +264,6 @@ abstract class _SettingsState implements SettingsState {
 
   @override
   bool get showHeaders;
-  @override
-  bool get waitlistNotifications;
   @override
   WaitlistSorting get waitlistSorting;
   @override

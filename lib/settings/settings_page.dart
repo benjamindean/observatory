@@ -7,7 +7,6 @@ import 'package:observatory/auth/ui/steam_log_in_button.dart';
 import 'package:observatory/settings/ui/stores_settings_list_tile.dart';
 import 'package:observatory/settings/ui/theme_list_tile.dart';
 import 'package:observatory/settings/ui/theme_true_black_list_tile.dart';
-import 'package:observatory/settings/ui/waitlist_alerts_settings_tile.dart';
 import 'package:observatory/shared/ui/observatory_dialog.dart';
 import 'package:observatory/waitlist/providers/waitlist_provider.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +94,6 @@ class SettingsPage extends ConsumerWidget {
                     child: ITADLogInButton(),
                   ),
                   const CollapsePinnedListTile(),
-                  const WaitlistAlertsSettingsTile(),
                   const ListHeading(title: 'Library'),
                   const MuteGamesInLibraryListTile(),
                   const ListHeading(title: 'Internal'),

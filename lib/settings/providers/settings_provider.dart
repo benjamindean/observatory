@@ -5,7 +5,6 @@ import 'package:observatory/settings/state/settings_state.dart';
 
 import 'package:observatory/shared/api/api.dart';
 import 'package:observatory/shared/models/store.dart';
-import 'package:observatory/tasks/check_waitlist.dart';
 
 class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
   final SettingsRepository repository = GetIt.I<SettingsRepository>();
@@ -21,7 +20,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
     return SettingsState(
       showHeaders: await repository.getShowHeaders(),
-      waitlistNotifications: await repository.getWaitlistNotifications(),
       waitlistSorting: await repository.getWaitlistSorting(),
       waitlistSortingDirection: await repository.getWaitlistSortingDirection(),
       collapsePinned: await repository.getCollapsePinned(),
@@ -41,24 +39,6 @@ class AsyncSettingsNotifier extends AsyncNotifier<SettingsState> {
 
         return state.requireValue.copyWith(
           showHeaders: showHeaders,
-        );
-      },
-    );
-  }
-
-  Future<void> setWaitlistNotifications(bool isEnabled) async {
-    state = await AsyncValue.guard(
-      () async {
-        await repository.setWaitlistNotifications(isEnabled);
-
-        if (isEnabled) {
-          await enableCheckWaitlistTask();
-        } else {
-          await disableCheckWaitlistTask();
-        }
-
-        return state.requireValue.copyWith(
-          waitlistNotifications: isEnabled,
         );
       },
     );
