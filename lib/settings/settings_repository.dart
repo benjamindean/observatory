@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -65,8 +64,6 @@ class SettingsRepository {
   final String PREF_DEALS_TAB = 'observatory_deals_tab_name';
   final String PREF_DEAL_CARD_TYPE = 'observatory_deal_card_type';
   final String PREF_THEME = 'observatory_theme';
-  final String PREF_WAITLIST_NOTIFICATIONS =
-      'observatory_waitlist_notifications';
   final String PREF_WAITLIST_SORTING = 'observatory_waitlist_sorting';
   final String PREF_WAITLIST_SORTING_DIRECTION =
       'observatory_waitlist_sorting_direction';
@@ -256,24 +253,6 @@ class SettingsRepository {
     return settingsBox.put(
       PREF_LAUNCH_COUNTER,
       count,
-    );
-  }
-
-  Future<bool> getWaitlistNotifications() async {
-    final bool isEnabledOnSystem =
-        await AwesomeNotifications().isNotificationAllowed();
-
-    return settingsBox.get(
-          PREF_WAITLIST_NOTIFICATIONS,
-          defaultValue: false,
-        ) &&
-        isEnabledOnSystem;
-  }
-
-  Future<void> setWaitlistNotifications(bool isEnabled) async {
-    return settingsBox.put(
-      PREF_WAITLIST_NOTIFICATIONS,
-      isEnabled,
     );
   }
 

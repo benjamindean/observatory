@@ -9,7 +9,6 @@ part of 'settings_state.dart';
 _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
     _$SettingsStateImpl(
       showHeaders: json['showHeaders'] as bool,
-      waitlistNotifications: json['waitlistNotifications'] as bool,
       waitlistSorting:
           $enumDecode(_$WaitlistSortingEnumMap, json['waitlistSorting']),
       waitlistSortingDirection: $enumDecode(
@@ -25,7 +24,6 @@ _$SettingsStateImpl _$$SettingsStateImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$SettingsStateImplToJson(_$SettingsStateImpl instance) =>
     <String, dynamic>{
       'showHeaders': instance.showHeaders,
-      'waitlistNotifications': instance.waitlistNotifications,
       'waitlistSorting': _$WaitlistSortingEnumMap[instance.waitlistSorting]!,
       'waitlistSortingDirection':
           _$WaitlistSortingDirectionEnumMap[instance.waitlistSortingDirection]!,

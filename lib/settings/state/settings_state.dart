@@ -9,7 +9,6 @@ part 'settings_state.g.dart';
 class SettingsState with _$SettingsState {
   factory SettingsState({
     required bool showHeaders,
-    required bool waitlistNotifications,
     required WaitlistSorting waitlistSorting,
     required WaitlistSortingDirection waitlistSortingDirection,
     @Default([]) List<String> purchasedProductIds,
