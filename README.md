@@ -10,6 +10,7 @@ Observatory is the essential app for tracking PC game prices and discounts exclu
 
 [<img src="./assets/images/appstore-button.png" height="50px">](https://apps.apple.com/us/app/observatory-for-itad/id6479194330)
 [<img src="./assets/images/apk-button.png" height="50px">](https://github.com/benjamindean/observatory/releases/latest)
+[<img src="./assets/images/obtainium-button.png" height="50px">](https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.benjaminabel.observatory%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fbenjamindean%2Fobservatory%22%2C%22author%22%3A%22benjamindean%22%2C%22name%22%3A%22Observatory%22%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22observatory-.%2A%5C%5C%5C%5C.apk%5C%22%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%28%5C%5C%5C%5Cd%2B%5C%5C%5C%5C.%5C%5C%5C%5Cd%2B%5C%5C%5C%5C.%5C%5C%5C%5Cd%2B%29%5C%22%2C%5C%22releaseTitleAsVersion%5C%22%3Atrue%2C%5C%22about%5C%22%3A%5C%22Track%20discounts%20from%2030%2B%20legitimate%20resellers%2C%20powered%20by%20IsThereAnyDeal%5C%22%7D%22%2C%22overrideSource%22%3A%22GitHub%22%7D)
 
 ## Screenshots
 
